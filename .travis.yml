@@ -1,0 +1,8 @@
+# https://docs.travis-ci.com/user/languages/objective-c/
+os: osx
+osx_image: xcode10.1	
+language: swift
+
+xcode_project: Buddies.xcodeproj # path to your xcodeproj folder
+xcode_scheme: Buddies
+xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone XR
