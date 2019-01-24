@@ -7,6 +7,11 @@ xcode_project: Buddies.xcodeproj # path to your xcodeproj folder
 xcode_scheme: Buddies
 xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone XR
 
+# Build pushes to master:
+branches:
+  only: 
+    - master
+
 # Uploads test coverage to codecov
 after_success:
   - bash <(curl -s https://codecov.io/bash)
