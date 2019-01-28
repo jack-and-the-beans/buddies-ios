@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		59457095F78B141BB93B4CD6 /* Pods_BuddiesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22663AE425AE50AC65D6EE5D /* Pods_BuddiesUITests.framework */; };
 		B650F1ED21FF6A5C0078EEAE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B650F1EC21FF6A5C0078EEAE /* GoogleService-Info.plist */; };
 		B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
 		B6AC54A121F8DB8300B075B8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC54A021F8DB8300B075B8 /* ViewController.swift */; };
@@ -15,7 +14,6 @@
 		B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A521F8DB8500B075B8 /* Assets.xcassets */; };
 		B6AC54A921F8DB8500B075B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A721F8DB8500B075B8 /* LaunchScreen.storyboard */; };
 		B6AC54B421F8DB8500B075B8 /* BuddiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC54B321F8DB8500B075B8 /* BuddiesTests.swift */; };
-		B6AC54BF21F8DB8500B075B8 /* BuddiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC54BE21F8DB8500B075B8 /* BuddiesUITests.swift */; };
 		BC97CE98FE7521FEC111E8D8 /* Pods_Buddies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */; };
 		D224642A61925CB2F139C62A /* Pods_BuddiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A75D052FEF0993FE926DD6A9 /* Pods_BuddiesTests.framework */; };
 /* End PBXBuildFile section */
@@ -28,21 +26,12 @@
 			remoteGlobalIDString = B6AC549A21F8DB8300B075B8;
 			remoteInfo = Buddies;
 		};
-		B6AC54BB21F8DB8500B075B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B6AC549321F8DB8300B075B8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B6AC549A21F8DB8300B075B8;
-			remoteInfo = Buddies;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		175E6AB724FECB3A49170B22 /* Pods-Buddies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buddies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Buddies/Pods-Buddies.debug.xcconfig"; sourceTree = "<group>"; };
 		22663AE425AE50AC65D6EE5D /* Pods_BuddiesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BuddiesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Buddies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D48C1A80FB4679DF8579993 /* Pods-BuddiesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuddiesUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BuddiesUITests/Pods-BuddiesUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		708E18A7C1FC3D04FD7B8413 /* Pods-BuddiesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuddiesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BuddiesUITests/Pods-BuddiesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		816AE6E7B58BFBD0416E039D /* Pods-BuddiesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuddiesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BuddiesTests/Pods-BuddiesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A75D052FEF0993FE926DD6A9 /* Pods_BuddiesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BuddiesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B650F1EC21FF6A5C0078EEAE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -56,9 +45,6 @@
 		B6AC54AF21F8DB8500B075B8 /* BuddiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BuddiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6AC54B321F8DB8500B075B8 /* BuddiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddiesTests.swift; sourceTree = "<group>"; };
 		B6AC54B521F8DB8500B075B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B6AC54BA21F8DB8500B075B8 /* BuddiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BuddiesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6AC54BE21F8DB8500B075B8 /* BuddiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddiesUITests.swift; sourceTree = "<group>"; };
-		B6AC54C021F8DB8500B075B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B99012110D81D232FCCCF814 /* Pods-BuddiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuddiesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BuddiesTests/Pods-BuddiesTests.release.xcconfig"; sourceTree = "<group>"; };
 		E239FFC5C11CDB70A2230436 /* Pods-Buddies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buddies.release.xcconfig"; path = "Pods/Target Support Files/Pods-Buddies/Pods-Buddies.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,14 +66,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B6AC54B721F8DB8500B075B8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				59457095F78B141BB93B4CD6 /* Pods_BuddiesUITests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -98,8 +76,6 @@
 				E239FFC5C11CDB70A2230436 /* Pods-Buddies.release.xcconfig */,
 				816AE6E7B58BFBD0416E039D /* Pods-BuddiesTests.debug.xcconfig */,
 				B99012110D81D232FCCCF814 /* Pods-BuddiesTests.release.xcconfig */,
-				4D48C1A80FB4679DF8579993 /* Pods-BuddiesUITests.debug.xcconfig */,
-				708E18A7C1FC3D04FD7B8413 /* Pods-BuddiesUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -119,7 +95,6 @@
 			children = (
 				B6AC549D21F8DB8300B075B8 /* Buddies */,
 				B6AC54B221F8DB8500B075B8 /* BuddiesTests */,
-				B6AC54BD21F8DB8500B075B8 /* BuddiesUITests */,
 				B6AC549C21F8DB8300B075B8 /* Products */,
 				769FE6AA175095E2C7DD39A9 /* Pods */,
 				821E1FEC13FCAEDDDB13A1A6 /* Frameworks */,
@@ -131,7 +106,6 @@
 			children = (
 				B6AC549B21F8DB8300B075B8 /* Buddies.app */,
 				B6AC54AF21F8DB8500B075B8 /* BuddiesTests.xctest */,
-				B6AC54BA21F8DB8500B075B8 /* BuddiesUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,15 +131,6 @@
 				B6AC54B521F8DB8500B075B8 /* Info.plist */,
 			);
 			path = BuddiesTests;
-			sourceTree = "<group>";
-		};
-		B6AC54BD21F8DB8500B075B8 /* BuddiesUITests */ = {
-			isa = PBXGroup;
-			children = (
-				B6AC54BE21F8DB8500B075B8 /* BuddiesUITests.swift */,
-				B6AC54C021F8DB8500B075B8 /* Info.plist */,
-			);
-			path = BuddiesUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,25 +175,6 @@
 			productReference = B6AC54AF21F8DB8500B075B8 /* BuddiesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		B6AC54B921F8DB8500B075B8 /* BuddiesUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B6AC54C921F8DB8500B075B8 /* Build configuration list for PBXNativeTarget "BuddiesUITests" */;
-			buildPhases = (
-				7BDF1D7CD0A3BF208B3A8475 /* [CP] Check Pods Manifest.lock */,
-				B6AC54B621F8DB8500B075B8 /* Sources */,
-				B6AC54B721F8DB8500B075B8 /* Frameworks */,
-				B6AC54B821F8DB8500B075B8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B6AC54BC21F8DB8500B075B8 /* PBXTargetDependency */,
-			);
-			name = BuddiesUITests;
-			productName = BuddiesUITests;
-			productReference = B6AC54BA21F8DB8500B075B8 /* BuddiesUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -243,10 +189,6 @@
 						CreatedOnToolsVersion = 10.1;
 					};
 					B6AC54AE21F8DB8500B075B8 = {
-						CreatedOnToolsVersion = 10.1;
-						TestTargetID = B6AC549A21F8DB8300B075B8;
-					};
-					B6AC54B921F8DB8500B075B8 = {
 						CreatedOnToolsVersion = 10.1;
 						TestTargetID = B6AC549A21F8DB8300B075B8;
 					};
@@ -267,7 +209,6 @@
 			targets = (
 				B6AC549A21F8DB8300B075B8 /* Buddies */,
 				B6AC54AE21F8DB8500B075B8 /* BuddiesTests */,
-				B6AC54B921F8DB8500B075B8 /* BuddiesUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -285,13 +226,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B6AC54AD21F8DB8500B075B8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6AC54B821F8DB8500B075B8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -381,28 +315,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Buddies/Pods-Buddies-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7BDF1D7CD0A3BF208B3A8475 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BuddiesUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		E6AB4C744E5761107CE47EE6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -445,14 +357,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B6AC54B621F8DB8500B075B8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B6AC54BF21F8DB8500B075B8 /* BuddiesUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -460,11 +364,6 @@
 			isa = PBXTargetDependency;
 			target = B6AC549A21F8DB8300B075B8 /* Buddies */;
 			targetProxy = B6AC54B021F8DB8500B075B8 /* PBXContainerItemProxy */;
-		};
-		B6AC54BC21F8DB8500B075B8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B6AC549A21F8DB8300B075B8 /* Buddies */;
-			targetProxy = B6AC54BB21F8DB8500B075B8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -686,48 +585,6 @@
 			};
 			name = Release;
 		};
-		B6AC54CA21F8DB8500B075B8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D48C1A80FB4679DF8579993 /* Pods-BuddiesUITests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 74YMV2J9D7;
-				INFOPLIST_FILE = BuddiesUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jack-and-the-beans.BuddiesUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Buddies;
-			};
-			name = Debug;
-		};
-		B6AC54CB21F8DB8500B075B8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 708E18A7C1FC3D04FD7B8413 /* Pods-BuddiesUITests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 74YMV2J9D7;
-				INFOPLIST_FILE = BuddiesUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jack-and-the-beans.BuddiesUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Buddies;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -754,15 +611,6 @@
 			buildConfigurations = (
 				B6AC54C721F8DB8500B075B8 /* Debug */,
 				B6AC54C821F8DB8500B075B8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B6AC54C921F8DB8500B075B8 /* Build configuration list for PBXNativeTarget "BuddiesUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B6AC54CA21F8DB8500B075B8 /* Debug */,
-				B6AC54CB21F8DB8500B075B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
