@@ -3,7 +3,7 @@ os: osx
 osx_image: xcode10.1	
 language: swift
 
-xcode_project: Buddies.xcworkspace # path to your xcodeproj folder
+xcode_workspace: Buddies.xcworkspace # path to the workspace to build
 xcode_scheme: Buddies
 xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone XR
 
