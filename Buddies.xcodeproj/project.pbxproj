@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58D2AA11220201B2009ABCBC /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D2AA01220201B1009ABCBC /* PinterestLayout.swift */; };
+		58D2AA12220201B2009ABCBC /* Photos.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58D2AA03220201B1009ABCBC /* Photos.xcassets */; };
+		58D2AA13220201B2009ABCBC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58D2AA04220201B1009ABCBC /* Images.xcassets */; };
+		58D2AA14220201B2009ABCBC /* Photos.plist in Resources */ = {isa = PBXBuildFile; fileRef = 58D2AA05220201B1009ABCBC /* Photos.plist */; };
+		58D2AA15220201B2009ABCBC /* PhotoStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D2AA07220201B1009ABCBC /* PhotoStreamViewController.swift */; };
+		58D2AA16220201B2009ABCBC /* AnnotatedPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D2AA09220201B2009ABCBC /* AnnotatedPhotoCell.swift */; };
+		58D2AA17220201B2009ABCBC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D2AA0B220201B2009ABCBC /* Photo.swift */; };
 		B650F1ED21FF6A5C0078EEAE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B650F1EC21FF6A5C0078EEAE /* GoogleService-Info.plist */; };
 		B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
 		B6AC54A121F8DB8300B075B8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC54A021F8DB8300B075B8 /* ViewController.swift */; };
@@ -32,6 +39,13 @@
 		175E6AB724FECB3A49170B22 /* Pods-Buddies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buddies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Buddies/Pods-Buddies.debug.xcconfig"; sourceTree = "<group>"; };
 		22663AE425AE50AC65D6EE5D /* Pods_BuddiesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BuddiesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Buddies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58D2AA01220201B1009ABCBC /* PinterestLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
+		58D2AA03220201B1009ABCBC /* Photos.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Photos.xcassets; sourceTree = "<group>"; };
+		58D2AA04220201B1009ABCBC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		58D2AA05220201B1009ABCBC /* Photos.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Photos.plist; sourceTree = "<group>"; };
+		58D2AA07220201B1009ABCBC /* PhotoStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoStreamViewController.swift; sourceTree = "<group>"; };
+		58D2AA09220201B2009ABCBC /* AnnotatedPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotatedPhotoCell.swift; sourceTree = "<group>"; };
+		58D2AA0B220201B2009ABCBC /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		816AE6E7B58BFBD0416E039D /* Pods-BuddiesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuddiesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BuddiesTests/Pods-BuddiesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A75D052FEF0993FE926DD6A9 /* Pods_BuddiesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BuddiesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B650F1EC21FF6A5C0078EEAE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -69,6 +83,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		58D2A9FF220201A1009ABCBC /* TopicControl */ = {
+			isa = PBXGroup;
+			children = (
+				58D2AA02220201B1009ABCBC /* Assets */,
+				58D2AA00220201B1009ABCBC /* Layouts */,
+				58D2AA0A220201B2009ABCBC /* Models */,
+				58D2AA06220201B1009ABCBC /* View Controllers */,
+				58D2AA08220201B2009ABCBC /* Views */,
+			);
+			path = TopicControl;
+			sourceTree = "<group>";
+		};
+		58D2AA00220201B1009ABCBC /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				58D2AA01220201B1009ABCBC /* PinterestLayout.swift */,
+			);
+			path = Layouts;
+			sourceTree = "<group>";
+		};
+		58D2AA02220201B1009ABCBC /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				58D2AA03220201B1009ABCBC /* Photos.xcassets */,
+				58D2AA04220201B1009ABCBC /* Images.xcassets */,
+				58D2AA05220201B1009ABCBC /* Photos.plist */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		58D2AA06220201B1009ABCBC /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				58D2AA07220201B1009ABCBC /* PhotoStreamViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		58D2AA08220201B2009ABCBC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				58D2AA09220201B2009ABCBC /* AnnotatedPhotoCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		58D2AA0A220201B2009ABCBC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				58D2AA0B220201B2009ABCBC /* Photo.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		769FE6AA175095E2C7DD39A9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +161,7 @@
 		B6AC549221F8DB8300B075B8 = {
 			isa = PBXGroup;
 			children = (
+				58D2A9FF220201A1009ABCBC /* TopicControl */,
 				B6AC549D21F8DB8300B075B8 /* Buddies */,
 				B6AC54B221F8DB8500B075B8 /* BuddiesTests */,
 				B6AC549C21F8DB8300B075B8 /* Products */,
@@ -220,7 +289,10 @@
 			files = (
 				B6AC54A921F8DB8500B075B8 /* LaunchScreen.storyboard in Resources */,
 				B650F1ED21FF6A5C0078EEAE /* GoogleService-Info.plist in Resources */,
+				58D2AA14220201B2009ABCBC /* Photos.plist in Resources */,
 				B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */,
+				58D2AA13220201B2009ABCBC /* Images.xcassets in Resources */,
+				58D2AA12220201B2009ABCBC /* Photos.xcassets in Resources */,
 				B6AC54A421F8DB8300B075B8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -344,8 +416,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58D2AA17220201B2009ABCBC /* Photo.swift in Sources */,
+				58D2AA11220201B2009ABCBC /* PinterestLayout.swift in Sources */,
 				B6AC54A121F8DB8300B075B8 /* ViewController.swift in Sources */,
 				B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */,
+				58D2AA15220201B2009ABCBC /* PhotoStreamViewController.swift in Sources */,
+				58D2AA16220201B2009ABCBC /* AnnotatedPhotoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
