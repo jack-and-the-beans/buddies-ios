@@ -17,8 +17,16 @@ enum BuddiesStoryboard : String {
     }
     
     func viewController<T : UIViewController>() -> T {
-        guard let scene = instance.instantiateViewController(withIdentifier: "Init") as? T else {
-            fatalError("ViewController with Storyboard ID of \"Init\", not found in \(self.rawValue) Storyboard.")
+        guard let scene = instance.instantiateInitialViewController() as? T else {
+            fatalError("No Initial ViewController for \(self.rawValue) Storyboard.")
+        }
+        
+        return scene
+    }
+    
+    func viewController<T : UIViewController>(withID id: String) -> T {
+        guard let scene = instance.instantiateViewController(withIdentifier: id) as? T else {
+            fatalError("No Initial ViewController for \(self.rawValue) Storyboard.")
         }
         
         return scene

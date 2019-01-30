@@ -9,14 +9,9 @@
 import UIKit
 import Firebase
 
-class LoginExistingVC: UIViewController {
-    
+class LoginExistingVC: LoginBase {
     @IBOutlet weak var emailField: UnderlinedTextbox!
-    
     @IBOutlet weak var passwordField: UnderlinedTextbox!
-    
-    var initEmailText: String?
-    var initPasswordText: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,25 +20,11 @@ class LoginExistingVC: UIViewController {
         passwordField.text = initPasswordText
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let dest = segue.destination as? LoginVC {
-            dest.initEmailText = emailField.text
-            dest.initPasswordText = passwordField.text
-        }
+    override func getTopField() -> UITextField {
+        return emailField;
     }
     
-    func showMessagePrompt(_ msg: String) {
-        let alertController = UIAlertController(title: "Login Error", message: msg, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-        
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
-    func getAuthHandler() -> AuthHandler {
-        return AuthHandler(auth: Auth.auth())
-    }
-    
-    @IBAction func logIn(_ sender: Any) {
+    @IBAction func logIn() {
         guard let password = passwordField.text else {
             showMessagePrompt("You must enter a password")
             return
@@ -67,17 +48,23 @@ class LoginExistingVC: UIViewController {
         getAuthHandler().logIn(
             email: email,
             password: password,
-            onError: showMessagePrompt,
+            onError: { msg in self.showMessagePrompt(msg) },
             onSuccess: { user in BuddiesStoryboard.Main.goTo() }
         )
     }
     
-    @IBAction func facebookLogin(_ sender: Any) {
+    @IBAction func facebookLogin() {
         getAuthHandler().logInWithFacebook(
             ref: self,
-            onError: showMessagePrompt,
+            onError: { msg in self.showMessagePrompt(msg) },
             onSuccess: { user in BuddiesStoryboard.Main.goTo() }
         )
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? LoginVC {
+            dest.initEmailText = emailField.text
+            dest.initPasswordText = passwordField.text
+        }
+    }
 }
