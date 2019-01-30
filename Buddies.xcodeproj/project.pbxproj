@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5827F49E220269930018C932 /* Topics.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5827F49D220269930018C932 /* Topics.storyboard */; };
 		583FD2DB220238F7005B2C75 /* LayoutMeasurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583FD2DA220238F7005B2C75 /* LayoutMeasurements.swift */; };
 		583FD2DE220244F8005B2C75 /* TopicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583FD2DD220244F8005B2C75 /* TopicModel.swift */; };
 		58A5A404220258E000E0BF38 /* bean.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58A5A403220258E000E0BF38 /* bean.jpg */; };
@@ -43,6 +44,7 @@
 		175E6AB724FECB3A49170B22 /* Pods-Buddies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buddies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Buddies/Pods-Buddies.debug.xcconfig"; sourceTree = "<group>"; };
 		22663AE425AE50AC65D6EE5D /* Pods_BuddiesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BuddiesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Buddies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5827F49D220269930018C932 /* Topics.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Topics.storyboard; sourceTree = "<group>"; };
 		583FD2DA220238F7005B2C75 /* LayoutMeasurements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutMeasurements.swift; sourceTree = "<group>"; };
 		583FD2DD220244F8005B2C75 /* TopicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicModel.swift; sourceTree = "<group>"; };
 		58A5A403220258E000E0BF38 /* bean.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bean.jpg; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */,
 				B6AC54A021F8DB8300B075B8 /* ViewController.swift */,
 				B6AC54A221F8DB8300B075B8 /* Main.storyboard */,
+				5827F49D220269930018C932 /* Topics.storyboard */,
 				B6AC54A521F8DB8500B075B8 /* Assets.xcassets */,
 				B6AC54A721F8DB8500B075B8 /* LaunchScreen.storyboard */,
 				B6AC54AA21F8DB8500B075B8 /* Info.plist */,
@@ -311,6 +314,7 @@
 				B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */,
 				58D2AA12220201B2009ABCBC /* Topics.xcassets in Resources */,
 				58A5A40522025B6400E0BF38 /* bean.jpg in Resources */,
+				5827F49E220269930018C932 /* Topics.storyboard in Resources */,
 				B6AC54A421F8DB8300B075B8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
