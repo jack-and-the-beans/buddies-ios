@@ -9,12 +9,12 @@
 import XCTest
 @testable import Buddies
 
-class Measurements: XCTestCase {
+class TestLayoutMeasurements: XCTestCase {
     
     var viewController: TopicViewController!
     
     override func setUp() {
-        viewController = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TopicViewController") as! TopicViewController)
+        viewController = (UIStoryboard(name: "Topics", bundle: nil).instantiateViewController(withIdentifier: "TopicViewController") as! TopicViewController)
         
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -29,10 +29,10 @@ class Measurements: XCTestCase {
 
     func testValidColumnWidth() {
         if let layout = viewController.collectionView.collectionViewLayout as? TopicLayout {
-            assert(layout.columnWidth >= layout.topicElementWidth, "Column width is big enough")
-            assert(layout.columnWidth <= layout.topicElementWidth + layout.topicElementWidth * CGFloat(1.0/Double(layout.numberOfColumns)), "Column width could fit another column")
+            XCTAssert(layout.columnWidth >= layout.topicWidth, "Column width is big enough")
+            XCTAssert(layout.columnWidth <= layout.topicElementWidth + layout.topicElementWidth * CGFloat(1.0/Double(layout.numberOfColumns)), "Column width could fit another column")
         } else {
-            assert(false, "Layout not of TopicLayout type")
+            XCTAssert(false, "Layout not of TopicLayout type")
         }
     }
 

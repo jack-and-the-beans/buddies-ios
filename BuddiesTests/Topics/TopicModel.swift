@@ -9,7 +9,7 @@
 import XCTest
 @testable import Buddies
 
-class Topics: XCTestCase {
+class TestTopicsModel: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
