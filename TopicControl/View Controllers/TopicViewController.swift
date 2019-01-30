@@ -29,28 +29,54 @@
  */
 
 import UIKit
+import AVFoundation
 
-class AnnotatedPhotoCell: UICollectionViewCell {
+class TopicViewController: UICollectionViewController {
   
-  @IBOutlet fileprivate weak var containerView: UIView!
-  @IBOutlet fileprivate weak var imageView: UIImageView!
-  @IBOutlet fileprivate weak var captionLabel: UILabel!
-  @IBOutlet fileprivate weak var commentLabel: UILabel!
+  var topics = Topic.allTopics()
   
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    containerView.layer.cornerRadius = 6
-    containerView.layer.masksToBounds = true
+  override var preferredStatusBarStyle : UIStatusBarStyle {
+    return UIStatusBarStyle.lightContent
   }
   
-  var photo: Photo? {
-    didSet {
-      if let photo = photo {
-        imageView.image = photo.image
-        captionLabel.text = photo.caption
-        commentLabel.text = photo.comment
-      }
+  override func viewDidLoad() {
+    super.viewDidLoad()
+   
+    if let patternImage = UIImage(named: "Pattern") {
+      view.backgroundColor = UIColor(patternImage: patternImage)
+    }
+    collectionView?.backgroundColor = UIColor.clear
+    collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
+    // Set the PinterestLayout delegate
+    if let layout = collectionView?.collectionViewLayout as? TopicLayout {
+      layout.delegate = self
     }
   }
   
+}
+
+extension TopicViewController {
+  
+  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return topics.count
+  }
+  
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnnotatedPhotoCell", for: indexPath)
+    if let topicCell = cell as? TopicCell {
+      topicCell.topic = topics[indexPath.item]
+    }
+    return cell
+  }
+  
+}
+
+//MARK: - PINTEREST LAYOUT DELEGATE
+extension TopicViewController : TopicLayoutDelegate {
+  
+  // 1. Returns the photo height
+  func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
+    return 150; //photos[indexPath.item].image.size.height
+  }
+
 }

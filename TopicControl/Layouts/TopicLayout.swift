@@ -30,14 +30,14 @@
 
 import UIKit
 
-protocol PinterestLayoutDelegate: class {
+protocol TopicLayoutDelegate: class {
   // 1. Method to ask the delegate for the height of the image
   func collectionView(_ collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat
 }
 
-class PinterestLayout: UICollectionViewLayout {
+class TopicLayout: UICollectionViewLayout {
   //1. Pinterest Layout Delegate
-  weak var delegate: PinterestLayoutDelegate!
+  weak var delegate: TopicLayoutDelegate!
   
   //2. Configurable properties
   fileprivate var numberOfColumns = 2

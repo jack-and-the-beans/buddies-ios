@@ -30,7 +30,7 @@
 
 import UIKit
 
-struct Photo {
+struct Topic {
   
   var caption: String
   var comment: String
@@ -51,18 +51,18 @@ struct Photo {
     self.init(caption: caption, comment: comment, image: image)
   }
 
-  static func allPhotos() -> [Photo] {
-    var photos = [Photo]()
-    guard let URL = Bundle.main.url(forResource: "Photos", withExtension: "plist"),
+  static func allTopics() -> [Topic] {
+    var topics = [Topic]()
+    guard let URL = Bundle.main.url(forResource: "Topics", withExtension: "plist"),
       let photosFromPlist = NSArray(contentsOf: URL) as? [[String:String]] else {
-        return photos
+        return topics
     }
     for dictionary in photosFromPlist {
-      if let photo = Photo(dictionary: dictionary) {
-        photos.append(photo)
+      if let topic = Topic(dictionary: dictionary) {
+        topics.append(topic)
       }
     }
-    return photos
+    return topics
   }
   
 }
