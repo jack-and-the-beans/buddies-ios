@@ -32,37 +32,36 @@ import UIKit
 
 struct Topic {
   
-  var caption: String
-  var comment: String
-  var image: UIImage
+    var name: String
+    var image: UIImage
+    var selected: Bool
   
-  
-  init(caption: String, comment: String, image: UIImage) {
-    self.caption = caption
-    self.comment = comment
-    self.image = image
-  }
-  
-  init?(dictionary: [String: String]) {
-    guard let caption = dictionary["Caption"], let comment = dictionary["Comment"], let photo = dictionary["Photo"],
-      let image = UIImage(named: photo) else {
-        return nil
+    init(name: String, image: UIImage, selected: Bool = false) {
+        self.name = name
+        self.image = image
+        self.selected = selected
     }
-    self.init(caption: caption, comment: comment, image: image)
-  }
+  
+    init?(dictionary: [String: Any]) {
+        guard let name = dictionary["name"] as? String, let selected = dictionary["selected"] as? Bool, let photo = dictionary["image"] as? String,
+            let image = UIImage(named: photo) else {
+            return nil
+        }
+        self.init(name: name, image: image, selected: Bool(selected))
+    }
 
-  static func allTopics() -> [Topic] {
-    var topics = [Topic]()
-    guard let URL = Bundle.main.url(forResource: "Topics", withExtension: "plist"),
-      let photosFromPlist = NSArray(contentsOf: URL) as? [[String:String]] else {
+    static func allTopics() -> [Topic] {
+        var topics = [Topic]()
+        guard let URL = Bundle.main.url(forResource: "Topics", withExtension: "plist"),
+            let photosFromPlist = NSArray(contentsOf: URL) as? [[String:Any]] else {
+            return topics
+        }
+        for dictionary in photosFromPlist {
+            if let topic = Topic(dictionary: dictionary) {
+                topics.append(topic)
+            }
+        }
         return topics
     }
-    for dictionary in photosFromPlist {
-      if let topic = Topic(dictionary: dictionary) {
-        topics.append(topic)
-      }
-    }
-    return topics
-  }
   
 }

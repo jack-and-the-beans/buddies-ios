@@ -33,13 +33,15 @@ import AVFoundation
 
 class TopicViewController: UICollectionViewController {
   
-    var topics = Topic.allTopics()
+    var topics: [Topic]!
   
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        topics = Topic.allTopics()
+        
         collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
-        // Set the PinterestLayout delegate
+        // Set the layout delegate
             if let layout = collectionView?.collectionViewLayout as? TopicLayout {
                 layout.delegate = self
             }

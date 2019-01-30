@@ -34,7 +34,7 @@ class TopicCell: UICollectionViewCell {
   
   @IBOutlet fileprivate weak var containerView: UIView!
   @IBOutlet fileprivate weak var imageView: UIImageView!
-  @IBOutlet fileprivate weak var captionLabel: UILabel!
+  @IBOutlet fileprivate weak var nameLabel: UILabel!
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -46,7 +46,7 @@ class TopicCell: UICollectionViewCell {
     didSet {
       if let topic = topic {
         imageView.image = topic.image
-        captionLabel.text = topic.caption
+        nameLabel.text = topic.name
       }
     }
   }

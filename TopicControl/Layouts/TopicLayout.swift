@@ -38,15 +38,39 @@ protocol TopicLayoutDelegate: class {
 class TopicLayout: UICollectionViewLayout {
 
     weak var delegate: TopicLayoutDelegate!
+
+    let topicWidth = CGFloat(150);
     
-    private let topicHeight = CGFloat(100);
-    private let topicWidth = CGFloat(150);
-    
-    private var topicElementWidth: CGFloat {
+    var topicElementWidth: CGFloat {
         get {
             return topicWidth + cellPadding;
         }
     }
+    
+    var xOffset : [CGFloat] {
+        get {
+            var offsets = [CGFloat]()
+            for column in 0 ..< Int(numberOfColumns) {
+                offsets.append(CGFloat(column) * columnWidth)
+            }
+            return offsets
+        }
+        
+    }
+    
+    var columnWidth: CGFloat {
+        get {
+            return contentWidth / CGFloat(numberOfColumns)
+        }
+    }
+    
+    var numberOfColumns: Int {
+        get {
+            return Int(round(contentWidth / topicElementWidth))
+        }
+    }
+    var cellPadding: CGFloat = 6
+
 
     override func invalidateLayout() {
         cache = []
@@ -59,20 +83,13 @@ class TopicLayout: UICollectionViewLayout {
         return newBounds.width != collectionView.bounds.width
     }
     
-    fileprivate var numberOfColumns: Int {
-        get {
-            return Int(round(contentWidth / topicElementWidth))
-        }
-    }
-    fileprivate var cellPadding: CGFloat = 6
 
-    //3. Array to keep a cache of attributes.
     fileprivate var cache = [UICollectionViewLayoutAttributes]()
 
-    //4. Content height and size
-    fileprivate var contentHeight: CGFloat = 0
+    //Content height and size
+    var contentHeight: CGFloat = 0
 
-    fileprivate var contentWidth: CGFloat {
+    var contentWidth: CGFloat {
         guard let collectionView = collectionView else {
             return 0
         }
@@ -90,13 +107,7 @@ class TopicLayout: UICollectionViewLayout {
         guard cache.isEmpty == true, let collectionView = collectionView else {
             return
         }
-        // 2. Pre-Calculates the X Offset for every column and adds an array to increment the currently max Y Offset for each column
-        let columnWidth = contentWidth / CGFloat(numberOfColumns)
-        print("\(topicElementWidth) vs \(columnWidth)")
-        var xOffset = [CGFloat]()
-        for column in 0 ..< Int(numberOfColumns) {
-            xOffset.append(CGFloat(column) * columnWidth)
-        }
+
         var column = 0
         var yOffset = [CGFloat](repeating: 0, count: Int(numberOfColumns))
 
@@ -108,6 +119,7 @@ class TopicLayout: UICollectionViewLayout {
             // 4. Asks the delegate for the height of the picture and the annotation and calculates the cell frame.
             let photoHeight = delegate.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath)
             let height = cellPadding * 2 + photoHeight
+            
             let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
 

@@ -13,7 +13,7 @@
         <!--Topic View Controller-->
         <scene sceneID="say-lW-rdj">
             <objects>
-                <collectionViewController id="Zc6-W6-bDA" customClass="TopicViewController" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="TopicViewController" id="Zc6-W6-bDA" customClass="TopicViewController" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="f5r-Kk-8Bq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -66,9 +66,9 @@
                                 </constraints>
                                 <size key="customSize" width="180" height="159"/>
                                 <connections>
-                                    <outlet property="captionLabel" destination="9F7-fL-Jk5" id="cb3-dV-FEI"/>
                                     <outlet property="containerView" destination="aBp-qJ-lVm" id="FAY-TZ-zaS"/>
                                     <outlet property="imageView" destination="3xc-Id-cnY" id="KUd-lV-skx"/>
+                                    <outlet property="nameLabel" destination="9F7-fL-Jk5" id="YgF-ay-1M6"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
