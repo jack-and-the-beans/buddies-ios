@@ -20,45 +20,35 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <collectionViewLayout key="collectionViewLayout" id="LbZ-Pv-KFh" customClass="TopicLayout" customModule="Buddies" customModuleProvider="target"/>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AnnotatedPhotoCell" id="qaG-ev-HO1" customClass="TopicCell" customModule="Buddies" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TopicCell" id="qaG-ev-HO1" customClass="TopicCell" customModule="Buddies" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="180" height="159"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="180" height="159"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="aBp-qJ-lVm" userLabel="Container View">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="180" height="159"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3xc-Id-cnY">
-                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="127"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="126"/>
                                                     <color key="backgroundColor" red="0.14901960784313725" green="0.59999999999999998" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Caption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9F7-fL-Jk5">
-                                                    <rect key="frame" x="4" y="137" width="172" height="17"/>
+                                                    <rect key="frame" x="10" y="135" width="44" height="17"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="12"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Comment" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5uv-z6-gKA">
-                                                    <rect key="frame" x="4" y="156" width="172" height="14"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" red="0.14901960784313725" green="0.59999999999999998" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="5uv-z6-gKA" firstAttribute="top" secondItem="9F7-fL-Jk5" secondAttribute="bottom" constant="2" id="1Jz-9u-RLT"/>
                                                 <constraint firstAttribute="trailing" secondItem="3xc-Id-cnY" secondAttribute="trailing" id="3mk-Km-Ogm"/>
-                                                <constraint firstItem="5uv-z6-gKA" firstAttribute="leading" secondItem="aBp-qJ-lVm" secondAttribute="leading" constant="4" id="CGn-Bi-NAn"/>
+                                                <constraint firstItem="9F7-fL-Jk5" firstAttribute="leading" secondItem="aBp-qJ-lVm" secondAttribute="leading" constant="10" id="AhD-sg-qop"/>
                                                 <constraint firstItem="3xc-Id-cnY" firstAttribute="leading" secondItem="aBp-qJ-lVm" secondAttribute="leading" id="EQj-qh-gYs"/>
-                                                <constraint firstAttribute="trailing" secondItem="5uv-z6-gKA" secondAttribute="trailing" constant="4" id="Jb9-i9-lDu"/>
-                                                <constraint firstAttribute="trailing" secondItem="9F7-fL-Jk5" secondAttribute="trailing" constant="4" id="QRU-w5-vq6"/>
-                                                <constraint firstItem="9F7-fL-Jk5" firstAttribute="leading" secondItem="aBp-qJ-lVm" secondAttribute="leading" constant="4" id="U3v-tR-x0y"/>
+                                                <constraint firstItem="9F7-fL-Jk5" firstAttribute="top" secondItem="3xc-Id-cnY" secondAttribute="bottom" constant="9" id="XtQ-eg-1rb"/>
                                                 <constraint firstItem="3xc-Id-cnY" firstAttribute="top" secondItem="aBp-qJ-lVm" secondAttribute="top" id="aIo-xr-MlU"/>
-                                                <constraint firstAttribute="bottom" secondItem="5uv-z6-gKA" secondAttribute="bottom" constant="10" id="c1m-Is-Zoo"/>
-                                                <constraint firstItem="9F7-fL-Jk5" firstAttribute="top" secondItem="3xc-Id-cnY" secondAttribute="bottom" constant="10" id="xwO-CS-PLP"/>
+                                                <constraint firstAttribute="bottom" secondItem="9F7-fL-Jk5" secondAttribute="bottom" constant="7" id="vba-zn-EMZ"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -74,10 +64,9 @@
                                     <constraint firstItem="aBp-qJ-lVm" firstAttribute="top" secondItem="qaG-ev-HO1" secondAttribute="top" id="bKG-tx-9aa"/>
                                     <constraint firstAttribute="bottom" secondItem="aBp-qJ-lVm" secondAttribute="bottom" id="mQQ-eP-31G"/>
                                 </constraints>
-                                <size key="customSize" width="180" height="180"/>
+                                <size key="customSize" width="180" height="159"/>
                                 <connections>
                                     <outlet property="captionLabel" destination="9F7-fL-Jk5" id="cb3-dV-FEI"/>
-                                    <outlet property="commentLabel" destination="5uv-z6-gKA" id="L9H-sK-VFT"/>
                                     <outlet property="containerView" destination="aBp-qJ-lVm" id="FAY-TZ-zaS"/>
                                     <outlet property="imageView" destination="3xc-Id-cnY" id="KUd-lV-skx"/>
                                 </connections>
@@ -91,7 +80,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bch-6a-xd2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1644" y="142"/>
+            <point key="canvasLocation" x="1644" y="141.67916041979012"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">

@@ -33,19 +33,15 @@ import AVFoundation
 
 class TopicViewController: UICollectionViewController {
   
-  var topics = Topic.allTopics()
-  
-  override var preferredStatusBarStyle : UIStatusBarStyle {
-    return UIStatusBarStyle.lightContent
-  }
+    var topics = Topic.allTopics()
+
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
+    }
   
   override func viewDidLoad() {
     super.viewDidLoad()
    
-    if let patternImage = UIImage(named: "Pattern") {
-      view.backgroundColor = UIColor(patternImage: patternImage)
-    }
-    collectionView?.backgroundColor = UIColor.clear
     collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
     // Set the PinterestLayout delegate
     if let layout = collectionView?.collectionViewLayout as? TopicLayout {
@@ -62,7 +58,7 @@ extension TopicViewController {
   }
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnnotatedPhotoCell", for: indexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopicCell", for: indexPath)
     if let topicCell = cell as? TopicCell {
       topicCell.topic = topics[indexPath.item]
     }
@@ -76,7 +72,7 @@ extension TopicViewController : TopicLayoutDelegate {
   
   // 1. Returns the photo height
   func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-    return 150; //photos[indexPath.item].image.size.height
+    return 100; //photos[indexPath.item].image.size.height
   }
 
 }
