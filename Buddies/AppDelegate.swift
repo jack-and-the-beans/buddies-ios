@@ -14,10 +14,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
+        // Initialize
         FirebaseApp.configure()
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let authHandler = AuthHandler(auth: Auth.auth())
+        
+        if authHandler.isLoggedIn() {
+            // Show login page
+            let loginViewController = BuddiesStoryboard.Login.viewController()
+            self.window?.rootViewController = loginViewController
+        } else {
+            // Show home page
+            let mainViewController = BuddiesStoryboard.Main.viewController()
+            self.window?.rootViewController = mainViewController
+        }
+
+        self.window?.makeKeyAndVisible()
+        
         return true
     }
 

@@ -10,7 +10,10 @@ target 'Buddies' do
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
   pod 'Firebase/Messaging'
-
+  
+  # Login Flow
+  pod 'FBSDKLoginKit'
+  
   target 'BuddiesTests' do
     inherit! :search_paths
     # Pods for testing
