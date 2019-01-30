@@ -43,11 +43,14 @@ struct Topic {
     }
   
     init?(dictionary: [String: Any]) {
-        guard let name = dictionary["name"] as? String, let selected = dictionary["selected"] as? Bool, let photo = dictionary["image"] as? String,
+        guard
+            let name = dictionary["name"] as? String,
+            let selected = (dictionary["selected"] != nil) ? dictionary["selected"] as? Bool : Optional(false),
+            let photo = dictionary["image"] as? String,
             let image = UIImage(named: photo) else {
             return nil
         }
-        self.init(name: name, image: image, selected: Bool(selected))
+        self.init(name: name, image: image, selected: selected)
     }
 
     static func allTopics() -> [Topic] {

@@ -33,8 +33,8 @@ import UIKit
 class TopicCell: UICollectionViewCell {
   
   @IBOutlet fileprivate weak var containerView: UIView!
-  @IBOutlet fileprivate weak var imageView: UIImageView!
-  @IBOutlet fileprivate weak var nameLabel: UILabel!
+  @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet weak var nameLabel: UILabel!
   
   override func awakeFromNib() {
     super.awakeFromNib()
