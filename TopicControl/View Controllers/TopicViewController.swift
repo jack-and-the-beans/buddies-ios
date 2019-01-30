@@ -34,45 +34,37 @@ import AVFoundation
 class TopicViewController: UICollectionViewController {
   
     var topics = Topic.allTopics()
+  
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return UIStatusBarStyle.lightContent
+        collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
+        // Set the PinterestLayout delegate
+            if let layout = collectionView?.collectionViewLayout as? TopicLayout {
+                layout.delegate = self
+            }
     }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-   
-    collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
-    // Set the PinterestLayout delegate
-    if let layout = collectionView?.collectionViewLayout as? TopicLayout {
-      layout.delegate = self
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return topics.count
     }
-  }
-  
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopicCell", for: indexPath)
+            if let topicCell = cell as? TopicCell {
+                topicCell.topic = topics[indexPath.item]
+            }
+            return cell
+        }
 }
 
-extension TopicViewController {
-  
-  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return topics.count
-  }
-  
-  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopicCell", for: indexPath)
-    if let topicCell = cell as? TopicCell {
-      topicCell.topic = topics[indexPath.item]
-    }
-    return cell
-  }
-  
-}
 
-//MARK: - PINTEREST LAYOUT DELEGATE
+//MARK: -  LAYOUT DELEGATE
 extension TopicViewController : TopicLayoutDelegate {
   
-  // 1. Returns the photo height
+  // 1. Returns the topic height
   func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-    return 100; //photos[indexPath.item].image.size.height
+    return 100;
   }
 
 }

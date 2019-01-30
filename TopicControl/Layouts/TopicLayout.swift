@@ -48,7 +48,17 @@ class TopicLayout: UICollectionViewLayout {
         }
     }
 
+    override func invalidateLayout() {
+        cache = []
+        super.invalidateLayout()
+    }
 
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        guard let collectionView = collectionView else { return false }
+        
+        return newBounds.width != collectionView.bounds.width
+    }
+    
     fileprivate var numberOfColumns: Int {
         get {
             return Int(round(contentWidth / topicElementWidth))
@@ -124,6 +134,7 @@ class TopicLayout: UICollectionViewLayout {
                 visibleLayoutAttributes.append(attributes)
             }
         }
+        
         return visibleLayoutAttributes
     }
 
