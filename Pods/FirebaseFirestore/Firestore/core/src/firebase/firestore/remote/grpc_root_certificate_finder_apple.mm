@@ -34,28 +34,48 @@ using util::ReadFile;
 using util::StatusOr;
 using util::StringFormat;
 
+NSString* FindPathToCertificatesFile() {
+  // Certificates file might be present in either the gRPC-C++ bundle or (for
+  // some projects) in the main bundle.
+  NSBundle* bundles[] = {
+      // Try to load certificates bundled by gRPC-C++.
+      [NSBundle bundleWithIdentifier:@"org.cocoapods.grpcpp"],
+      // Users manually adding resources to the project may add the
+      // certificate to the main application bundle. Note that `mainBundle` is
+      // nil for unit tests of library projects, so it cannot fully substitute
+      // for checking the framework bundle.
+      [NSBundle mainBundle],
+  };
+
+  // search for the roots.pem file in each of these resource locations
+  NSString* possibleResources[] = {
+      @"gRPCCertificates.bundle/roots",
+      @"roots",
+  };
+
+  for (NSBundle* bundle : bundles) {
+    if (!bundle) {
+      continue;
+    }
+
+    for (NSString* resource : possibleResources) {
+      NSString* path = [bundle pathForResource:resource ofType:@"pem"];
+      if (path) {
+        LOG_DEBUG("%s.pem found in bundle %s", resource,
+                  [bundle bundleIdentifier]);
+        return path;
+      } else {
+        LOG_DEBUG("%s.pem not found in bundle %s", resource,
+                  [bundle bundleIdentifier]);
+      }
+    }
+  }
+
+  return nil;
+}
+
 std::string LoadGrpcRootCertificate() {
-  // Try to load certificates bundled by gRPC-C++ if available (depends on
-  // gRPC-C++ version).
-  // Note that `mainBundle` may be nil in certain cases (e.g., unit tests).
-  NSBundle* bundle = [NSBundle bundleWithIdentifier:@"org.cocoapods.grpcpp"];
-  NSString* path;
-  if (bundle) {
-    path =
-        [bundle pathForResource:@"gRPCCertificates.bundle/roots" ofType:@"pem"];
-  }
-  if (path) {
-    LOG_DEBUG("Using roots.pem file from gRPC-C++ pod");
-  } else {
-    // Fall back to the certificates bundled with Firestore if necessary.
-    LOG_DEBUG("Using roots.pem file from Firestore pod");
-
-    bundle = [NSBundle bundleForClass:FSTFirestoreClient.class];
-    HARD_ASSERT(bundle, "Could not find Firestore bundle");
-    path = [bundle pathForResource:@"gRPCCertificates-Firestore.bundle/roots"
-                            ofType:@"pem"];
-  }
-
+  NSString* path = FindPathToCertificatesFile();
   HARD_ASSERT(
       path,
       "Could not load root certificates from the bundle. SSL cannot work.");
