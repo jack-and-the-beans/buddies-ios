@@ -34,7 +34,7 @@ class UnderlinedTextbox: UITextField, UITextFieldDelegate {
         border.frame = CGRect(
             x: 0,
             y: self.frame.size.height-width,
-            width: self.frame.size.width,
+            width: self.frame.size.width + self.frame.size.height,
             height: self.frame.size.height
         )
         border.borderWidth = width

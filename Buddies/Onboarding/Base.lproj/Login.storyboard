@@ -13,7 +13,7 @@
         <!--LoginVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="Init" id="BYZ-38-t0r" customClass="LoginVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="create" id="BYZ-38-t0r" customClass="LoginVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -26,7 +26,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Continue with Facebook"/>
                                 <connections>
-                                    <action selector="signUpWithFacebook:" destination="BYZ-38-t0r" eventType="touchUpInside" id="m3e-DV-VCP"/>
+                                    <action selector="signUpWithFacebook" destination="BYZ-38-t0r" eventType="touchUpInside" id="K1f-hm-BHP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NPG-8f-5D9">
@@ -37,7 +37,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Sign Up"/>
                                 <connections>
-                                    <action selector="signUpWithEmail:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yRN-ZG-EJu"/>
+                                    <action selector="signUpWithEmail" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wf9-U1-h5c"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwO-uY-FYC">
@@ -151,7 +151,7 @@
         <!--Login ExistingVC-->
         <scene sceneID="O1O-fc-YlY">
             <objects>
-                <viewController id="fB0-gX-wY7" customClass="LoginExistingVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="existing" id="fB0-gX-wY7" customClass="LoginExistingVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Xh8-2X-i9R">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -164,6 +164,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Continue with Facebook"/>
                                 <connections>
+                                    <action selector="facebookLogin" destination="fB0-gX-wY7" eventType="touchUpInside" id="G7a-dS-2g2"/>
                                     <action selector="facebookLogin:" destination="fB0-gX-wY7" eventType="touchUpInside" id="kg0-l5-wgx"/>
                                 </connections>
                             </button>
@@ -175,7 +176,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Log In"/>
                                 <connections>
-                                    <action selector="logIn:" destination="fB0-gX-wY7" eventType="touchUpInside" id="6Gy-wY-WV7"/>
+                                    <action selector="logIn" destination="fB0-gX-wY7" eventType="touchUpInside" id="M7P-6X-o0R"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- OR -" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5o-5F-2Jr">

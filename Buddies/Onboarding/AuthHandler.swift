@@ -11,18 +11,10 @@ import Firebase
 import FBSDKLoginKit
 
 class AuthHandler {
-    private let auth: Auth
-    private let authStateListenerHandle: AuthStateDidChangeListenerHandle
+    private let auth: Auth!
     
-    init(auth: Auth) {
+    init(auth: Auth!) {
         self.auth = auth
-        authStateListenerHandle = auth.addStateDidChangeListener { (auth: Auth, user: User?) in
-            print(user ?? "None")
-        }
-    }
-    
-    deinit {
-        auth.removeStateDidChangeListener(authStateListenerHandle);
     }
     
     func isLoggedIn() -> Bool {

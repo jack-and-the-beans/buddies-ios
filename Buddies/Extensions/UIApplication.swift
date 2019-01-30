@@ -10,10 +10,6 @@ import UIKit
 
 // https://github.com/ogulcan/iOS-Login-Example/blob/master/Login/Extension/UIApplication.swift
 extension UIApplication {
-    
-    static var loginAnimation: UIView.AnimationOptions = .transitionFlipFromRight
-    static var logoutAnimation: UIView.AnimationOptions = .transitionCrossDissolve
-    
     public static func setRootView(_ viewController: UIViewController,
                                    options: UIView.AnimationOptions = .transitionFlipFromRight,
                                    animated: Bool = true,
