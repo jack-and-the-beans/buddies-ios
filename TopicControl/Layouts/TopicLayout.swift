@@ -66,7 +66,7 @@ class TopicLayout: UICollectionViewLayout {
     
     var numberOfColumns: Int {
         get {
-            return Int(round(contentWidth / topicElementWidth))
+            return Int(floor(contentWidth / topicElementWidth))
         }
     }
     var cellPadding: CGFloat = 6
