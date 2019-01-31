@@ -8,16 +8,28 @@
 
 import UIKit
 import Firebase
+import UserNotifications
+import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    var notifications: NotificationService
     var window: UIWindow?
+
+    override init () {
+        notifications = NotificationService()
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // Initialize
         FirebaseApp.configure()
+        
+        self.notifications.setFirestore(firestore: Firestore.firestore())
+        
+        // Setup delegates for notifications:
+        UNUserNotificationCenter.current().delegate = self.notifications
+        Messaging.messaging().delegate = self.notifications
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let authHandler = AuthHandler(auth: Auth.auth())
@@ -58,7 +70,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
 
 }
 
