@@ -116,8 +116,8 @@ class TopicLayout: UICollectionViewLayout {
           
             let indexPath = IndexPath(item: item, section: 0)
 
-            // 4. Asks the delegate for the height of the picture and the annotation and calculates the cell frame.
-            let photoHeight = delegate.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath)
+
+            let photoHeight = topicElementWidth*CGFloat(0.75)
             let height = cellPadding * 2 + photoHeight
             
             let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
