@@ -8,6 +8,11 @@
 
 import Foundation
 import UIKit
+import FirebaseFirestore
+
+protocol TopicCollectionDelegate {
+    func update() -> Void
+}
 
 
 class TopicCollection: NSObject {
@@ -16,6 +21,8 @@ class TopicCollection: NSObject {
             print("TOPICS SET", topics)
         }
     }
+    
+    var delegate: TopicCollectionDelegate?
     
     func loadSampleTopics() {
         var loadingTopics = [Topic]()
@@ -34,41 +41,51 @@ class TopicCollection: NSObject {
         topics = loadingTopics
     }
     
+    func addFromStorage(using snapshot: DocumentSnapshot, image: UIImage){
+        if let topic = Topic(snapshot: snapshot) {
+            topic.image = image
+            self.topics.append(topic)
+        }
+    }
+    
+    func updateImage(with imageURL: URL, id: String){
+        do {
+            let imageData = try Data(contentsOf: imageURL)
+            if let image = UIImage(data: imageData) {
+                topics.first {$0.id == id}?.image = image
+                delegate?.update()
+                print("Updated image")
+            } else {
+                print("Failed to load downloaded Topic image for \(id)")
+            }
+        } catch {
+            print("Could not load topic")
+        }
+    }
+    
     func loadTopics(){
         FirestoreManager.loadAllDocuments(ofType: "topics") { snapshots in
             for snap in snapshots {
-                let data = snap.data()!
-                let url = data["image_url"] as! String
-                let name = data["name"] as! String
+//
                 if let image = StorageManager.shared.getSavedImage(filename: snap.documentID) {
                     OperationQueue.main.addOperation {
+                        self.addFromStorage(using: snap, image: image)
                         print("Topic loaded from local files")
-                        self.topics.append(Topic(id: snap.documentID, name: name, image: image))
                     }
                 } else {
                     OperationQueue.main.addOperation {
-                        print("Topic loaded from local files")
-                        self.topics.append(Topic(id: snap.documentID, name: name, image: UIImage()))
+                        print("Topic created without image")
+                        self.topics.append(Topic(snapshot: snap)!)
                     }
-                    //If not downloaded yet
-                    let dtask = StorageManager.shared.downloadFile(for: url, to: snap.documentID, session: nil) { destURL in
-                        OperationQueue.main.addOperation {
-                            do {
-                                let imageData = try Data(contentsOf: destURL)
-                                if let image = UIImage(data: imageData) {
-                                    var relatedTopic: Topic? = self.topics.first(where: { topic in
-                                        topic.id == snap.documentID
-                                    })
-                                    relatedTopic?.image = image
-                                    print("Updated image")
-                                } else {
-                                    print("Failed to load downloaded Topic image for \(snap.documentID)")
-                                }
-                                print(self.topics)
-                            } catch {
-                                print("Could not load topic")
+                    
+                    if let firebaseImageURL = snap.data()?["image_url"] as? String {
+                        let _ = StorageManager.shared.downloadFile(for: firebaseImageURL, to: snap.documentID, session: nil) { destURL in
+                            OperationQueue.main.addOperation {
+                                self.updateImage(with: destURL, id: snap.documentID)
                             }
                         }
+                    } else {
+                        print("Cannot get ImageUrl for \(snap.documentID)")
                     }
                 }
                 
