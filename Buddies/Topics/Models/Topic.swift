@@ -32,28 +32,15 @@ import UIKit
 import Firebase
 
 struct Topic {
-    
-    var db = Firestore.firestore()
-  
+    let id: String
     var name: String
     var image: UIImage
     var selected: Bool
   
-    init(name: String, image: UIImage, selected: Bool = false) {
+    init(id: String, name: String, image: UIImage, selected: Bool = false) {
+        self.id = id
         self.name = name
         self.image = image
         self.selected = selected
     }
-  
-    init?(dictionary: [String: Any]) {
-        guard
-            let name = dictionary["name"] as? String,
-            let selected = (dictionary["selected"] != nil) ? dictionary["selected"] as? Bool : Optional(false),
-            let photo = dictionary["image"] as? String,
-            let image = UIImage(named: photo) else {
-            return nil
-        }
-        self.init(name: name, image: image, selected: selected)
-    }
-  
 }
