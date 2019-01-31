@@ -25,9 +25,11 @@ class TopicCollection: NSObject {
                 return
         }
         for dictionary in photosFromPlist {
-            if let topic = Topic(dictionary: dictionary) {
-                loadingTopics.append(topic)
-            }
+            let name = dictionary["name"] as! String
+            let id = name
+            let image = UIImage(named: dictionary["image"] as! String)!
+            loadingTopics.append(Topic(id: id, name: name, image: image))
+        
         }
         topics = loadingTopics
     }
@@ -38,18 +40,38 @@ class TopicCollection: NSObject {
                 let data = snap.data()!
                 let url = data["image_url"] as! String
                 let name = data["name"] as! String
-                let dtask = StorageManager.shared.downloadFile(for: url, to: snap.documentID, session: nil) { destURL in
+                if let image = StorageManager.shared.getSavedImage(filename: snap.documentID) {
                     OperationQueue.main.addOperation {
-                        do {
-                            let imageData = try Data(contentsOf: destURL)
-                            let image = UIImage(data: imageData)
-                            self.topics.append(Topic(name: name, image: image!))
-                            print(self.topics)
-                        } catch {
-                            print("Could not load topic")
+                        print("Topic loaded from local files")
+                        self.topics.append(Topic(id: snap.documentID, name: name, image: image))
+                    }
+                } else {
+                    OperationQueue.main.addOperation {
+                        print("Topic loaded from local files")
+                        self.topics.append(Topic(id: snap.documentID, name: name, image: UIImage()))
+                    }
+                    //If not downloaded yet
+                    let dtask = StorageManager.shared.downloadFile(for: url, to: snap.documentID, session: nil) { destURL in
+                        OperationQueue.main.addOperation {
+                            do {
+                                let imageData = try Data(contentsOf: destURL)
+                                if let image = UIImage(data: imageData) {
+                                    var relatedTopic: Topic? = self.topics.first(where: { topic in
+                                        topic.id == snap.documentID
+                                    })
+                                    relatedTopic?.image = image
+                                    print("Updated image")
+                                } else {
+                                    print("Failed to load downloaded Topic image for \(snap.documentID)")
+                                }
+                                print(self.topics)
+                            } catch {
+                                print("Could not load topic")
+                            }
                         }
                     }
                 }
+                
             }
         }
     }

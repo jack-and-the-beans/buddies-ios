@@ -22,7 +22,7 @@ class TestTopicCell: XCTestCase {
     func testDidSetTopic() {
         let img = UIImage(named: "bean.jpg")
     
-        let top = Topic(name: "Example", image: img!)
+        let top = Topic(id: "id", name: "Example", image: img!)
         let imageView = UIImageView()
         let label = UILabel()
         
