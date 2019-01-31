@@ -29,8 +29,11 @@
  */
 
 import UIKit
+import Firebase
 
 struct Topic {
+    
+    var db = Firestore.firestore()
   
     var name: String
     var image: UIImage
@@ -51,20 +54,6 @@ struct Topic {
             return nil
         }
         self.init(name: name, image: image, selected: selected)
-    }
-
-    static func allTopics() -> [Topic] {
-        var topics = [Topic]()
-        guard let URL = Bundle.main.url(forResource: "Topics", withExtension: "plist"),
-            let photosFromPlist = NSArray(contentsOf: URL) as? [[String:Any]] else {
-            return topics
-        }
-        for dictionary in photosFromPlist {
-            if let topic = Topic(dictionary: dictionary) {
-                topics.append(topic)
-            }
-        }
-        return topics
     }
   
 }
