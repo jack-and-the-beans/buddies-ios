@@ -91,11 +91,24 @@
         <!--Profile-->
         <scene sceneID="mQX-h3-g9E">
             <objects>
-                <viewController title="Profile" id="cx0-ln-hPg" sceneMemberID="viewController">
+                <viewController title="Profile" id="cx0-ln-hPg" customClass="ProfileVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hM9-uP-l8X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H7b-EU-Ifv">
+                                <rect key="frame" x="136" y="318.5" width="103" height="30"/>
+                                <state key="normal" title="TEMP: Log Out"/>
+                                <connections>
+                                    <action selector="signOut:" destination="cx0-ln-hPg" eventType="touchUpInside" id="Dni-Y6-iae"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="H7b-EU-Ifv" firstAttribute="centerX" secondItem="hM9-uP-l8X" secondAttribute="centerX" id="Yz1-Ne-2aT"/>
+                            <constraint firstItem="H7b-EU-Ifv" firstAttribute="centerY" secondItem="hM9-uP-l8X" secondAttribute="centerY" id="fR5-dY-JPB"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="NjH-9g-EbY"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" id="adQ-NT-5qe"/>
