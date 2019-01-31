@@ -45,7 +45,7 @@ class TopicCell: UICollectionViewCell {
   var topic: Topic? {
     didSet {
       if let topic = topic {
-        imageView.image = topic.image
+        imageView.image = topic.image ?? UIImage()
         nameLabel.text = topic.name
       }
     }

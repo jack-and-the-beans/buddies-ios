@@ -32,7 +32,7 @@ import UIKit
 import AVFoundation
 
 
-class TopicViewController: UICollectionViewController {
+class TopicViewController: UICollectionViewController, TopicCollectionDelegate {
   
     var topicCollection: TopicCollection!
   
@@ -41,10 +41,15 @@ class TopicViewController: UICollectionViewController {
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         topicCollection = appDelegate.topicCollection
-        
+        topicCollection.delegate = self
         collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
     }
 
+    func update() {
+        print("UPDATE STUFF in VC")
+        collectionView.reloadData()
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return topicCollection.topics.count
     }
