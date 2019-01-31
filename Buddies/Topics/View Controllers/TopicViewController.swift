@@ -42,11 +42,17 @@ class TopicViewController: UICollectionViewController, TopicCollectionDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         topicCollection = appDelegate.topicCollection
         topicCollection.delegate = self
+        
         collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
     }
 
-    func update() {
-        print("UPDATE STUFF in VC")
+    func updateTopicImage(index: Int) {
+        let indexPath = IndexPath(item: index, section: 0)
+        collectionView.reloadItems(at: [indexPath])
+    }
+
+    
+    func updateTopicImages() {
         collectionView.reloadData()
     }
     

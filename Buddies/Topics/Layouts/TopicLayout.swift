@@ -34,6 +34,8 @@ class TopicLayout: UICollectionViewLayout {
 
     let topicWidth = CGFloat(150);
     
+    let heightToWidthRatio = 0.9
+    
     var topicElementWidth: CGFloat {
         get {
             return topicWidth + cellPadding;
@@ -110,7 +112,7 @@ class TopicLayout: UICollectionViewLayout {
             let indexPath = IndexPath(item: item, section: 0)
 
 
-            let photoHeight = topicElementWidth*CGFloat(0.75)
+            let photoHeight = topicWidth*CGFloat(heightToWidthRatio)
             let height = cellPadding * 2 + photoHeight
             
             let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
