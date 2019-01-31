@@ -30,14 +30,7 @@
 
 import UIKit
 
-protocol TopicLayoutDelegate: class {
-  // 1. Method to ask the delegate for the height of the image
-  func collectionView(_ collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat
-}
-
 class TopicLayout: UICollectionViewLayout {
-
-    weak var delegate: TopicLayoutDelegate!
 
     let topicWidth = CGFloat(150);
     

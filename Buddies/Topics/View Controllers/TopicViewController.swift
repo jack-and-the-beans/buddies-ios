@@ -41,10 +41,6 @@ class TopicViewController: UICollectionViewController {
         topics = Topic.allTopics()
         
         collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
-        // Set the layout delegate
-            if let layout = collectionView?.collectionViewLayout as? TopicLayout {
-                layout.delegate = self
-            }
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -60,13 +56,3 @@ class TopicViewController: UICollectionViewController {
         }
 }
 
-
-//MARK: -  LAYOUT DELEGATE
-extension TopicViewController : TopicLayoutDelegate {
-  
-  // 1. Returns the topic height
-  func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-    return 100;
-  }
-
-}
