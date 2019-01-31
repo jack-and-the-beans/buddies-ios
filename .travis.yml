@@ -8,7 +8,8 @@ xcode_workspace: Buddies.xcworkspace # path to the workspace to build
 xcode_scheme: Buddies
 xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone XR
 
-install: false
+install:
+  - echo Hello
 
 # Build pushes to master:
 branches:
