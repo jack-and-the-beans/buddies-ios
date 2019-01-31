@@ -34,7 +34,7 @@ class StorageManager {
         let request = URLRequest(url:url!)
         let localDestURL = localURL(for: localPath)
 
-        
+        print("Starting download task")
         let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
             if let tempLocalUrl = tempLocalUrl, error == nil {
                 // Success
@@ -49,6 +49,7 @@ class StorageManager {
                 }
                 
                 if callback != nil {
+                    print("Successfully saved \(path)")
                     callback!(localDestURL!)
                 }
                 
@@ -56,6 +57,7 @@ class StorageManager {
                 print("Error took place while downloading a file. Error description: \(String(describing: error?.localizedDescription))");
             }
         }
+        task.resume()
         return task
 
     }

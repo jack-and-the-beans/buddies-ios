@@ -31,26 +31,28 @@
 import UIKit
 import AVFoundation
 
+
 class TopicViewController: UICollectionViewController {
   
-    var topics: [Topic]!
+    var topicCollection: TopicCollection!
   
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        topics = Topic.allTopics()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        topicCollection = appDelegate.topicCollection
         
         collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return topics.count
+        return topicCollection.topics.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopicCell", for: indexPath)
             if let topicCell = cell as? TopicCell {
-                topicCell.topic = topics[indexPath.item]
+                topicCell.topic = topicCollection.topics[indexPath.item]
             }
             return cell
         }

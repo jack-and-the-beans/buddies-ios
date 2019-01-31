@@ -13,11 +13,13 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var topicCollection: TopicCollection!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // Initialize
         FirebaseApp.configure()
+        topicCollection = TopicCollection()
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let authHandler = AuthHandler(auth: Auth.auth())
@@ -27,12 +29,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let loginViewController = BuddiesStoryboard.Login.viewController()
             self.window?.rootViewController = loginViewController
         } else {
+            
+            topicCollection.loadTopics()
+
             // Show home page
             let mainViewController = BuddiesStoryboard.Main.viewController()
             self.window?.rootViewController = mainViewController
         }
 
         self.window?.makeKeyAndVisible()
+        
+        
         
         return true
     }
