@@ -1,12 +1,14 @@
 # https://docs.travis-ci.com/user/languages/objective-c/
 os: osx
 osx_image: xcode10.1	
-language: swift
-cache: cocoapods # Save compiled cocoapods
+language: swift # Save compiled cocoapods
 
 xcode_workspace: Buddies.xcworkspace # path to the workspace to build
 xcode_scheme: Buddies
 xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone XR
+
+install:
+  - echo Hello
 
 # Build pushes to master:
 branches:
