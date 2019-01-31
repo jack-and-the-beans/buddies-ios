@@ -138,7 +138,7 @@
 			path = Base.lproj;
 			sourceTree = "<group>";
 		};
-		58D2A9FF220201A1009ABCBC /* TopicControl */ = {
+		58D2A9FF220201A1009ABCBC /* Topics */ = {
 			isa = PBXGroup;
 			children = (
 				58D2AA02220201B1009ABCBC /* Assets */,
@@ -147,7 +147,7 @@
 				58D2AA06220201B1009ABCBC /* View Controllers */,
 				58D2AA08220201B2009ABCBC /* Views */,
 			);
-			path = TopicControl;
+			path = Topics;
 			sourceTree = "<group>";
 		};
 		58D2AA00220201B1009ABCBC /* Layouts */ = {
@@ -273,7 +273,6 @@
 		B6AC549221F8DB8300B075B8 = {
 			isa = PBXGroup;
 			children = (
-				58D2A9FF220201A1009ABCBC /* TopicControl */,
 				B6AC549D21F8DB8300B075B8 /* Buddies */,
 				B6AC54B221F8DB8500B075B8 /* BuddiesTests */,
 				B6AC549C21F8DB8300B075B8 /* Products */,
@@ -294,6 +293,7 @@
 		B6AC549D21F8DB8300B075B8 /* Buddies */ = {
 			isa = PBXGroup;
 			children = (
+				58D2A9FF220201A1009ABCBC /* Topics */,
 				A9E8BF532202015A00C05F2C /* Extensions */,
 				A9E8BF502201FFD800C05F2C /* Main */,
 				A9E8BF4F2201FFA800C05F2C /* Onboarding */,
