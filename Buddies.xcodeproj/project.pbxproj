@@ -16,7 +16,6 @@
 		A9E8BF4A2201F9D700C05F2C /* UnderlinedTextbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF492201F9D700C05F2C /* UnderlinedTextbox.swift */; };
 		A9E8BF4C2201FB9C00C05F2C /* ControlColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF4B2201FB9C00C05F2C /* ControlColors.swift */; };
 		A9E8BF4E2201FE9A00C05F2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9E8BF4D2201FE9A00C05F2C /* Main.storyboard */; };
-		A9E8BF522202000700C05F2C /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF512202000700C05F2C /* ExploreVC.swift */; };
 		A9E8BF582202021C00C05F2C /* BuddiesStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF572202021C00C05F2C /* BuddiesStoryboard.swift */; };
 		A9E8BF5A2202055B00C05F2C /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF592202055B00C05F2C /* UIApplication.swift */; };
 		A9E8BF5C22022D9400C05F2C /* LoginBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5B22022D9400C05F2C /* LoginBase.swift */; };
@@ -57,7 +56,6 @@
 		A9E8BF492201F9D700C05F2C /* UnderlinedTextbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextbox.swift; sourceTree = "<group>"; };
 		A9E8BF4B2201FB9C00C05F2C /* ControlColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlColors.swift; sourceTree = "<group>"; };
 		A9E8BF4D2201FE9A00C05F2C /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		A9E8BF512202000700C05F2C /* ExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
 		A9E8BF572202021C00C05F2C /* BuddiesStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddiesStoryboard.swift; sourceTree = "<group>"; };
 		A9E8BF592202055B00C05F2C /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		A9E8BF5B22022D9400C05F2C /* LoginBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBase.swift; sourceTree = "<group>"; };
@@ -142,7 +140,6 @@
 		A9E8BF502201FFD800C05F2C /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				A9E8BF512202000700C05F2C /* ExploreVC.swift */,
 				A9E8BF4D2201FE9A00C05F2C /* Main.storyboard */,
 			);
 			path = Main;
@@ -426,7 +423,6 @@
 				A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */,
 				A9E8BF582202021C00C05F2C /* BuddiesStoryboard.swift in Sources */,
 				A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */,
-				A9E8BF522202000700C05F2C /* ExploreVC.swift in Sources */,
 				A9E8BF4A2201F9D700C05F2C /* UnderlinedTextbox.swift in Sources */,
 				A9E8BF45220143A300C05F2C /* AuthHandler.swift in Sources */,
 				A9E8BF5A2202055B00C05F2C /* UIApplication.swift in Sources */,
