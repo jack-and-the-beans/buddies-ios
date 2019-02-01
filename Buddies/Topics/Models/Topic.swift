@@ -44,13 +44,11 @@ class Topic {
         self.selected = selected
     }
     
-    convenience init?(snapshot: DocumentSnapshot){
-        let data = snapshot.data()
-        
-        guard let name = data!["name"] as? String else {
+    convenience init?(id: String, data: [String: Any]?){
+        guard let name = data?["name"] as? String else {
                 return nil
         }
-        self.init(id: snapshot.documentID, name: name, image: nil)
+        self.init(id: id, name: name, image: nil)
         
     }
 }

@@ -117,10 +117,10 @@
             </objects>
             <point key="canvasLocation" x="564" y="-922"/>
         </scene>
-        <!--TopicViewController-->
+        <!--viewTopics-->
         <scene sceneID="QYt-tQ-Ph0">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="Topics" storyboardName="Topics" referencedIdentifier="TopicViewController" id="FsU-Ic-pRN" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardIdentifier="Topics" storyboardName="Topics" referencedIdentifier="viewTopics" id="FsU-Ic-pRN" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="9nD-RF-AcL"/>
                     <navigationItem key="navigationItem" id="QGu-S6-xU6"/>
                 </viewControllerPlaceholder>

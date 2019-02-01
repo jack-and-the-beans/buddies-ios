@@ -12,9 +12,6 @@ import FirebaseCore
 import FirebaseStorage
 
 class FirestoreManager {
-    
-    static let shared = FirestoreManager()
-    
     static var db: Firestore {
         get {
             return Firestore.firestore()

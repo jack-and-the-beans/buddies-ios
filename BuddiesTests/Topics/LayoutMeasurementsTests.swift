@@ -14,13 +14,14 @@ class TestLayoutMeasurements: XCTestCase {
     var viewController: TopicViewController!
     
     override func setUp() {
-        viewController = (UIStoryboard(name: "Topics", bundle: nil).instantiateViewController(withIdentifier: "TopicViewController") as! TopicViewController)
+        viewController = (UIStoryboard(name: "Topics", bundle: nil).instantiateViewController(withIdentifier: "viewTopics") as! TopicViewController)
+
         
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+
+        viewController = nil
     }
     
     func testUsingTopicLayout() {

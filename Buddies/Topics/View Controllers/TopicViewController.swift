@@ -51,7 +51,6 @@ class TopicViewController: UICollectionViewController, TopicCollectionDelegate {
         collectionView.reloadItems(at: [indexPath])
     }
 
-    
     func updateTopicImages() {
         collectionView.reloadData()
     }
