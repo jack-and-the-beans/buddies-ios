@@ -36,5 +36,13 @@ class TestTopicsModel: XCTestCase {
         XCTAssert(top.selected == true)
         XCTAssert(top.image == img)
     }
+    
+    func testTopicFromSnapshot(){
+        XCTAssert(false)
+    }
+    
+    func testTopicFromSnapshotWithNoName(){
+        XCTAssert(false)
+    }
 
 }

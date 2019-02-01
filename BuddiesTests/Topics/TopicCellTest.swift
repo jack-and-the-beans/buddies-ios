@@ -34,4 +34,5 @@ class TestTopicCell: XCTestCase {
         XCTAssert(cell.nameLabel.text == "Example")
         XCTAssert(cell.imageView.image == img)
     }
+    
 }

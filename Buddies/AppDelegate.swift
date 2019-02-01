@@ -21,12 +21,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         topicCollection = TopicCollection()
         
+        Auth.auth().addStateDidChangeListener {auth, user in
+            if let _ = user {
+                AppContent.setup()
+            }
+        }
+        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let authHandler = AuthHandler(auth: Auth.auth())
         
         if authHandler.isLoggedIn() {
             //Load topics when we open
-            topicCollection.loadTopics()
+            AppContent.setup()
             
             // Show home page
             let mainViewController = BuddiesStoryboard.Main.viewController()
