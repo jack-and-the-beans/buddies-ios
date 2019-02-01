@@ -18,7 +18,7 @@ class AuthHandler {
     }
     
     func isLoggedIn() -> Bool {
-        return auth.currentUser == nil
+        return auth.currentUser != nil
     }
     
     func logInWithFacebook(ref: UIViewController, onError: @escaping (String) -> Void, onSuccess: @escaping (User) -> Void) {
