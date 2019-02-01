@@ -8,31 +8,71 @@
 
 import Foundation
 import XCTest
+import FirebaseInstanceID
+import FirebaseMessaging
+import UserNotifications
+
 @testable import Buddies
 
 class NotificationServiceTest: XCTestCase {
     let notificationService = NotificationService()
-    let app = XCUIApplication()
     
-    override func setUp() {
-        app.launch()
+    class MockInstanceID: InstanceIDProtocol {
+        func instanceID(handler:  @escaping InstanceIDResultHandler) {
+            let res = InstanceResultMock()
+            handler(res, nil)
+        }
+    }
+
+    class InstanceResultMock: InstanceIDResult {
+        override var token: String {
+            get {
+                return "hello"
+            }
+        }
+    }
+
+    class NotificationAcceptMock: NotificationProtocol {
+        func requestAuthorization (options: UNAuthorizationOptions, completionHandler: @escaping (Bool, Error?) -> Void) {
+            completionHandler(true, nil)
+        }
+    }
+
+    class NotificationDenyMock: NotificationProtocol {
+        func requestAuthorization (options: UNAuthorizationOptions, completionHandler: @escaping (Bool, Error?) -> Void) {
+            completionHandler(false, nil)
+        }
     }
     
-    func testNotePermissionRequest () {
-        addUIInterruptionMonitor(withDescription: "System Dialog") { (alert) -> Bool in
-            alert.buttons["Allow"].tap()
-            return true
+    class TokenTester: NotificationService {
+        var token: String? = nil
+        override func saveTokenToFirestore(fcmToken: String) {
+            self.token = fcmToken
         }
-        NotificationService.registerForNotifications()
-        app.tap()
     }
     
     func testTokenSavedOnPermissionGrant () {
-        
+        let notificationTester = TokenTester()
+        notificationTester.registerForNotifications(
+            instanceId: MockInstanceID(),
+            notifications: NotificationAcceptMock())
+        XCTAssert(notificationTester.token == "hello", "Saves token when permission is granted.")
+    }
+    
+    func testTokenNotSavedOnPermissionDeny () {
+        let notificationTester = TokenTester()
+        notificationTester.registerForNotifications(
+            instanceId: MockInstanceID(),
+            notifications: NotificationDenyMock())
+        XCTAssert(notificationTester.token == nil, "Does not save token when permission is denied.")
     }
     
     func testTokenSavedOnTokenUpdate () {
-        
+        let notificationTester = TokenTester()
+        notificationTester.messaging(
+            Messaging.messaging(),
+            didReceiveRegistrationToken: "hello")
+        XCTAssert(notificationTester.token == "hello", "Saves token when messaging updates token")
     }
     
     func testTokenSave() {

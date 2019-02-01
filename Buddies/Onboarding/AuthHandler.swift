@@ -12,9 +12,11 @@ import FBSDKLoginKit
 
 class AuthHandler {
     private let auth: Auth!
+    private let notifications: NotificationService!
 
     init(auth: Auth!) {
         self.auth = auth
+        self.notifications = NotificationService()
     }
     
     func isLoggedIn() -> Bool {
@@ -35,7 +37,7 @@ class AuthHandler {
                         onError(error.localizedDescription)
                     }
                     else {
-                        NotificationService.registerForNotifications()
+                        self.notifications.registerForNotifications()
                         onSuccess(result!.user)
                     }
                 }
@@ -51,7 +53,7 @@ class AuthHandler {
             }
             else if let result = result {
                 // TODO: Push to firestore first
-                NotificationService.registerForNotifications()
+                self.notifications.registerForNotifications()
                 onSuccess(result.user)
             }
         }
@@ -67,7 +69,7 @@ class AuthHandler {
             }
             else if let result = result {
                 // TODO: Push to firestore first
-                NotificationService.registerForNotifications()
+                self.notifications.registerForNotifications()
                 onSuccess(result.user)
             }
         }

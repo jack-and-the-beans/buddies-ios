@@ -16,15 +16,30 @@ import FirebaseFirestore
 import FirebaseInstanceID
 import FirebaseAuth
 
+// Protocols for dependency injection:
+protocol InstanceIDProtocol {
+    func instanceID (handler:  @escaping InstanceIDResultHandler)
+}
+
+protocol NotificationProtocol {
+    func requestAuthorization (options: UNAuthorizationOptions, completionHandler: @escaping (Bool, Error?) -> Void)
+}
+extension UNUserNotificationCenter: NotificationProtocol {}
+extension InstanceID: InstanceIDProtocol {}
+
 class NotificationService: NSObject, UNUserNotificationCenterDelegate, MessagingDelegate {
     
-    static func registerForNotifications () {
+    func registerForNotifications
+        (instanceId: InstanceIDProtocol = InstanceID.instanceID(),
+         notifications: NotificationProtocol = UNUserNotificationCenter.current()) {
+
         let authOptions: UNAuthorizationOptions = [.alert]
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, error in
+        notifications.requestAuthorization(options: authOptions) { granted, error in
             // Get current notification token. We have to do this because messaging
             // receives the token before we are authenticated, meaning that we need
             // to retreive it ourselves:
-            InstanceID.instanceID().instanceID(handler: { (res, err) in
+            guard granted else { return }
+            instanceId.instanceID(handler: { (res, err) in
                 guard let token = res?.token else { return }
                 self.saveTokenToFirestore(fcmToken: token)
             })
@@ -33,14 +48,14 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate, Messaging
 
     // Saves the user's notification token whenever it updates:
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        NotificationService.saveTokenToFirestore(fcmToken: fcmToken)
+        self.saveTokenToFirestore(fcmToken: fcmToken)
     }
 
     // Pushes the token to firestore if:
     // 1. The user has enabled notifications
     // 2. The token exists
     // 3. The user is authenticated
-    static func saveTokenToFirestore(fcmToken: String) {
+    func saveTokenToFirestore(fcmToken: String) {
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
             guard settings.authorizationStatus == .authorized else { return }
             guard let usr = Auth.auth().currentUser else { return }
