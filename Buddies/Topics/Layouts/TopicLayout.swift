@@ -33,8 +33,8 @@ import UIKit
 class TopicLayout: UICollectionViewLayout {
 
     let topicWidth = CGFloat(150);
-    
     let heightToWidthRatio = 0.9
+    var cellPadding: CGFloat = 6
     
     var topicElementWidth: CGFloat {
         get {
@@ -50,7 +50,6 @@ class TopicLayout: UICollectionViewLayout {
             }
             return offsets
         }
-        
     }
     
     var columnWidth: CGFloat {
@@ -64,8 +63,6 @@ class TopicLayout: UICollectionViewLayout {
             return Int(floor(contentWidth / topicElementWidth))
         }
     }
-    var cellPadding: CGFloat = 6
-
 
     override func invalidateLayout() {
         cache = []
@@ -74,11 +71,9 @@ class TopicLayout: UICollectionViewLayout {
 
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         guard let collectionView = collectionView else { return false }
-        
         return newBounds.width != collectionView.bounds.width
     }
     
-
     fileprivate var cache = [UICollectionViewLayoutAttributes]()
 
     //Content height and size
@@ -95,10 +90,8 @@ class TopicLayout: UICollectionViewLayout {
     override var collectionViewContentSize: CGSize {
         return CGSize(width: contentWidth, height: contentHeight)
     }
-    
 
     override func prepare() {
-        // 1. Only calculate once
         guard cache.isEmpty == true, let collectionView = collectionView else {
             return
         }
@@ -111,11 +104,14 @@ class TopicLayout: UICollectionViewLayout {
           
             let indexPath = IndexPath(item: item, section: 0)
 
-
             let photoHeight = topicWidth*CGFloat(heightToWidthRatio)
             let height = cellPadding * 2 + photoHeight
             
-            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
+            let frame = CGRect(
+                x: xOffset[column], y: yOffset[column],
+                width: columnWidth, height: height
+            )
+            
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
 
             // 5. Creates an UICollectionViewLayoutItem with the frame and add it to the cache
@@ -141,7 +137,6 @@ class TopicLayout: UICollectionViewLayout {
                 visibleLayoutAttributes.append(attributes)
             }
         }
-        
         return visibleLayoutAttributes
     }
 

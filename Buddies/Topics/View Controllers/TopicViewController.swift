@@ -60,10 +60,15 @@ class TopicViewController: UICollectionViewController, TopicCollectionDelegate {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopicCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "TopicCell",
+                for: indexPath
+            )
+        
             if let topicCell = cell as? TopicCell {
                 topicCell.topic = topicCollection.topics[indexPath.item]
             }
+        
             return cell
         }
 }

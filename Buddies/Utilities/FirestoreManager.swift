@@ -22,10 +22,9 @@ class FirestoreManager {
     static func loadAllDocuments(ofType type: String,
                                  _ callback: @escaping ([DocumentSnapshot]) -> ()) {
         db.collection(type).getDocuments { result, error in
-            guard let result = result, error == nil else {
-                if let error = error {
-                    print("Error loading \(type) from Firestore: \n \(error)")
-                }
+            guard let result = result,
+                error == nil else {
+                    print("Error loading \(type) from Firestore: \n \(String(describing: error))")
                 callback([])
                 return
             }

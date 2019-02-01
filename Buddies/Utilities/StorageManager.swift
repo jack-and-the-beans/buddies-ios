@@ -21,7 +21,8 @@ class StorageManager {
         
         let url = URL(string: path)
         
-        let session: URLSession = providedSession ?? URLSession(configuration: URLSessionConfiguration.default)
+        let session: URLSession = providedSession
+            ?? URLSession(configuration: URLSessionConfiguration.default)
         
         let request = URLRequest(url:url!)
         
@@ -31,7 +32,11 @@ class StorageManager {
 
         let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
             if let tempLocalUrl = tempLocalUrl, error == nil {
-                StorageManager.persistDownload(temp: tempLocalUrl, dest: localDestURL, callback: callback)
+                StorageManager.persistDownload(
+                    temp: tempLocalUrl,
+                    dest: localDestURL,
+                    callback: callback
+                )
             } else {
                 print("Error took place while downloading a file. Error description: \(String(describing: error?.localizedDescription))");
             }
@@ -51,24 +56,24 @@ class StorageManager {
     }
     
     static func localURL(for path: String) -> URL? {
-        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
-            print("Couldn't create directory.")
-            return nil
-        }
-        guard let url = directory.appendingPathComponent(path) else {
-            print("Couldn't create file URL.")
-            return nil
-        }
-        
-        return url
+        do {
+            let directory = try FileManager.default.url(
+                for: .documentDirectory,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: false
+            ) as NSURL
+            
+            return directory.appendingPathComponent(path)
+        } catch { return nil }
     }
     
     static func getSavedImage(filename: String) -> UIImage? {
-        if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
-            let dirUrl = URL(fileURLWithPath: dir.absoluteString)
-            let fileUrl = dirUrl.appendingPathComponent(filename).path
-            return UIImage(contentsOfFile: fileUrl)
-        } else {
+        do {
+            let fileURL = localURL(for: filename)
+            let imageData = try Data(contentsOf: fileURL!)
+            return UIImage(data: imageData)
+        } catch {
             return nil
         }
     }

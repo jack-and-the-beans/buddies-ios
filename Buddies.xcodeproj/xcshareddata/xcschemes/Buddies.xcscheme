@@ -48,14 +48,6 @@
                BlueprintName = "BuddiesTests"
                ReferencedContainer = "container:Buddies.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "UIApplicationTests/testSetRootView()">
-               </Test>
-               <Test
-                  Identifier = "UIViewControlTests/testSetupHideKeyboardOnTap()">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
