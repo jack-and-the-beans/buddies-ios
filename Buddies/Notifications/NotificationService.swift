@@ -20,12 +20,13 @@ import FirebaseAuth
 protocol InstanceIDProtocol {
     func instanceID (handler:  @escaping InstanceIDResultHandler)
 }
+extension InstanceID: InstanceIDProtocol {}
 
 protocol NotificationProtocol {
     func requestAuthorization (options: UNAuthorizationOptions, completionHandler: @escaping (Bool, Error?) -> Void)
 }
 extension UNUserNotificationCenter: NotificationProtocol {}
-extension InstanceID: InstanceIDProtocol {}
+
 
 class NotificationService: NSObject, UNUserNotificationCenterDelegate, MessagingDelegate {
     
@@ -47,25 +48,29 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate, Messaging
     }
 
     // Saves the user's notification token whenever it updates:
+    // Note: the token will save even if we don't have notification
+    // permission. This is OK because iOS will handle that case
+    // for us. I removed the check for notification permission
+    // because it was not possible to subclass for mocking.
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         self.saveTokenToFirestore(fcmToken: fcmToken)
     }
 
     // Pushes the token to firestore if:
-    // 1. The user has enabled notifications
-    // 2. The token exists
-    // 3. The user is authenticated
-    func saveTokenToFirestore(fcmToken: String) {
-        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            guard settings.authorizationStatus == .authorized else { return }
-            guard let usr = Auth.auth().currentUser else { return }
-            
-            Firestore.firestore().collection("users").document(usr.uid).updateData([
-                    "notification_token" : fcmToken
-            ]) {err in
-                if let err = err {
-                    print("Error updating document: \(err)")
-                }
+    // 1. The token exists
+    // 2. The user is authenticated
+    func saveTokenToFirestore(
+        fcmToken: String,
+        user: UserInfo? = Auth.auth().currentUser,
+        collection: CollectionReference = Firestore.firestore().collection("users")) {
+        
+        guard let uid = user?.uid else { return }
+
+        collection.document(uid).updateData([
+                "notification_token" : fcmToken
+        ]) {err in
+            if let err = err {
+                print("Error updating document: \(err)")
             }
         }
     }
