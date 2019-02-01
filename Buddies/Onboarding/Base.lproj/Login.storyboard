@@ -164,8 +164,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Continue with Facebook"/>
                                 <connections>
-                                    <action selector="facebookLogin" destination="fB0-gX-wY7" eventType="touchUpInside" id="G7a-dS-2g2"/>
-                                    <action selector="facebookLogin:" destination="fB0-gX-wY7" eventType="touchUpInside" id="kg0-l5-wgx"/>
+                                    <action selector="facebookLogin" destination="fB0-gX-wY7" eventType="touchUpInside" id="7e7-i3-QUK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kb8-ia-qhM">
