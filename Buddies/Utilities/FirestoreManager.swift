@@ -12,14 +12,16 @@ import FirebaseCore
 import FirebaseStorage
 
 class FirestoreManager {
-    static var db: Firestore {
+    var db: Firestore {
         get {
             return Firestore.firestore()
         }
     }
+
+    static let shared = FirestoreManager()
     
     //https://github.com/AssassinDev422/hallow/blob/e1b334df607a1a5cddf4f5b1eb23a88c3db7871e/Hallow/Utilities/FirebaseUtilities.swift
-    static func loadAllDocuments(ofType type: String,
+    func loadAllDocuments(ofType type: String,
                                  _ callback: @escaping ([DocumentSnapshot]) -> ()) {
         db.collection(type).getDocuments { result, error in
             guard let result = result,

@@ -52,9 +52,9 @@ class TopicCollection: NSObject {
     }
     
     func loadTopics(){
-        FirestoreManager.loadAllDocuments(ofType: "topics") { snapshots in
+        FirestoreManager.shared.loadAllDocuments(ofType: "topics") { snapshots in
             for snap in snapshots {
-                if let image = StorageManager.getSavedImage(filename: snap.documentID) {
+                if let image = StorageManager.shared.getSavedImage(filename: snap.documentID) {
                     OperationQueue.main.addOperation {
                         self.addFromStorage(using: snap.data(), for: snap.documentID, image: image)
                     }
@@ -68,7 +68,7 @@ class TopicCollection: NSObject {
                         continue
                     }
                         
-                    let _ = StorageManager.downloadFile(
+                    let _ = StorageManager.shared.downloadFile(
                         for: firebaseImageURL,
                         to: snap.documentID,
                         session: nil
