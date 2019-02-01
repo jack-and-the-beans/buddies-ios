@@ -47,7 +47,7 @@ class TopicCollection: NSObject {
                 print("Failed to load downloaded Topic image for \(id)")
             }
         } catch {
-            print("Could not load topic")
+            print("Could not load topic, \(error)")
         }
     }
     

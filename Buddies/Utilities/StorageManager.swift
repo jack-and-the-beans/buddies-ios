@@ -17,68 +17,37 @@ class StorageManager {
         }
     }
     
-    static func downloadFile(for path: String, to localPath: String, session providedSession: URLSession?,  callback: ((_ path: URL) -> Void)? = nil) -> URLSessionTask {
+    static func downloadFile(for path: String, to localPath: String, session providedSession: URLSession?,  callback: ((_ path: URL) -> Void)? = nil) -> URLSessionTask? {
+        
         let url = URL(string: path)
         
-        let session: URLSession
-        if let tempSess = providedSession {
-            session = tempSess
-        }
-        else {
-            let sessionConfig = URLSessionConfiguration.default
-            session = URLSession(configuration: sessionConfig)
-        }
+        let session: URLSession = providedSession ?? URLSession(configuration: URLSessionConfiguration.default)
         
         let request = URLRequest(url:url!)
-        let localDestURL = localURL(for: localPath)
+        
+        guard let localDestURL = localURL(for: localPath) else {
+            return nil
+        }
 
-        print("Starting download task")
         let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
             if let tempLocalUrl = tempLocalUrl, error == nil {
-                // Success
-                if let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                    print("Successfully downloaded. Status code: \(statusCode)")
-                }
-                
-                do {
-                    try FileManager.default.copyItem(at: tempLocalUrl, to: localDestURL!)
-                } catch (let writeError) {
-                    print("Error creating a file \(localDestURL?.absoluteString ?? "Invalid Filename") : \(writeError)")
-                }
-                
-                if callback != nil {
-                    print("Successfully saved \(path)")
-                    callback!(localDestURL!)
-                }
-                
+                StorageManager.persistDownload(temp: tempLocalUrl, dest: localDestURL, callback: callback)
             } else {
                 print("Error took place while downloading a file. Error description: \(String(describing: error?.localizedDescription))");
             }
         }
         task.resume()
+        
         return task
-
     }
     
-    static func downloadFile(for firebasePath: String, to localPath: String, onSuccess: ((StorageTaskSnapshot) -> Void)? = nil, onFailure: ((StorageTaskSnapshot) -> Void)? = nil) {
-        let itemRef = storage.reference().child(firebasePath)
-        
-        if let localDestURL = localURL(for: localPath) {
-            let downloadTask = itemRef.write(toFile: localDestURL)
-            if(onSuccess != nil){
-               downloadTask.observe(.success) { snapshot in
-                    onSuccess!(snapshot)
-                }
-            }
-            
-            if(onFailure != nil){
-                downloadTask.observe(.failure) { snapshot in
-                    onFailure!(snapshot)
-                }
-            }
-        } else {
-            print("Failed to download image")
+    static func persistDownload(temp: URL, dest: URL, callback: ((_ path: URL) -> Void)?){
+        do {
+            try FileManager.default.copyItem(at: temp, to: dest)
+        } catch (let writeError) {
+            print("Error creating a file \(dest.absoluteString) : \(writeError)")
         }
+        callback?(dest)
     }
     
     static func localURL(for path: String) -> URL? {
