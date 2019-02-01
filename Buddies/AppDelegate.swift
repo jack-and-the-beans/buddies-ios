@@ -25,21 +25,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let authHandler = AuthHandler(auth: Auth.auth())
         
         if authHandler.isLoggedIn() {
-            // Show login page
-            let loginViewController = BuddiesStoryboard.Login.viewController()
-            self.window?.rootViewController = loginViewController
-        } else {
-            
+            //Load topics when we open
             topicCollection.loadTopics()
-
+            
             // Show home page
             let mainViewController = BuddiesStoryboard.Main.viewController()
             self.window?.rootViewController = mainViewController
+            
+        } else {
+            // Show login page
+            let loginViewController = BuddiesStoryboard.Login.viewController()
+            self.window?.rootViewController = loginViewController
+            
         }
 
         self.window?.makeKeyAndVisible()
-        
-        
         
         return true
     }
