@@ -122,6 +122,30 @@ PODS:
   - gRPC-Core/Interface (1.17.0)
   - GTMSessionFetcher/Core (1.2.1)
   - leveldb-library (1.20)
+  - MaterialComponents/Buttons (75.0.1):
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Math
+    - MaterialComponents/private/Shapes
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+    - MDFInternationalization
+    - MDFTextAccessibility
+  - MaterialComponents/Ink (75.0.1):
+    - MaterialComponents/private/Math
+  - MaterialComponents/private/Application (75.0.1)
+  - MaterialComponents/private/Math (75.0.1)
+  - MaterialComponents/private/Shapes (75.0.1):
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowLayer
+  - MaterialComponents/ShadowElevations (75.0.1)
+  - MaterialComponents/ShadowLayer (75.0.1):
+    - MaterialComponents/ShadowElevations
+  - MaterialComponents/Typography (75.0.1):
+    - MaterialComponents/private/Application
+    - MaterialComponents/private/Math
+  - MDFInternationalization (2.0.0)
+  - MDFTextAccessibility (2.0.0)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -136,6 +160,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Messaging
   - Firebase/Storage
+  - MaterialComponents/Buttons
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -159,6 +184,9 @@ SPEC REPOS:
     - gRPC-Core
     - GTMSessionFetcher
     - leveldb-library
+    - MaterialComponents
+    - MDFInternationalization
+    - MDFTextAccessibility
     - nanopb
     - Protobuf
 
@@ -183,9 +211,12 @@ SPEC CHECKSUMS:
   gRPC-Core: 4028031ed2c5267cca0d846c876d8046b1ecb9b6
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  MaterialComponents: 9e6875acd311cc88fc0b64d76e2038afc3e71868
+  MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
+  MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
 
-PODFILE CHECKSUM: 2dca043ac21f912fd30b2cfb7d610650ca259a1b
+PODFILE CHECKSUM: 7fbf58302cf6b2962a38a3f35f52e0421e24fb72
 
 COCOAPODS: 1.5.3
