@@ -67,14 +67,16 @@ class TopicCollection: NSObject {
                         print("Cannot get Image URL for \(snap.documentID)")
                         continue
                     }
-                    
-                    let onDownload: (URL)->Void = { destURL in
+                        
+                    let _ = StorageManager.downloadFile(
+                        for: firebaseImageURL,
+                        to: snap.documentID,
+                        session: nil
+                    ) { destURL in
                         OperationQueue.main.addOperation {
                             self.updateImage(with: destURL, for: snap.documentID)
                         }
                     }
-                        
-                    let _ = StorageManager.downloadFile(for: firebaseImageURL, to: snap.documentID, session: nil, callback: onDownload)
  
                 }
                 
