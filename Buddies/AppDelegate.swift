@@ -13,12 +13,8 @@ import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var notifications: NotificationService
+    var notifications: NotificationService = NotificationService()
     var window: UIWindow?
-
-    override init () {
-        notifications = NotificationService()
-    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
