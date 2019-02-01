@@ -11,13 +11,15 @@ import FirebaseStorage
 
 class StorageManager {
     
-    static var storage: Storage {
+    var storage: Storage {
         get {
             return Storage.storage()
         }
     }
     
-    static func downloadFile(for path: String, to localPath: String, session providedSession: URLSession?,  callback: ((_ path: URL) -> Void)? = nil) -> URLSessionTask? {
+    static let shared = StorageManager()
+    
+    func downloadFile(for path: String, to localPath: String, session providedSession: URLSession?,  callback: ((_ path: URL) -> Void)? = nil) -> URLSessionTask? {
         
         let url = URL(string: path)
         
@@ -32,7 +34,7 @@ class StorageManager {
 
         let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
             if let tempLocalUrl = tempLocalUrl, error == nil {
-                StorageManager.persistDownload(
+                self.persistDownload(
                     temp: tempLocalUrl,
                     dest: localDestURL,
                     callback: callback
@@ -46,7 +48,7 @@ class StorageManager {
         return task
     }
     
-    static func persistDownload(temp: URL, dest: URL, callback: ((_ path: URL) -> Void)?){
+    func persistDownload(temp: URL, dest: URL, callback: ((_ path: URL) -> Void)?){
         do {
             try FileManager.default.copyItem(at: temp, to: dest)
         } catch (let writeError) {
@@ -55,7 +57,7 @@ class StorageManager {
         callback?(dest)
     }
     
-    static func localURL(for path: String) -> URL? {
+    func localURL(for path: String) -> URL? {
         do {
             let directory = try FileManager.default.url(
                 for: .documentDirectory,
@@ -68,7 +70,7 @@ class StorageManager {
         } catch { return nil }
     }
     
-    static func getSavedImage(filename: String) -> UIImage? {
+    func getSavedImage(filename: String) -> UIImage? {
         do {
             let fileURL = localURL(for: filename)
             let imageData = try Data(contentsOf: fileURL!)
