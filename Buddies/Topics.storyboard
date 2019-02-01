@@ -12,7 +12,7 @@
         <!--Topic View Controller-->
         <scene sceneID="say-lW-rdj">
             <objects>
-                <collectionViewController storyboardIdentifier="TopicViewController" id="Zc6-W6-bDA" customClass="TopicViewController" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="viewTopics" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zc6-W6-bDA" customClass="TopicViewController" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="f5r-Kk-8Bq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

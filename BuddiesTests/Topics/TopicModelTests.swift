@@ -38,11 +38,26 @@ class TestTopicsModel: XCTestCase {
     }
     
     func testTopicFromSnapshot(){
-        XCTAssert(false)
+        let data: [String: Any]? = [
+            "name": "luke",
+            "pie": "no?"
+        ]
+        if let top = Topic(id: "ID", data: data){
+            XCTAssert(top.name == "luke")
+            XCTAssert(top.id == "ID")
+            XCTAssert(top.image == nil)
+            XCTAssert(top.selected == false)
+        } else {
+            XCTAssert(false)
+        }
+        
     }
     
     func testTopicFromSnapshotWithNoName(){
-        XCTAssert(false)
+        let data: [String: Any]? = [
+            "pie": "no?"
+        ]
+        XCTAssert(Topic(id: "ID", data: data) == nil)
     }
 
 }

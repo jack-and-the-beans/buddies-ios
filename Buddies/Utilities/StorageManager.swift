@@ -11,15 +11,13 @@ import FirebaseStorage
 
 class StorageManager {
     
-    static let shared = StorageManager()
-    
-    var storage: Storage {
+    static var storage: Storage {
         get {
             return Storage.storage()
         }
     }
     
-    func downloadFile(for path: String, to localPath: String, session providedSession: URLSession?,  callback: ((_ path: URL) -> Void)? = nil) -> URLSessionTask {
+    static func downloadFile(for path: String, to localPath: String, session providedSession: URLSession?,  callback: ((_ path: URL) -> Void)? = nil) -> URLSessionTask {
         let url = URL(string: path)
         
         let session: URLSession
@@ -62,7 +60,7 @@ class StorageManager {
 
     }
     
-    func downloadFile(for firebasePath: String, to localPath: String, onSuccess: ((StorageTaskSnapshot) -> Void)? = nil, onFailure: ((StorageTaskSnapshot) -> Void)? = nil) {
+    static func downloadFile(for firebasePath: String, to localPath: String, onSuccess: ((StorageTaskSnapshot) -> Void)? = nil, onFailure: ((StorageTaskSnapshot) -> Void)? = nil) {
         let itemRef = storage.reference().child(firebasePath)
         
         if let localDestURL = localURL(for: localPath) {
@@ -83,7 +81,7 @@ class StorageManager {
         }
     }
     
-    func localURL(for path: String) -> URL? {
+    static func localURL(for path: String) -> URL? {
         guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
             print("Couldn't create directory.")
             return nil
@@ -96,7 +94,7 @@ class StorageManager {
         return url
     }
     
-    func getSavedImage(filename: String) -> UIImage? {
+    static func getSavedImage(filename: String) -> UIImage? {
         if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
             let dirUrl = URL(fileURLWithPath: dir.absoluteString)
             let fileUrl = dirUrl.appendingPathComponent(filename).path
