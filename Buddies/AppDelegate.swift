@@ -22,6 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        // This will get is a token, even if we don't save
+        // it until we have notification permission.
+        application.registerForRemoteNotifications()
+
         // Initialize
         FirebaseApp.configure()
         

@@ -21,32 +21,33 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate, Messaging
     static func registerForNotifications () {
         let authOptions: UNAuthorizationOptions = [.alert]
         UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, error in
-            guard granted else { return }
-            self.getNotificationSettings()
+            self.saveTokenToFirestore()
         }
     }
 
-    static func getNotificationSettings() {
+    // Saves the user's notification token whenever it updates:
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        saveTokenToFirestore(fcmToken)
+    }
+
+    // Pushes the token to firestore if:
+    // 1. The user has enabled notifications
+    // 2. The token exists
+    // 3. The user is authenticated
+    func saveTokenToFirestore(fcmToken: String) {
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
             guard settings.authorizationStatus == .authorized else { return }
-            DispatchQueue.main.async {
-                UIApplication.shared.registerForRemoteNotifications()
-            }
-        }
-    }
-
-    // Sends user's notification token to Firestore whenever it updates:
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         guard let db = self.firestore else { return }
         guard let usr = Auth.auth().currentUser else { return }
         
         db.collection("users").document(usr.uid).updateData([
-            "notification_token" : fcmToken
+                "notification_token" : fcmToken
         ]) {err in
             if let err = err {
                 print("Error updating document: \(err)")
             }
         }
+    }
     }
 
     func setFirestore(firestore: Firestore) {
