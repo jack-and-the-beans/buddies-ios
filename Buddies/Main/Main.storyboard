@@ -33,7 +33,7 @@
         <!--My Activities-->
         <scene sceneID="OTF-GQ-g8j">
             <objects>
-                <tableViewController title="My Activities" id="gRJ-5v-O3W" sceneMemberID="viewController">
+                <tableViewController title="My Activities" id="gRJ-5v-O3W" customClass="MyActivitiesVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="9mb-Z8-dCc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -91,7 +91,7 @@
         <!--Discover-->
         <scene sceneID="8BO-Mv-Hhr">
             <objects>
-                <tableViewController title="Discover" id="jTO-HI-2Vb" sceneMemberID="viewController">
+                <tableViewController title="Discover" id="jTO-HI-2Vb" customClass="ExlporeVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="aXY-um-HUU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

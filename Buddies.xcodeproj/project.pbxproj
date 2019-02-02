@@ -23,15 +23,19 @@
 		58D2AA15220201B2009ABCBC /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D2AA07220201B1009ABCBC /* TopicViewController.swift */; };
 		58D2AA16220201B2009ABCBC /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D2AA09220201B2009ABCBC /* TopicCell.swift */; };
 		58D2AA17220201B2009ABCBC /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D2AA0B220201B2009ABCBC /* Topic.swift */; };
+		58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EA1EF622041436003F6A3A /* StorageManagerTests.swift */; };
 		A850ED5D2203934200DBF1A6 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850ED5C2203934200DBF1A6 /* NotificationService.swift */; };
 		A850ED612203A12900DBF1A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A850ED602203A12900DBF1A6 /* GoogleService-Info.plist */; };
 		A850ED622203A12900DBF1A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A850ED602203A12900DBF1A6 /* GoogleService-Info.plist */; };
 		A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B2F37B22040710006B91D1 /* NotificationServiceTest.swift */; };
-		58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EA1EF622041436003F6A3A /* StorageManagerTests.swift */; };
 		A91BA3372202404600DED6B3 /* LoginVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA3362202404600DED6B3 /* LoginVCTests.swift */; };
 		A91BA33A22024A8900DED6B3 /* LoginExistingVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */; };
 		A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */; };
 		A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */; };
+		A9B1448A220600CC004C614E /* MyActivitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B14489220600CC004C614E /* MyActivitiesVC.swift */; };
+		A9B1448C220600FD004C614E /* ExlporeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1448B220600FD004C614E /* ExlporeVC.swift */; };
+		A9B1448F220601C6004C614E /* CreateActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9B1448E220601C6004C614E /* CreateActivity.storyboard */; };
+		A9B1449122060206004C614E /* CreateActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1449022060206004C614E /* CreateActivityVC.swift */; };
 		A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF3F2201427A00C05F2C /* LoginVC.swift */; };
 		A9E8BF45220143A300C05F2C /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF44220143A300C05F2C /* AuthHandler.swift */; };
 		A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */; };
@@ -91,6 +95,10 @@
 		A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVCTests.swift; sourceTree = "<group>"; };
 		A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthHandler.swift; sourceTree = "<group>"; };
 		A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		A9B14489220600CC004C614E /* MyActivitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivitiesVC.swift; sourceTree = "<group>"; };
+		A9B1448B220600FD004C614E /* ExlporeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExlporeVC.swift; sourceTree = "<group>"; };
+		A9B1448E220601C6004C614E /* CreateActivity.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateActivity.storyboard; sourceTree = "<group>"; };
+		A9B1449022060206004C614E /* CreateActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityVC.swift; sourceTree = "<group>"; };
 		A9E8BF3F2201427A00C05F2C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		A9E8BF44220143A300C05F2C /* AuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandler.swift; sourceTree = "<group>"; };
 		A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVC.swift; sourceTree = "<group>"; };
@@ -252,6 +260,15 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
+		A9B1448D220601B8004C614E /* CreateActivity */ = {
+			isa = PBXGroup;
+			children = (
+				A9B1448E220601C6004C614E /* CreateActivity.storyboard */,
+				A9B1449022060206004C614E /* CreateActivityVC.swift */,
+			);
+			path = CreateActivity;
+			sourceTree = "<group>";
+		};
 		A9E8BF482201F7DB00C05F2C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,6 +295,8 @@
 			children = (
 				A9E8BF4D2201FE9A00C05F2C /* Main.storyboard */,
 				A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */,
+				A9B14489220600CC004C614E /* MyActivitiesVC.swift */,
+				A9B1448B220600FD004C614E /* ExlporeVC.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -333,6 +352,7 @@
 		B6AC549D21F8DB8300B075B8 /* Buddies */ = {
 			isa = PBXGroup;
 			children = (
+				A9B1448D220601B8004C614E /* CreateActivity */,
 				A850ED5F2203A0C100DBF1A6 /* Buddies.entitlements */,
 				582D0FA422035C21004F71E3 /* Utilities */,
 				58D2A9FF220201A1009ABCBC /* Topics */,
@@ -456,10 +476,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6AC54A921F8DB8500B075B8 /* LaunchScreen.storyboard in Resources */,
+				A9B1448F220601C6004C614E /* CreateActivity.storyboard in Resources */,
 				A9E8BF4E2201FE9A00C05F2C /* Main.storyboard in Resources */,
 				A850ED612203A12900DBF1A6 /* GoogleService-Info.plist in Resources */,
-				58D2AA14220201B2009ABCBC /* Topics.plist in Resources */,
-				B650F1ED21FF6A5C0078EEAE /* GoogleService-Info.plist in Resources */,
 				B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */,
 				58A5A40522025B6400E0BF38 /* bean.jpg in Resources */,
 				5827F49E220269930018C932 /* Topics.storyboard in Resources */,
@@ -569,8 +588,11 @@
 				58D2AA17220201B2009ABCBC /* Topic.swift in Sources */,
 				58D2AA11220201B2009ABCBC /* TopicLayout.swift in Sources */,
 				B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */,
+				A9B1449122060206004C614E /* CreateActivityVC.swift in Sources */,
 				58AAA6752203F52E00AA538A /* Initialization.swift in Sources */,
+				A9B1448C220600FD004C614E /* ExlporeVC.swift in Sources */,
 				582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */,
+				A9B1448A220600CC004C614E /* MyActivitiesVC.swift in Sources */,
 				58D2AA15220201B2009ABCBC /* TopicViewController.swift in Sources */,
 				58D2AA16220201B2009ABCBC /* TopicCell.swift in Sources */,
 				B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */,
@@ -594,9 +616,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				583FD2DE220244F8005B2C75 /* TopicModel.swift in Sources */,
-				58A5A40722025C2B00E0BF38 /* TestTopicCell.swift in Sources */,
-				583FD2DB220238F7005B2C75 /* LayoutMeasurements.swift in Sources */,
+				583FD2DE220244F8005B2C75 /* TopicModelTests.swift in Sources */,
+				58A5A40722025C2B00E0BF38 /* TopicCellTest.swift in Sources */,
+				583FD2DB220238F7005B2C75 /* LayoutMeasurementsTests.swift in Sources */,
 				A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */,
 				58AAA6772203FD3A00AA538A /* TopicCollectionTests.swift in Sources */,
 				58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */,
