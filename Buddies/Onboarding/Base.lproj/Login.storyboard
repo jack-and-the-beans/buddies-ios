@@ -279,7 +279,7 @@
         <!--Sign Up InfoVC-->
         <scene sceneID="bWc-17-Mtk">
             <objects>
-                <viewController storyboardIdentifier="SignUpInfoVC" title="Sign Up InfoVC" id="s0Y-7Y-nAN" customClass="SignUpInfoVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpInfo" title="Sign Up InfoVC" id="s0Y-7Y-nAN" customClass="SignUpInfoVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xy8-pU-I9d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

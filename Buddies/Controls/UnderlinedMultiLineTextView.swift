@@ -23,14 +23,14 @@ class UnderlinedMultiLineTextView: UITextView, UITextViewDelegate {
         super.init(coder: aDecoder)
         
         delegate = self
-        //initBorder()
+        initBorder()
     }
     
     required override init(frame: CGRect, textContainer: NSTextContainer?) {
         border = CALayer()
         super.init(frame: frame, textContainer: textContainer)
         delegate = self
-        //initBorder()
+        initBorder()
     }
     
     func initBorder(){
@@ -45,7 +45,7 @@ class UnderlinedMultiLineTextView: UITextView, UITextViewDelegate {
             height: self.frame.size.height
         )
         border.borderWidth = width
-        self.layer.addSublayer(border)
+        //self.layer.addSublayer(border)
         self.layer.masksToBounds = true
     }
     
@@ -58,13 +58,6 @@ class UnderlinedMultiLineTextView: UITextView, UITextViewDelegate {
         }
         
     }
-    
-    
-    func textViewDidChange(_ textView: UITextView) {
-        //self.layer.
-        //initBorder()
-    }
-   
     
     
     func textViewDidEndEditing(_ textView: UITextView) {

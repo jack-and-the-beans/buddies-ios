@@ -13,6 +13,7 @@ class MockAuthHandler : AuthHandler {
     var nCallsCreateUser = 0
     var nCallsLogInWithFacebook = 0
     var nCallsLogIn = 0
+    var nCallsGetUID = 0
     
     init() {
         super.init(auth: nil)
@@ -29,4 +30,14 @@ class MockAuthHandler : AuthHandler {
     override func logIn(email: String, password: String, onError: @escaping (String) -> Void, onSuccess: @escaping (User) -> Void) {
         nCallsLogIn += 1
     }
+    
+    override func getUID() -> String? {
+        
+        nCallsGetUID = nCallsGetUID + 1
+        
+        return super.getUID()
+        
+    }
+    
+    
 }

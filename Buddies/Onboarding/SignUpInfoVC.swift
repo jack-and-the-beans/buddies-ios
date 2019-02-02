@@ -22,10 +22,10 @@ class SignUpInfoVC: LoginBase {
     
     @IBAction func finishSignUp(_ sender: Any) {
         
-        if let UID = Auth.auth().currentUser?.uid
+        if let UID = getAuthHandler().getUID()
         {
             //set bio text
-            FirestoreManager().db.collection("users").document(UID).setData([
+            FirestoreManager.shared.db.collection("users").document(UID).setData([
                 "bio": bioText.text!
                 ], merge: true)
             BuddiesStoryboard.Main.goTo()
