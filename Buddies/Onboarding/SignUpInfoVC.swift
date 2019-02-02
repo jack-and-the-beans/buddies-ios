@@ -8,15 +8,66 @@
 
 import UIKit
 import Firebase
+import Firebase
 
-class SignUpInfoVC: LoginBase {
+class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func changePicture(_ sender: Any) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+        present(imagePicker, animated: true)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let imgUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL{
+            
+            let imgName = imgUrl.lastPathComponent
+            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+            let localPath = documentDirectory?.appending(imgName)
+            
+            let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+            let data = image.pngData()! as NSData
+            data.write(toFile: localPath!, atomically: true)
+            
+            let photoURL = URL.init(fileURLWithPath: localPath!)
+            
+            let curUID = getAuthHandler().getUID()!
+            
+            let storagePath = "/users/" + curUID + "/profilePicture.jpg"
+            let storageRef = StorageManager.shared.storage.reference().child(storagePath)
+            
+            let uploadTask = storageRef.putFile(from: photoURL, metadata: nil) { metadata, error in
+         
+                storageRef.downloadURL { (url, error) in
+                    if let downloadURL = url{
+                    
+                    FirestoreManager.shared.db.collection("users").document(curUID).setData([
+                        "image_url": downloadURL.absoluteString
+                        ], merge: true)
+                    }else{
+                        
+                    }
+                }
+            }
+            
+            
+            uploadTask.observe(.success) { snapshot in
+                // Upload completed successfully
+                   self.dismiss(animated: true, completion: nil)
+            }
     
+        }
+        
+    }
     
     @IBOutlet weak var bioText: UITextView!
     

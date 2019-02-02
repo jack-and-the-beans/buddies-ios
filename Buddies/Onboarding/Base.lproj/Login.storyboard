@@ -301,15 +301,28 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VL9-LF-7fc">
+                                <rect key="frame" x="130" y="92" width="115" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="xAe-Dg-tQA"/>
+                                </constraints>
+                                <state key="normal" title="Upload a Picture"/>
+                                <connections>
+                                    <action selector="changePicture:" destination="s0Y-7Y-nAN" eventType="touchUpInside" id="jAZ-aO-5As"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8Lm-UX-4cY" firstAttribute="top" secondItem="U5q-xz-N3r" secondAttribute="bottom" constant="125" id="5s4-tw-5Fb"/>
                             <constraint firstItem="U5q-xz-N3r" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="AXv-IK-vDq"/>
                             <constraint firstItem="U5q-xz-N3r" firstAttribute="leading" secondItem="ieI-QG-mvM" secondAttribute="leading" constant="30" id="MCd-CI-b8m"/>
+                            <constraint firstItem="VL9-LF-7fc" firstAttribute="centerX" secondItem="U5q-xz-N3r" secondAttribute="centerX" id="R1s-cb-DFO"/>
                             <constraint firstItem="ieI-QG-mvM" firstAttribute="trailing" secondItem="U5q-xz-N3r" secondAttribute="trailing" constant="30" id="XdA-a2-z3P"/>
                             <constraint firstItem="8Lm-UX-4cY" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="cdV-md-xK5"/>
                             <constraint firstItem="ieI-QG-mvM" firstAttribute="bottom" secondItem="8Lm-UX-4cY" secondAttribute="bottom" constant="150" id="mxr-cI-kzg"/>
+                            <constraint firstItem="VL9-LF-7fc" firstAttribute="top" secondItem="ieI-QG-mvM" secondAttribute="top" constant="72" id="r5T-lc-AS2"/>
+                            <constraint firstItem="VL9-LF-7fc" firstAttribute="leading" secondItem="ieI-QG-mvM" secondAttribute="leading" constant="130" id="rg0-il-xrT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ieI-QG-mvM"/>
                     </view>
