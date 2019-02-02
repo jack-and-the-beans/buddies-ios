@@ -60,7 +60,7 @@ class LoginVC: LoginBase {
             email: email,
             password: password,
             onError: { msg in self.showMessagePrompt(msg) },
-            onSuccess: { user in BuddiesStoryboard.Main.goTo() }
+            onSuccess: { user in self.performSegue(withIdentifier: "GetSignUpInfo", sender: self)}
         )
     }
     
@@ -68,7 +68,7 @@ class LoginVC: LoginBase {
         getAuthHandler().logInWithFacebook(
             ref: self,
             onError: { msg in self.showMessagePrompt(msg) },
-            onSuccess: { user in BuddiesStoryboard.Main.goTo() }
+            onSuccess: { user in self.performSegue(withIdentifier: "GetSignUpInfo", sender: self) }
         )
     }
     
