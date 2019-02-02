@@ -15,6 +15,7 @@ import FirebaseMessaging
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var notifications: NotificationService = NotificationService()
     var window: UIWindow?
+    var topicCollection: TopicCollection!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
@@ -24,6 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Initialize
         FirebaseApp.configure()
+        topicCollection = TopicCollection()
+        
+        Auth.auth().addStateDidChangeListener {auth, user in
+            if let _ = user {
+                AppContent.setup()
+            }
+        }
         
         // Setup delegates for notifications:
         UNUserNotificationCenter.current().delegate = self.notifications
@@ -33,13 +41,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let authHandler = AuthHandler(auth: Auth.auth())
         
         if authHandler.isLoggedIn() {
-            // Show login page
-            let loginViewController = BuddiesStoryboard.Login.viewController()
-            self.window?.rootViewController = loginViewController
-        } else {
+            //Load topics when we open
+            AppContent.setup()
+            
             // Show home page
             let mainViewController = BuddiesStoryboard.Main.viewController()
             self.window?.rootViewController = mainViewController
+            
+        } else {
+            // Show login page
+            let loginViewController = BuddiesStoryboard.Login.viewController()
+            self.window?.rootViewController = loginViewController
+            
         }
 
         self.window?.makeKeyAndVisible()
