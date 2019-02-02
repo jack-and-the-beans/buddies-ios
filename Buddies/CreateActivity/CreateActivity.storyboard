@@ -13,7 +13,7 @@
         <!--Create ActivityVC-->
         <scene sceneID="Ona-ji-F4l">
             <objects>
-                <viewController id="0et-4V-p8w" customClass="CreateActivityVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="create" id="0et-4V-p8w" customClass="CreateActivityVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OEd-KA-pfH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
