@@ -296,7 +296,7 @@
 				A9E8BF4D2201FE9A00C05F2C /* Main.storyboard */,
 				A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */,
 				A9B14489220600CC004C614E /* MyActivitiesVC.swift */,
-				A9B1448B220600FD004C614E /* ExlporeVC.swift */,
+				A9B1448B220600FD004C614E /* DiscoverVC.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -590,7 +590,7 @@
 				B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */,
 				A9B1449122060206004C614E /* CreateActivityVC.swift in Sources */,
 				58AAA6752203F52E00AA538A /* Initialization.swift in Sources */,
-				A9B1448C220600FD004C614E /* ExlporeVC.swift in Sources */,
+				A9B1448C220600FD004C614E /* DiscoverVC.swift in Sources */,
 				582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */,
 				A9B1448A220600CC004C614E /* MyActivitiesVC.swift in Sources */,
 				58D2AA15220201B2009ABCBC /* TopicViewController.swift in Sources */,

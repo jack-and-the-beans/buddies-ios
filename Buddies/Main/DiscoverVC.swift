@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExlporeVC: UITableViewController {
+class DiscoverVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
