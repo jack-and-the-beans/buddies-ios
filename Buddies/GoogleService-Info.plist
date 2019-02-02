@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>949761947823-a4adkj0h17fjhs4rb5rjsn8ad7t4qr83.apps.googleusercontent.com</string>
+	<string>949761947823-s439h7ja76c8cmbm7g0be3fod67248o4.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.949761947823-a4adkj0h17fjhs4rb5rjsn8ad7t4qr83</string>
+	<string>com.googleusercontent.apps.949761947823-s439h7ja76c8cmbm7g0be3fod67248o4</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBGvyrz2qcG2valDiPb3JLpuij2fHfeVWA</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>jack-and-the-beans.Buddies</string>
+	<string>edu.gcc.cs.buddies</string>
 	<key>PROJECT_ID</key>
 	<string>beans-buddies</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:949761947823:ios:d604880bb008a75f</string>
+	<string>1:949761947823:ios:f40a0ac37275d200</string>
 	<key>DATABASE_URL</key>
 	<string>https://beans-buddies.firebaseio.com</string>
 </dict>
