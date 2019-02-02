@@ -41,9 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let authHandler = AuthHandler(auth: Auth.auth())
         
         if authHandler.isLoggedIn() {
-            //Load topics when we open
-            AppContent.setup()
-            
             // Show home page
             let mainViewController = BuddiesStoryboard.Main.viewController()
             self.window?.rootViewController = mainViewController
