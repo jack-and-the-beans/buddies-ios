@@ -17,6 +17,9 @@ import FirebaseInstanceID
 import FirebaseAuth
 
 // Protocols for dependency injection:
+// Essetially, these classes (e.g. `InstanceID` and `UNUserNotificationCenter`) already
+// implement these methods. The protocols are so that we can mock the protocol, and then
+// inject just the methods we need for the tests.
 protocol InstanceIDProtocol {
     func instanceID (handler:  @escaping InstanceIDResultHandler)
 }
