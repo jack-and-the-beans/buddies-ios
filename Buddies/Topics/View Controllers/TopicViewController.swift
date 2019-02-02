@@ -44,6 +44,8 @@ class TopicViewController: UICollectionViewController, TopicCollectionDelegate {
         topicCollection.delegate = self
         
         collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
+        
+        self.renderCreateActivityFab()
     }
 
     func updateTopicImage(index: Int) {
