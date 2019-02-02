@@ -28,8 +28,15 @@ class CreateActivityVCTests: XCTestCase {
     }
     
     func testBack() {
+        let expectation = self.expectation(description: #function)
+        vc._dismissHook = {
+            expectation.fulfill()
+        }
+        
         XCTAssertTrue(getTopViewController() == vc, "Expected create activity view to be shown")
         vc.back(0)
+        
+        waitForExpectations(timeout: 10)
         XCTAssertFalse(getTopViewController() == vc, "Expected create activity view to be dismissed")
     }
     
