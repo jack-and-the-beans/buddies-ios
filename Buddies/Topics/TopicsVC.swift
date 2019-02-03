@@ -49,5 +49,12 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
         
             return cell
         }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? UITableViewController,
+            let indexPath = collectionView.indexPathsForSelectedItems {
+            dest.title = topicCollection.topics[indexPath[0].row].name
+        }
+    }
 }
 
