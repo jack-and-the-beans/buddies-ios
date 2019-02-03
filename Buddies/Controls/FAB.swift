@@ -26,6 +26,7 @@ class FAB {
         let plusImage = UIImage(named: "plus")
         button.setImage(plusImage, for: .normal)
         button.setBackgroundColor(ControlColors.themeAlt)
+        button.setShadowColor(UIColor.black.withAlphaComponent(0.4), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.zPosition = 1000
         
