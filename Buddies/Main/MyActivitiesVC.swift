@@ -14,7 +14,9 @@ class MyActivitiesVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Stored as a local var for the sake of unit testing hooks
+        // We need to store a local so that the
+        //  instance isn't deallocated along with
+        //  the event handler!
         fab = FAB(for: self)
         fab.renderCreateActivityFab()
     }

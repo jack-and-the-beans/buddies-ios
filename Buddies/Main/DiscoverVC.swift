@@ -9,10 +9,17 @@
 import UIKit
 
 class DiscoverVC: UITableViewController {
+    
+    var fab: FAB!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FAB(for: self).renderCreateActivityFab()
+        // We need to store a local so that the
+        //  instance isn't deallocated along with
+        //  the event handler!
+        fab = FAB(for: self)
+        fab.renderCreateActivityFab()
     }
     
 
