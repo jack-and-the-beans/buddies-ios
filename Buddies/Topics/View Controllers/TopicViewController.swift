@@ -33,7 +33,7 @@ import AVFoundation
 
 
 class TopicViewController: UICollectionViewController, TopicCollectionDelegate {
-  
+
     var topicCollection: TopicCollection!
   
     override func viewDidLoad() {
@@ -45,7 +45,7 @@ class TopicViewController: UICollectionViewController, TopicCollectionDelegate {
         
         collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
         
-        self.renderCreateActivityFab()
+        FAB(for: self).renderCreateActivityFab()
     }
 
     func updateTopicImage(index: Int) {

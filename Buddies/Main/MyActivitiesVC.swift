@@ -9,11 +9,14 @@
 import UIKit
 
 class MyActivitiesVC: UITableViewController {
-
+    var fab: FAB!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.renderCreateActivityFab()
+        // Stored as a local var for the sake of unit testing hooks
+        fab = FAB(for: self)
+        fab.renderCreateActivityFab()
     }
     
 

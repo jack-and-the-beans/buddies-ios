@@ -9,11 +9,10 @@
 import UIKit
 
 class DiscoverVC: UITableViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.renderCreateActivityFab()
+        
+        FAB(for: self).renderCreateActivityFab()
     }
     
 
