@@ -40,6 +40,9 @@
 		A9B1449B22062D4C004C614E /* MyActivitiesVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1449A22062D4C004C614E /* MyActivitiesVCTests.swift */; };
 		A9B1449D22065D3A004C614E /* LayoutMeasurementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1449C22065D39004C614E /* LayoutMeasurementsTests.swift */; };
 		A9B1449F22065F50004C614E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1449E22065F50004C614E /* AppDelegate.swift */; };
+		A9B144A1220678DF004C614E /* FAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144A0220678DF004C614E /* FAB.swift */; };
+		A9B144A522067B5A004C614E /* FABTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144A422067B5A004C614E /* FABTests.swift */; };
+		A9B144A722067C28004C614E /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144A622067C28004C614E /* Testing.swift */; };
 		A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF3F2201427A00C05F2C /* LoginVC.swift */; };
 		A9E8BF45220143A300C05F2C /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF44220143A300C05F2C /* AuthHandler.swift */; };
 		A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */; };
@@ -106,6 +109,9 @@
 		A9B1449A22062D4C004C614E /* MyActivitiesVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivitiesVCTests.swift; sourceTree = "<group>"; };
 		A9B1449C22065D39004C614E /* LayoutMeasurementsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutMeasurementsTests.swift; sourceTree = "<group>"; };
 		A9B1449E22065F50004C614E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A9B144A0220678DF004C614E /* FAB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAB.swift; sourceTree = "<group>"; };
+		A9B144A422067B5A004C614E /* FABTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FABTests.swift; sourceTree = "<group>"; };
+		A9B144A622067C28004C614E /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		A9E8BF3F2201427A00C05F2C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		A9E8BF44220143A300C05F2C /* AuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandler.swift; sourceTree = "<group>"; };
 		A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVC.swift; sourceTree = "<group>"; };
@@ -292,11 +298,20 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		A9B144A322067B41004C614E /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				A9B144A422067B5A004C614E /* FABTests.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
 		A9E8BF482201F7DB00C05F2C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
 				A9E8BF492201F9D700C05F2C /* UnderlinedTextbox.swift */,
 				A9E8BF4B2201FB9C00C05F2C /* ControlColors.swift */,
+				A9B144A0220678DF004C614E /* FAB.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -398,6 +413,8 @@
 		B6AC54B221F8DB8500B075B8 /* BuddiesTests */ = {
 			isa = PBXGroup;
 			children = (
+				A9B144A622067C28004C614E /* Testing.swift */,
+				A9B144A322067B41004C614E /* Controls */,
 				A9B1449722062D02004C614E /* Main */,
 				A9B1449322062C89004C614E /* CreateActivity */,
 				58EA1EF52204141F003F6A3A /* Utilities */,
@@ -615,6 +632,7 @@
 				A9B1449122060206004C614E /* CreateActivityVC.swift in Sources */,
 				58AAA6752203F52E00AA538A /* Initialization.swift in Sources */,
 				A9B1448C220600FD004C614E /* DiscoverVC.swift in Sources */,
+				A9B144A1220678DF004C614E /* FAB.swift in Sources */,
 				582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */,
 				A9B1448A220600CC004C614E /* MyActivitiesVC.swift in Sources */,
 				58D2AA15220201B2009ABCBC /* TopicViewController.swift in Sources */,
@@ -648,9 +666,11 @@
 				58AAA6772203FD3A00AA538A /* TopicCollectionTests.swift in Sources */,
 				58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */,
 				583FD2DE220244F8005B2C75 /* TopicModelTests.swift in Sources */,
+				A9B144A522067B5A004C614E /* FABTests.swift in Sources */,
 				58A5A40722025C2B00E0BF38 /* TopicCellTest.swift in Sources */,
 				A9B1449922062D3B004C614E /* DiscoverVCTests.swift in Sources */,
 				A91BA3372202404600DED6B3 /* LoginVCTests.swift in Sources */,
+				A9B144A722067C28004C614E /* Testing.swift in Sources */,
 				A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */,
 				A91BA33A22024A8900DED6B3 /* LoginExistingVCTests.swift in Sources */,
 				A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */,
