@@ -55,13 +55,9 @@ class TopicCollection: NSObject {
         FirestoreManager.shared.loadAllDocuments(ofType: "topics") { snapshots in
             for snap in snapshots {
                 if let image = StorageManager.shared.getSavedImage(filename: snap.documentID) {
-                    OperationQueue.main.addOperation {
-                        self.addFromStorage(using: snap.data(), for: snap.documentID, image: image)
-                    }
+                    self.addFromStorage(using: snap.data(), for: snap.documentID, image: image)
                 } else {
-                    OperationQueue.main.addOperation {
-                        self.addWithoutImage(using: snap.data(), for: snap.documentID)
-                    }
+                    self.addWithoutImage(using: snap.data(), for: snap.documentID)
                 
                     guard let firebaseImageURL = snap.data()?["image_url"] as? String else {
                         print("Cannot get Image URL for \(snap.documentID)")
