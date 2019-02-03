@@ -198,6 +198,7 @@
 		58EF8D79220783E500872770 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				A9E8BF572202021C00C05F2C /* BuddiesStoryboard.swift */,
 				A9B1448E220601C6004C614E /* CreateActivity.storyboard */,
 				B6AC54A721F8DB8500B075B8 /* LaunchScreen.storyboard */,
 				5827F49D220269930018C932 /* Topics.storyboard */,
@@ -365,7 +366,6 @@
 				A9B1449E22065F50004C614E /* AppDelegate.swift */,
 				B6AC54A521F8DB8500B075B8 /* Assets.xcassets */,
 				B6AC54AA21F8DB8500B075B8 /* Info.plist */,
-				A9E8BF572202021C00C05F2C /* BuddiesStoryboard.swift */,
 			);
 			path = Buddies;
 			sourceTree = "<group>";
