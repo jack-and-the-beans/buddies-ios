@@ -19,6 +19,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         // Do any additional setup after loading the view.
     }
     
+    @IBOutlet weak var buttonPicture: UIButton!
     @IBAction func changePicture(_ sender: Any) {
         let imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = true
@@ -38,6 +39,10 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
             let data = image.pngData()! as NSData
             data.write(toFile: localPath!, atomically: true)
             
+            buttonPicture.tintColor = UIColor.clear
+            
+            buttonPicture.setImage(UIImage(contentsOfFile: localPath!), for: .normal)
+
             let photoURL = URL.init(fileURLWithPath: localPath!)
             
             let curUID = getAuthHandler().getUID()!
