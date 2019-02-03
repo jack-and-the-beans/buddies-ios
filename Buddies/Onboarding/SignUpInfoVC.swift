@@ -80,11 +80,20 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         
         if let UID = getAuthHandler().getUID()
         {
-            //set bio text
-            FirestoreManager.shared.db.collection("users").document(UID).setData([
-                "bio": bioText.text!
-                ], merge: true)
-            BuddiesStoryboard.Main.goTo()
+            
+            
+            if let bio = bioText.text{
+                //set bio text
+                FirestoreManager.shared.db.collection("users").document(UID).setData([
+                    "bio": bio
+                    ], merge: true)
+                BuddiesStoryboard.Main.goTo()
+            }
+            else
+            {
+                bioText.text = "About you..."
+            }
+            
         }
         else
         {

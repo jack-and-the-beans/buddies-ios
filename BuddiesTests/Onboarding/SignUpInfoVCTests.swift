@@ -51,7 +51,13 @@ class SignUpInfoVCTests: XCTestCase {
         for (email, password, bio, nExpectedCalls) in values {
             
             //sign in to allow auth to get UI
-            //prepare VC
+            /*handler.createUser(
+                email: email,
+                password: password,
+                onError: { msg in XCTAssert(false)},
+                onSuccess: { user in self.performSegue(withIdentifier: "GetSignUpInfo", sender: self)}
+            )*/
+            
             handler.nCallsGetUID = 0
             vc.bioText.text = bio
             vc.finishSignUp(self)
