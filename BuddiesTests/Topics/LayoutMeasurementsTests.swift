@@ -11,10 +11,10 @@ import XCTest
 
 class TestLayoutMeasurements: XCTestCase {
     
-    var viewController: TopicViewController!
+    var viewController: TopicsVC!
     
     override func setUp() {
-        viewController = (UIStoryboard(name: "Topics", bundle: nil).instantiateViewController(withIdentifier: "viewTopics") as! TopicViewController)
+        viewController = (UIStoryboard(name: "Topics", bundle: nil).instantiateViewController(withIdentifier: "viewTopics") as! TopicsVC)
 
         
     }

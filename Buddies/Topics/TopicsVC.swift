@@ -32,7 +32,7 @@ import UIKit
 import AVFoundation
 
 
-class TopicViewController: UICollectionViewController, TopicCollectionDelegate {
+class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
 
     var topicCollection: TopicCollection!
   
