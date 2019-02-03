@@ -11,11 +11,9 @@
 		582D0FA622035C3D004F71E3 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA522035C3D004F71E3 /* FirestoreManager.swift */; };
 		582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA722036C93004F71E3 /* StorageManager.swift */; };
 		582D0FAB22037D1C004F71E3 /* TopicCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FAA22037D1C004F71E3 /* TopicCollection.swift */; };
-		583FD2DE220244F8005B2C75 /* TopicModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583FD2DD220244F8005B2C75 /* TopicModelTests.swift */; };
 		5868FA6E2202A9DC00A4EC31 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5868FA6C2202A9DC00A4EC31 /* Login.storyboard */; };
 		58A5A404220258E000E0BF38 /* bean.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58A5A403220258E000E0BF38 /* bean.jpg */; };
 		58A5A40522025B6400E0BF38 /* bean.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58A5A403220258E000E0BF38 /* bean.jpg */; };
-		58A5A40722025C2B00E0BF38 /* TopicCellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A5A40622025C2B00E0BF38 /* TopicCellTest.swift */; };
 		58AAA6752203F52E00AA538A /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6742203F52E00AA538A /* Initialization.swift */; };
 		58AAA6772203FD3A00AA538A /* TopicCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6762203FD3A00AA538A /* TopicCollectionTests.swift */; };
 		58D2AA11220201B2009ABCBC /* TopicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D2AA01220201B1009ABCBC /* TopicLayout.swift */; };
@@ -43,6 +41,8 @@
 		A9B144A1220678DF004C614E /* FAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144A0220678DF004C614E /* FAB.swift */; };
 		A9B144A522067B5A004C614E /* FABTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144A422067B5A004C614E /* FABTests.swift */; };
 		A9B144A722067C28004C614E /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144A622067C28004C614E /* Testing.swift */; };
+		A9B144A822076B56004C614E /* TopicModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583FD2DD220244F8005B2C75 /* TopicModelTests.swift */; };
+		A9B144A922076B56004C614E /* TopicCellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A5A40622025C2B00E0BF38 /* TopicCellTest.swift */; };
 		A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF3F2201427A00C05F2C /* LoginVC.swift */; };
 		A9E8BF45220143A300C05F2C /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF44220143A300C05F2C /* AuthHandler.swift */; };
 		A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */; };
@@ -658,16 +658,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				583FD2DE220244F8005B2C75 /* TopicModelTests.swift in Sources */,
+				A9B144A822076B56004C614E /* TopicModelTests.swift in Sources */,
 				A9B1449522062CB6004C614E /* CreateActivityVCTests.swift in Sources */,
 				A9B1449D22065D3A004C614E /* LayoutMeasurementsTests.swift in Sources */,
-				58A5A40722025C2B00E0BF38 /* TopicCellTest.swift in Sources */,
+				A9B144A922076B56004C614E /* TopicCellTest.swift in Sources */,
 				A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */,
 				58AAA6772203FD3A00AA538A /* TopicCollectionTests.swift in Sources */,
 				58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */,
-				583FD2DE220244F8005B2C75 /* TopicModelTests.swift in Sources */,
 				A9B144A522067B5A004C614E /* FABTests.swift in Sources */,
-				58A5A40722025C2B00E0BF38 /* TopicCellTest.swift in Sources */,
 				A9B1449922062D3B004C614E /* DiscoverVCTests.swift in Sources */,
 				A91BA3372202404600DED6B3 /* LoginVCTests.swift in Sources */,
 				A9B144A722067C28004C614E /* Testing.swift in Sources */,
