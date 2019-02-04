@@ -69,9 +69,9 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate, Messaging
         
         guard let uid = user?.uid else { return }
 
-        collection.document(uid).updateData([
+        collection.document(uid).setData([
                 "notification_token" : fcmToken
-        ]) {err in
+        ], merge: true) {err in
             if let err = err {
                 print("Error updating document: \(err)")
             }
