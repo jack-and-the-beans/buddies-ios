@@ -81,17 +81,43 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     
     @IBOutlet weak var bioText: UITextView!
     
+    func fillDataModel(UID: String){
+        
+        let favTopics: [String] = []
+        let blockedUsers: [String] = []
+        let blockedActivities: [String] = []
+        let blockedBy: [String] = []
+        let dateJoined = Date()
+        let loc = GeoPoint.init(latitude: 10, longitude: 10)
+        
+        FirestoreManager.shared.db.collection("users").document(UID).setData([
+            "favorite_topics": favTopics,
+            "blocked_users": blockedUsers,
+            "blocked_activities": blockedActivities,
+            "blocked_by": blockedBy,
+            "date_joined": dateJoined,
+            "location" : loc
+            ], merge: true)
+        BuddiesStoryboard.Main.goTo()
+        
+    }
+    
     @IBAction func finishSignUp(_ sender: Any) {
         
         if let UID = getAuthHandler().getUID()
         {
             
             
+            
             if let bio = bioText.text{
                 //set bio text
                 FirestoreManager.shared.db.collection("users").document(UID).setData([
-                    "bio": bio
+                    "bio": bio,
+                    "uid": UID,
+                    "email": Auth.auth().currentUser?.email
                     ], merge: true)
+                
+                fillDataModel(UID: UID)
                 BuddiesStoryboard.Main.goTo()
             }
             else
