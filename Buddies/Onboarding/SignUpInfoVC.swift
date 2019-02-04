@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import Firebase
 
-class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     
     
@@ -49,7 +49,8 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
 
             let photoURL = URL.init(fileURLWithPath: localPath!)
             
-            let curUID = getAuthHandler().getUID()!
+            let authHandler = AuthHandler(auth: Auth.auth())
+            let curUID = authHandler.getUID()!
             
             let storagePath = "/users/" + curUID + "/profilePicture.jpg"
             let storageRef = StorageManager.shared.storage.reference().child(storagePath)
@@ -104,17 +105,18 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     
     @IBAction func finishSignUp(_ sender: Any) {
         
-        if let UID = getAuthHandler().getUID()
+        let authHandler = AuthHandler(auth: Auth.auth())
+        
+        if let UID = authHandler.getUID()
         {
             
-            
-            
+        
             if let bio = bioText.text{
                 //set bio text
                 FirestoreManager.shared.db.collection("users").document(UID).setData([
                     "bio": bio,
                     "uid": UID,
-                    "email": Auth.auth().currentUser?.email
+                    "email": authHandler.getEmail()!
                     ], merge: true)
                 
                 fillDataModel(UID: UID)
@@ -128,7 +130,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         }
         else
         {
-           self.showMessagePrompt("Unable to authorize user.")
+           print("Unable to authorize user.")
         }
 
 

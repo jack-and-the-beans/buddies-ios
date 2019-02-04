@@ -26,6 +26,10 @@ class SignUpInfoVCTests: XCTestCase {
         vc = nil
     }
     
+    func showMessagePrompt(_ msg: String) {
+        //dummy
+    }
+    
     func testInitLifecycle() {
         XCTAssertNotNil(vc.view, "View should be loaded")
     }
@@ -35,6 +39,7 @@ class SignUpInfoVCTests: XCTestCase {
         
         let handler = MockAuthHandler()
         vc._authHandler = handler
+        
         self.addTeardownBlock { self.vc._authHandler = nil }
         
         let values: [(String, String, String, Int)] = [
@@ -51,19 +56,20 @@ class SignUpInfoVCTests: XCTestCase {
         for (email, password, bio, nExpectedCalls) in values {
             
             //sign in to allow auth to get UI
-            /*handler.createUser(
+            vc._authHandler!.createUser(
                 email: email,
                 password: password,
                 onError: { msg in XCTAssert(false)},
-                onSuccess: { user in self.performSegue(withIdentifier: "GetSignUpInfo", sender: self)}
-            )*/
+                onSuccess: { user in print("hit") }
+            )
             
             handler.nCallsGetUID = 0
             vc.bioText.text = bio
+            
             vc.finishSignUp(self)
             
             //check bio with bio that should be in firebase
-            if let UID = Auth.auth().currentUser?.uid
+            if let UID = vc._authHandler?.getUID()
             {
                 let docRef = FirestoreManager.shared.db.collection("users").document(UID)
                 
@@ -83,10 +89,9 @@ class SignUpInfoVCTests: XCTestCase {
                 XCTAssert(false)
             }
             
-            /*handler.signOut(onError: ProfileVC.showMessagePrompt()) {
+            vc._authHandler?.signOut(onError: showMessagePrompt(_:)) {
                 BuddiesStoryboard.Login.goTo()
-            }*/
-
+            }
         }
         
     }
