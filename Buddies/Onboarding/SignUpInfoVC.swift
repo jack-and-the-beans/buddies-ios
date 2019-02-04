@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 import Firebase
 import Firebase
 
@@ -24,6 +25,7 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     @IBOutlet weak var pictureText: UILabel!
     @IBOutlet weak var buttonPicture: UIButton!
+    
     @IBAction func changePicture(_ sender: Any) {
         let imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = true
@@ -43,9 +45,7 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             let data = image.pngData()! as NSData
             data.write(toFile: localPath!, atomically: true)
             
-            buttonPicture.tintColor = UIColor.clear
             
-            buttonPicture.setImage(UIImage(contentsOfFile: localPath!), for: .normal)
 
             let photoURL = URL.init(fileURLWithPath: localPath!)
             
@@ -55,7 +55,7 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             let storagePath = "/users/" + curUID + "/profilePicture.jpg"
             let storageRef = StorageManager.shared.storage.reference().child(storagePath)
             
-            let uploadTask = storageRef.putFile(from: photoURL, metadata: nil) { metadata, error in
+            let uploadTask = storageRef.putFile(from: imgUrl, metadata: nil) { metadata, error in
          
                 storageRef.downloadURL { (url, error) in
                     if let downloadURL = url{
@@ -68,11 +68,15 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                     }
                 }
             }
-            
+          
+           
             
             uploadTask.observe(.success) { snapshot in
                 // Upload completed successfully
+                
                 self.pictureText.text = ""
+                self.buttonPicture.tintColor = UIColor.clear
+                self.buttonPicture.setImage(image, for: .normal)
                 self.dismiss(animated: true, completion: nil)
             }
     
