@@ -14,6 +14,9 @@ target 'Buddies' do
   # Login Flow
   pod 'FBSDKLoginKit'
   
+  # UI Elements 
+  pod 'MaterialComponents/Buttons'
+  
   target 'BuddiesTests' do
     inherit! :search_paths
     # Pods for testing

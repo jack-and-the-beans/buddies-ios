@@ -105,6 +105,17 @@ class NotificationServiceTest: XCTestCase {
             override func updateData(_ fields: [AnyHashable : Any], completion: ((Error?) -> Void)? = nil) {
                 test_token = fields[AnyHashable("notification_token")] as? String
             }
+
+            override func setData(_ documentData: [String : Any], merge: Bool, completion: ((Error?) -> Void)? = nil) {
+                test_token = documentData["notification_token"] as? String
+                if (test_token?.count == 0) {
+                    let err = NSError(domain: "None", code: -1, userInfo: ["name": "none"])
+                    guard let onErr = completion else { return }
+                    
+                    onErr(err)
+                }
+            }
+            
             // THANK YOU STACK OVERFLOW: https://stackoverflow.com/a/47272501
             init(workaround _: Void = ()) {}
         }
@@ -133,6 +144,18 @@ class NotificationServiceTest: XCTestCase {
             collection: collection
         )
         XCTAssert(collection.doc.test_token == "token_boi", "Saves token if user is authenticated.")
+    }
+    
+    func testTokenError() {
+        let notificationTester = NotificationService()
+        let collection = TestCollection()
+        let user = ExistingUser()
+        notificationTester.saveTokenToFirestore(
+            fcmToken: "",
+            user: user,
+            collection: collection
+        )
+        XCTAssert(true, "Does not crash on error throw")
     }
 }
 
