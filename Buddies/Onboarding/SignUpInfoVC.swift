@@ -17,8 +17,12 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        buttonPicture.layer.cornerRadius = buttonPicture.frame.size.width / 2
+        
     }
     
+    @IBOutlet weak var pictureText: UILabel!
     @IBOutlet weak var buttonPicture: UIButton!
     @IBAction func changePicture(_ sender: Any) {
         let imagePicker = UIImagePickerController()
@@ -67,7 +71,8 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
             
             uploadTask.observe(.success) { snapshot in
                 // Upload completed successfully
-                   self.dismiss(animated: true, completion: nil)
+                self.pictureText.text = ""
+                self.dismiss(animated: true, completion: nil)
             }
     
         }
