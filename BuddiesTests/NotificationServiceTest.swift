@@ -92,63 +92,32 @@ class NotificationServiceTest: XCTestCase {
         var uid: String = "test_uid"
     }
 
-    class TestCollection : CollectionReference {
-        var test_token: String? = nil
-        var doc = TestDoc()
-
-        override func document(_ documentPath: String) -> DocumentReference {
-            return doc
-        }
-
-        class TestDoc : DocumentReference {
-            var test_token: String? = nil
-            override func updateData(_ fields: [AnyHashable : Any], completion: ((Error?) -> Void)? = nil) {
-                test_token = fields[AnyHashable("notification_token")] as? String
-            }
-
-            override func setData(_ documentData: [String : Any], merge: Bool, completion: ((Error?) -> Void)? = nil) {
-                test_token = documentData["notification_token"] as? String
-                if (test_token?.count == 0) {
-                    let err = NSError(domain: "None", code: -1, userInfo: ["name": "none"])
-                    guard let onErr = completion else { return }
-                    
-                    onErr(err)
-                }
-            }
-            
-            // THANK YOU STACK OVERFLOW: https://stackoverflow.com/a/47272501
-            init(workaround _: Void = ()) {}
-        }
-        // THANK YOU STACK OVERFLOW: https://stackoverflow.com/a/47272501
-        init(workaround _: Void = ()) {}
-    }
-
     func testTokenSaveNoUser() {
         let notificationTester = NotificationService()
-        let collection = TestCollection()
+        let collection = TestCollectionReference()
         notificationTester.saveTokenToFirestore(
             fcmToken: "token_boi",
             user: nil,
             collection: collection
         )
-        XCTAssert(collection.doc.test_token == nil, "Does not save token if user is not authenticated.")
+        XCTAssert(collection.doc.exposedData["notification_token"] == nil, "Does not save token if user is not authenticated.")
     }
 
     func testTokenSave() {
         let notificationTester = NotificationService()
-        let collection = TestCollection()
+        let collection = TestCollectionReference()
         let user = ExistingUser()
         notificationTester.saveTokenToFirestore(
             fcmToken: "token_boi",
             user: user,
             collection: collection
         )
-        XCTAssert(collection.doc.test_token == "token_boi", "Saves token if user is authenticated.")
+        XCTAssert(collection.doc.exposedData["notification_token"] as! String == "token_boi", "Saves token if user is authenticated.")
     }
     
     func testTokenError() {
         let notificationTester = NotificationService()
-        let collection = TestCollection()
+        let collection = TestCollectionReference()
         let user = ExistingUser()
         notificationTester.saveTokenToFirestore(
             fcmToken: "",
