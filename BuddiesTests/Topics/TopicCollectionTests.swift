@@ -12,24 +12,37 @@ import FirebaseFirestore
 
 class TopicCollectionTests: XCTestCase {
     
-    class MockCollectioDelegate: TopicCollectionDelegate {
+    class MockCollectionDelegate: TopicCollectionDelegate {
         var fullUpdates = 0
-        var specificUpdates = [Int]()
         func updateTopicImages() {
             fullUpdates += 1
         }
-        func updateTopicImage(index: Int) {
-            specificUpdates.append(index)
+    }
+    
+    class MockTopicCollection: TopicCollection {
+        var addFromStorageCalls = 0
+        var addWithoutImageCalls = 0
+        var updateImageCalls = 0
+        
+        override func addFromStorage(using data: [String : Any]?, for id: String, image: UIImage) {
+            addFromStorageCalls += 1
+        }
+        override func addWithoutImage(using data: [String : Any]?, for id: String) {
+            addWithoutImageCalls += 1
+        }
+        override func updateImage(with imageURL: URL, for id: String) {
+            updateImageCalls += 1
         }
     }
     
+    
     var collection: TopicCollection!
-    var delegate: MockCollectioDelegate!
+    var delegate: MockCollectionDelegate!
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         collection = TopicCollection()
-        delegate = MockCollectioDelegate()
+        delegate = MockCollectionDelegate()
         collection.delegate = delegate
         
     }
@@ -60,9 +73,7 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics[1].id == "2")
         XCTAssert(collection.topics[1].name == "jake")
         
-        XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
+        XCTAssert(delegate.fullUpdates == 2)
     }
     
     func testAddFromStorageInvalid(){
@@ -78,8 +89,6 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics.count == 0)
         
         XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
 
     }
     
@@ -100,9 +109,7 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics[0].id == "1")
         XCTAssert(collection.topics[0].name == "jake")
         
-        XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
+        XCTAssert(delegate.fullUpdates == 1)
     }
     
     
@@ -130,10 +137,7 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics[1].id == "2")
         XCTAssert(collection.topics[1].name == "jake")
         
-        XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
-        
+        XCTAssert(delegate.fullUpdates == 2)
         
     }
     
@@ -150,9 +154,6 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics.count == 0)
         
         XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
-        
     }
     
     func testAddWithoutImageMixed(){
@@ -172,9 +173,7 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics[0].id == "1")
         XCTAssert(collection.topics[0].name == "jake")
         
-        XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
+        XCTAssert(delegate.fullUpdates == 1)
     }
     
    
@@ -208,7 +207,8 @@ class TopicCollectionTests: XCTestCase {
                 XCTAssert(collection.topics[i].image == nil)
             }
         }
-        XCTAssert(delegate.specificUpdates.elementsEqual(elemsUpdated))
+        //the 0th, 2nd, and 6th item is updated
+        XCTAssert(delegate.fullUpdates == 4)
     }
     
     func testUpdateImageNoSuchTopic(){
@@ -235,6 +235,51 @@ class TopicCollectionTests: XCTestCase {
             XCTAssert(collection.topics[i].image == nil)
         }
         
-        XCTAssert(delegate.specificUpdates.isEmpty)
+        XCTAssert(delegate.fullUpdates == 0)
+    }
+    
+    func testAddTopicStorage(){
+        let mockCollection = MockTopicCollection()
+        
+        let data = [
+            "name": "test name",
+            "image_url": "not SUT",
+        ]
+        let snap = MockDocumentSnapshot(data: data)
+        let storageManager = MockStorageManager()
+        //Don't try to fake download
+        storageManager.shouldFindSavedImage = true
+
+        mockCollection.addTopic(snapshot: snap, storageManger: storageManager)
+        
+        XCTAssert(storageManager.downloadFileCalls == 0)
+        XCTAssert(storageManager.getSavedImageCalls == 1)
+        
+        XCTAssert(mockCollection.addFromStorageCalls == 1)
+        XCTAssert(mockCollection.addWithoutImageCalls == 0)
+        XCTAssert(mockCollection.updateImageCalls == 0)
+    }
+    
+    func testAddTopicDownload(){
+
+        let mockCollection = MockTopicCollection()
+        
+        let data = [
+            "name": "test name",
+            "image_url": "not SUT",
+            ]
+        
+        let snap = MockDocumentSnapshot(data: data)
+        let storageManager = MockStorageManager()
+        
+        mockCollection.addTopic(snapshot: snap, storageManger: storageManager)
+        
+        XCTAssert(storageManager.downloadFileCalls == 1)
+        XCTAssert(storageManager.getSavedImageCalls == 1)
+
+        
+        XCTAssert(mockCollection.addFromStorageCalls == 0)
+        XCTAssert(mockCollection.addWithoutImageCalls == 1)
+        XCTAssert(mockCollection.updateImageCalls == 1)
     }
 }
