@@ -94,7 +94,8 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             let loc = GeoPoint.init(latitude: 10, longitude: 10)
             let email = user?.email
             
-            FirestoreManager.shared.db.collection("users").document(UID).setData([
+            
+            collection.document(UID).setData([
                 "favorite_topics": favTopics,
                 "blocked_users": blockedUsers,
                 "blocked_activities": blockedActivities,
@@ -118,7 +119,7 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         
         if let UID = user?.uid
         {
-            FirestoreManager.shared.db.collection("users").document(UID).setData([
+            collection.document(UID).setData([
                 "image_url": url
                 ], merge: true)
         }
@@ -136,7 +137,7 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
      
         if let UID = user?.uid
         {
-            FirestoreManager.shared.db.collection("users").document(UID).setData([
+            collection.document(UID).setData([
             "bio": bio
             ], merge: true)
         }

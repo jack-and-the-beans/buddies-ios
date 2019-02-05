@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		450CC0F5220964F000282BAB /* SignUpInfoVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */; };
 		45DA93A8220957CE0064CBEF /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DA93A7220957CE0064CBEF /* Testing.swift */; };
 		45DA93A9220957CE0064CBEF /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DA93A7220957CE0064CBEF /* Testing.swift */; };
 		45FBF7A922095A030007DD6D /* CreateActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBF7A822095A030007DD6D /* CreateActivityVC.swift */; };
@@ -79,6 +80,7 @@
 		175E6AB724FECB3A49170B22 /* Pods-Buddies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buddies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Buddies/Pods-Buddies.debug.xcconfig"; sourceTree = "<group>"; };
 		22663AE425AE50AC65D6EE5D /* Pods_BuddiesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BuddiesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Buddies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInfoVCTests.swift; sourceTree = "<group>"; };
 		45DA93A7220957CE0064CBEF /* Testing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		45FBF7A822095A030007DD6D /* CreateActivityVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateActivityVC.swift; sourceTree = "<group>"; };
 		582D0FA522035C3D004F71E3 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
@@ -105,7 +107,6 @@
 		58EF8DA22208A2BC00872770 /* CreateActivityVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateActivityVCTests.swift; sourceTree = "<group>"; };
 		58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyActivitiesVCTests.swift; sourceTree = "<group>"; };
 		58EF8DA62208A2C600872770 /* DiscoverVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverVCTests.swift; sourceTree = "<group>"; };
-		58EF8DA92208A2D100872770 /* SignUpInfoVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpInfoVCTests.swift; sourceTree = "<group>"; };
 		58EF8DAE2208A2E900872770 /* TopicCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCollectionTests.swift; sourceTree = "<group>"; };
 		58EF8DAF2208A2E900872770 /* TopicModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicModelTests.swift; sourceTree = "<group>"; };
 		58EF8DB02208A2E900872770 /* LayoutMeasurementsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutMeasurementsTests.swift; sourceTree = "<group>"; };
@@ -376,10 +377,10 @@
 		A9E8BF6322023D0D00C05F2C /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				58EF8DA92208A2D100872770 /* SignUpInfoVCTests.swift */,
 				A91BA3362202404600DED6B3 /* LoginVCTests.swift */,
 				A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */,
 				A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */,
+				450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -682,6 +683,7 @@
 				A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */,
 				58AAA6772203FD3A00AA538A /* TopicCollectionTests.swift in Sources */,
 				58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */,
+				450CC0F5220964F000282BAB /* SignUpInfoVCTests.swift in Sources */,
 				45DA93A9220957CE0064CBEF /* Testing.swift in Sources */,
 				589AD64122092F950090A96C /* FirebaseMock.swift in Sources */,
 				A91BA3372202404600DED6B3 /* LoginVCTests.swift in Sources */,
