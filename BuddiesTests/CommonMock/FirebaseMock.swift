@@ -9,14 +9,14 @@
 import Foundation
 import Firebase
 
-class TestCollectionReference : CollectionReference {
-    var documents = [String: TestDocumentReference]()
+class MockCollectionReference : CollectionReference {
+    var documents = [String: MockDocumentReference]()
     
     override func document(_ documentPath: String) -> DocumentReference {
         if let document = documents[documentPath] {
             return document
         } else {
-            let doc = TestDocumentReference()
+            let doc = MockDocumentReference()
             documents[documentPath] = doc
             return doc
         }
@@ -25,7 +25,7 @@ class TestCollectionReference : CollectionReference {
     init(workaround _: Void = ()) {}
 }
 
-class TestDocumentReference : DocumentReference {
+class MockDocumentReference : DocumentReference {
     var exposedData = [String: Any]()
     override func updateData(_ fields: [AnyHashable : Any], completion: ((Error?) -> Void)? = nil) {
         if let data = fields as? [String: Any] {
@@ -48,4 +48,25 @@ class TestDocumentReference : DocumentReference {
     
     // THANK YOU STACK OVERFLOW: https://stackoverflow.com/a/47272501
     init(workaround _: Void = ()) {}
+}
+
+class MockDocumentSnapshot : DocumentSnapshot {
+    var exposedData = [String: Any]()
+    let _documentID = UUID().uuidString
+    override var documentID: String {
+        get {
+            return _documentID
+        }
+    }
+
+    override func data() -> [String : Any]? {
+        return exposedData
+    }
+    
+    // THANK YOU STACK OVERFLOW: https://stackoverflow.com/a/47272501
+    init(workaround _: Void = ()) {}
+    
+    init(data: [String: Any]){
+        exposedData = data
+    }
 }
