@@ -22,22 +22,6 @@ class StorageManagerTests: XCTestCase {
         }
     }
     
-    class MockURLSessionDownloadTask : URLSessionDownloadTask {
-        var started = false
-        override func resume() { started = true }
-    }
-    
-    class MockURLSession: URLSession {
-        var urlString: String? = nil
-        override func downloadTask(with request: URLRequest, completionHandler: @escaping (URL?, URLResponse?, Error?) -> Void) -> URLSessionDownloadTask {
-            
-            urlString = request.url?.absoluteString
-            
-            completionHandler(URL(string: "mockTempURL"), nil, nil)
-            
-            return MockURLSessionDownloadTask()
-        }
-    }
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

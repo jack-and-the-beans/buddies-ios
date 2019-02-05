@@ -12,20 +12,37 @@ import FirebaseFirestore
 
 class TopicCollectionTests: XCTestCase {
     
-    class MockCollectioDelegate: TopicCollectionDelegate {
+    class MockCollectionDelegate: TopicCollectionDelegate {
         var fullUpdates = 0
         func updateTopicImages() {
             fullUpdates += 1
         }
     }
     
+    class MockTopicCollection: TopicCollection {
+        var addFromStorageCalls = 0
+        var addWithoutImageCalls = 0
+        var updateImageCalls = 0
+        
+        override func addFromStorage(using data: [String : Any]?, for id: String, image: UIImage) {
+            addFromStorageCalls += 1
+        }
+        override func addWithoutImage(using data: [String : Any]?, for id: String) {
+            addWithoutImageCalls += 1
+        }
+        override func updateImage(with imageURL: URL, for id: String) {
+            updateImageCalls += 1
+        }
+    }
+    
+    
     var collection: TopicCollection!
-    var delegate: MockCollectioDelegate!
+    var delegate: MockCollectionDelegate!
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         collection = TopicCollection()
-        delegate = MockCollectioDelegate()
+        delegate = MockCollectionDelegate()
         collection.delegate = delegate
         
     }
@@ -219,5 +236,50 @@ class TopicCollectionTests: XCTestCase {
         }
         
         XCTAssert(delegate.fullUpdates == 0)
+    }
+    
+    func testAddTopicStorage(){
+        let mockCollection = MockTopicCollection()
+        
+        let data = [
+            "name": "test name",
+            "image_url": "not SUT",
+        ]
+        let snap = MockDocumentSnapshot(data: data)
+        let storageManager = MockStorageManager()
+        //Don't try to fake download
+        storageManager.shouldFindSavedImage = true
+
+        mockCollection.addTopic(snapshot: snap, storageManger: storageManager)
+        
+        XCTAssert(storageManager.downloadFileCalls == 0)
+        XCTAssert(storageManager.getSavedImageCalls == 1)
+        
+        XCTAssert(mockCollection.addFromStorageCalls == 1)
+        XCTAssert(mockCollection.addWithoutImageCalls == 0)
+        XCTAssert(mockCollection.updateImageCalls == 0)
+    }
+    
+    func testAddTopicDownload(){
+
+        let mockCollection = MockTopicCollection()
+        
+        let data = [
+            "name": "test name",
+            "image_url": "not SUT",
+            ]
+        
+        let snap = MockDocumentSnapshot(data: data)
+        let storageManager = MockStorageManager()
+        
+        mockCollection.addTopic(snapshot: snap, storageManger: storageManager)
+        
+        XCTAssert(storageManager.downloadFileCalls == 1)
+        XCTAssert(storageManager.getSavedImageCalls == 1)
+
+        
+        XCTAssert(mockCollection.addFromStorageCalls == 0)
+        XCTAssert(mockCollection.addWithoutImageCalls == 1)
+        XCTAssert(mockCollection.updateImageCalls == 1)
     }
 }
