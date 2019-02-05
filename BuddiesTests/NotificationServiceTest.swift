@@ -94,32 +94,32 @@ class NotificationServiceTest: XCTestCase {
 
     func testTokenSaveNoUser() {
         let notificationTester = NotificationService()
-        let collection = TestCollectionReference()
+        let collection = MockCollectionReference()
         notificationTester.saveTokenToFirestore(
             fcmToken: "token_boi",
             user: nil,
             collection: collection
         )
-        let doc = collection.document("test_uid") as! TestDocumentReference
+        let doc = collection.document("test_uid") as! MockDocumentReference
         XCTAssert(doc.exposedData["notification_token"] == nil, "Does not save token if user is not authenticated.")
     }
 
     func testTokenSave() {
         let notificationTester = NotificationService()
-        let collection = TestCollectionReference()
+        let collection = MockCollectionReference()
         let user = ExistingUser()
         notificationTester.saveTokenToFirestore(
             fcmToken: "token_boi",
             user: user,
             collection: collection
         )
-        let doc = collection.document("test_uid") as! TestDocumentReference
+        let doc = collection.document("test_uid") as! MockDocumentReference
         XCTAssert(doc.exposedData["notification_token"] as! String == "token_boi", "Saves token if user is authenticated.")
     }
     
     func testTokenError() {
         let notificationTester = NotificationService()
-        let collection = TestCollectionReference()
+        let collection = MockCollectionReference()
         let user = ExistingUser()
         notificationTester.saveTokenToFirestore(
             fcmToken: "",

@@ -11,7 +11,6 @@ import UIKit
 import FirebaseFirestore
 
 protocol TopicCollectionDelegate {
-    func updateTopicImage(index: Int) -> Void
     func updateTopicImages() -> Void
 }
 
@@ -25,14 +24,14 @@ class TopicCollection: NSObject {
         if let topic = Topic(id: id, data: data) {
             topic.image = image
             self.topics.append(topic)
-            self.delegate?.updateTopicImage(index: self.topics.count - 1)
+            self.delegate?.updateTopicImages()
         }
     }
     
     func addWithoutImage(using data: [String: Any]?, for id: String){
         if let topic = Topic(id: id, data: data){
             self.topics.append(topic)
-            self.delegate?.updateTopicImage(index: self.topics.count - 1)
+            self.delegate?.updateTopicImages()
         }
     }
     
@@ -42,7 +41,7 @@ class TopicCollection: NSObject {
             if let image = UIImage(data: imageData),
                 let idx = topics.firstIndex(where: {$0.id == id})  {
                 topics[idx].image = image
-                delegate?.updateTopicImage(index: idx)
+                self.delegate?.updateTopicImages()
             } else {
                 print("Failed to load downloaded Topic image for \(id)")
             }
@@ -51,35 +50,31 @@ class TopicCollection: NSObject {
         }
     }
     
-    func loadTopics(){
-        FirestoreManager.shared.loadAllDocuments(ofType: "topics") { snapshots in
-            for snap in snapshots {
-                if let image = StorageManager.shared.getSavedImage(filename: snap.documentID) {
-                    self.addFromStorage(using: snap.data(), for: snap.documentID, image: image)
-                } else {
-                    self.addWithoutImage(using: snap.data(), for: snap.documentID)
-                
-                    guard let firebaseImageURL = snap.data()?["image_url"] as? String else {
-                        print("Cannot get Image URL for \(snap.documentID)")
-                        continue
-                    }
-                        
-                    let _ = StorageManager.shared.downloadFile(
-                        for: firebaseImageURL,
-                        to: snap.documentID,
-                        session: nil
-                    ) { destURL in
-                        OperationQueue.main.addOperation {
-                            self.updateImage(with: destURL, for: snap.documentID)
-                        }
-                    }
- 
-                }
-                
+    func addTopic(snapshot: DocumentSnapshot, storageManger: StorageManager = StorageManager.shared){
+        if let image = storageManger.getSavedImage(filename: snapshot.documentID) {
+            addFromStorage(using: snapshot.data(), for: snapshot.documentID, image: image)
+        } else {
+            addWithoutImage(using: snapshot.data(), for: snapshot.documentID)
+            
+            guard let firebaseImageURL = snapshot.data()?["image_url"] as? String else {
+                print("Cannot get Image URL for \(snapshot.documentID)")
+                return
             }
+            
+            let _ = storageManger.downloadFile(
+                for: firebaseImageURL,
+                to: snapshot.documentID,
+                session: nil
+            ) { destURL in self.updateImage(with: destURL, for: snapshot.documentID) }
         }
     }
     
-    
+    func loadTopics(){
+        FirestoreManager.shared.loadAllDocuments(ofType: "topics"){ snapshots in
+            for snap in snapshots {
+                self.addTopic(snapshot: snap)
+            }
+        }
+    }
     
 }
