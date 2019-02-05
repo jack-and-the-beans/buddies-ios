@@ -12,9 +12,6 @@ import Firebase
 
 class SignUpInfoVCTests: XCTestCase {
 
-    var vc: SignUpInfoVC!
-    
-    
     override func setUp() {
         vc = BuddiesStoryboard.Login.viewController(withID: "SignUpInfo")
         UIApplication.setRootView(vc, animated: false)
@@ -26,75 +23,80 @@ class SignUpInfoVCTests: XCTestCase {
         vc = nil
     }
     
-    func showMessagePrompt(_ msg: String) {
-        //dummy
+    class ExistingUser : NSObject, UserInfo {
+        var providerID: String = "test"
+        
+        var displayName: String? = "test"
+        
+        var photoURL: URL? = nil
+        
+        var email: String? = "test"
+        
+        var phoneNumber: String? = "test"
+        
+        var uid: String = "test_uid"
     }
+    
     
     func testInitLifecycle() {
         XCTAssertNotNil(vc.view, "View should be loaded")
     }
     
-    func testfinishSignUp(){
+    func testFillDataModel()
+    {
+        let vc = SignUpInfoVC()
+        let collection = TestCollectionReference()
+        let user = ExistingUser()
         
+        vc.fillDataModel( user: user, collection: collection)
         
-        let handler = MockAuthHandler()
-        vc._authHandler = handler
+        let doc = collection.document("test_uid") as! TestDocumentReference
         
-        self.addTeardownBlock { self.vc._authHandler = nil }
-        
-        let values: [(String, String, String, Int)] = [
-            ("example@example.com", "myGoodP@ssword1", "Hello1", 1),
-            ("example2@example.com", "myGoodP@ssword2", "Hello2", 1),
-            ("example3@example.com", "myGoodP@ssword3", "Hello3", 1),
-            ("example4@example.com", "myGoodP@ssword4", "Hello4", 1),
-            ("example5@example.com", "myGoodP@ssword5", "Hello5", 1),
-            ("example6@example.com", "myGoodP@ssword6", "Hello6", 1),
-            ("example7@example.com", "myGoodP@ssword7", "Hello7", 1),
-            ]
-        
-        
-        for (email, password, bio, nExpectedCalls) in values {
-            
-            //sign in to allow auth to get UI
-            vc._authHandler!.createUser(
-                email: email,
-                password: password,
-                onError: { msg in XCTAssert(false)},
-                onSuccess: { user in print("hit") }
-            )
-            
-            handler.nCallsGetUID = 0
-            vc.bioText.text = bio
-            
-            vc.finishSignUp(self)
-            
-            //check bio with bio that should be in firebase
-            if let UID = vc._authHandler?.getUID()
-            {
-                let docRef = FirestoreManager.shared.db.collection("users").document(UID)
-                
-                docRef.getDocument { (document, error) in
-                    
-                    if let document = document, document.exists {
-                        let fbBio = document.get("bio") as! String
-                        XCTAssert(bio == fbBio)
-                    } else {
-                       XCTAssert(false)
-                    }
-                }
-                
-                XCTAssert(handler.nCallsGetUID == nExpectedCalls, "Expected: \(nExpectedCalls) Actual: \(handler.nCallsCreateUser) Bio: \(bio ?? "nil")")
-            }
-            else{
-                XCTAssert(false)
-            }
-            
-            vc._authHandler?.signOut(onError: showMessagePrompt(_:)) {
-                BuddiesStoryboard.Login.goTo()
-            }
-        }
-        
+        XCTAssert(doc.exposedData["favorite_topics"] as! [String] == [], "Saves empty array for favorite_topics if user is authenticated.")
+        XCTAssert(doc.exposedData["blocked_users"] as! [String] == [], "Saves empty array for blocked_users if user is authenticated.")
+        XCTAssert(doc.exposedData["blocked_activities"] as! [String] == [], "Saves empty array for blocked_activities if user is authenticated.")
+        XCTAssert(doc.exposedData["blocked_by"] as! [String] == [], "Saves empty array for blocked_by if user is authenticated.")
+        XCTAssert(doc.exposedData["date_joined"] as! Date == Date(timeIntervalSince1970: TimeInterval(0)), "Saves dummy date for date_joined if user is authenticated.")
+        XCTAssert(doc.exposedData["location"] as! Geopoint == GeoPoint.init(latitude: 10, longitude: 10), "Saves dummy location for location if user is authenticated.")
+        XCTAssert(doc.exposedData["email"] as! String == "test", "Saves dummy email if user is authenticated.")
     }
+    
+    func testSaveProfilePicURLToFirestore()
+    {
+        let vc = SignUpInfoVC()
+        let collection = TestCollectionReference()
+        let user = ExistingUser()
+        
+        vc.saveProfilePicURLToFirestore(
+            image_url: "url/for/image",
+            user: user,
+            collection: collection
+        )
+        
+        let doc = collection.document("test_uid") as! TestDocumentReference
+        
+        XCTAssert(doc.exposedData["image_url"] as! String == "url/for/image", "Saves download url for profile picture if user is authenticated.")
+    }
+    
+    func testSaveBioToFirestore(){
+        let vc = SignUpInfoVC()
+        let collection = TestCollectionReference()
+        let user = ExistingUser()
+        
+        vc.saveBioToFirestore(
+            bio: "biography",
+            user: user,
+            collection: collection
+        )
+        
+        let doc = collection.document("test_uid") as! TestDocumentReference
+        
+        XCTAssert(doc.exposedData["bio"] as! String == "biography", "Saves bio if user is authenticated.")
+    }
+    
+    
+    
+  
     
     
 }
