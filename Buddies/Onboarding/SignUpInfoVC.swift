@@ -35,7 +35,7 @@ class ProfilePicOp: Operation {
                 if let downloadURL = url{
                     self.vc.saveProfilePicURLToFirestore(url: downloadURL.absoluteString)
                 }else{
-                    print("Error updating document: \(error)")
+                    print("Error updating document: \(error!)")
                 }
             }
         }
@@ -136,7 +136,7 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 "blocked_by": blockedBy,
                 "date_joined": dateJoined,
                 "location" : loc,
-                "email": email
+                "email": email!
                 ], merge: true)
             
         }else{
