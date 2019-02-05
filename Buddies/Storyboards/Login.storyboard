@@ -142,11 +142,12 @@
                         <outlet property="emailField" destination="02Z-AH-9si" id="7Lf-80-Pmh"/>
                         <outlet property="firstNameField" destination="58C-Ul-F4u" id="1CH-Dn-lOS"/>
                         <outlet property="passwordField" destination="IaT-Yb-ken" id="Fqq-Pg-d5o"/>
+                        <segue destination="s0Y-7Y-nAN" kind="show" identifier="GetSignUpInfo" id="9lV-Tx-R2h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="40.799999999999997" y="26.53673163418291"/>
+            <point key="canvasLocation" x="130" y="27"/>
         </scene>
         <!--Login ExistingVC-->
         <scene sceneID="O1O-fc-YlY">
@@ -274,6 +275,80 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cbf-G9-nft" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="879" y="27"/>
+        </scene>
+        <!--Sign Up InfoVC-->
+        <scene sceneID="bWc-17-Mtk">
+            <objects>
+                <viewController storyboardIdentifier="SignUpInfo" title="Sign Up InfoVC" id="s0Y-7Y-nAN" customClass="SignUpInfoVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xy8-pU-I9d">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Lm-UX-4cY">
+                                <rect key="frame" x="167" y="487" width="41" height="30"/>
+                                <state key="normal" title="Finish"/>
+                                <connections>
+                                    <action selector="finishSignUp:" destination="s0Y-7Y-nAN" eventType="touchUpInside" id="uGz-2X-3wv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VL9-LF-7fc">
+                                <rect key="frame" x="97.5" y="50" width="180" height="180"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="180" id="Y1m-Ij-FNN"/>
+                                    <constraint firstAttribute="width" constant="180" id="axF-5q-POJ"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="changePicture:" destination="s0Y-7Y-nAN" eventType="touchUpInside" id="jAZ-aO-5As"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZ9-Ks-z4Y">
+                                <rect key="frame" x="130.5" y="235" width="114" height="30"/>
+                                <state key="normal" title="Upload a Picture">
+                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="changePicture:" destination="s0Y-7Y-nAN" eventType="touchUpInside" id="jMz-o5-19I"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="About you..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="U5q-xz-N3r" customClass="UnderlinedMultiLineTextView" customModule="Buddies" customModuleProvider="target">
+                                <rect key="frame" x="30" y="297" width="315" height="160"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="315" id="MLd-sO-ZJb"/>
+                                    <constraint firstAttribute="height" constant="160" id="XLq-19-wIB"/>
+                                </constraints>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="U5q-xz-N3r" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="8PX-gO-z2q"/>
+                            <constraint firstItem="VL9-LF-7fc" firstAttribute="top" secondItem="ieI-QG-mvM" secondAttribute="top" constant="30" id="HSD-bh-LFC"/>
+                            <constraint firstItem="QZ9-Ks-z4Y" firstAttribute="top" secondItem="VL9-LF-7fc" secondAttribute="bottom" constant="5" id="KXO-qJ-gF7"/>
+                            <constraint firstItem="VL9-LF-7fc" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="PLq-7e-To1"/>
+                            <constraint firstItem="8Lm-UX-4cY" firstAttribute="top" secondItem="U5q-xz-N3r" secondAttribute="bottom" constant="30" id="WTc-tq-Nev"/>
+                            <constraint firstItem="8Lm-UX-4cY" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="cdV-md-xK5"/>
+                            <constraint firstItem="QZ9-Ks-z4Y" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="cem-UX-fEI"/>
+                            <constraint firstItem="ieI-QG-mvM" firstAttribute="bottom" secondItem="8Lm-UX-4cY" secondAttribute="bottom" constant="150" id="mxr-cI-kzg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ieI-QG-mvM"/>
+                    </view>
+                    <connections>
+                        <outlet property="bioText" destination="U5q-xz-N3r" id="fan-6e-geL"/>
+                        <outlet property="buttonPicture" destination="VL9-LF-7fc" id="oQJ-Wm-Icv"/>
+                        <outlet property="pictureButtonText" destination="QZ9-Ks-z4Y" id="9YW-8A-yO5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mip-qu-XnF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1712.8" y="26.53673163418291"/>
         </scene>
     </scenes>
     <resources>

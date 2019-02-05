@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         topicCollection = TopicCollection()
         
+        
         Auth.auth().addStateDidChangeListener {auth, user in
             if let _ = user {
                 AppContent.setup()

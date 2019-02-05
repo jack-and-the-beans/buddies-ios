@@ -17,6 +17,7 @@ class CreateActivityVC: UIViewController {
     }
     
     var _dismissHook: (() -> Void)?
+    
     @IBAction func back(_ sender: Any) {
         dismiss(animated: true, completion: _dismissHook)
     }
