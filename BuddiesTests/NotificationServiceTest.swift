@@ -100,7 +100,8 @@ class NotificationServiceTest: XCTestCase {
             user: nil,
             collection: collection
         )
-        XCTAssert(collection.doc.exposedData["notification_token"] == nil, "Does not save token if user is not authenticated.")
+        let doc = collection.document("test_uid") as! TestDocumentReference
+        XCTAssert(doc.exposedData["notification_token"] == nil, "Does not save token if user is not authenticated.")
     }
 
     func testTokenSave() {
@@ -112,7 +113,8 @@ class NotificationServiceTest: XCTestCase {
             user: user,
             collection: collection
         )
-        XCTAssert(collection.doc.exposedData["notification_token"] as! String == "token_boi", "Saves token if user is authenticated.")
+        let doc = collection.document("test_uid") as! TestDocumentReference
+        XCTAssert(doc.exposedData["notification_token"] as! String == "token_boi", "Saves token if user is authenticated.")
     }
     
     func testTokenError() {
