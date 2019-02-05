@@ -11,7 +11,6 @@ import UIKit
 import FirebaseFirestore
 
 protocol TopicCollectionDelegate {
-    func updateTopicImage(index: Int) -> Void
     func updateTopicImages() -> Void
 }
 
@@ -25,14 +24,14 @@ class TopicCollection: NSObject {
         if let topic = Topic(id: id, data: data) {
             topic.image = image
             self.topics.append(topic)
-            self.delegate?.updateTopicImage(index: self.topics.count - 1)
+            self.delegate?.updateTopicImages()
         }
     }
     
     func addWithoutImage(using data: [String: Any]?, for id: String){
         if let topic = Topic(id: id, data: data){
             self.topics.append(topic)
-            self.delegate?.updateTopicImage(index: self.topics.count - 1)
+            self.delegate?.updateTopicImages()
         }
     }
     
@@ -42,7 +41,7 @@ class TopicCollection: NSObject {
             if let image = UIImage(data: imageData),
                 let idx = topics.firstIndex(where: {$0.id == id})  {
                 topics[idx].image = image
-                delegate?.updateTopicImage(index: idx)
+                self.delegate?.updateTopicImages()
             } else {
                 print("Failed to load downloaded Topic image for \(id)")
             }
