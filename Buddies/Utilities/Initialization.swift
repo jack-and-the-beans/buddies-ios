@@ -13,6 +13,7 @@ import UIKit
 class AppContent {
     static func setup(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.topicCollection.topics = []
         appDelegate.topicCollection.loadTopics()
     }
 }
