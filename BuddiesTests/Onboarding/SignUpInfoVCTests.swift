@@ -10,6 +10,81 @@ import XCTest
 import Firebase
 @testable import Buddies
 
+//temp
+class ExistingUser : NSObject, UserInfo {
+    var providerID: String = "test"
+    
+    var displayName: String? = "test"
+    
+    var photoURL: URL? = nil
+    
+    var email: String? = "test"
+    
+    var phoneNumber: String? = "test"
+    
+    var uid: String = "test_uid"
+}
+
+//temp
+class TestCollection : CollectionReference {
+    
+    var test_bio: String? = nil
+    var test_fav_topics: [String]? = []
+    var test_blocked_users: [String]? = []
+    var test_blocked_activities: [String]? = []
+    var test_blocked_by: [String]? = []
+    var test_date_joined: Date? = nil
+    var test_loc: GeoPoint? = nil
+    var test_email : String? = nil
+    
+    var doc = TestDoc()
+    
+    override func document(_ documentPath: String) -> DocumentReference {
+        return doc
+    }
+    
+    class TestDoc : DocumentReference {
+        
+        var test_bio: String? = nil
+        var test_fav_topics: [String]? = []
+        var test_blocked_users: [String]? = []
+        var test_blocked_activities: [String]? = []
+        var test_blocked_by: [String]? = []
+        var test_date_joined: Date? = nil
+        var test_loc: GeoPoint? = nil
+        var test_email : String? = nil
+        
+        override func updateData(_ fields: [AnyHashable : Any], completion: ((Error?) -> Void)? = nil) {
+            
+            test_bio = fields[AnyHashable("bio")] as? String
+            test_fav_topics = fields[AnyHashable("fav_topics")] as? [String]
+            test_blocked_users = fields[AnyHashable("blocked_users")] as? [String]
+            test_blocked_activities = fields[AnyHashable("blocked_activities")] as? [String]
+            test_blocked_by = fields[AnyHashable("blocked_by")] as? [String]
+            test_date_joined = fields[AnyHashable("test_fav_topics")] as? Date
+            test_loc  = fields[AnyHashable("test_fav_topics")] as? GeoPoint
+            test_email = fields[AnyHashable("test_email")] as? String
+            
+        }
+        
+        override func setData(_ documentData: [String : Any], merge: Bool, completion: ((Error?) -> Void)? = nil) {
+            test_bio = documentData["bio"] as? String
+            if (test_bio?.count == 0) {
+                let err = NSError(domain: "None", code: -1, userInfo: ["name": "none"])
+                guard let onErr = completion else { return }
+                
+                onErr(err)
+            }
+        }
+        
+        // THANK YOU STACK OVERFLOW: https://stackoverflow.com/a/47272501
+        init(workaround _: Void = ()) {}
+    }
+    // THANK YOU STACK OVERFLOW: https://stackoverflow.com/a/47272501
+    init(workaround _: Void = ()) {}
+}
+
+
 class SignUpInfoVCTests: XCTestCase {
 
     var vc: SignUpInfoVC!
@@ -26,73 +101,24 @@ class SignUpInfoVCTests: XCTestCase {
         vc = nil
     }
     
-    func showMessagePrompt(_ msg: String) {
-        //dummy
-    }
+ 
     
     func testInitLifecycle() {
         XCTAssertNotNil(vc.view, "View should be loaded")
     }
     
-    func testfinishSignUp(){
+    func testSaveProfilePicURLToFirestore()
+    {
         
+    }
+    
+    func testSaveBioToFirestore()
+    {
         
-        let handler = MockAuthHandler()
-        vc._authHandler = handler
-        
-        self.addTeardownBlock { self.vc._authHandler = nil }
-        
-        let values: [(String, String, String, Int)] = [
-            ("example@example.com", "myGoodP@ssword1", "Hello1", 1),
-            ("example2@example.com", "myGoodP@ssword2", "Hello2", 1),
-            ("example3@example.com", "myGoodP@ssword3", "Hello3", 1),
-            ("example4@example.com", "myGoodP@ssword4", "Hello4", 1),
-            ("example5@example.com", "myGoodP@ssword5", "Hello5", 1),
-            ("example6@example.com", "myGoodP@ssword6", "Hello6", 1),
-            ("example7@example.com", "myGoodP@ssword7", "Hello7", 1),
-            ]
-        
-        
-        for (email, password, bio, nExpectedCalls) in values {
-            
-            //sign in to allow auth to get UI
-            vc._authHandler!.createUser(
-                email: email,
-                password: password,
-                onError: { msg in XCTAssert(false)},
-                onSuccess: { user in print("hit") }
-            )
-            
-            handler.nCallsGetUID = 0
-            vc.bioText.text = bio
-            
-            vc.finishSignUp(self)
-            
-            //check bio with bio that should be in firebase
-            if let UID = vc._authHandler?.getUID()
-            {
-                let docRef = FirestoreManager.shared.db.collection("users").document(UID)
-                
-                docRef.getDocument { (document, error) in
-                    
-                    if let document = document, document.exists {
-                        let fbBio = document.get("bio") as! String
-                        XCTAssert(bio == fbBio)
-                    } else {
-                       XCTAssert(false)
-                    }
-                }
-                
-                XCTAssert(handler.nCallsGetUID == nExpectedCalls, "Expected: \(nExpectedCalls) Actual: \(handler.nCallsCreateUser) Bio: \(bio ?? "nil")")
-            }
-            else{
-                XCTAssert(false)
-            }
-            
-            vc._authHandler?.signOut(onError: showMessagePrompt(_:)) {
-                BuddiesStoryboard.Login.goTo()
-            }
-        }
+    }
+    
+    func testFillDataModel()
+    {
         
     }
     

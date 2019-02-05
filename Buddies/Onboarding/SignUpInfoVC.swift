@@ -27,12 +27,14 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     @IBOutlet weak var buttonPicture: UIButton!
     
     @IBAction func changePicture(_ sender: Any) {
+        
         let imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         present(imagePicker, animated: true)
     }
 
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let imgUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL{
@@ -45,35 +47,27 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             let data = image.pngData()! as NSData
             data.write(toFile: localPath!, atomically: true)
             
-            
-
-            let photoURL = URL.init(fileURLWithPath: localPath!)
-            
             let authHandler = AuthHandler(auth: Auth.auth())
             let curUID = authHandler.getUID()!
             
+            //cloud storage paths / references
             let storagePath = "/users/" + curUID + "/profilePicture.jpg"
             let storageRef = StorageManager.shared.storage.reference().child(storagePath)
             
+            //upload picture to storage
             let uploadTask = storageRef.putFile(from: imgUrl, metadata: nil) { metadata, error in
          
                 storageRef.downloadURL { (url, error) in
                     if let downloadURL = url{
-                    
-                    FirestoreManager.shared.db.collection("users").document(curUID).setData([
-                        "image_url": downloadURL.absoluteString
-                        ], merge: true)
+                        self.saveProfilePicURLToFirestore(url: downloadURL.absoluteString)
                     }else{
-                        
+                         print("Error updating document: \(error)")
                     }
                 }
             }
           
-           
-            
+            // Upload completed successfully
             uploadTask.observe(.success) { snapshot in
-                // Upload completed successfully
-                
                 self.pictureText.text = ""
                 self.buttonPicture.tintColor = UIColor.clear
                 self.buttonPicture.setImage(image, for: .normal)
@@ -86,58 +80,77 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     @IBOutlet weak var bioText: UITextView!
     
-    func fillDataModel(UID: String){
+    //Fill data model for current user with dummy data
+    func fillDataModel(user: UserInfo? = Auth.auth().currentUser,
+                       collection: CollectionReference = Firestore.firestore().collection("users")){
         
-        let favTopics: [String] = []
-        let blockedUsers: [String] = []
-        let blockedActivities: [String] = []
-        let blockedBy: [String] = []
-        let dateJoined = Date()
-        let loc = GeoPoint.init(latitude: 10, longitude: 10)
         
-        FirestoreManager.shared.db.collection("users").document(UID).setData([
-            "favorite_topics": favTopics,
-            "blocked_users": blockedUsers,
-            "blocked_activities": blockedActivities,
-            "blocked_by": blockedBy,
-            "date_joined": dateJoined,
-            "location" : loc
-            ], merge: true)
-        BuddiesStoryboard.Main.goTo()
-        
+        if let UID = user?.uid
+        {
+            let favTopics: [String] = []
+            let blockedUsers: [String] = []
+            let blockedActivities: [String] = []
+            let blockedBy: [String] = []
+            let dateJoined = Date()
+            let loc = GeoPoint.init(latitude: 10, longitude: 10)
+            let email = user?.email
+
+            FirestoreManager.shared.db.collection("users").document(UID).setData([
+                "favorite_topics": favTopics,
+                "blocked_users": blockedUsers,
+                "blocked_activities": blockedActivities,
+                "blocked_by": blockedBy,
+                "date_joined": dateJoined,
+                "location" : loc,
+                "email": email
+                ], merge: true)
+
+        }else{
+           print("Unable to authorize user.")
+        }
     }
     
-    @IBAction func finishSignUp(_ sender: Any) {
+    func saveBioToFirestore(
+        bio: String,
+        user: UserInfo? = Auth.auth().currentUser,
+        collection: CollectionReference = Firestore.firestore().collection("users")){
         
-        let authHandler = AuthHandler(auth: Auth.auth())
-        
-        if let UID = authHandler.getUID()
+        if let UID = user?.uid
         {
-            
-        
-            if let bio = bioText.text{
                 //set bio text
-                FirestoreManager.shared.db.collection("users").document(UID).setData([
-                    "bio": bio,
-                    "uid": UID,
-                    "email": authHandler.getEmail()!
-                    ], merge: true)
-                
-                fillDataModel(UID: UID)
-                BuddiesStoryboard.Main.goTo()
-            }
-            else
-            {
-                bioText.text = "About you..."
-            }
-            
+            FirestoreManager.shared.db.collection("users").document(UID).setData([
+                "bio": bio
+            ], merge: true)
         }
         else
         {
-           print("Unable to authorize user.")
+            print("Unable to authorize user.")
         }
-
-
+    }
+    
+    func saveProfilePicURLToFirestore(
+        url: String,
+        user: UserInfo? = Auth.auth().currentUser,
+        collection: CollectionReference = Firestore.firestore().collection("users")){
+        
+        if let UID = user?.uid
+        {
+            FirestoreManager.shared.db.collection("users").document(UID).setData([
+                "image_url": url
+                ], merge: true)
+        }
+        else
+        {
+            print("Unable to authorize user.")
+        }
+    }
+    
+    
+    @IBAction func finishSignUp(_ sender: Any) {
+        
+        saveBioToFirestore(bio: bioText.text)
+        fillDataModel()
+        BuddiesStoryboard.Main.goTo()
     }
     
 
