@@ -14,12 +14,8 @@ class TopicCollectionTests: XCTestCase {
     
     class MockCollectioDelegate: TopicCollectionDelegate {
         var fullUpdates = 0
-        var specificUpdates = [Int]()
         func updateTopicImages() {
             fullUpdates += 1
-        }
-        func updateTopicImage(index: Int) {
-            specificUpdates.append(index)
         }
     }
     
@@ -60,9 +56,7 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics[1].id == "2")
         XCTAssert(collection.topics[1].name == "jake")
         
-        XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
+        XCTAssert(delegate.fullUpdates == 2)
     }
     
     func testAddFromStorageInvalid(){
@@ -78,8 +72,6 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics.count == 0)
         
         XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
 
     }
     
@@ -100,9 +92,7 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics[0].id == "1")
         XCTAssert(collection.topics[0].name == "jake")
         
-        XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
+        XCTAssert(delegate.fullUpdates == 1)
     }
     
     
@@ -130,10 +120,7 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics[1].id == "2")
         XCTAssert(collection.topics[1].name == "jake")
         
-        XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
-        
+        XCTAssert(delegate.fullUpdates == 2)
         
     }
     
@@ -150,9 +137,6 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics.count == 0)
         
         XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
-        
     }
     
     func testAddWithoutImageMixed(){
@@ -172,9 +156,7 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(collection.topics[0].id == "1")
         XCTAssert(collection.topics[0].name == "jake")
         
-        XCTAssert(delegate.fullUpdates == 0)
-        let sorted = delegate.specificUpdates.sorted()
-        XCTAssert(sorted.elementsEqual(stride(from: 0, to: collection.topics.count, by: 1)))
+        XCTAssert(delegate.fullUpdates == 1)
     }
     
    
@@ -208,7 +190,8 @@ class TopicCollectionTests: XCTestCase {
                 XCTAssert(collection.topics[i].image == nil)
             }
         }
-        XCTAssert(delegate.specificUpdates.elementsEqual(elemsUpdated))
+        //the 0th, 2nd, and 6th item is updated
+        XCTAssert(delegate.fullUpdates == 4)
     }
     
     func testUpdateImageNoSuchTopic(){
@@ -235,6 +218,6 @@ class TopicCollectionTests: XCTestCase {
             XCTAssert(collection.topics[i].image == nil)
         }
         
-        XCTAssert(delegate.specificUpdates.isEmpty)
+        XCTAssert(delegate.fullUpdates == 0)
     }
 }
