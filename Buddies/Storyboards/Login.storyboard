@@ -291,20 +291,13 @@
                                     <action selector="finishSignUp:" destination="s0Y-7Y-nAN" eventType="touchUpInside" id="uGz-2X-3wv"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="About you..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="U5q-xz-N3r" customClass="UnderlinedMultiLineTextView" customModule="Buddies" customModuleProvider="target">
-                                <rect key="frame" x="30" y="287" width="315" height="75"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="75" id="azW-7E-i2J"/>
-                                </constraints>
-                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VL9-LF-7fc">
-                                <rect key="frame" x="97" y="58" width="180" height="180"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VL9-LF-7fc">
+                                <rect key="frame" x="97.5" y="50" width="180" height="180"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="180" id="Y1m-Ij-FNN"/>
+                                    <constraint firstAttribute="width" constant="180" id="axF-5q-POJ"/>
+                                </constraints>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal">
                                     <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -313,21 +306,36 @@
                                     <action selector="changePicture:" destination="s0Y-7Y-nAN" eventType="touchUpInside" id="jAZ-aO-5As"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Upload a picture" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iv5-nn-5nV">
-                                <rect key="frame" x="122" y="246" width="130" height="23"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZ9-Ks-z4Y">
+                                <rect key="frame" x="130.5" y="235" width="114" height="30"/>
+                                <state key="normal" title="Upload a Picture">
+                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="changePicture:" destination="s0Y-7Y-nAN" eventType="touchUpInside" id="jMz-o5-19I"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="About you..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="U5q-xz-N3r" customClass="UnderlinedMultiLineTextView" customModule="Buddies" customModuleProvider="target">
+                                <rect key="frame" x="30" y="297" width="315" height="160"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="315" id="MLd-sO-ZJb"/>
+                                    <constraint firstAttribute="height" constant="160" id="XLq-19-wIB"/>
+                                </constraints>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="8Lm-UX-4cY" firstAttribute="top" secondItem="U5q-xz-N3r" secondAttribute="bottom" constant="125" id="5s4-tw-5Fb"/>
-                            <constraint firstItem="U5q-xz-N3r" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="AXv-IK-vDq"/>
-                            <constraint firstItem="U5q-xz-N3r" firstAttribute="leading" secondItem="ieI-QG-mvM" secondAttribute="leading" constant="30" id="MCd-CI-b8m"/>
-                            <constraint firstItem="ieI-QG-mvM" firstAttribute="trailing" secondItem="U5q-xz-N3r" secondAttribute="trailing" constant="30" id="XdA-a2-z3P"/>
+                            <constraint firstItem="U5q-xz-N3r" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="8PX-gO-z2q"/>
+                            <constraint firstItem="VL9-LF-7fc" firstAttribute="top" secondItem="ieI-QG-mvM" secondAttribute="top" constant="30" id="HSD-bh-LFC"/>
+                            <constraint firstItem="QZ9-Ks-z4Y" firstAttribute="top" secondItem="VL9-LF-7fc" secondAttribute="bottom" constant="5" id="KXO-qJ-gF7"/>
+                            <constraint firstItem="VL9-LF-7fc" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="PLq-7e-To1"/>
+                            <constraint firstItem="8Lm-UX-4cY" firstAttribute="top" secondItem="U5q-xz-N3r" secondAttribute="bottom" constant="30" id="WTc-tq-Nev"/>
                             <constraint firstItem="8Lm-UX-4cY" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="cdV-md-xK5"/>
+                            <constraint firstItem="QZ9-Ks-z4Y" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="cem-UX-fEI"/>
                             <constraint firstItem="ieI-QG-mvM" firstAttribute="bottom" secondItem="8Lm-UX-4cY" secondAttribute="bottom" constant="150" id="mxr-cI-kzg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ieI-QG-mvM"/>
@@ -335,7 +343,7 @@
                     <connections>
                         <outlet property="bioText" destination="U5q-xz-N3r" id="fan-6e-geL"/>
                         <outlet property="buttonPicture" destination="VL9-LF-7fc" id="oQJ-Wm-Icv"/>
-                        <outlet property="pictureText" destination="iv5-nn-5nV" id="YXU-7Z-9fv"/>
+                        <outlet property="pictureButtonText" destination="QZ9-Ks-z4Y" id="9YW-8A-yO5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mip-qu-XnF" userLabel="First Responder" sceneMemberID="firstResponder"/>

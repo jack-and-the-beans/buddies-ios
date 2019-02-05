@@ -13,23 +13,25 @@ import Firebase
 
 class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    
+    let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+        bioText.layer.borderColor = ControlColors.fieldBorderFocused.cgColor
+        bioText.layer.borderWidth = 2
         buttonPicture.layer.cornerRadius = buttonPicture.frame.size.width / 2
         
     }
     
-    @IBOutlet weak var pictureText: UILabel!
+
+    @IBOutlet weak var pictureButtonText: UIButton!
     @IBOutlet weak var buttonPicture: UIButton!
     
     @IBAction func changePicture(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.allowsEditing = true
-        imagePicker.delegate = self
         present(imagePicker, animated: true)
     }
 
@@ -69,7 +71,8 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             // Upload completed successfully
             uploadTask.observe(.success) { snapshot in
                
-                self.pictureText.text = ""
+                self.pictureButtonText.setTitle("", for: UIControl.State.disabled)
+                self.pictureButtonText.isEnabled = false
                 self.buttonPicture.tintColor = UIColor.clear
                 self.buttonPicture.setImage(image, for: .normal)
                 self.dismiss(animated: true, completion: nil)

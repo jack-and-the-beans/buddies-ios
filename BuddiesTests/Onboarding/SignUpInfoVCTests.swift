@@ -46,12 +46,12 @@ class SignUpInfoVCTests: XCTestCase {
     func testFillDataModel()
     {
         let vc = SignUpInfoVC()
-        let collection = TestCollectionReference()
+        let collection = MockCollectionReference()
         let user = ExistingUser()
         
         vc.fillDataModel( user: user, collection: collection)
         
-        let doc = collection.document("test_uid") as! TestDocumentReference
+        let doc = collection.document("test_uid") as! MockDocumentReference
         
         XCTAssert(doc.exposedData["favorite_topics"] as! [String] == [], "Saves empty array for favorite_topics if user is authenticated.")
         XCTAssert(doc.exposedData["blocked_users"] as! [String] == [], "Saves empty array for blocked_users if user is authenticated.")
@@ -65,7 +65,7 @@ class SignUpInfoVCTests: XCTestCase {
     func testSaveProfilePicURLToFirestore()
     {
         let vc = SignUpInfoVC()
-        let collection = TestCollectionReference()
+        let collection = MockCollectionReference()
         let user = ExistingUser()
         
         vc.saveProfilePicURLToFirestore(
@@ -74,14 +74,14 @@ class SignUpInfoVCTests: XCTestCase {
             collection: collection
         )
         
-        let doc = collection.document("test_uid") as! TestDocumentReference
+        let doc = collection.document("test_uid") as! MockDocumentReference
         
         XCTAssert(doc.exposedData["image_url"] as! String == "url/for/image", "Saves download url for profile picture if user is authenticated.")
     }
     
     func testSaveBioToFirestore(){
         let vc = SignUpInfoVC()
-        let collection = TestCollectionReference()
+        let collection = MockCollectionReference()
         let user = ExistingUser()
         
         vc.saveBioToFirestore(
@@ -90,7 +90,7 @@ class SignUpInfoVCTests: XCTestCase {
             collection: collection
         )
         
-        let doc = collection.document("test_uid") as! TestDocumentReference
+        let doc = collection.document("test_uid") as! MockDocumentReference
         
         XCTAssert(doc.exposedData["bio"] as! String == "biography", "Saves bio if user is authenticated.")
     }
