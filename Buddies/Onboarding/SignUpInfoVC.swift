@@ -11,6 +11,47 @@ import Photos
 import Firebase
 import Firebase
 
+class ProfilePicOp: Operation {
+    
+    let imgURL : URL
+    let storageRef : StorageReference
+    let vc : SignUpInfoVC
+    
+    init(_ imgURL: URL, storageRef: StorageReference, vc: SignUpInfoVC) {
+        self.imgURL = imgURL
+        self.storageRef = storageRef
+        self.vc = vc
+    }
+    
+    override func main() {
+        
+        if isCancelled {
+            return
+        }
+        
+        let uploadTask = storageRef.putFile(from: self.imgURL, metadata: nil) { metadata, error in
+            
+            self.storageRef.downloadURL { (url, error) in
+                if let downloadURL = url{
+                    self.vc.saveProfilePicURLToFirestore(url: downloadURL.absoluteString)
+                }else{
+                    print("Error updating document: \(error)")
+                }
+            }
+        }
+        
+        // Upload completed successfully
+        uploadTask.observe(.success) { snapshot in
+            return
+            
+        }
+        
+        
+        
+    }
+}
+
+
 class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     let imagePicker = UIImagePickerController()
@@ -47,6 +88,10 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             let data = image.pngData()! as NSData
             data.write(toFile: localPath!, atomically: true)
             
+            
+            self.pictureButtonText.isEnabled = false
+            self.buttonPicture.tintColor = UIColor.clear
+            self.buttonPicture.setImage(image, for: .normal)
          
             let authHandler = AuthHandler(auth: Auth.auth())
             let curUID = authHandler.getUID()!
@@ -55,29 +100,15 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             let storagePath = "/users/" + curUID + "/profilePicture.jpg"
             let storageRef = StorageManager.shared.storage.reference().child(storagePath)
             
-             //upload picture to storage
-            let uploadTask = storageRef.putFile(from: imgUrl, metadata: nil) { metadata, error in
-         
-                storageRef.downloadURL { (url, error) in
-                    if let downloadURL = url{
-                        self.saveProfilePicURLToFirestore(url: downloadURL.absoluteString)
-                    }else{
-                         print("Error updating document: \(error)")
-                    }
-                }
-            }
-          
+            //upload picture to storage async
+            let profPicOp = ProfilePicOp(imgUrl, storageRef: storageRef, vc: self)
+            let profPicOpQueue = OperationQueue()
+            profPicOpQueue.name = "Profile Pic Operation Queue"
+            profPicOpQueue.maxConcurrentOperationCount = 1
+            profPicOpQueue.addOperation(profPicOp)
            
-            // Upload completed successfully
-            uploadTask.observe(.success) { snapshot in
-               
-                self.pictureButtonText.setTitle("", for: UIControl.State.disabled)
-                self.pictureButtonText.isEnabled = false
-                self.buttonPicture.tintColor = UIColor.clear
-                self.buttonPicture.setImage(image, for: .normal)
-                self.dismiss(animated: true, completion: nil)
-            }
-    
+            self.dismiss(animated: true, completion: nil)
+          
         }
         
     }
