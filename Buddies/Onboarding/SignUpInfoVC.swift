@@ -74,6 +74,7 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 guard let picUrl = URL(string: facebookPicUrl) else { return }
                 downloadImage(from: picUrl)
             }
+        }
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {

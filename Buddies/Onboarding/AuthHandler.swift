@@ -13,6 +13,8 @@ import FBSDKLoginKit
 class AuthHandler {
     private let auth: Auth!
     private let notifications: NotificationService!
+    
+    var isNewUser = false
 
     init(auth: Auth!) {
         self.auth = auth
@@ -60,6 +62,9 @@ class AuthHandler {
                         onError(error.localizedDescription)
                     }
                     else {
+                        
+                        self.isNewUser = (result?.additionalUserInfo?.isNewUser)!
+                        
                         self.notifications.registerForNotifications()
                         
                         //save facebook access token for auth later on
