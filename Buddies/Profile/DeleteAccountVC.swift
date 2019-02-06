@@ -21,6 +21,9 @@ class DeleteAccountVC: LoginBase {
     
     @IBOutlet weak var passwordField: UITextField!
     
+    override func getTopField() -> UIView {
+        return emailField
+    }
     
     @IBAction func confirmDeleteAccount(_ sender: Any) {
         

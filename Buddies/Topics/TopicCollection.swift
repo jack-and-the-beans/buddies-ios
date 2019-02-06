@@ -35,7 +35,7 @@ class TopicCollection: NSObject {
         }
     }
     
-    func updateImage(with imageURL: URL, for id: String){
+    func updateImage(with imageURL: URL, for id: String) {
         do {
             let imageData = try Data(contentsOf: imageURL)
             if let image = UIImage(data: imageData),

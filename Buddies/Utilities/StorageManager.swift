@@ -48,7 +48,7 @@ class StorageManager {
         return task
     }
     
-    func persistDownload(temp: URL, dest: URL, callback: ((_ path: URL) -> Void)?){
+    func persistDownload(temp: URL, dest: URL, callback: ((_ path: URL) -> Void)? = nil) {
         do {
             try FileManager.default.copyItem(at: temp, to: dest)
         } catch (let writeError) {
