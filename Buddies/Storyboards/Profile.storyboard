@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qjg-cX-S7x">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Profile-->
+        <scene sceneID="ged-W7-Ynx">
+            <objects>
+                <viewController storyboardIdentifier="profileMain" title="Profile" id="qjg-cX-S7x" customClass="ProfileVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="duf-QF-vs0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4om-Rt-YZM">
+                                <rect key="frame" x="136" y="318.5" width="103" height="30"/>
+                                <state key="normal" title="TEMP: Log Out"/>
+                                <connections>
+                                    <action selector="signOut:" destination="qjg-cX-S7x" eventType="touchUpInside" id="DF0-qK-6V3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDw-z2-ckO">
+                                <rect key="frame" x="111.5" y="203" width="152" height="30"/>
+                                <state key="normal" title="TEMP: Delete account">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="m4L-16-SyF" kind="show" id="5SR-zL-e09"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="RDw-z2-ckO" firstAttribute="centerX" secondItem="duf-QF-vs0" secondAttribute="centerX" id="2GU-YV-xCW"/>
+                            <constraint firstItem="4om-Rt-YZM" firstAttribute="centerY" secondItem="duf-QF-vs0" secondAttribute="centerY" id="C35-uu-RlI"/>
+                            <constraint firstItem="4om-Rt-YZM" firstAttribute="top" secondItem="RDw-z2-ckO" secondAttribute="bottom" constant="85.5" id="N5S-wz-1k5"/>
+                            <constraint firstItem="4om-Rt-YZM" firstAttribute="centerX" secondItem="duf-QF-vs0" secondAttribute="centerX" id="Ygb-CR-Iue"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Zq7-M8-aiS"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Profile" id="L1I-Mj-bx6"/>
+                    <navigationItem key="navigationItem" id="yjn-Y5-t13"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fLJ-tb-MyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="585" y="565"/>
+        </scene>
+        <!--Delete Account-->
+        <scene sceneID="6CK-ax-X1q">
+            <objects>
+                <viewController title="Delete Account" id="m4L-16-SyF" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nb2-QY-Qk2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="HFJ-4T-0f3"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ToL-o8-JpC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1385" y="566"/>
+        </scene>
+    </scenes>
+</document>

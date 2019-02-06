@@ -12,6 +12,7 @@
 		45DA93A9220957CE0064CBEF /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DA93A7220957CE0064CBEF /* Testing.swift */; };
 		45FBF7A922095A030007DD6D /* CreateActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBF7A822095A030007DD6D /* CreateActivityVC.swift */; };
 		45FBF7AA22095A030007DD6D /* CreateActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBF7A822095A030007DD6D /* CreateActivityVC.swift */; };
+		45FED0AD220A5F0300B90C3B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45FED0AC220A5F0300B90C3B /* Profile.storyboard */; };
 		582D0FA622035C3D004F71E3 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA522035C3D004F71E3 /* FirestoreManager.swift */; };
 		582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA722036C93004F71E3 /* StorageManager.swift */; };
 		589AD64122092F950090A96C /* FirebaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589AD64022092F950090A96C /* FirebaseMock.swift */; };
@@ -83,6 +84,7 @@
 		450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInfoVCTests.swift; sourceTree = "<group>"; };
 		45DA93A7220957CE0064CBEF /* Testing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		45FBF7A822095A030007DD6D /* CreateActivityVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateActivityVC.swift; sourceTree = "<group>"; };
+		45FED0AC220A5F0300B90C3B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		582D0FA522035C3D004F71E3 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		582D0FA722036C93004F71E3 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		583FD2DA220238F7005B2C75 /* LayoutMeasurementsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutMeasurementsTests.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				58EF8DBB2208BE5E00872770 /* Main.storyboard */,
 				58EF8DBC2208BE5E00872770 /* Login.storyboard */,
 				58EF8DBD2208BE5E00872770 /* Topics.storyboard */,
+				45FED0AC220A5F0300B90C3B /* Profile.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */,
 				A850ED612203A12900DBF1A6 /* GoogleService-Info.plist in Resources */,
 				58EF8DC02208BE5E00872770 /* LaunchScreen.storyboard in Resources */,
+				45FED0AD220A5F0300B90C3B /* Profile.storyboard in Resources */,
 				B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */,
 				58A5A40522025B6400E0BF38 /* bean.jpg in Resources */,
 			);
