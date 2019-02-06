@@ -34,7 +34,7 @@ class ProfilePicOp: Operation {
             self.storageRef.downloadURL { (url, error) in
                 if let downloadURL = url{
                     self.vc.saveProfilePicURLToFirestore(url: downloadURL.absoluteString)
-                }else{
+                } else {
                     print("Error updating document: \(error!)")
                 }
             }
@@ -75,9 +75,22 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
             if (userInfo.providerID == "facebook.com") {
                 let facebookId = userInfo.uid
                 let facebookPicUrl = "https://graph.facebook.com/\(facebookId)/picture?type=large"
+                
                 saveProfilePicURLToFirestore(url: facebookPicUrl)
-                guard let picUrl = URL(string: facebookPicUrl) else { return }
-                downloadImage(from: picUrl)
+                
+                _ = StorageManager.shared.downloadFile(for: facebookPicUrl, to: userInfo.uid, session: nil) { localURL in
+                    do {
+                        let imageData = try Data(contentsOf: localURL)
+                        if let image = UIImage(data: imageData) {
+                            self.buttonPicture.setImage(image, for: .normal)
+                        } else {
+                            print("Failed to load downloaded User profile pic image from facebook")
+                        }
+                    } catch {
+                        
+                        print("Could not load topic, \(error)")
+                    }
+                }
             }
         }
     }
@@ -95,21 +108,6 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
             textView.text = "About you..."
             textView.textColor = UIColor.lightGray
         }
-    }
-    
-    // https://stackoverflow.com/a/27712427
-    func downloadImage(from url: URL) {
-        getData(from: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async() {
-                let img = UIImage(data: data)
-                self.buttonPicture.setImage(img, for: .normal)
-            }
-        }
-    }
-
-    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
 
     @IBOutlet weak var pictureButtonText: UIButton!
@@ -142,20 +140,14 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let imgUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL{
-            
-            let imgName = imgUrl.lastPathComponent
-            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-            let localPath = documentDirectory?.appending(imgName)
-            
             let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-            let data = image.pngData()! as NSData
-            data.write(toFile: localPath!, atomically: true)
-            
-            
+
             self.pictureButtonText.isEnabled = false
             self.pictureButtonText.setTitle("", for: UIControl.State.disabled)
             self.buttonPicture.tintColor = UIColor.clear
             self.buttonPicture.setImage(image, for: .normal)
+            
+            cacheImage(imgUrl: imgUrl)
          
             uploadProfilePicToCloudStorage(imgUrl: imgUrl)
             
@@ -163,6 +155,15 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
           
         }
         
+    }
+    
+    func cacheImage(imgUrl: URL,
+                    user: UserInfo? = Auth.auth().currentUser,
+                    manager: StorageManager = StorageManager.shared) {
+        if let uid = user?.uid,
+           let localUrl = manager.localURL(for: uid) {
+            manager.persistDownload(temp: imgUrl, dest: localUrl)
+        }
     }
     
     @IBOutlet weak var bioText: UITextView!
@@ -203,14 +204,12 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         user: UserInfo? = Auth.auth().currentUser,
         collection: CollectionReference = Firestore.firestore().collection("users")){
         
-        if let UID = user?.uid
-        {
+        if let UID = user?.uid {
             collection.document(UID).setData([
                 "image_url": url
                 ], merge: true)
         }
-        else
-        {
+        else {
             print("Unable to authorize user.")
         }
     }
