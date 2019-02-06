@@ -31,13 +31,6 @@ class MockAuthHandler : AuthHandler {
         nCallsLogIn += 1
     }
     
-    override func getUID() -> String? {
-        
-        nCallsGetUID = nCallsGetUID + 1
-        
-        return super.getUID()
-        
-    }
     
     
 }

@@ -23,26 +23,6 @@ class AuthHandler {
         return auth.currentUser != nil
     }
     
-    func getUID() -> String?{
-        
-        if isLoggedIn(){
-            return auth.currentUser?.uid
-        }
-        else{
-            return nil
-        }
-    }
-    
-    func getEmail() -> String?{
-        
-        if isLoggedIn(){
-            return auth.currentUser?.email
-        }
-        else{
-            return nil
-        }
-        
-    }
     
     func logInWithFacebook(ref: UIViewController, onError: @escaping (String) -> Void, onSuccess: @escaping (User) -> Void) {
         let loginManager = FBSDKLoginManager()

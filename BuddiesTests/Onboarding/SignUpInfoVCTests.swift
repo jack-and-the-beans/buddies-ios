@@ -43,6 +43,7 @@ class SignUpInfoVCTests: XCTestCase {
         XCTAssertNotNil(vc.view, "View should be loaded")
     }
     
+    
     func testFillDataModel()
     {
         let vc = SignUpInfoVC()
@@ -61,6 +62,33 @@ class SignUpInfoVCTests: XCTestCase {
         XCTAssert(doc.exposedData["location"] as! GeoPoint == GeoPoint.init(latitude: 10, longitude: 10), "Saves dummy location for location if user is authenticated.")
         XCTAssert(doc.exposedData["email"] as! String == "test", "Saves dummy email if user is authenticated.")
     }
+    
+    
+    func testTextViewDidBeginEditing()
+    {
+        let vc = SignUpInfoVC()
+        let tempTextView = UITextView()
+        vc.bioText = tempTextView
+        vc.bioText.textColor = UIColor.lightGray
+        vc.bioText.text = "About you..."
+        vc.textViewDidBeginEditing(vc.bioText)
+        
+        XCTAssert(vc.bioText.text.isEmpty, "Bio text view is empty.")
+        XCTAssert(vc.bioText.textColor == UIColor.black, "Bio text is black.")
+    }
+    
+    func testTextViewDidEndEditing(){
+        
+        let vc = SignUpInfoVC()
+        let tempTextView = UITextView()
+        vc.bioText = tempTextView
+        vc.bioText.text = nil
+        vc.textViewDidEndEditing(vc.bioText)
+        
+        XCTAssert(vc.bioText.text == "About you...", "Bio text is 'About you...'")
+        XCTAssert(vc.bioText.textColor == UIColor.lightGray, "Bio text is light gray.")
+    }
+    
     
     func testSaveProfilePicURLToFirestore()
     {
