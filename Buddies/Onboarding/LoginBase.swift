@@ -22,7 +22,7 @@ class LoginBase: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func getTopField() -> UITextField {
+    func getTopField() -> UIView {
         fatalError("Subclasses need to implement the `getBottomField()` method.")
     }
     
