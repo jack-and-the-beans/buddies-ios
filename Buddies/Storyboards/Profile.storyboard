@@ -47,41 +47,53 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="----  --------  ------                         ----  -----  --------                      --------   ----- " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsL-Mx-UtQ">
-                                <rect key="frame" x="197.5" y="84" width="157.5" height="157.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="wsL-Mx-UtQ" secondAttribute="height" multiplier="1:1" id="gt0-yg-6Ff"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="------" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AlU-tN-0fB">
-                                <rect key="frame" x="20" y="261.5" width="46" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other users will be able to see your previous events here. You can change privacy settings by tapping the gear." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SfH-O5-cFJ">
-                                <rect key="frame" x="35" y="578" width="305" height="54"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="----  --------  ------                         ----  -----  --------                      --------   ----- " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsL-Mx-UtQ">
+                                <rect key="frame" x="197.5" y="120.5" width="157.5" height="54"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other users will be able to see your previous events here." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SfH-O5-cFJ">
+                                <rect key="frame" x="35" y="573.5" width="305" height="33.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite Topics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QB7-BW-dX7">
+                                <rect key="frame" x="20" y="276.5" width="183.5" height="32.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="27"/>
                                 <color key="textColor" red="0.36367782360000001" green="0.36367782360000001" blue="0.36367782360000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="91f-gN-Add">
+                                <rect key="frame" x="20" y="319" width="149" height="30"/>
+                                <state key="normal" title="Pretend this is a topic"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="------" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AlU-tN-0fB">
+                                <rect key="frame" x="197.5" y="84" width="157.5" height="21.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Zq7-M8-aiS" firstAttribute="bottom" secondItem="SfH-O5-cFJ" secondAttribute="bottom" constant="60" id="1qw-4J-hXZ"/>
                             <constraint firstItem="6Mv-t1-IFJ" firstAttribute="top" secondItem="Zq7-M8-aiS" secondAttribute="top" constant="20" id="3bV-uV-ZzR"/>
+                            <constraint firstItem="91f-gN-Add" firstAttribute="top" secondItem="QB7-BW-dX7" secondAttribute="bottom" constant="10" id="3ec-e5-Ypt"/>
+                            <constraint firstItem="AlU-tN-0fB" firstAttribute="width" secondItem="6Mv-t1-IFJ" secondAttribute="width" id="68O-fk-jtn"/>
+                            <constraint firstItem="QB7-BW-dX7" firstAttribute="top" secondItem="6Mv-t1-IFJ" secondAttribute="bottom" constant="35" id="6Lt-y2-hMe"/>
+                            <constraint firstItem="AlU-tN-0fB" firstAttribute="top" secondItem="6Mv-t1-IFJ" secondAttribute="top" id="6pm-iC-6UX"/>
                             <constraint firstItem="wsL-Mx-UtQ" firstAttribute="width" secondItem="6Mv-t1-IFJ" secondAttribute="width" id="8Mu-9x-1Qx"/>
-                            <constraint firstItem="AlU-tN-0fB" firstAttribute="top" secondItem="6Mv-t1-IFJ" secondAttribute="bottom" constant="20" id="E3D-UI-puH"/>
+                            <constraint firstItem="QB7-BW-dX7" firstAttribute="leading" secondItem="Zq7-M8-aiS" secondAttribute="leading" constant="20" id="Gd4-IM-3is"/>
+                            <constraint firstItem="91f-gN-Add" firstAttribute="leading" secondItem="QB7-BW-dX7" secondAttribute="leading" id="HMt-zS-9X2"/>
                             <constraint firstItem="SfH-O5-cFJ" firstAttribute="leading" secondItem="Zq7-M8-aiS" secondAttribute="leading" constant="35" id="Ksk-Dl-NUw"/>
-                            <constraint firstItem="AlU-tN-0fB" firstAttribute="leading" secondItem="Zq7-M8-aiS" secondAttribute="leading" constant="20" id="MN2-gA-n0l"/>
-                            <constraint firstItem="wsL-Mx-UtQ" firstAttribute="top" secondItem="Zq7-M8-aiS" secondAttribute="top" constant="20" id="MfC-R7-25b"/>
-                            <constraint firstItem="Zq7-M8-aiS" firstAttribute="bottom" secondItem="SfH-O5-cFJ" secondAttribute="bottom" constant="35" id="PAe-qQ-JMw"/>
                             <constraint firstItem="6Mv-t1-IFJ" firstAttribute="leading" secondItem="Zq7-M8-aiS" secondAttribute="leading" constant="20" id="U5k-RN-yG0"/>
                             <constraint firstItem="wsL-Mx-UtQ" firstAttribute="leading" secondItem="6Mv-t1-IFJ" secondAttribute="trailing" constant="20" id="fZf-Y7-bXa"/>
                             <constraint firstAttribute="trailing" secondItem="SfH-O5-cFJ" secondAttribute="trailing" constant="35" id="h1u-8P-4dP"/>
                             <constraint firstItem="Zq7-M8-aiS" firstAttribute="trailing" secondItem="wsL-Mx-UtQ" secondAttribute="trailing" constant="20" id="tSI-GX-bCl"/>
+                            <constraint firstItem="Zq7-M8-aiS" firstAttribute="trailing" secondItem="AlU-tN-0fB" secondAttribute="trailing" constant="20" id="wgO-La-Q9y"/>
+                            <constraint firstItem="wsL-Mx-UtQ" firstAttribute="top" secondItem="AlU-tN-0fB" secondAttribute="bottom" constant="15" id="wpj-Bm-Bwx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Zq7-M8-aiS"/>
                     </view>
@@ -100,7 +112,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="516" y="556"/>
+            <point key="canvasLocation" x="516" y="555.47226386806597"/>
         </scene>
         <!--Delete Account-->
         <scene sceneID="6CK-ax-X1q">
