@@ -22,7 +22,6 @@ class MockExistingUser : NSObject, UserInfo {
     
     var uid: String = "test_uid"
     
-    override func delete
 }
 
 class MockCollectionReference : CollectionReference {
