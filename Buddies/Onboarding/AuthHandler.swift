@@ -23,6 +23,25 @@ class AuthHandler {
         return auth.currentUser != nil
     }
     
+    func saveFacebookAccessTokenToFirestore(
+        facebookAccessToken: String,
+        user: UserInfo? = Auth.auth().currentUser,
+        collection: CollectionReference = Firestore.firestore().collection("users")){
+        
+        if let UID = user?.uid
+        {
+            collection.document(UID).setData([
+                "facebook_access_token": facebookAccessToken
+                ], merge: true)
+        }
+        else
+        {
+            print("Unable to authorize user.")
+        }
+        
+        
+    }
+    
     
     func logInWithFacebook(ref: UIViewController, onError: @escaping (String) -> Void, onSuccess: @escaping (User) -> Void) {
         let loginManager = FBSDKLoginManager()
@@ -33,12 +52,18 @@ class AuthHandler {
             } else if !result!.isCancelled {
                 let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
                 
+                
+                
                 self.auth.signInAndRetrieveData(with: credential) { (result, error) in
                     if let error = error {
                         onError(error.localizedDescription)
                     }
                     else {
                         self.notifications.registerForNotifications()
+                        
+                        //save facebook access token for auth later on
+                        self.saveFacebookAccessTokenToFirestore(facebookAccessToken:(FBSDKAccessToken.current()?.tokenString)!)
+                        
                         onSuccess(result!.user)
                     }
                 }
