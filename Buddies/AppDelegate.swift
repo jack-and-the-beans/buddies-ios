@@ -42,15 +42,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let authHandler = AuthHandler(auth: Auth.auth())
         
         if authHandler.isLoggedIn() {
-            // Show home page
-            let mainViewController = BuddiesStoryboard.Main.viewController()
-            self.window?.rootViewController = mainViewController
+            let me = Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid)
             
+            // set the view to the launch screen intil we're ready for more
+            self.window?.rootViewController = BuddiesStoryboard.LaunchScreen.viewController()
+            
+            me.getDocument { (snap, err) in
+                guard
+                    let snap = snap
+                    , snap.exists
+                    , let data = snap.data()
+                    , let _ = data["image_url"]
+                    , let _ = data["bio"] else {
+                    self.window?.rootViewController = BuddiesStoryboard.Login.viewController(withID: "SignUpInfo")
+                    return
+                }
+                
+                // Show home page
+                self.window?.rootViewController = BuddiesStoryboard.Main.viewController()
+            }
         } else {
             // Show login page
-            let loginViewController = BuddiesStoryboard.Login.viewController()
-            self.window?.rootViewController = loginViewController
-            
+            self.window?.rootViewController = BuddiesStoryboard.Login.viewController()
         }
 
         self.window?.makeKeyAndVisible()

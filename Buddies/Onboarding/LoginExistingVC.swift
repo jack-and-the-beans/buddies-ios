@@ -49,15 +49,36 @@ class LoginExistingVC: LoginBase {
             email: email,
             password: password,
             onError: { msg in self.showMessagePrompt(msg) },
-            onSuccess: { user in BuddiesStoryboard.Main.goTo() }
+            onSuccess: { user in self.handleOnLogIn(user: user) }
         )
+    }
+    
+    func handleOnLogIn(user: User) {
+        let me = Firestore.firestore().collection("users").document(user.uid)
+        
+        me.getDocument { (snap, err) in
+            guard
+                let snap = snap
+                , snap.exists
+                , let data = snap.data()
+                , let _ = data["image_url"]
+                , let _ = data["bio"] else {
+                    UIApplication.setRootView(
+                        BuddiesStoryboard.Login.viewController(withID: "SignUpInfo")
+                    )
+                    return
+            }
+            
+            // Show home page
+            BuddiesStoryboard.Main.goTo()
+        }
     }
     
     @IBAction func facebookLogin() {
         getAuthHandler().logInWithFacebook(
             ref: self,
             onError: { msg in self.showMessagePrompt(msg) },
-            onSuccess: { user in BuddiesStoryboard.Main.goTo() }
+            onSuccess: { user in self.handleOnLogIn(user: user) }
         )
     }
     

@@ -191,7 +191,8 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
                 "date_joined": dateJoined,
                 "location" : loc,
                 "email": email ?? "",
-                "name": myFirstName ?? "Nameless",
+                // Handle error cases with the name safely
+                "name": myFirstName ?? email?.split(separator: "@")[0] ?? "Nameless",
             ], merge: true)
             
         }else{
