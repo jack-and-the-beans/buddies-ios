@@ -205,9 +205,19 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     @IBAction func finishSignUp(_ sender: Any) {
         
-        saveBioToFirestore(bio: bioText.text)
-        fillDataModel()
-        BuddiesStoryboard.Main.goTo()
+        if bioText.textColor! == UIColor.lightGray || buttonPicture.imageView?.image == nil {
+            let alert = UIAlertController(title: "Finish Sign Up", message: "Please enter a bio and choose a profile picture.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }else
+        {
+            saveBioToFirestore(bio: bioText.text)
+            fillDataModel()
+            BuddiesStoryboard.Main.goTo()
+        }
+        
     }
     
 
