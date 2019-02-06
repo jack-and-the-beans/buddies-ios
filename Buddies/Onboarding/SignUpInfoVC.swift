@@ -66,8 +66,34 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         bioText.layer.borderWidth = 2
         buttonPicture.layer.cornerRadius = buttonPicture.frame.size.width / 2
         
+        // If the user authenticated with Facebook, set
+        // their profile picture to be from facebook.
+        guard let user = Auth.auth().currentUser else { return }
+        for userInfo in user.providerData {
+            if (userInfo.providerID == "facebook.com") {
+                let facebookId = userInfo.uid
+                let facebookPicUrl = "https://graph.facebook.com/\(facebookId)/picture?type=large"
+                saveProfilePicURLToFirestore(url: facebookPicUrl)
+                guard let picUrl = URL(string: facebookPicUrl) else { return }
+                downloadImage(from: picUrl)
+            }
+        }
     }
     
+    // https://stackoverflow.com/a/27712427
+    func downloadImage(from url: URL) {
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async() {
+                let img = UIImage(data: data)
+                self.buttonPicture.setImage(img, for: .normal)
+            }
+        }
+    }
+
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
 
     @IBOutlet weak var pictureButtonText: UIButton!
     @IBOutlet weak var buttonPicture: UIButton!
