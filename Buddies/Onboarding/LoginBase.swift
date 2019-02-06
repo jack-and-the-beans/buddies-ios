@@ -43,10 +43,8 @@ class LoginBase: UIViewController {
     }
     
     func showMessagePrompt(_ msg: String) {
-        print("hit")
         let alertController = UIAlertController(title: "Login Error", message: msg, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-        
         self.present(alertController, animated: true, completion: nil)
     }
     

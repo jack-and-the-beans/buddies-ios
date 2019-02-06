@@ -57,7 +57,7 @@
         <!--Delete Account-->
         <scene sceneID="6CK-ax-X1q">
             <objects>
-                <viewController title="Delete Account" id="m4L-16-SyF" customClass="DeleteAccountVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="deleteAccountProfile" title="Delete Account" id="m4L-16-SyF" customClass="DeleteAccountVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nb2-QY-Qk2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

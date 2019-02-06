@@ -25,19 +25,7 @@ class SignUpInfoVCTests: XCTestCase {
         vc = nil
     }
     
-    class ExistingUser : NSObject, UserInfo {
-        var providerID: String = "test"
-        
-        var displayName: String? = "test"
-        
-        var photoURL: URL? = nil
-        
-        var email: String? = "test"
-        
-        var phoneNumber: String? = "test"
-        
-        var uid: String = "test_uid"
-    }
+    
     
     func testInitLifecycle() {
         XCTAssertNotNil(vc.view, "View should be loaded")
@@ -48,7 +36,7 @@ class SignUpInfoVCTests: XCTestCase {
     {
         let vc = SignUpInfoVC()
         let collection = MockCollectionReference()
-        let user = ExistingUser()
+        let user = MockExistingUser()
         
         vc.fillDataModel( user: user, collection: collection)
         
@@ -94,7 +82,7 @@ class SignUpInfoVCTests: XCTestCase {
     {
         let vc = SignUpInfoVC()
         let collection = MockCollectionReference()
-        let user = ExistingUser()
+        let user = MockExistingUser()
         
         vc.saveProfilePicURLToFirestore(
             url: "url/for/image",
@@ -110,7 +98,7 @@ class SignUpInfoVCTests: XCTestCase {
     func testSaveBioToFirestore(){
         let vc = SignUpInfoVC()
         let collection = MockCollectionReference()
-        let user = ExistingUser()
+        let user = MockExistingUser()
         
         vc.saveBioToFirestore(
             bio: "biography",

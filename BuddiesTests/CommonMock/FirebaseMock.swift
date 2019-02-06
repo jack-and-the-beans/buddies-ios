@@ -9,6 +9,22 @@
 import Foundation
 import Firebase
 
+class MockExistingUser : NSObject, UserInfo {
+    var providerID: String = "test"
+    
+    var displayName: String? = "test"
+    
+    var photoURL: URL? = nil
+    
+    var email: String? = "test"
+    
+    var phoneNumber: String? = "test"
+    
+    var uid: String = "test_uid"
+    
+    override func delete
+}
+
 class MockCollectionReference : CollectionReference {
     var documents = [String: MockDocumentReference]()
     
