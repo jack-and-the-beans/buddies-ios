@@ -51,6 +51,7 @@ class ProfilePicOp: Operation {
 class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
     var imagePicker = UIImagePickerController()
+    var myFirstName: String?
     
     override func getTopField() -> UIView {
         return bioText
@@ -189,8 +190,9 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
                 "blocked_by": blockedBy,
                 "date_joined": dateJoined,
                 "location" : loc,
-                "email": email!
-                ], merge: true)
+                "email": email ?? "",
+                "name": myFirstName ?? "Nameless",
+            ], merge: true)
             
         }else{
             print("Unable to authorize user.")
@@ -207,7 +209,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         if let UID = user?.uid {
             collection.document(UID).setData([
                 "image_url": url
-                ], merge: true)
+            ], merge: true)
         }
         else {
             print("Unable to authorize user.")
@@ -223,7 +225,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         if let UID = user?.uid
         {
             collection.document(UID).setData([
-            "bio": bio
+                "bio": bio
             ], merge: true)
         }
         else

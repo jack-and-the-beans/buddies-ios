@@ -71,11 +71,10 @@ class LoginVC: LoginBase {
             ref: self,
             onError: { msg in self.showMessagePrompt(msg) },
             onSuccess: { user in
-                
-                if(tempAuthHandler.isNewUser){
+                if(tempAuthHandler.isNewUser) {
                      self.performSegue(withIdentifier: "GetSignUpInfo", sender: self)
-                }else
-                {
+                }
+                else {
                     BuddiesStoryboard.Main.goTo()
                 }
                 
@@ -88,6 +87,10 @@ class LoginVC: LoginBase {
         if let dest = segue.destination as? LoginExistingVC {
             dest.initEmailText = emailField.text
             dest.initPasswordText = passwordField.text
+        }
+        
+        if let dest = segue.destination as? SignUpInfoVC {
+            dest.myFirstName = firstNameField.text
         }
     }
 }
