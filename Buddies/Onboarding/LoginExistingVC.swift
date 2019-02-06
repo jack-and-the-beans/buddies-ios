@@ -20,7 +20,7 @@ class LoginExistingVC: LoginBase {
         passwordField.text = initPasswordText
     }
     
-    override func getTopField() -> UITextField {
+    override func getTopField() -> UIView {
         return emailField;
     }
     

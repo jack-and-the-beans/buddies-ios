@@ -21,7 +21,7 @@ class LoginVC: LoginBase {
         passwordField.text = initPasswordText
     }
     
-    override func getTopField() -> UITextField {
+    override func getTopField() -> UIView {
         return firstNameField;
     }
     

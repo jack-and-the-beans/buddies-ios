@@ -48,9 +48,13 @@ class ProfilePicOp: Operation {
 }
 
 
-class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
+class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
     var imagePicker = UIImagePickerController()
+    
+    override func getTopField() -> UIView {
+        return bioText
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
