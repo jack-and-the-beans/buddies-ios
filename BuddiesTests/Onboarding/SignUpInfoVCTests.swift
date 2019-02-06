@@ -25,29 +25,18 @@ class SignUpInfoVCTests: XCTestCase {
         vc = nil
     }
     
-    class ExistingUser : NSObject, UserInfo {
-        var providerID: String = "test"
-        
-        var displayName: String? = "test"
-        
-        var photoURL: URL? = nil
-        
-        var email: String? = "test"
-        
-        var phoneNumber: String? = "test"
-        
-        var uid: String = "test_uid"
-    }
+    
     
     func testInitLifecycle() {
         XCTAssertNotNil(vc.view, "View should be loaded")
     }
     
+    
     func testFillDataModel()
     {
         let vc = SignUpInfoVC()
         let collection = MockCollectionReference()
-        let user = ExistingUser()
+        let user = MockExistingUser()
         
         vc.fillDataModel( user: user, collection: collection)
         
@@ -62,11 +51,38 @@ class SignUpInfoVCTests: XCTestCase {
         XCTAssert(doc.exposedData["email"] as! String == "test", "Saves dummy email if user is authenticated.")
     }
     
+    
+    func testTextViewDidBeginEditing()
+    {
+        let vc = SignUpInfoVC()
+        let tempTextView = UITextView()
+        vc.bioText = tempTextView
+        vc.bioText.textColor = UIColor.lightGray
+        vc.bioText.text = "About you..."
+        vc.textViewDidBeginEditing(vc.bioText)
+        
+        XCTAssert(vc.bioText.text.isEmpty, "Bio text view is empty.")
+        XCTAssert(vc.bioText.textColor == UIColor.black, "Bio text is black.")
+    }
+    
+    func testTextViewDidEndEditing(){
+        
+        let vc = SignUpInfoVC()
+        let tempTextView = UITextView()
+        vc.bioText = tempTextView
+        vc.bioText.text = nil
+        vc.textViewDidEndEditing(vc.bioText)
+        
+        XCTAssert(vc.bioText.text == "About you...", "Bio text is 'About you...'")
+        XCTAssert(vc.bioText.textColor == UIColor.lightGray, "Bio text is light gray.")
+    }
+    
+    
     func testSaveProfilePicURLToFirestore()
     {
         let vc = SignUpInfoVC()
         let collection = MockCollectionReference()
-        let user = ExistingUser()
+        let user = MockExistingUser()
         
         vc.saveProfilePicURLToFirestore(
             url: "url/for/image",
@@ -82,7 +98,7 @@ class SignUpInfoVCTests: XCTestCase {
     func testSaveBioToFirestore(){
         let vc = SignUpInfoVC()
         let collection = MockCollectionReference()
-        let user = ExistingUser()
+        let user = MockExistingUser()
         
         vc.saveBioToFirestore(
             bio: "biography",

@@ -65,10 +65,22 @@ class LoginVC: LoginBase {
     }
     
     @IBAction func signUpWithFacebook() {
-        getAuthHandler().logInWithFacebook(
+        
+        let tempAuthHandler = getAuthHandler()
+        tempAuthHandler.logInWithFacebook(
             ref: self,
             onError: { msg in self.showMessagePrompt(msg) },
-            onSuccess: { user in self.performSegue(withIdentifier: "GetSignUpInfo", sender: self) }
+            onSuccess: { user in
+                
+                if(tempAuthHandler.isNewUser){
+                     self.performSegue(withIdentifier: "GetSignUpInfo", sender: self)
+                }else
+                {
+                    BuddiesStoryboard.Main.goTo()
+                }
+                
+               
+            }
         )
     }
     

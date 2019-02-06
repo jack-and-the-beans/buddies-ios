@@ -315,7 +315,7 @@
                                     <action selector="changePicture:" destination="s0Y-7Y-nAN" eventType="touchUpInside" id="jMz-o5-19I"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="About you..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="U5q-xz-N3r" customClass="UnderlinedMultiLineTextView" customModule="Buddies" customModuleProvider="target">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="About you..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="U5q-xz-N3r">
                                 <rect key="frame" x="30" y="297" width="315" height="160"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>

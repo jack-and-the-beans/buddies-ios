@@ -30,43 +30,40 @@ class ProfilePicOp: Operation {
         }
         
         let uploadTask = storageRef.putFile(from: self.imgURL, metadata: nil) { metadata, error in
-            
             self.storageRef.downloadURL { (url, error) in
                 if let downloadURL = url{
                     self.vc.saveProfilePicURLToFirestore(url: downloadURL.absoluteString)
                 }else{
-                    print("Error updating document: \(error)")
+                    print("Error updating document: \(error!)")
                 }
             }
         }
-        
         // Upload completed successfully
         uploadTask.observe(.success) { snapshot in
             return
-            
         }
-        
-        
-        
+    
     }
 }
 
 
-class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
-    let imagePicker = UIImagePickerController()
+    var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupHideKeyboardOnTap()
         // Do any additional setup after loading the view.
-        
+        bioText.delegate = self
+        bioText.textColor = UIColor.lightGray
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         bioText.layer.borderColor = ControlColors.fieldBorderFocused.cgColor
         bioText.layer.borderWidth = 2
         buttonPicture.layer.cornerRadius = buttonPicture.frame.size.width / 2
-        
-        // If the user authenticated with Facebook, set
+      
+         // If the user authenticated with Facebook, set
         // their profile picture to be from facebook.
         guard let user = Auth.auth().currentUser else { return }
         for userInfo in user.providerData {
@@ -77,6 +74,21 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 guard let picUrl = URL(string: facebookPicUrl) else { return }
                 downloadImage(from: picUrl)
             }
+        }
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "About you..."
+            textView.textColor = UIColor.lightGray
         }
     }
     
@@ -101,6 +113,26 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     @IBAction func changePicture(_ sender: Any) {
         present(imagePicker, animated: true)
     }
+    
+    func uploadProfilePicToCloudStorage(imgUrl: URL, user: UserInfo? = Auth.auth().currentUser){
+        
+        if let curUID = user?.uid {
+            //cloud storage paths / references
+            let storagePath = "/users/" + curUID + "/profilePicture.jpg"
+            let storageRef = StorageManager.shared.storage.reference().child(storagePath)
+            
+            //upload picture to storage async
+            let profPicOp = ProfilePicOp(imgUrl, storageRef: storageRef, vc: self)
+            let profPicOpQueue = OperationQueue()
+            profPicOpQueue.name = "Profile Pic Operation Queue"
+            profPicOpQueue.maxConcurrentOperationCount = 1
+            profPicOpQueue.addOperation(profPicOp)
+        }
+        else{
+            print("Unable to authenticate user.")
+        }
+        
+    }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
@@ -116,23 +148,12 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             
             
             self.pictureButtonText.isEnabled = false
+            self.pictureButtonText.setTitle("", for: UIControl.State.disabled)
             self.buttonPicture.tintColor = UIColor.clear
             self.buttonPicture.setImage(image, for: .normal)
          
-            let authHandler = AuthHandler(auth: Auth.auth())
-            let curUID = authHandler.getUID()!
+            uploadProfilePicToCloudStorage(imgUrl: imgUrl)
             
-            //cloud storage paths / references
-            let storagePath = "/users/" + curUID + "/profilePicture.jpg"
-            let storageRef = StorageManager.shared.storage.reference().child(storagePath)
-            
-            //upload picture to storage async
-            let profPicOp = ProfilePicOp(imgUrl, storageRef: storageRef, vc: self)
-            let profPicOpQueue = OperationQueue()
-            profPicOpQueue.name = "Profile Pic Operation Queue"
-            profPicOpQueue.maxConcurrentOperationCount = 1
-            profPicOpQueue.addOperation(profPicOp)
-           
             self.dismiss(animated: true, completion: nil)
           
         }
@@ -162,7 +183,7 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 "blocked_by": blockedBy,
                 "date_joined": dateJoined,
                 "location" : loc,
-                "email": email
+                "email": email!
                 ], merge: true)
             
         }else{
@@ -211,9 +232,19 @@ class SignUpInfoVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     @IBAction func finishSignUp(_ sender: Any) {
         
-        saveBioToFirestore(bio: bioText.text)
-        fillDataModel()
-        BuddiesStoryboard.Main.goTo()
+        if bioText.textColor! == UIColor.lightGray || buttonPicture.imageView?.image == nil {
+            let alert = UIAlertController(title: "Finish Sign Up", message: "Please enter a bio and choose a profile picture.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }else
+        {
+            saveBioToFirestore(bio: bioText.text)
+            fillDataModel()
+            BuddiesStoryboard.Main.goTo()
+        }
+        
     }
     
 

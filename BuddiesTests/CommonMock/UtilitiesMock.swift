@@ -32,6 +32,8 @@ class MockStorageManager: StorageManager {
     var getSavedImageCalls = 0
     var shouldFindSavedImage = false
     
+    
+    
     override func downloadFile(for path: String, to localPath: String, session providedSession: URLSession?, callback: ((URL) -> Void)?) -> URLSessionTask? {
         
         downloadFileCalls += 1

@@ -78,19 +78,6 @@ class NotificationServiceTest: XCTestCase {
         XCTAssert(notificationTester.token == "hello", "Saves token when messaging updates token")
     }
     
-    class ExistingUser : NSObject, UserInfo {
-        var providerID: String = "test"
-        
-        var displayName: String? = "test"
-        
-        var photoURL: URL? = nil
-        
-        var email: String? = "test"
-        
-        var phoneNumber: String? = "test"
-        
-        var uid: String = "test_uid"
-    }
 
     func testTokenSaveNoUser() {
         let notificationTester = NotificationService()
@@ -107,7 +94,7 @@ class NotificationServiceTest: XCTestCase {
     func testTokenSave() {
         let notificationTester = NotificationService()
         let collection = MockCollectionReference()
-        let user = ExistingUser()
+        let user = MockExistingUser()
         notificationTester.saveTokenToFirestore(
             fcmToken: "token_boi",
             user: user,
@@ -120,7 +107,7 @@ class NotificationServiceTest: XCTestCase {
     func testTokenError() {
         let notificationTester = NotificationService()
         let collection = MockCollectionReference()
-        let user = ExistingUser()
+        let user = MockExistingUser()
         notificationTester.saveTokenToFirestore(
             fcmToken: "",
             user: user,
