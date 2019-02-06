@@ -285,18 +285,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Lm-UX-4cY">
-                                <rect key="frame" x="167" y="487" width="41" height="30"/>
+                                <rect key="frame" x="167" y="455" width="41" height="30"/>
                                 <state key="normal" title="Finish"/>
                                 <connections>
                                     <action selector="finishSignUp:" destination="s0Y-7Y-nAN" eventType="touchUpInside" id="uGz-2X-3wv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VL9-LF-7fc">
-                                <rect key="frame" x="97.5" y="50" width="180" height="180"/>
+                                <rect key="frame" x="112.5" y="50" width="150" height="150"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="Y1m-Ij-FNN"/>
-                                    <constraint firstAttribute="width" constant="180" id="axF-5q-POJ"/>
+                                    <constraint firstAttribute="height" constant="150" id="Y1m-Ij-FNN"/>
+                                    <constraint firstAttribute="width" secondItem="VL9-LF-7fc" secondAttribute="height" multiplier="1:1" id="dp2-D4-GaK"/>
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal">
@@ -307,7 +307,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZ9-Ks-z4Y">
-                                <rect key="frame" x="130.5" y="235" width="114" height="30"/>
+                                <rect key="frame" x="130.5" y="205" width="114" height="30"/>
                                 <state key="normal" title="Upload a Picture">
                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -316,7 +316,7 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="About you..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="U5q-xz-N3r">
-                                <rect key="frame" x="30" y="297" width="315" height="160"/>
+                                <rect key="frame" x="30" y="265" width="315" height="160"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="315" id="MLd-sO-ZJb"/>
@@ -334,9 +334,10 @@
                             <constraint firstItem="QZ9-Ks-z4Y" firstAttribute="top" secondItem="VL9-LF-7fc" secondAttribute="bottom" constant="5" id="KXO-qJ-gF7"/>
                             <constraint firstItem="VL9-LF-7fc" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="PLq-7e-To1"/>
                             <constraint firstItem="8Lm-UX-4cY" firstAttribute="top" secondItem="U5q-xz-N3r" secondAttribute="bottom" constant="30" id="WTc-tq-Nev"/>
+                            <constraint firstItem="ieI-QG-mvM" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8Lm-UX-4cY" secondAttribute="bottom" id="bTu-wH-ulT"/>
                             <constraint firstItem="8Lm-UX-4cY" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="cdV-md-xK5"/>
                             <constraint firstItem="QZ9-Ks-z4Y" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="cem-UX-fEI"/>
-                            <constraint firstItem="ieI-QG-mvM" firstAttribute="bottom" secondItem="8Lm-UX-4cY" secondAttribute="bottom" constant="150" id="mxr-cI-kzg"/>
+                            <constraint firstItem="U5q-xz-N3r" firstAttribute="top" secondItem="QZ9-Ks-z4Y" secondAttribute="bottom" constant="30" id="hFC-ED-dud"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ieI-QG-mvM"/>
                     </view>
