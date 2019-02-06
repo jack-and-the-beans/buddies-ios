@@ -68,7 +68,8 @@ class LoginVC: LoginBase {
         getAuthHandler().logInWithFacebook(
             ref: self,
             onError: { msg in self.showMessagePrompt(msg) },
-            onSuccess: { user in self.performSegue(withIdentifier: "GetSignUpInfo", sender: self) }
+            onSuccess: { user in self.performSegue(withIdentifier: "GetSignUpInfo", sender: self)
+            }
         )
     }
     

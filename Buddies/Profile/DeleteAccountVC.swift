@@ -44,17 +44,15 @@ class DeleteAccountVC: LoginBase {
             return
         }
         
-        let user = Auth.auth().currentUser
+        guard let user = Auth.auth().currentUser else {return}
         let credential = EmailAuthProvider.credential(withEmail: email, password: password)
         
-        //reauth user
-        user?.reauthenticate(with: credential) { error in
+        user.reauthenticateAndRetrieveData(with: credential, completion: {(result,error) in
             if error != nil {
                 self.showMessagePrompt("Your email or password is incorrect.")
             } else {
-                
                 //delete user
-                user?.delete { error in
+                user.delete { error in
                     
                     if error != nil {
                         self.showMessagePrompt("Could not delete user.")
@@ -68,8 +66,8 @@ class DeleteAccountVC: LoginBase {
                     }
                 }
             }
-        }
-        
+        })
+
     }
     
 }

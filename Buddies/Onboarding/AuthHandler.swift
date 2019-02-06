@@ -23,6 +23,8 @@ class AuthHandler {
         return auth.currentUser != nil
     }
     
+
+    
     func saveFacebookAccessTokenToFirestore(
         facebookAccessToken: String,
         user: UserInfo? = Auth.auth().currentUser,
@@ -50,9 +52,8 @@ class AuthHandler {
             if let error = error {
                 onError(error.localizedDescription)
             } else if !result!.isCancelled {
+                
                 let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-                
-                
                 
                 self.auth.signInAndRetrieveData(with: credential) { (result, error) in
                     if let error = error {

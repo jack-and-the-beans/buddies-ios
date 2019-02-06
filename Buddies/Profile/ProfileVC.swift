@@ -77,42 +77,35 @@ class ProfileVC: UIViewController {
     
     func deleteAccountFacebook() {
         
-        if let user = Auth.auth().currentUser  {
-            
-            let docRef = FirestoreManager.shared.db.collection("users").document(user.uid)
-            
-            docRef.getDocument { (document, error) in
-                if let document = document, document.exists {
-                    
-                    //get token from firestore
-                    let token = document.get("facebook_access_token") as! String
-                    let credential = FacebookAuthProvider.credential(withAccessToken: token)
-                    
-                    //reauth user
-                    user.reauthenticate(with: credential) { error in
-                        if error != nil {
-                            self.showMessagePrompt("Could not authenticate user.")
-                        } else {
-                            
-                            //delete user
-                            user.delete { error in
-                                
-                                if error != nil {
-                                    self.showMessagePrompt("Could not delete user.")
-                                } else {
-                                    
-                                    //sign out user after deleting their account
-                                    let auth = AuthHandler(auth: Auth.auth())
-                                    auth.signOut(onError: self.showMessagePrompt) {
-                                        BuddiesStoryboard.Login.goTo()
-                                    }
+        guard let user = Auth.auth().currentUser else {return}
+        let docRef = FirestoreManager.shared.db.collection("users").document(user.uid)
+        
+        docRef.getDocument { (document, error) in
+    
+            if let document = document, document.exists {
+                //get token from firestore
+                let token = document.get("facebook_access_token") as! String
+                let credential = FacebookAuthProvider.credential(withAccessToken: token)
+                
+                user.reauthenticateAndRetrieveData(with: credential, completion: {(result, error) in
+                    if error != nil {
+                        self.showMessagePrompt("Could not authenticate user.")
+                    } else {
+                        user.delete { error in
+                            if error != nil {
+                                self.showMessagePrompt("Could not delete user.")
+                            } else {
+                                //sign out user after deleting their account
+                                let auth = AuthHandler(auth: Auth.auth())
+                                auth.signOut(onError: self.showMessagePrompt) {
+                                    BuddiesStoryboard.Login.goTo()
                                 }
                             }
                         }
                     }
-                } else {
-                    print("Document does not exist")
-                }
+                })
+            } else {
+                print("Document does not exist")
             }
         }
     }
