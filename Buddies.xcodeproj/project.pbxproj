@@ -54,6 +54,7 @@
 		A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */; };
 		A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */; };
 		A9B144AF220B4165004C614E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144AE220B4165004C614E /* SettingsVC.swift */; };
+		A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144B0220C82A0004C614E /* AppDelegateTests.swift */; };
 		A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF3F2201427A00C05F2C /* LoginVC.swift */; };
 		A9E8BF45220143A300C05F2C /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF44220143A300C05F2C /* AuthHandler.swift */; };
 		A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */; };
@@ -136,6 +137,7 @@
 		A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthHandler.swift; sourceTree = "<group>"; };
 		A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		A9B144AE220B4165004C614E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		A9B144B0220C82A0004C614E /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		A9E8BF3F2201427A00C05F2C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		A9E8BF44220143A300C05F2C /* AuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandler.swift; sourceTree = "<group>"; };
 		A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVC.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 				A9E8BF6322023D0D00C05F2C /* Onboarding */,
 				A9E8BF6122023CF100C05F2C /* Extensions */,
 				B6AC54B521F8DB8500B075B8 /* Info.plist */,
+				A9B144B0220C82A0004C614E /* AppDelegateTests.swift */,
 				A8B2F37B22040710006B91D1 /* NotificationServiceTest.swift */,
 				45DA93A7220957CE0064CBEF /* Testing.swift */,
 				589AD642220934FD0090A96C /* CommonMock */,
@@ -710,6 +713,7 @@
 				A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */,
 				A91BA33A22024A8900DED6B3 /* LoginExistingVCTests.swift in Sources */,
 				A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */,
+				A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */,
 				A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */,
 				58EF8DB42208A2E900872770 /* LayoutMeasurementsTests.swift in Sources */,
 				58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */,

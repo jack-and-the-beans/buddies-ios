@@ -88,7 +88,9 @@ class ProfileVC: UIViewController {
         do {
             let imageData = try Data(contentsOf: imageURL)
             if let image = UIImage(data: imageData) {
-                onImageLoaded(image: image)
+                OperationQueue.main.addOperation {
+                    self.onImageLoaded(image: image)
+                }
             } else {
                 print("Failed to load downloaded Topic image for \(uid)")
             }

@@ -61,6 +61,11 @@ class MockDocumentReference : DocumentReference {
         completion?(nil)
     }
     
+    override func getDocument(completion: @escaping FIRDocumentSnapshotBlock) {
+        let snap = MockDocumentSnapshot(data: exposedData)
+        completion(snap, nil)
+    }
+    
     // THANK YOU STACK OVERFLOW: https://stackoverflow.com/a/47272501
     init(workaround _: Void = ()) {}
 }
@@ -72,6 +77,10 @@ class MockDocumentSnapshot : DocumentSnapshot {
         get {
             return _documentID
         }
+    }
+    
+    override var exists: Bool {
+        get { return true }
     }
 
     override func data() -> [String : Any]? {

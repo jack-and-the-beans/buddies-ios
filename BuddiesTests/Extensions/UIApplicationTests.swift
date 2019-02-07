@@ -21,8 +21,24 @@ class UIApplicationTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10)
+        waitForExpectations(timeout: 5)
         
-        XCTAssert(myVC === UIApplication.shared.keyWindow?.rootViewController, "VC should be set as root")
+        XCTAssert(
+            myVC === UIApplication.shared.keyWindow?.rootViewController,
+            "VC should be set as root")
+    }
+    
+    
+    func testSetRootViewViaGoto() {
+        let expectation = self.expectation(description: #function)
+        
+        // Set there to be no root view controller
+        UIApplication.shared.keyWindow?.rootViewController = nil
+        
+        BuddiesStoryboard.Login.goTo() {
+            expectation.fulfill()
+        }
+                
+        waitForExpectations(timeout: 5)
     }
 }

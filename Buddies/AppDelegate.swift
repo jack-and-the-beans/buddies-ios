@@ -18,58 +18,78 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var topicCollection: TopicCollection!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
         // This will get us a token, even if we don't save
         // it until we have notification permission.
         application.registerForRemoteNotifications()
-
+        
         // Initialize
         FirebaseApp.configure()
         topicCollection = TopicCollection()
-        
-        
-        Auth.auth().addStateDidChangeListener {auth, user in
-            if let _ = user {
-                AppContent.setup()
-            }
-        }
         
         // Setup delegates for notifications:
         UNUserNotificationCenter.current().delegate = self.notifications
         Messaging.messaging().delegate = self.notifications
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
+        
         let authHandler = AuthHandler(auth: Auth.auth())
         
-        if authHandler.isLoggedIn() {
-            let me = Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid)
-            
+        Auth.auth().addStateDidChangeListener { (auth, user) in
+            if let _ = user { AppContent.setup() }
+        }
+
+        setupInitialView(isLoggedIn: authHandler.isLoggedIn()) { callback in
+            getHasUserDoc(callback: callback)
+        }
+        
+        self.window?.makeKeyAndVisible()
+        
+        return true
+    }
+    
+    func getHasUserDoc(callback: @escaping (Bool) -> Void,
+                     uid: String? = Auth.auth().currentUser?.uid,
+                     src: CollectionReference = Firestore.firestore().collection("users")) {
+        guard let uid = uid else {
+            callback(false)
+            return
+        }
+        
+        src.document(uid).getDocument { (snap, err) in
+            if let snap = snap
+                , snap.exists
+                , let data = snap.data()
+                , let _ = data["image_url"]
+                , let _ = data["bio"] {
+                callback(true)
+            }
+            else {
+                callback(false)
+            }
+        }
+    }
+        
+    func setupInitialView(isLoggedIn: Bool, getUserIsFilledOut: (@escaping (Bool) -> Void) -> Void) {
+        if isLoggedIn {
             // set the view to the launch screen intil we're ready for more
             self.window?.rootViewController = BuddiesStoryboard.LaunchScreen.viewController()
             
-            me.getDocument { (snap, err) in
-                guard
-                    let snap = snap
-                    , snap.exists
-                    , let data = snap.data()
-                    , let _ = data["image_url"]
-                    , let _ = data["bio"] else {
+            getUserIsFilledOut { userIsFilledOut in
+                if userIsFilledOut {
                     self.window?.rootViewController = BuddiesStoryboard.Login.viewController(withID: "SignUpInfo")
-                    return
                 }
-                
-                // Show home page
-                self.window?.rootViewController = BuddiesStoryboard.Main.viewController()
+                else {
+                    // Show home page
+                    self.window?.rootViewController = BuddiesStoryboard.Main.viewController()
+                }
             }
         } else {
             // Show login page
             self.window?.rootViewController = BuddiesStoryboard.Login.viewController()
         }
-
-        self.window?.makeKeyAndVisible()
-        
-        return true
     }
+    
+    /*
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -92,6 +112,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    */
 }
 
