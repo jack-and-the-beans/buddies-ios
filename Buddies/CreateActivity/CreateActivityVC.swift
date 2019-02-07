@@ -9,11 +9,29 @@
 import UIKit
 import Firebase
 
-class CreateActivityVC: UITableViewController {
+class CreateActivityVC: UITableViewController, UITextViewDelegate {
 
+    
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Description"
+            textView.textColor = UIColor.lightGray
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        descriptionTextView.delegate = self
+        descriptionTextView.textColor = UIColor.lightGray
+        self.setupHideKeyboardOnTap()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
