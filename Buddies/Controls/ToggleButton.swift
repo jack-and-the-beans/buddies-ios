@@ -47,7 +47,6 @@ import UIKit
     
     
     func setupImage(){
-        
         heightAnchor.constraint(equalToConstant: size.height).isActive = true
         widthAnchor.constraint(equalToConstant: size.width).isActive = true
         
@@ -58,8 +57,8 @@ import UIKit
         setImage(selectedImg, for: [.selected, .highlighted])
         
         addTarget(self, action: #selector(toggled), for: .touchUpInside)
-        
     }
+    
     override func title(for state: UIControl.State) -> String? {
         return nil
     }
