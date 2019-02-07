@@ -68,21 +68,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    func tryLoadMainPage(getUserIsFilledOut: (@escaping (Bool) -> Void) -> Void) {
+        getUserIsFilledOut { userIsFilledOut in
+            if userIsFilledOut {
+                self.window?.rootViewController = BuddiesStoryboard.Login.viewController(withID: "SignUpInfo")
+            }
+            else {
+                // Show home page
+                self.window?.rootViewController = BuddiesStoryboard.Main.viewController()
+            }
+        }
+    }
         
     func setupInitialView(isLoggedIn: Bool, getUserIsFilledOut: (@escaping (Bool) -> Void) -> Void) {
         if isLoggedIn {
             // set the view to the launch screen intil we're ready for more
             self.window?.rootViewController = BuddiesStoryboard.LaunchScreen.viewController()
-            
-            getUserIsFilledOut { userIsFilledOut in
-                if userIsFilledOut {
-                    self.window?.rootViewController = BuddiesStoryboard.Login.viewController(withID: "SignUpInfo")
-                }
-                else {
-                    // Show home page
-                    self.window?.rootViewController = BuddiesStoryboard.Main.viewController()
-                }
-            }
+            tryLoadMainPage(getUserIsFilledOut: getUserIsFilledOut)
         } else {
             // Show login page
             self.window?.rootViewController = BuddiesStoryboard.Login.viewController()
