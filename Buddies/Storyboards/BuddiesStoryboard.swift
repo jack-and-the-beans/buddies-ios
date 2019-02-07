@@ -35,7 +35,7 @@ enum BuddiesStoryboard : String {
         return scene
     }
     
-    func goTo() {
-        UIApplication.setRootView(viewController())
+    func goTo(completion: (() -> Void)? = nil) {
+        UIApplication.setRootView(viewController(), completion: completion)
     }
 }

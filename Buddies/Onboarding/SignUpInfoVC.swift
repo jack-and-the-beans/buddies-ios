@@ -83,7 +83,9 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
                     do {
                         let imageData = try Data(contentsOf: localURL)
                         if let image = UIImage(data: imageData) {
-                            self.buttonPicture.setImage(image, for: .normal)
+                            OperationQueue.main.addOperation {
+                                self.buttonPicture.setImage(image, for: .normal)
+                            }
                         } else {
                             print("Failed to load downloaded User profile pic image from facebook")
                         }
