@@ -9,12 +9,19 @@
 import UIKit
 import Firebase
 
-class SettingsVC: UIViewController {
-
+class SettingsVC: UITableViewController {
+    @IBOutlet weak var joinnedActivityNotificationToggle: UISwitch!
+    @IBOutlet weak var starredTopicNotificationToggle: UISwitch!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    }
+    
+    
+    @IBAction func onStarredTopicNotificationChange() {
+    }
+    
+    @IBAction func onJoinedActivityNotificationChange() {
     }
     
     @IBAction func deleteAccount(_ sender: Any) {
