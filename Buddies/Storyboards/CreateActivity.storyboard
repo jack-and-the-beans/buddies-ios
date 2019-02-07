@@ -141,12 +141,12 @@
                     <navigationItem key="navigationItem" title="Suggest Activity" id="0T8-8K-etd">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="3KS-oR-21e">
                             <connections>
-                                <segue destination="of3-xm-ifi" kind="unwind" unwindAction="cancelCreateActivity:" id="XNi-oC-sRt"/>
+                                <action selector="cancelCreateActivity:" destination="RyM-nJ-J7c" id="Krd-3H-X2K"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Suggest" id="QMc-k1-alN">
                             <connections>
-                                <segue destination="of3-xm-ifi" kind="unwind" unwindAction="finishCreateActivity:" id="oJc-u7-7XO"/>
+                                <action selector="finishCreateActivity:" destination="RyM-nJ-J7c" id="Sxy-ZE-HZY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -156,7 +156,6 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pY9-yC-X6S" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="of3-xm-ifi" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="45.600000000000001" y="-627.4362818590705"/>
         </scene>
