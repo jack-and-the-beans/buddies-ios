@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import Firebase
 @testable import Buddies
 
 class LoginExistingVCTests: XCTestCase {
@@ -98,5 +99,45 @@ class LoginExistingVCTests: XCTestCase {
         vc.facebookLogin()
         
         XCTAssert(handler.nCallsLogInWithFacebook == 1, "Sign up with email should call logInWithFacebook")
+    }
+    
+    func testHandleOnLogIn_HasDoc() {
+        let uid = MockExistingUser().uid
+        let doc = MockDocumentReference()
+        let ref = MockCollectionReference()
+        
+        ref.documents[uid] = doc
+        doc.exposedData["bio"] = "blah blah"
+        doc.exposedData["image_url"] = "my_image_url"
+        
+        let app = MockAD(hasDoc: true)
+        
+        vc.handleOnLogIn(uid: uid, app: app, users: ref)
+    }
+    
+    func testHandleOnLogIn_NoDoc() {
+        let uid = MockExistingUser().uid
+        let doc = MockDocumentReference()
+        let ref = MockCollectionReference()
+        
+        ref.documents[uid] = doc
+        doc.exposedData["bio"] = "blah blah"
+        doc.exposedData["image_url"] = "my_image_url"
+        
+        let app = MockAD(hasDoc: false)
+        
+        vc.handleOnLogIn(uid: uid, app: app, users: ref)
+    }
+    
+    func testHandleOnLogIn_nilApp() {
+        vc.handleOnLogIn(uid: "hello", app: nil)
+    }
+    
+    class MockAD : AppDelegate {
+        let hasDoc: Bool
+        init(hasDoc: Bool) { self.hasDoc = hasDoc }
+        override func getHasUserDoc(callback: @escaping (Bool) -> Void, uid: String?, src: CollectionReference) {
+            callback(self.hasDoc)
+        }
     }
 }
