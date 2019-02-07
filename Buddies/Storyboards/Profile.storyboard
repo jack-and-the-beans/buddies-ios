@@ -29,7 +29,6 @@
         <!--Profile-->
         <scene sceneID="ged-W7-Ynx">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fLJ-tb-MyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="profileMain" title="Profile" id="qjg-cX-S7x" customClass="ProfileVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="duf-QF-vs0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -111,6 +110,7 @@
                         <outlet property="profilePic" destination="6Mv-t1-IFJ" id="0Wo-XB-8f2"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fLJ-tb-MyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="516" y="555.47226386806597"/>
         </scene>
@@ -190,7 +190,7 @@
         <!--Settings-->
         <scene sceneID="J9h-QH-6q3">
             <objects>
-                <viewController id="l1g-GD-m4H" customClass="SettingsVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="settings" id="l1g-GD-m4H" customClass="SettingsVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BMu-cO-0XQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
