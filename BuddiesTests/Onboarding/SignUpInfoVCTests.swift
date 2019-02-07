@@ -110,9 +110,4 @@ class SignUpInfoVCTests: XCTestCase {
         
         XCTAssert(doc.exposedData["bio"] as! String == "biography", "Saves bio if user is authenticated.")
     }
-    
-    
-    
-    
-    
 }

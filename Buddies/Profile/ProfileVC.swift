@@ -23,11 +23,9 @@ class ProfileVC: UIViewController {
     }
     
     
-    func loadProfileData(auth: Auth = Auth.auth(),
+    func loadProfileData(uid: String = Auth.auth().currentUser!.uid,
                         storageManger: StorageManager = StorageManager.shared,
                         users: CollectionReference = Firestore.firestore().collection("users")) {
-        
-        let uid = auth.currentUser!.uid
         
         if let image = storageManger.getSavedImage(filename: uid) {
             onImageLoaded(image: image)
