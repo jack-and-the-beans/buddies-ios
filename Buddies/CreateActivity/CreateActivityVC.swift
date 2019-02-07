@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class CreateActivityVC: UITableViewController {
 
@@ -31,6 +32,7 @@ class CreateActivityVC: UITableViewController {
         }
     }
     
+    @IBOutlet weak var descriptionTextView: UITextView!
     
     @IBOutlet weak var titleField: UITextField!
     
@@ -43,8 +45,35 @@ class CreateActivityVC: UITableViewController {
     }
     
     @IBAction func finishCreateActivity(_ segue: UIStoryboardSegue) {
-             dismiss(animated: true, completion: _dismissHook)
+        
+        guard let title = titleField.text else {return}
+        guard let description = descriptionTextView.text else {return}
+        saveActivityToFirestore(title: title, description: description)
+        dismiss(animated: true, completion: _dismissHook)
     }
 
-
+    func saveActivityToFirestore(
+        title: String = "Title",
+        description: String = "Description",
+        user: UserInfo? = Auth.auth().currentUser,
+        collection: CollectionReference = Firestore.firestore().collection("activities"),
+        location: GeoPoint = GeoPoint(latitude: 0, longitude: 0),
+        startTime: Date = Date(),
+        endTime: Date = Date(),
+        topicIDs: [String] = []){
+        
+        guard let uid = user?.uid else {return}
+        
+        collection.addDocument(data: [
+            "title": title,
+            "owner_id": uid,
+            "description" : description,
+            "date_created": Date(),
+            "location": location,
+            "start_time": startTime,
+            "end_time": endTime,
+            "topic_ids": topicIDs,
+            "members": [uid]
+        ])
+    }
 }

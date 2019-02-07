@@ -151,6 +151,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="descriptionTextView" destination="yEs-Fb-whx" id="WKK-k1-kLq"/>
                         <outlet property="locationField" destination="FZ7-4J-Xhx" id="hBe-fk-5nh"/>
                         <outlet property="titleField" destination="a3a-rU-EbY" id="t3p-sQ-FTr"/>
                     </connections>
