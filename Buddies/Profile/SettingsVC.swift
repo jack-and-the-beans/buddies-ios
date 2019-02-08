@@ -9,19 +9,34 @@
 import UIKit
 import Firebase
 
+protocol SettingsVCDelegate {
+    func setStarredTopicNotification(to: Bool)
+    func setJoinedActivityNotification(to: Bool)
+}
+
 class SettingsVC: UITableViewController {
     @IBOutlet weak var joinnedActivityNotificationToggle: UISwitch!
     @IBOutlet weak var starredTopicNotificationToggle: UISwitch!
     
+    var delegate: SettingsVCDelegate!
+    var init_TopicsNotifications: Bool!
+    var init_JoinedActivityNotifications: Bool!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Initialize toggle states
+        joinnedActivityNotificationToggle.setOn(init_JoinedActivityNotifications, animated: false)
+        starredTopicNotificationToggle.setOn(init_TopicsNotifications, animated: false)
     }
     
     
     @IBAction func onStarredTopicNotificationChange() {
+        self.delegate.setStarredTopicNotification(to: starredTopicNotificationToggle.isOn)
     }
     
     @IBAction func onJoinedActivityNotificationChange() {
+        self.delegate.setJoinedActivityNotification(to: joinnedActivityNotificationToggle.isOn)
     }
     
     @IBAction func deleteAccount(_ sender: Any) {

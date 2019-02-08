@@ -9,10 +9,13 @@
 import UIKit
 import Firebase
 
-class ProfileVC: UIViewController {
+class ProfileVC: UIViewController, SettingsVCDelegate {
     @IBOutlet weak var profilePic: UIButton!
     @IBOutlet weak var bioLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    
+    var settings_TopicsNotifications: Bool = true
+    var settings_JoinedActivityNotifications: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +81,11 @@ class ProfileVC: UIViewController {
             
             self.bioLabel.text = bio
             self.nameLabel.text = name
+            
+            self.settings_TopicsNotifications =
+                data?["should_send_activity_suggestion_notification"] as? Bool ?? true
+            self.settings_JoinedActivityNotifications =
+                data?["should_send_joined_activity_notification"] as? Bool ?? true
         }
     }
     
@@ -94,5 +102,35 @@ class ProfileVC: UIViewController {
         } catch {
             print("Could not load topic, \(error)")
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? SettingsVC {
+            dest.init_TopicsNotifications = settings_TopicsNotifications
+            dest.init_JoinedActivityNotifications = settings_JoinedActivityNotifications
+            dest.delegate = self
+        }
+    }
+    
+    func setStarredTopicNotification(to value: Bool) {
+        let collection = Firestore.firestore().collection("users")
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        collection.document(uid).setData([
+            "should_send_activity_suggestion_notification": value
+        ], merge: true)
+        
+        self.settings_TopicsNotifications = value
+    }
+    
+    func setJoinedActivityNotification(to value: Bool) {
+        let collection = Firestore.firestore().collection("users")
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        collection.document(uid).setData([
+            "should_send_joined_activity_notification": value
+        ], merge: true)
+
+        self.settings_JoinedActivityNotifications = value
     }
 }
