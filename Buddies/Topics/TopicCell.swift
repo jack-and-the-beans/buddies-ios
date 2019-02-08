@@ -32,23 +32,24 @@ import UIKit
 
 class TopicCell: UICollectionViewCell {
   
-  @IBOutlet fileprivate weak var containerView: UIView!
-  @IBOutlet weak var imageView: UIImageView!
-  @IBOutlet weak var nameLabel: UILabel!
-  
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    containerView.layer.cornerRadius = 6
-    containerView.layer.masksToBounds = true
-  }
-  
-  var topic: Topic? {
-    didSet {
-      if let topic = topic {
-        imageView.image = topic.image ?? UIImage()
-        nameLabel.text = topic.name
-      }
+    @IBOutlet fileprivate weak var containerView: UIView!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var toggleButton: ToggleButton!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        containerView.layer.cornerRadius = 6
+        containerView.layer.masksToBounds = true
     }
-  }
+  
+    var topic: Topic? {
+        didSet {
+            if let topic = topic {
+                imageView.image = topic.image ?? UIImage()
+                nameLabel.text = topic.name
+            }
+        }
+    }
   
 }

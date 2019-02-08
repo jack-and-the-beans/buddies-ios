@@ -30,21 +30,44 @@
                                             <rect key="frame" x="0.0" y="0.0" width="180" height="159"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3xc-Id-cnY">
-                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="126"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="127"/>
                                                     <color key="backgroundColor" red="0.14901960784313725" green="0.59999999999999998" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Caption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9F7-fL-Jk5">
-                                                    <rect key="frame" x="10" y="135" width="44" height="17"/>
+                                                    <rect key="frame" x="10" y="136" width="44" height="16"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="12"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNO-2G-fTv" customClass="ToggleButton" customModule="Buddies" customModuleProvider="target">
+                                                    <rect key="frame" x="149" y="132" width="21" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="FFn-Ed-kuH"/>
+                                                        <constraint firstAttribute="width" constant="21" id="o9A-yo-LfT"/>
+                                                    </constraints>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="unselectedColor">
+                                                            <color key="value" red="0.0" green="0.3294117647" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="selectedImg" value="favorite_star"/>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="unselectedImg" value="favorite_star"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="toggleSelected:" destination="Zc6-W6-bDA" eventType="touchUpInside" id="AHb-qA-3ab"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" red="0.14901960784313725" green="0.59999999999999998" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="3xc-Id-cnY" secondAttribute="trailing" id="3mk-Km-Ogm"/>
+                                                <constraint firstAttribute="bottom" secondItem="lNO-2G-fTv" secondAttribute="bottom" constant="6" id="8JG-pE-cFf"/>
                                                 <constraint firstItem="9F7-fL-Jk5" firstAttribute="leading" secondItem="aBp-qJ-lVm" secondAttribute="leading" constant="10" id="AhD-sg-qop"/>
                                                 <constraint firstItem="3xc-Id-cnY" firstAttribute="leading" secondItem="aBp-qJ-lVm" secondAttribute="leading" id="EQj-qh-gYs"/>
+                                                <constraint firstAttribute="trailing" secondItem="lNO-2G-fTv" secondAttribute="trailing" constant="10" id="ThM-9r-0zy"/>
                                                 <constraint firstItem="9F7-fL-Jk5" firstAttribute="top" secondItem="3xc-Id-cnY" secondAttribute="bottom" constant="9" id="XtQ-eg-1rb"/>
                                                 <constraint firstItem="3xc-Id-cnY" firstAttribute="top" secondItem="aBp-qJ-lVm" secondAttribute="top" id="aIo-xr-MlU"/>
                                                 <constraint firstAttribute="bottom" secondItem="9F7-fL-Jk5" secondAttribute="bottom" constant="7" id="vba-zn-EMZ"/>
@@ -68,6 +91,7 @@
                                     <outlet property="containerView" destination="aBp-qJ-lVm" id="FAY-TZ-zaS"/>
                                     <outlet property="imageView" destination="3xc-Id-cnY" id="KUd-lV-skx"/>
                                     <outlet property="nameLabel" destination="9F7-fL-Jk5" id="YgF-ay-1M6"/>
+                                    <outlet property="toggleButton" destination="lNO-2G-fTv" id="FCF-sY-NPy"/>
                                     <segue destination="k11-m3-OhU" kind="show" id="KoG-bF-0cW"/>
                                 </connections>
                             </collectionViewCell>
@@ -81,7 +105,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bch-6a-xd2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1969" y="342"/>
+            <point key="canvasLocation" x="-1970.4000000000001" y="341.37931034482762"/>
         </scene>
         <!--Topic Activities-->
         <scene sceneID="vdE-4p-lUG">
@@ -92,7 +116,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="P5d-97-pYL">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="topic-activity" id="P5d-97-pYL">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P5d-97-pYL" id="58I-1r-9Jl">
@@ -115,7 +139,6 @@
         <!--Topics Nav-->
         <scene sceneID="qzS-pt-sHL">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fnM-4D-B89" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController title="Topics Nav" id="FlY-9c-B7N" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bPz-Td-PSr">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -125,8 +148,12 @@
                         <segue destination="Zc6-W6-bDA" kind="relationship" relationship="rootViewController" id="fh3-dC-vff"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fnM-4D-B89" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2881" y="328"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="favorite_star" width="100" height="100"/>
+    </resources>
 </document>
