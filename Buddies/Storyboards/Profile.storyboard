@@ -36,13 +36,12 @@
                         <subviews>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Mv-t1-IFJ">
                                 <rect key="frame" x="20" y="84" width="157.5" height="157.5"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="NwO-1i-4wH"/>
                                     <constraint firstAttribute="width" secondItem="6Mv-t1-IFJ" secondAttribute="height" multiplier="1:1" id="eZa-qh-jsc"/>
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal">
+                                <state key="normal" image="JackAndTheBeans">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
@@ -308,4 +307,7 @@
             <point key="canvasLocation" x="1220" y="977"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="JackAndTheBeans" width="640" height="640"/>
+    </resources>
 </document>
