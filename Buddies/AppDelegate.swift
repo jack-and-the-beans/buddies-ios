@@ -72,11 +72,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func tryLoadMainPage(getUserIsFilledOut: (@escaping (Bool) -> Void) -> Void) {
         getUserIsFilledOut { userIsFilledOut in
             if userIsFilledOut {
-                self.window?.rootViewController = BuddiesStoryboard.Login.viewController(withID: "SignUpInfo")
+                self.window?.rootViewController = BuddiesStoryboard.Main.viewController()
             }
             else {
-                // Show home page
-                self.window?.rootViewController = BuddiesStoryboard.Main.viewController()
+                self.window?.rootViewController = BuddiesStoryboard.Login.viewController(withID: "SignUpInfo")
             }
         }
     }
