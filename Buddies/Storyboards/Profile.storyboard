@@ -218,7 +218,7 @@
                                                     </constraints>
                                                     <color key="onTintColor" red="0.1137254902" green="0.63137254899999995" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <connections>
-                                                        <action selector="onStarredTopicNotificationChange" destination="l1g-GD-m4H" eventType="valueChanged" id="dcL-bN-y9H"/>
+                                                        <action selector="onStarredTopicNotificationChange" destination="l1g-GD-m4H" eventType="valueChanged" id="QjO-Hu-keU"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -297,8 +297,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="fsy-c3-78G"/>
                     <connections>
-                        <outlet property="joinnedActivityNotificationToggle" destination="CY7-Ib-LAZ" id="Yoc-vL-NAN"/>
-                        <outlet property="starredTopicNotificationToggle" destination="2my-lj-ZcM" id="Erb-ly-rzv"/>
+                        <outlet property="joinedActivityNotificationToggle" destination="CY7-Ib-LAZ" id="i6U-dK-Nxt"/>
+                        <outlet property="topicNotificationToggle" destination="2my-lj-ZcM" id="gbj-QE-OGL"/>
                         <segue destination="m4L-16-SyF" kind="show" identifier="confirmDeleteAccountEmail" id="aVv-17-usQ"/>
                     </connections>
                 </tableViewController>

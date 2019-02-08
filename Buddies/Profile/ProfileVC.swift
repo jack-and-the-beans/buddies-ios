@@ -113,7 +113,7 @@ class ProfileVC: UIViewController, SettingsVCDelegate {
         }
     }
     
-    func setStarredTopicNotification(to value: Bool) {
+    func setTopicNotification(to value: Bool) {
         let collection = Firestore.firestore().collection("users")
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
