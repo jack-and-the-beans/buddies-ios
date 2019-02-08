@@ -36,18 +36,6 @@ class ToggleButtonTests: XCTestCase {
         XCTAssert(!button.isSelected)
     }
 
-    func testSetConstraints() {
-        let button = ToggleButton(frame: frame)
-        let constraints = button.constraints
-        
-        XCTAssert(constraints.count == 2)
-        
-        button.size = CGSize(width: 100, height: 100)
-        
-        XCTAssert(constraints.count == 2)
-        XCTAssert(constraints != button.constraints)
-    }
-    
     func testSetImages(){
         let button = ToggleButton(frame: frame)
         let selectedImage = button.image(for: .selected)
@@ -74,16 +62,5 @@ class ToggleButtonTests: XCTestCase {
         XCTAssert(button.title(for: .highlighted) == nil)
         XCTAssert(button.title(for: .normal) == nil)
         XCTAssert(button.title(for: .disabled) == nil)
-    }
-    
-    func testSetColor(){
-        let button = ToggleButton(frame: frame)
-        
-        button.toggleColor = UIColor.red
-        
-        XCTAssert(button.titleColor(for: .selected) == UIColor.red)
-        XCTAssert(button.titleColor(for: .highlighted) == UIColor.red)
-        XCTAssert(button.titleColor(for: .normal) == UIColor.red)
-        XCTAssert(button.titleColor(for: .disabled) == UIColor.red)
     }
 }

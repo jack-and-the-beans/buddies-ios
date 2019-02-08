@@ -13,7 +13,19 @@ import AVFoundation
 class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
 
     var topicCollection: TopicCollection!
+    
+    var selectedTopics = [Topic]()
   
+    @IBAction func toggleSelected(_ sender: ToggleButton) {
+        guard let cell = sender.superview?.superview?.superview as? TopicCell,
+            let topic = cell.topic else { return }
+    
+        if sender.isSelected {
+            selectedTopics.append(topic)
+        } else {
+            selectedTopics = selectedTopics.filter({ $0.id != topic.id })
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,9 +49,10 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
                 withReuseIdentifier: "TopicCell",
                 for: indexPath
             )
-        
             if let topicCell = cell as? TopicCell {
-                topicCell.topic = topicCollection.topics[indexPath.item]
+                let topic = topicCollection.topics[indexPath.item]
+                topicCell.topic = topic
+                topicCell.toggleButton.isSelected = selectedTopics.contains { $0.id == topic.id }
             }
         
             return cell
