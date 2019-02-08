@@ -20,7 +20,8 @@ class ProfileVC: UIViewController, SettingsVCDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        profilePic.layer.cornerRadius = profilePic.frame.size.width / 2
+        profilePic?.imageView?.layer.cornerRadius = profilePic.bounds.size.width / 2
+        profilePic?.imageView?.clipsToBounds = true
 
         loadProfileData()
     }
