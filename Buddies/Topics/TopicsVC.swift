@@ -28,7 +28,7 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("Passed into selection view: \(selectedTopics.map { $0.name })")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         topicCollection = appDelegate.topicCollection
         topicCollection.delegate = self
@@ -59,7 +59,7 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
         }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let dest = segue.destination as? UITableViewController,
+        if let dest = segue.destination as? ActivityTableVC,
             let indexPath = collectionView.indexPathsForSelectedItems {
             dest.title = topicCollection.topics[indexPath[0].row].name
         }
