@@ -89,11 +89,11 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hxy-1F-P9y">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hxy-1F-P9y" userLabel="TopicsDetails">
                                                     <rect key="frame" x="296" y="12" width="44" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -152,6 +152,7 @@
                         <outlet property="descriptionTextView" destination="yEs-Fb-whx" id="WKK-k1-kLq"/>
                         <outlet property="locationField" destination="R3p-kv-sml" id="siw-HH-jRs"/>
                         <outlet property="titleField" destination="a3a-rU-EbY" id="t3p-sQ-FTr"/>
+                        <outlet property="topicDetails" destination="Hxy-1F-P9y" id="8JY-lk-cbQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pY9-yC-X6S" userLabel="First Responder" sceneMemberID="firstResponder"/>

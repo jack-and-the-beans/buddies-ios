@@ -27,7 +27,15 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     var _dismissHook: (() -> Void)?
 
     var topicCollection: TopicCollection?
-    var selectedTopics = [Topic]()
+    var selectedTopics = [Topic]() {
+        didSet {
+            if selectedTopics.count > 0 {
+                topicDetails.text = (selectedTopics.map { $0.name }).joined(separator: ", ")
+            } else { topicDetails.text = "None" }
+        }
+    }
+    
+    @IBOutlet weak var topicDetails: UILabel!
     
     @IBOutlet weak var locationField: SearchTextField!
     
