@@ -49,19 +49,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FZ7-4J-Xhx">
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R3p-kv-sml" customClass="SearchTextField" customModule="Buddies" customModuleProvider="target">
                                                     <rect key="frame" x="10" y="10" width="355" height="23.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="FZ7-4J-Xhx" firstAttribute="leading" secondItem="LgP-f5-oeK" secondAttribute="leading" constant="10" id="FAX-ER-ZNs"/>
-                                                <constraint firstAttribute="bottom" secondItem="FZ7-4J-Xhx" secondAttribute="bottom" constant="10" id="oJg-dp-5ek"/>
-                                                <constraint firstAttribute="trailing" secondItem="FZ7-4J-Xhx" secondAttribute="trailing" constant="10" id="px9-Wz-s0p"/>
-                                                <constraint firstItem="FZ7-4J-Xhx" firstAttribute="top" secondItem="LgP-f5-oeK" secondAttribute="top" constant="10" id="v6D-XR-z8d"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -123,10 +118,10 @@
                                                 </textView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="yEs-Fb-whx" firstAttribute="top" secondItem="MIH-fJ-Sbf" secondAttribute="topMargin" id="0Jt-nF-Hpf"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="yEs-Fb-whx" secondAttribute="trailing" id="0vU-aN-NrB"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="yEs-Fb-whx" secondAttribute="bottom" id="jeG-Z9-jDL"/>
-                                                <constraint firstItem="yEs-Fb-whx" firstAttribute="leading" secondItem="MIH-fJ-Sbf" secondAttribute="leadingMargin" id="pxJ-KF-ydy"/>
+                                                <constraint firstItem="yEs-Fb-whx" firstAttribute="bottom" secondItem="MIH-fJ-Sbf" secondAttribute="bottomMargin" id="G1w-Sq-1vy"/>
+                                                <constraint firstItem="yEs-Fb-whx" firstAttribute="trailing" secondItem="MIH-fJ-Sbf" secondAttribute="trailingMargin" id="Ht4-cH-92W"/>
+                                                <constraint firstItem="yEs-Fb-whx" firstAttribute="leading" secondItem="MIH-fJ-Sbf" secondAttribute="leadingMargin" id="Tt5-qb-MJ7"/>
+                                                <constraint firstItem="yEs-Fb-whx" firstAttribute="top" secondItem="MIH-fJ-Sbf" secondAttribute="topMargin" id="f19-xv-gEj"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -152,7 +147,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="descriptionTextView" destination="yEs-Fb-whx" id="WKK-k1-kLq"/>
-                        <outlet property="locationField" destination="FZ7-4J-Xhx" id="hBe-fk-5nh"/>
+                        <outlet property="locationField" destination="R3p-kv-sml" id="siw-HH-jRs"/>
                         <outlet property="titleField" destination="a3a-rU-EbY" id="t3p-sQ-FTr"/>
                     </connections>
                 </tableViewController>

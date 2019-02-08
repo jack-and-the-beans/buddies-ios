@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		450CC0F5220964F000282BAB /* SignUpInfoVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */; };
 		4515BC24220BA95F0027B415 /* CreateActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515BC23220BA95F0027B415 /* CreateActivityVC.swift */; };
+		458CE72C220D36DC00012637 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CE72B220D36DC00012637 /* SearchTextField.swift */; };
+		458CE72E220D472200012637 /* MapItemSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CE72D220D472200012637 /* MapItemSearchResult.swift */; };
 		45DA93A8220957CE0064CBEF /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DA93A7220957CE0064CBEF /* Testing.swift */; };
 		45DA93A9220957CE0064CBEF /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DA93A7220957CE0064CBEF /* Testing.swift */; };
 		45FED0AD220A5F0300B90C3B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45FED0AC220A5F0300B90C3B /* Profile.storyboard */; };
@@ -83,6 +85,8 @@
 		3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Buddies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInfoVCTests.swift; sourceTree = "<group>"; };
 		4515BC23220BA95F0027B415 /* CreateActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityVC.swift; sourceTree = "<group>"; };
+		458CE72B220D36DC00012637 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
+		458CE72D220D472200012637 /* MapItemSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemSearchResult.swift; sourceTree = "<group>"; };
 		45DA93A7220957CE0064CBEF /* Testing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		45FED0AC220A5F0300B90C3B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		45FED0AE220A657100B90C3B /* DeleteAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVC.swift; sourceTree = "<group>"; };
@@ -181,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				4515BC23220BA95F0027B415 /* CreateActivityVC.swift */,
+				458CE72D220D472200012637 /* MapItemSearchResult.swift */,
 			);
 			path = CreateActivity;
 			sourceTree = "<group>";
@@ -345,6 +350,7 @@
 				58EF8D832208A1DF00872770 /* FAB.swift */,
 				A9E8BF492201F9D700C05F2C /* UnderlinedTextbox.swift */,
 				A9E8BF4B2201FB9C00C05F2C /* ControlColors.swift */,
+				458CE72B220D36DC00012637 /* SearchTextField.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -672,7 +678,9 @@
 				A9E8BF5C22022D9400C05F2C /* LoginBase.swift in Sources */,
 				A9E8BF5E22022F3400C05F2C /* UIVIewController.swift in Sources */,
 				58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */,
+				458CE72C220D36DC00012637 /* SearchTextField.swift in Sources */,
 				A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */,
+				458CE72E220D472200012637 /* MapItemSearchResult.swift in Sources */,
 				45FED0AF220A657100B90C3B /* DeleteAccountVC.swift in Sources */,
 				A9E8BF4C2201FB9C00C05F2C /* ControlColors.swift in Sources */,
 				4515BC24220BA95F0027B415 /* CreateActivityVC.swift in Sources */,
