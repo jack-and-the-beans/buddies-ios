@@ -53,7 +53,6 @@
 		A91BA33A22024A8900DED6B3 /* LoginExistingVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */; };
 		A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */; };
 		A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */; };
-		A9203536220CCBC000D115F2 /* ProfileVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9203535220CCBC000D115F2 /* ProfileVCTests.swift */; };
 		A9203538220CD4E500D115F2 /* DeleteAccountVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */; };
 		A920353A220CD60D00D115F2 /* SettingsVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9203539220CD60D00D115F2 /* SettingsVCTests.swift */; };
 		A9B144AF220B4165004C614E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144AE220B4165004C614E /* SettingsVC.swift */; };
@@ -139,7 +138,6 @@
 		A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVCTests.swift; sourceTree = "<group>"; };
 		A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthHandler.swift; sourceTree = "<group>"; };
 		A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
-		A9203535220CCBC000D115F2 /* ProfileVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVCTests.swift; sourceTree = "<group>"; };
 		A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVCTests.swift; sourceTree = "<group>"; };
 		A9203539220CD60D00D115F2 /* SettingsVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVCTests.swift; sourceTree = "<group>"; };
 		A9B144AE220B4165004C614E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
@@ -358,7 +356,6 @@
 		A9203534220CCB2E00D115F2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				A9203535220CCBC000D115F2 /* ProfileVCTests.swift */,
 				A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */,
 				A9203539220CD60D00D115F2 /* SettingsVCTests.swift */,
 			);
@@ -729,7 +726,6 @@
 				A91BA3372202404600DED6B3 /* LoginVCTests.swift in Sources */,
 				58EF8DB22208A2E900872770 /* TopicCollectionTests.swift in Sources */,
 				A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */,
-				A9203536220CCBC000D115F2 /* ProfileVCTests.swift in Sources */,
 				A91BA33A22024A8900DED6B3 /* LoginExistingVCTests.swift in Sources */,
 				A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */,
 				A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */,

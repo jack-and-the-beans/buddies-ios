@@ -22,7 +22,6 @@ class ProfileVC: UIViewController {
         loadProfileData()
     }
     
-    
     func loadProfileData(uid: String = Auth.auth().currentUser!.uid,
                         storageManger: StorageManager = StorageManager.shared,
                         users: CollectionReference = Firestore.firestore().collection("users")) {
