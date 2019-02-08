@@ -57,11 +57,15 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             if let query = self.locationField.text {
                 if query.count > 1 {
                     
+                    
+                    if(self.searchCompleter.isSearching){
+                        self.searchCompleter.cancel()
+                    }
+                    
                     self.searchCompleter.queryFragment = query
                     
                     // Show the loading indicator
                     self.locationField.showLoadingIndicator()
-                    
                     self.completerDidUpdateResults(completer: self.searchCompleter)
                     
                     var displayResults:[MapItemSearchResult] = []
@@ -74,7 +78,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                     }
                     
                     self.locationField.filterItems(displayResults)
-                 
+                    self.locationField.stopLoadingIndicator()
                     
                 }
             }
@@ -104,6 +108,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchCompleter.queryFragment = "warm up"
+        
         
         descriptionTextView.delegate = self
         descriptionTextView.textColor = UIColor.lightGray
@@ -115,7 +121,6 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         locationManager.requestWhenInUseAuthorization()
 
         searchCompleter.delegate = self
-        
         region = MKCoordinateRegion(
             center: locationManager.location?.coordinate ?? CLLocationCoordinate2D(),
             span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
@@ -194,7 +199,6 @@ extension CreateActivityVC: MKLocalSearchCompleterDelegate {
     
     private func completerDidUpdateResults(completer: MKLocalSearchCompleter) {
         searchResults = completer.results
-        self.locationField.stopLoadingIndicator()
     }
     
 }
