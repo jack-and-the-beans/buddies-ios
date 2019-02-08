@@ -54,7 +54,6 @@
 		A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */; };
 		A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */; };
 		A9203538220CD4E500D115F2 /* DeleteAccountVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */; };
-		A920353A220CD60D00D115F2 /* SettingsVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9203539220CD60D00D115F2 /* SettingsVCTests.swift */; };
 		A9B144AF220B4165004C614E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144AE220B4165004C614E /* SettingsVC.swift */; };
 		A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144B0220C82A0004C614E /* AppDelegateTests.swift */; };
 		A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF3F2201427A00C05F2C /* LoginVC.swift */; };
@@ -139,7 +138,6 @@
 		A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthHandler.swift; sourceTree = "<group>"; };
 		A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVCTests.swift; sourceTree = "<group>"; };
-		A9203539220CD60D00D115F2 /* SettingsVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVCTests.swift; sourceTree = "<group>"; };
 		A9B144AE220B4165004C614E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		A9B144B0220C82A0004C614E /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		A9E8BF3F2201427A00C05F2C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -357,7 +355,6 @@
 			isa = PBXGroup;
 			children = (
 				A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */,
-				A9203539220CD60D00D115F2 /* SettingsVCTests.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -718,7 +715,6 @@
 				A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */,
 				58AAA6772203FD3A00AA538A /* TopicCollectionTests.swift in Sources */,
 				58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */,
-				A920353A220CD60D00D115F2 /* SettingsVCTests.swift in Sources */,
 				450CC0F5220964F000282BAB /* SignUpInfoVCTests.swift in Sources */,
 				45DA93A9220957CE0064CBEF /* Testing.swift in Sources */,
 				589AD64122092F950090A96C /* FirebaseMock.swift in Sources */,
