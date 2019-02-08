@@ -41,10 +41,18 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     }
     
     @IBAction func finishCreateActivity(_ segue: UIStoryboardSegue) {
+        let topicIDs = selectedTopics.map { $0.id }
+        guard let title = titleField.text,
+            let description = descriptionTextView.text else { return }
         
-        guard let title = titleField.text else {return}
-        guard let description = descriptionTextView.text else {return}
-        saveActivityToFirestore(title: title, description: description, location: GeoPoint(latitude: chosenLocation.latitude, longitude: chosenLocation.longitude))
+        saveActivityToFirestore(
+                title: title,
+                description: description,
+                location: GeoPoint(latitude: chosenLocation.latitude,
+                                   longitude: chosenLocation.longitude),
+                topicIDs: topicIDs
+        )
+            
         dismiss(animated: true, completion: _dismissHook)
     }
     
@@ -104,7 +112,6 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         guard let nav = segue.destination as? UINavigationController,
             let topicPicker = nav.viewControllers[0] as? TopicsVC else { return }
         topicPicker.topicCollection = topicCollection
-        print("Trying to pass \(selectedTopics.map { $0.name })")
         topicPicker.selectedTopics = selectedTopics
         
     }
@@ -112,7 +119,6 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     @IBAction func unwindPickTopics(sender: UIStoryboardSegue) {
         if let source = sender.source as? TopicsVC {
             selectedTopics = source.selectedTopics
-            print("Selected \(selectedTopics.map { $0.name })")
         }
     }
     
@@ -130,7 +136,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         collection: CollectionReference = Firestore.firestore().collection("activities"),
         startTime: Date = Date(),
         endTime: Date = Date(),
-        topicIDs: [String] = []){
+        topicIDs: [String]){
         
         guard let uid = user?.uid else {return}
         
