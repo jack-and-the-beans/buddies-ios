@@ -17,9 +17,12 @@ class ProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        profilePic.layer.cornerRadius = profilePic.frame.size.width / 2
-
         loadProfileData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        profilePic.layer.cornerRadius = profilePic.frame.size.width / 2
     }
     
     func loadProfileData(uid: String = Auth.auth().currentUser!.uid,
