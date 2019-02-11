@@ -59,8 +59,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                 description: description,
                 location: GeoPoint(latitude: chosenLocation.latitude,
                                    longitude: chosenLocation.longitude),
-                startTime: getSliderDate(sliderValue: dateSlider.minValue),
-                endTime: getSliderDate(sliderValue: dateSlider.maxValue),
+                start_time: getSliderDate(sliderValue: dateSlider.minValue),
+                end_time: getSliderDate(sliderValue: dateSlider.maxValue),
                 topicIDs: topicIDs
         )
             
@@ -147,8 +147,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         location: GeoPoint = GeoPoint(latitude: 0, longitude: 0),
         user: UserInfo? = Auth.auth().currentUser,
         collection: CollectionReference = Firestore.firestore().collection("activities"),
-        startTime: Date = Date(),
-        endTime: Date = Date(),
+        start_time: Date = Date(),
+        end_time: Date = Date(),
         topicIDs: [String]){
         
         guard let uid = user?.uid else {return}
@@ -159,8 +159,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             "description" : description,
             "date_created": Date(),
             "location": location,
-            "start_time": startTime,
-            "end_time": endTime,
+            "start_time": start_time,
+            "end_time": end_time,
             "topic_ids": topicIDs,
             "members": [uid]
         ])
