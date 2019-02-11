@@ -13,8 +13,9 @@ import Firebase
 //https://stackoverflow.com/questions/33380711/how-to-implement-auto-complete-for-address-using-apple-map-kit
 //https://www.thorntech.com/2016/01/how-to-search-for-location-using-apples-mapkit/
 //https://stackoverflow.com/questions/39946100/search-for-address-using-swift
-class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDelegate{
+class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDelegate, RangeSeekSliderDelegate{
     
+    @IBOutlet weak var dateSlider: RangeSeekSlider!
     //MARK: - Variables/setup
     var chosenLocation = CLLocationCoordinate2D()
     var locationManager = CLLocationManager()
@@ -84,8 +85,10 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         searchCompleter.queryFragment = "warm up"
         
+        dateSlider.delegate = self
         
         descriptionTextView.delegate = self
         descriptionTextView.textColor = UIColor.lightGray
@@ -159,6 +162,40 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             "topic_ids": topicIDs,
             "members": [uid]
         ])
+    }
+    
+    func getSliderString(sliderValue: CGFloat) -> String
+    {
+        switch sliderValue {
+        case 1:
+            return "Today"
+        case 2:
+            return "Tomorrow"
+        case 3:
+            return "Next 3 Days"
+        case 4:
+            return "Next Week"
+        case 5:
+            return "Next 2 Weeks"
+        case 6:
+            return "Next Month"
+        default:
+            return "Today"
+        }
+
+    }
+ 
+    func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMinValue minValue: CGFloat) -> String? {
+        
+    
+        return getSliderString(sliderValue: minValue)
+        
+    }
+    
+    func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMaxValue maxValue: CGFloat) -> String? {
+
+        return getSliderString(sliderValue: maxValue)
+        
     }
     
     //MARK: - Location field
@@ -248,3 +285,5 @@ extension CreateActivityVC: MKLocalSearchCompleterDelegate {
     }
     
 }
+
+
