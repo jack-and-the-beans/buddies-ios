@@ -13,8 +13,9 @@ import Firebase
 //https://stackoverflow.com/questions/33380711/how-to-implement-auto-complete-for-address-using-apple-map-kit
 //https://www.thorntech.com/2016/01/how-to-search-for-location-using-apples-mapkit/
 //https://stackoverflow.com/questions/39946100/search-for-address-using-swift
-class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDelegate{
+class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDelegate, RangeSeekSliderDelegate{
     
+    @IBOutlet weak var dateSlider: RangeSeekSlider!
     //MARK: - Variables/setup
     var chosenLocation = CLLocationCoordinate2D()
     var locationManager = CLLocationManager()
@@ -58,6 +59,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                 description: description,
                 location: GeoPoint(latitude: chosenLocation.latitude,
                                    longitude: chosenLocation.longitude),
+                start_time: getSliderDate(sliderValue: dateSlider.minValue),
+                end_time: getSliderDate(sliderValue: dateSlider.maxValue),
                 topicIDs: topicIDs
         )
             
@@ -84,8 +87,10 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         searchCompleter.queryFragment = "warm up"
         
+        dateSlider.delegate = self
         
         descriptionTextView.delegate = self
         descriptionTextView.textColor = UIColor.lightGray
@@ -142,8 +147,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         location: GeoPoint = GeoPoint(latitude: 0, longitude: 0),
         user: UserInfo? = Auth.auth().currentUser,
         collection: CollectionReference = Firestore.firestore().collection("activities"),
-        startTime: Date = Date(),
-        endTime: Date = Date(),
+        start_time: Date = Date(),
+        end_time: Date = Date(),
         topicIDs: [String]){
         
         guard let uid = user?.uid else {return}
@@ -154,11 +159,72 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             "description" : description,
             "date_created": Date(),
             "location": location,
-            "start_time": startTime,
-            "end_time": endTime,
+            "start_time": start_time,
+            "end_time": end_time,
             "topic_ids": topicIDs,
             "members": [uid]
         ])
+    }
+    
+    func getSliderString(sliderValue: CGFloat) -> String
+    {
+        switch sliderValue {
+        case 1:
+            return "Today"
+        case 2:
+            return "Tomorrow"
+        case 3:
+            return "Next 3 Days"
+        case 4:
+            return "Next Week"
+        case 5:
+            return "Next 2 Weeks"
+        case 6:
+            return "Next Month"
+        default:
+            return "Today"
+        }
+
+    }
+ 
+    
+    func getSliderDate(sliderValue: CGFloat) -> Date {
+        
+        var dateComponent = DateComponents()
+        
+        switch sliderValue {
+        case 1:
+            dateComponent.day = 0
+        case 2:
+            dateComponent.day = 1
+        case 3:
+            dateComponent.day = 3
+        case 4:
+            dateComponent.day = 7
+        case 5:
+            dateComponent.day = 14
+        case 6:
+            dateComponent.day = 30
+        default:
+            dateComponent.day = 0
+        }
+        
+        return Calendar.current.date(byAdding: dateComponent, to: Date())!
+        
+    }
+    
+    
+    func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMinValue minValue: CGFloat) -> String? {
+        
+    
+        return getSliderString(sliderValue: minValue)
+        
+    }
+    
+    func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMaxValue maxValue: CGFloat) -> String? {
+
+        return getSliderString(sliderValue: maxValue)
+        
     }
     
     //MARK: - Location field
@@ -248,3 +314,5 @@ extension CreateActivityVC: MKLocalSearchCompleterDelegate {
     }
     
 }
+
+

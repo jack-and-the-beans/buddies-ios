@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		450779DE2210D7B00008D0DF /* RangeSeekSliderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450779DB2210D7B00008D0DF /* RangeSeekSliderDelegate.swift */; };
+		450779DF2210D7B00008D0DF /* TapticEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450779DC2210D7B00008D0DF /* TapticEngine.swift */; };
+		450779E02210D7B00008D0DF /* RangeSeekSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450779DD2210D7B00008D0DF /* RangeSeekSlider.swift */; };
 		450CC0F5220964F000282BAB /* SignUpInfoVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */; };
 		4515BC24220BA95F0027B415 /* CreateActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515BC23220BA95F0027B415 /* CreateActivityVC.swift */; };
 		458CE72C220D36DC00012637 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CE72B220D36DC00012637 /* SearchTextField.swift */; };
@@ -90,6 +93,9 @@
 		175E6AB724FECB3A49170B22 /* Pods-Buddies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buddies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Buddies/Pods-Buddies.debug.xcconfig"; sourceTree = "<group>"; };
 		22663AE425AE50AC65D6EE5D /* Pods_BuddiesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BuddiesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Buddies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		450779DB2210D7B00008D0DF /* RangeSeekSliderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSeekSliderDelegate.swift; sourceTree = "<group>"; };
+		450779DC2210D7B00008D0DF /* TapticEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapticEngine.swift; sourceTree = "<group>"; };
+		450779DD2210D7B00008D0DF /* RangeSeekSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSeekSlider.swift; sourceTree = "<group>"; };
 		450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInfoVCTests.swift; sourceTree = "<group>"; };
 		4515BC23220BA95F0027B415 /* CreateActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityVC.swift; sourceTree = "<group>"; };
 		458CE72B220D36DC00012637 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
@@ -380,6 +386,9 @@
 		A9E8BF482201F7DB00C05F2C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				450779DD2210D7B00008D0DF /* RangeSeekSlider.swift */,
+				450779DB2210D7B00008D0DF /* RangeSeekSliderDelegate.swift */,
+				450779DC2210D7B00008D0DF /* TapticEngine.swift */,
 				58EF8D832208A1DF00872770 /* FAB.swift */,
 				A9E8BF492201F9D700C05F2C /* UnderlinedTextbox.swift */,
 				A9E8BF4B2201FB9C00C05F2C /* ControlColors.swift */,
@@ -699,6 +708,7 @@
 				58AAA6752203F52E00AA538A /* Initialization.swift in Sources */,
 				58EF8D962208A25F00872770 /* TopicCell.swift in Sources */,
 				58EF8D952208A25F00872770 /* TopicCollection.swift in Sources */,
+				450779DF2210D7B00008D0DF /* TapticEngine.swift in Sources */,
 				582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */,
 				B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */,
 				A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */,
@@ -715,6 +725,7 @@
 				582D0FA622035C3D004F71E3 /* FirestoreManager.swift in Sources */,
 				58EF8D982208A25F00872770 /* TopicLayout.swift in Sources */,
 				A9E8BF5A2202055B00C05F2C /* UIApplication.swift in Sources */,
+				450779DE2210D7B00008D0DF /* RangeSeekSliderDelegate.swift in Sources */,
 				A9E8BF5C22022D9400C05F2C /* LoginBase.swift in Sources */,
 				A9E8BF5E22022F3400C05F2C /* UIVIewController.swift in Sources */,
 				58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */,
@@ -722,6 +733,7 @@
 				A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */,
 				458CE72E220D472200012637 /* MapItemSearchResult.swift in Sources */,
 				45FED0AF220A657100B90C3B /* DeleteAccountVC.swift in Sources */,
+				450779E02210D7B00008D0DF /* RangeSeekSlider.swift in Sources */,
 				A9B144AF220B4165004C614E /* SettingsVC.swift in Sources */,
 				A9E8BF4C2201FB9C00C05F2C /* ControlColors.swift in Sources */,
 				4515BC24220BA95F0027B415 /* CreateActivityVC.swift in Sources */,
