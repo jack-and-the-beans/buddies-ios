@@ -59,6 +59,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                 description: description,
                 location: GeoPoint(latitude: chosenLocation.latitude,
                                    longitude: chosenLocation.longitude),
+                startTime: getSliderDate(sliderValue: dateSlider.minValue),
+                endTime: getSliderDate(sliderValue: dateSlider.maxValue),
                 topicIDs: topicIDs
         )
             
@@ -185,6 +187,33 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
 
     }
  
+    
+    func getSliderDate(sliderValue: CGFloat) -> Date {
+        
+        var dateComponent = DateComponents()
+        
+        switch sliderValue {
+        case 1:
+            dateComponent.day = 0
+        case 2:
+            dateComponent.day = 1
+        case 3:
+            dateComponent.day = 3
+        case 4:
+            dateComponent.day = 7
+        case 5:
+            dateComponent.day = 14
+        case 6:
+            dateComponent.day = 30
+        default:
+            dateComponent.day = 0
+        }
+        
+        return Calendar.current.date(byAdding: dateComponent, to: Date())!
+        
+    }
+    
+    
     func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMinValue minValue: CGFloat) -> String? {
         
     
