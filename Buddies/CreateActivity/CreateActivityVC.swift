@@ -17,7 +17,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     
     @IBOutlet weak var dateSlider: RangeSeekSlider!
     //MARK: - Variables/setup
-    var chosenLocation = CLLocationCoordinate2D()
+    
+    var chosenLocation: CLLocationCoordinate2D!
     var locationManager = CLLocationManager()
     
     var searchCompleter = MKLocalSearchCompleter()
@@ -50,11 +51,14 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     }
     
     @IBAction func finishCreateActivity(_ segue: UIStoryboardSegue) {
+        
+        
         let topicIDs = selectedTopics.map { $0.id }
         guard let title = titleField.text,
             let description = descriptionTextView.text else { return }
         
-        saveActivityToFirestore(
+        if isValidActivityData(){
+            saveActivityToFirestore(
                 title: title,
                 description: description,
                 location: GeoPoint(latitude: chosenLocation.latitude,
@@ -62,9 +66,19 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                 start_time: getSliderDate(sliderValue: dateSlider.minValue),
                 end_time: getSliderDate(sliderValue: dateSlider.maxValue),
                 topicIDs: topicIDs
-        )
+            )
             
-        dismiss(animated: true, completion: _dismissHook)
+            dismiss(animated: true, completion: _dismissHook)
+        }else
+        {
+            let alert = UIAlertController(title: "Finish Suggesting Activity", message: "Please enter information for every field.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }
+        
+        
     }
     
     //MARK: - Editing
@@ -137,6 +151,18 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     
     @IBAction func unwindCancelPickTopics(sender: UIStoryboardSegue) {
         
+    }
+    
+    func isValidActivityData() -> Bool{
+        
+        if titleField.text == nil ||
+            chosenLocation == nil ||
+            topicDetails.text == "None" ||
+            descriptionTextView.text == "Description"{
+            return false
+        }else{
+            return true
+        }
     }
     
     //MARK: - Firestore

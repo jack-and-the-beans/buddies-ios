@@ -275,12 +275,18 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VHx-ke-qXu">
                                                     <rect key="frame" x="157.5" y="15" width="60" height="30"/>
                                                     <state key="normal" title="Sign Out"/>
+                                                    <connections>
+                                                        <action selector="signOut:" destination="l1g-GD-m4H" eventType="touchUpInside" id="yLq-zJ-pJw"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dy-kY-hCk">
                                                     <rect key="frame" x="135" y="53" width="105" height="30"/>
                                                     <state key="normal" title="Delete Account">
                                                         <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="deleteAccount:" destination="l1g-GD-m4H" eventType="touchUpInside" id="FRG-Gd-2Ud"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
