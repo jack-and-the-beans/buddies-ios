@@ -17,6 +17,9 @@ target 'Buddies' do
   # UI Elements 
   pod 'MaterialComponents/Buttons'
   
+  # Algolia
+  pod 'InstantSearchClient', '~> 6.0'
+  
   target 'BuddiesTests' do
     inherit! :search_paths
     # Pods for testing
