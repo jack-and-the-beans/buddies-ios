@@ -47,7 +47,7 @@ class AuthHandler {
     }
     
     
-    func logInWithFacebook(ref: UIViewController, onError: @escaping (String) -> Void, onSuccess: @escaping (User) -> Void) {
+    func logInWithFacebook(ref: UIViewController, onError: @escaping (String) -> Void, onSuccess: @escaping (Firebase.User) -> Void) {
         let loginManager = FBSDKLoginManager()
         
         loginManager.logIn(withReadPermissions: ["email"], from: ref, handler: { (result, error) in
@@ -77,7 +77,7 @@ class AuthHandler {
         })
     }
     
-    func createUser(email: String, password: String, onError: @escaping (String) -> Void, onSuccess: @escaping (User) -> Void) {
+    func createUser(email: String, password: String, onError: @escaping (String) -> Void, onSuccess: @escaping (Firebase.User) -> Void) {
         
         auth.createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
@@ -93,7 +93,7 @@ class AuthHandler {
     
     
     
-    func logIn(email: String, password: String, onError: @escaping (String) -> Void, onSuccess: @escaping (User) -> Void) {
+    func logIn(email: String, password: String, onError: @escaping (String) -> Void, onSuccess: @escaping (Firebase.User) -> Void) {
         
         auth.signIn(withEmail: email, password: password) { (result, error) in
             if let error = error {

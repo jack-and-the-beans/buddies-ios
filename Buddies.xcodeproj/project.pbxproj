@@ -61,6 +61,9 @@
 		A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */; };
 		A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */; };
 		A9203538220CD4E500D115F2 /* DeleteAccountVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */; };
+		A95B958522133DDB00453AEA /* DataAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958422133DDB00453AEA /* DataAccessor.swift */; };
+		A95B958822133FA500453AEA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958722133FA500453AEA /* User.swift */; };
+		A95B958A22133FB100453AEA /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958922133FB100453AEA /* Activity.swift */; };
 		A9B144AF220B4165004C614E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144AE220B4165004C614E /* SettingsVC.swift */; };
 		A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144B0220C82A0004C614E /* AppDelegateTests.swift */; };
 		A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF3F2201427A00C05F2C /* LoginVC.swift */; };
@@ -152,6 +155,9 @@
 		A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthHandler.swift; sourceTree = "<group>"; };
 		A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVCTests.swift; sourceTree = "<group>"; };
+		A95B958422133DDB00453AEA /* DataAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAccessor.swift; sourceTree = "<group>"; };
+		A95B958722133FA500453AEA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A95B958922133FB100453AEA /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		A9B144AE220B4165004C614E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		A9B144B0220C82A0004C614E /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		A9E8BF3F2201427A00C05F2C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -216,6 +222,7 @@
 				582D0FA522035C3D004F71E3 /* FirestoreManager.swift */,
 				582D0FA722036C93004F71E3 /* StorageManager.swift */,
 				58AAA6742203F52E00AA538A /* Initialization.swift */,
+				A95B958422133DDB00453AEA /* DataAccessor.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -383,6 +390,15 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		A95B958622133F9100453AEA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A95B958722133FA500453AEA /* User.swift */,
+				A95B958922133FB100453AEA /* Activity.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		A9E8BF482201F7DB00C05F2C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -467,6 +483,7 @@
 				45FBF7A722095A030007DD6D /* CreateActivity */,
 				A850ED5F2203A0C100DBF1A6 /* Buddies.entitlements */,
 				58EF8DB62208BE5E00872770 /* Storyboards */,
+				A95B958622133F9100453AEA /* Models */,
 				582D0FA422035C21004F71E3 /* Utilities */,
 				58D2A9FF220201A1009ABCBC /* Topics */,
 				A9E8BF532202015A00C05F2C /* Extensions */,
@@ -701,6 +718,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A95B958A22133FB100453AEA /* Activity.swift in Sources */,
 				58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */,
 				58EF8D8D2208A24700872770 /* DiscoverVC.swift in Sources */,
 				B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */,
@@ -731,12 +749,14 @@
 				58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */,
 				458CE72C220D36DC00012637 /* SearchTextField.swift in Sources */,
 				A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */,
+				A95B958522133DDB00453AEA /* DataAccessor.swift in Sources */,
 				458CE72E220D472200012637 /* MapItemSearchResult.swift in Sources */,
 				45FED0AF220A657100B90C3B /* DeleteAccountVC.swift in Sources */,
 				450779E02210D7B00008D0DF /* RangeSeekSlider.swift in Sources */,
 				A9B144AF220B4165004C614E /* SettingsVC.swift in Sources */,
 				A9E8BF4C2201FB9C00C05F2C /* ControlColors.swift in Sources */,
 				4515BC24220BA95F0027B415 /* CreateActivityVC.swift in Sources */,
+				A95B958822133FA500453AEA /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
