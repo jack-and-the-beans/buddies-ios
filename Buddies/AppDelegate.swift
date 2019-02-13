@@ -49,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func getHasUserDoc(callback: @escaping (Bool) -> Void,
                      uid: String? = Auth.auth().currentUser?.uid,
+                     dataAccess: DataAccessor? = DataAccessor.instance,
                      src: CollectionReference = Firestore.firestore().collection("users")) {
         // If we're not logged in, there is no doc
         guard let uid = uid else {
@@ -57,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // If the user is cached, it's already fine
-        if DataAccessor.instance.isUserCached(id: uid) {
+        if dataAccess?.isUserCached(id: uid) ?? false {
             callback(true)
             return
         }

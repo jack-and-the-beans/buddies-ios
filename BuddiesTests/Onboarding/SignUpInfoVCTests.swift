@@ -42,13 +42,13 @@ class SignUpInfoVCTests: XCTestCase {
         
         let doc = collection.document("test_uid") as! MockDocumentReference
         
-        XCTAssert(doc.exposedData["favorite_topics"] as! [String] == [], "Saves empty array for favorite_topics if user is authenticated.")
-        XCTAssert(doc.exposedData["blocked_users"] as! [String] == [], "Saves empty array for blocked_users if user is authenticated.")
-        XCTAssert(doc.exposedData["blocked_activities"] as! [String] == [], "Saves empty array for blocked_activities if user is authenticated.")
-        XCTAssert(doc.exposedData["blocked_by"] as! [String] == [], "Saves empty array for blocked_by if user is authenticated.")
-        XCTAssert(doc.exposedData["date_joined"] as! Date == Date(timeIntervalSince1970: TimeInterval(0)), "Saves dummy date for date_joined if user is authenticated.")
-        XCTAssert(doc.exposedData["location"] as! GeoPoint == GeoPoint.init(latitude: 10, longitude: 10), "Saves dummy location for location if user is authenticated.")
-        XCTAssert(doc.exposedData["email"] as! String == "test", "Saves dummy email if user is authenticated.")
+        XCTAssert(doc.exposedData["favorite_topics"] as? [String] != nil, "Saves empty array for favorite_topics if user is authenticated.")
+        XCTAssert(doc.exposedData["blocked_users"] as? [String] != nil, "Saves empty array for blocked_users if user is authenticated.")
+        XCTAssert(doc.exposedData["blocked_activities"] as? [String] != nil, "Saves empty array for blocked_activities if user is authenticated.")
+        XCTAssert(doc.exposedData["blocked_by"] as? [String] != nil, "Saves empty array for blocked_by if user is authenticated.")
+        XCTAssert(doc.exposedData["date_joined"] as? Timestamp != nil, "Saves dummy date for date_joined if user is authenticated.")
+        XCTAssert(doc.exposedData["location"] as? GeoPoint != nil, "Saves dummy location for location if user is authenticated.")
+        XCTAssert(doc.exposedData["email"] as? String == "test", "Saves dummy email if user is authenticated.")
     }
     
     

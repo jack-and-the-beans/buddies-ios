@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Buddies
+import Firebase
 
 class AppDelegateTests: XCTestCase {
     func testDelType() {
@@ -25,7 +26,7 @@ class AppDelegateTests: XCTestCase {
         let ref = MockCollectionReference()
         app.getHasUserDoc(callback: { result in
             if !result { expectation.fulfill() }
-        }, uid: nil, src: ref)
+        }, uid: nil, dataAccess: nil, src: ref)
         
         waitForExpectations(timeout: 2)
     }
@@ -47,7 +48,7 @@ class AppDelegateTests: XCTestCase {
         
         app.getHasUserDoc(callback: { result in
             if !result { expectation.fulfill() }
-        }, uid: uid, src: ref)
+        }, uid: uid, dataAccess: nil, src: ref)
         
         waitForExpectations(timeout: 2)
     }
@@ -69,7 +70,7 @@ class AppDelegateTests: XCTestCase {
         
         app.getHasUserDoc(callback: { result in
             if !result { expectation.fulfill() }
-        }, uid: uid, src: ref)
+        }, uid: uid, dataAccess: nil, src: ref)
         
         waitForExpectations(timeout: 2)
     }
@@ -89,11 +90,13 @@ class AppDelegateTests: XCTestCase {
         ref.documents[uid] = doc
         doc.exposedData["bio"] = "blah blah"
         doc.exposedData["image_url"] = "my_image_url"
+        doc.exposedData["name"] = "george"
+        doc.exposedData["date_joined"] = Timestamp(date: Date())
         
         app.getHasUserDoc(callback: { result in
             if result { expectation.fulfill() }
             else { print("uh whoops") }
-        }, uid: uid, src: ref)
+        }, uid: uid, dataAccess: nil, src: ref)
         
         waitForExpectations(timeout: 2)
     }
