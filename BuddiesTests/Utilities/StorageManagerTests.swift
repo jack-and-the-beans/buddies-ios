@@ -48,7 +48,6 @@ class StorageManagerTests: XCTestCase {
         }
     }
     
-    
     func testDownload() {
         let session = MockURLSession()
         let manager = StorageNoIO()
@@ -61,8 +60,18 @@ class StorageManagerTests: XCTestCase {
         let firstCall = manager.persistDownloadInvocations[0]
         XCTAssert(firstCall.dest.absoluteString == "testDownloadDest")
         XCTAssert(firstCall.source.absoluteString == "mockTempURL")
-
-
     }
-
+    
+    func testGetImage() {
+        let manager = StorageNoIO()
+        let session = MockURLSession()
+        
+        manager.getImage(imageUrl: "testDownloadURL",
+                         localFileName: "testDownloadDest",
+                         session: session,
+                         callback: { _ in /**/ })
+        let firstCall = manager.persistDownloadInvocations[0]
+        XCTAssert(firstCall.dest.absoluteString == "testDownloadDest")
+        XCTAssert(firstCall.source.absoluteString == "mockTempURL")
+    }
 }
