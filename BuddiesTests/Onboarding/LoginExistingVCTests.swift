@@ -136,7 +136,10 @@ class LoginExistingVCTests: XCTestCase {
     class MockAD : AppDelegate {
         let hasDoc: Bool
         init(hasDoc: Bool) { self.hasDoc = hasDoc }
-        override func getHasUserDoc(callback: @escaping (Bool) -> Void, uid: String?, src: CollectionReference) {
+        override func getHasUserDoc(callback: @escaping (Bool) -> Void,
+                                    uid: String?,
+                                    dataAccess: DataAccessor?,
+                                    src: CollectionReference) {
             callback(self.hasDoc)
         }
     }

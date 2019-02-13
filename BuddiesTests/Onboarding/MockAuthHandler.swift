@@ -19,15 +19,15 @@ class MockAuthHandler : AuthHandler {
         super.init(auth: nil)
     }
     
-    override func createUser(email: String, password: String, onError: @escaping (String) -> Void, onSuccess: @escaping (User) -> Void) {
+    override func createUser(email: String, password: String, onError: @escaping (String) -> Void, onSuccess: @escaping (Firebase.User) -> Void) {
         nCallsCreateUser += 1
     }
     
-    override func logInWithFacebook(ref: UIViewController, onError: @escaping (String) -> Void, onSuccess: @escaping (User) -> Void) {
+    override func logInWithFacebook(ref: UIViewController, onError: @escaping (String) -> Void, onSuccess: @escaping (Firebase.User) -> Void) {
         nCallsLogInWithFacebook += 1
     }
     
-    override func logIn(email: String, password: String, onError: @escaping (String) -> Void, onSuccess: @escaping (User) -> Void) {
+    override func logIn(email: String, password: String, onError: @escaping (String) -> Void, onSuccess: @escaping (Firebase.User) -> Void) {
         nCallsLogIn += 1
     }
     
