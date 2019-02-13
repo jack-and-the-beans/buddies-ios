@@ -16,7 +16,7 @@ protocol ActivityInvalidationDelegate {
 }
 
 class Activity {
-    let delegate: ActivityInvalidationDelegate
+    let delegate: ActivityInvalidationDelegate?
     
     // MARK: Immutable properties
     let activityId : ActivityId
@@ -33,7 +33,7 @@ class Activity {
     var topicIds : [String] { didSet { onChange("topic_ids", topicIds) } }
     
     private func onChange(_ key: String, _ value: Any?) {
-        delegate.onInvalidateActivity(activity: self)
+        delegate?.onInvalidateActivity(activity: self)
         
         let collection = Firestore.firestore().collection("activities")
         let doc = collection.document(activityId)
@@ -43,7 +43,7 @@ class Activity {
         }
     }
     
-    init(delegate: ActivityInvalidationDelegate,
+    init(delegate: ActivityInvalidationDelegate?,
          activityId: ActivityId,
          dateCreated: Timestamp,
          members: [UserId],
@@ -67,7 +67,7 @@ class Activity {
         self.topicIds = topicIds
     }
     
-    static func from(snap: DocumentSnapshot, with delegate: ActivityInvalidationDelegate) -> Activity? {
+    static func from(snap: DocumentSnapshot, with delegate: ActivityInvalidationDelegate?) -> Activity? {
         guard let data = snap.data(),
             let members = data["members"] as? [UserId],
             let location = data["location"] as? GeoPoint,

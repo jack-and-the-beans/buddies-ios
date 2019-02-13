@@ -22,7 +22,17 @@ class Listener<T> {
 // ! See example usage in Profile/ProfileVC.swift !
 // !----------------------------------------------!
 class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
-    static let instance = DataAccessor()
+    static let instance = DataAccessor(
+        usersCollection: Firestore.firestore().collection("users"),
+        activitiesCollection: Firestore.firestore().collection("activities"))
+    
+    let usersCollection: CollectionReference
+    let activitiesCollection: CollectionReference
+    
+    init(usersCollection: CollectionReference, activitiesCollection: CollectionReference) {
+        self.usersCollection = usersCollection
+        self.activitiesCollection = activitiesCollection
+    }
     
     var _userListeners: [UserId : [Listener<User>]] = [:]
     var _activityListeners: [ActivityId : [Listener<Activity>]] = [:]
@@ -55,13 +65,13 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
             
             // If we removed the listener, add it back
             if _userRegistration[id] == nil {
-                _userRegistration[id] = self._loadUser(id: id)
+                self._loadUser(id: id)
             }
         }
         else if !_usersLoading.contains(id) {
             _usersLoading.append(id)
             
-            _userRegistration[id] = self._loadUser(id: id)
+            self._loadUser(id: id)
         }
     
         // Return a cancel callback
@@ -78,8 +88,12 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
         }
     }
     
-    func _loadUser(id: UserId, users: CollectionReference = Firestore.firestore().collection("users")) -> ListenerRegistration {
-        return users.document(id).addSnapshotListener {
+    func _loadUser(id: UserId) {
+        if let oldReg = _userRegistration[id] {
+            oldReg.remove()
+        }
+
+        _userRegistration[id] = usersCollection.document(id).addSnapshotListener {
             guard let snap = $0 else {
                 print($1!)
                 return
@@ -110,13 +124,13 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
             
             // If we removed the firebase listener, add it back
             if _activityRegistration[id] == nil {
-                _activityRegistration[id] = self._loadActivity(id: id)
+                self._loadActivity(id: id)
             }
         }
         else if !_activitiesLoading.contains(id) {
             _activitiesLoading.append(id)
             
-            _activityRegistration[id] = self._loadActivity(id: id)
+            self._loadActivity(id: id)
         }
         
         // Return a cancel callback
@@ -133,8 +147,12 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
         }
     }
     
-    func _loadActivity(id: ActivityId,activities: CollectionReference = Firestore.firestore().collection("activities")) -> ListenerRegistration {
-        return activities.document(id).addSnapshotListener {
+    func _loadActivity(id: ActivityId) {
+        if let oldReg = _activityRegistration[id] {
+            oldReg.remove()
+        }
+        
+        _activityRegistration[id] = activitiesCollection.document(id).addSnapshotListener {
             guard let snap = $0 else {
                 print($1!)
                 return
