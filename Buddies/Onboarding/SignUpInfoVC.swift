@@ -171,19 +171,29 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     
     @IBOutlet weak var bioText: UITextView!
     
+    // returns the first part of the string `s`, up until the first occurence of the character `c`
+    func stringUntil(_ s: String?, _ c: Character) -> String? {
+        if let ss = s?.split(separator: c)[0] {
+            return String(ss)
+        }
+        return nil
+    }
+    
     func fillDataModel(user: UserInfo? = Auth.auth().currentUser,
                        collection: CollectionReference = Firestore.firestore().collection("users")){
         
-        if let UID = user?.uid
-        {
+        if let UID = user?.uid {
             let favTopics: [String] = []
             let blockedUsers: [String] = []
             let blockedActivities: [String] = []
             let blockedBy: [String] = []
-            let dateJoined: Date = Date(timeIntervalSince1970: TimeInterval(0))
+            let dateJoined = Timestamp(date: Date())
             let loc = GeoPoint.init(latitude: 10, longitude: 10)
             let email = user?.email
-            
+            let name = myFirstName
+                ?? stringUntil(user?.displayName, " ")
+                ?? stringUntil(email, "@")
+                ?? "Nameless"
             
             collection.document(UID).setData([
                 "favorite_topics": favTopics,
@@ -194,10 +204,11 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
                 "location" : loc,
                 "email": email ?? "",
                 // Handle error cases with the name safely
-                "name": myFirstName ?? email?.split(separator: "@")[0] ?? "Nameless",
+                "name": name
             ], merge: true)
             
-        }else{
+        }
+        else{
             print("Unable to authorize user.")
         }
         
