@@ -72,7 +72,10 @@ class LoginVC: LoginBase {
             onError: { msg in self.showMessagePrompt(msg) },
             onSuccess: { user in
                 if(tempAuthHandler.isNewUser) {
-                     self.performSegue(withIdentifier: "GetSignUpInfo", sender: self)
+                    if let fbFirstName = user.displayName?.split(separator: " ")[0] {
+                        self.firstNameField.text = String(fbFirstName)
+                    }
+                    self.performSegue(withIdentifier: "GetSignUpInfo", sender: self)
                 }
                 else {
                     BuddiesStoryboard.Main.goTo()
