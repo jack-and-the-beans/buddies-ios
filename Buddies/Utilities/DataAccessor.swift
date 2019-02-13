@@ -37,6 +37,10 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
     var _usersLoading: [UserId] = []
     var _activitiesLoading: [ActivityId] = []
     
+    func isUserCached(id: UserId) -> Bool {
+        return _userCache.object(forKey: id as AnyObject) != nil
+    }
+    
     func useUser(id: UserId, fn: @escaping (User) -> Void) -> (() -> Void) {
         // Wrap the callback for comparison later
         let callback = Listener(fn: fn)

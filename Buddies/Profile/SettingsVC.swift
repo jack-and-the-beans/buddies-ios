@@ -9,34 +9,51 @@
 import UIKit
 import Firebase
 
-protocol SettingsVCDelegate {
-    func setTopicNotification(to: Bool)
-    func setJoinedActivityNotification(to: Bool)
-}
-
 class SettingsVC: UITableViewController {
     @IBOutlet weak var joinedActivityNotificationToggle: UISwitch!
     @IBOutlet weak var topicNotificationToggle: UISwitch!
-    
-    var delegate: SettingsVCDelegate!
-    var init_TopicsNotifications: Bool!
-    var init_JoinedActivityNotifications: Bool!
-    
+
+    var stopListeningToUser: Canceler?
+    var userRef: User?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initialize toggle states
-        joinedActivityNotificationToggle.setOn(init_JoinedActivityNotifications, animated: false)
-        topicNotificationToggle.setOn(init_TopicsNotifications, animated: false)
+        renderView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        stopListeningToUser?()
+    }
+    
+    func renderView(uid: String = Auth.auth().currentUser!.uid,
+                    dataAccess: DataAccessor = DataAccessor.instance) {
+        var isFirstRender = true
+        
+        self.stopListeningToUser = dataAccess.useUser(id: uid) { user in
+            self.joinedActivityNotificationToggle.setOn(
+                user.shouldSendJoinedActivityNotification,
+                animated: !isFirstRender)
+            
+            self.topicNotificationToggle.setOn(
+                user.shouldSendActivitySuggestionNotification,
+                animated: !isFirstRender)
+            
+            isFirstRender = false
+            
+            self.userRef = user
+        }
     }
     
     
     @IBAction func onStarredTopicNotificationChange() {
-        self.delegate.setTopicNotification(to: topicNotificationToggle.isOn)
+        self.userRef?.shouldSendActivitySuggestionNotification = topicNotificationToggle.isOn
     }
     
     @IBAction func onJoinedActivityNotificationChange() {
-        self.delegate.setJoinedActivityNotification(to: joinedActivityNotificationToggle.isOn)
+        self.userRef?.shouldSendJoinedActivityNotification = joinedActivityNotificationToggle.isOn
     }
     
     @IBAction func deleteAccount(_ sender: Any) {
@@ -74,7 +91,7 @@ class SettingsVC: UITableViewController {
     }
     
     func showMessagePrompt(_ msg: String) {
-        let alertController = UIAlertController(title: "Login Error", message: msg, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Account Error", message: msg, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         
         self.present(alertController, animated: true, completion: nil)
@@ -87,39 +104,29 @@ class SettingsVC: UITableViewController {
         }
     }
     
-    
     func deleteAccountFacebook() {
+        guard let user = Auth.auth().currentUser else { return }
+        guard let token = userRef?.facebookId else { return }
+        let credential = FacebookAuthProvider.credential(withAccessToken: token)
         
-        guard let user = Auth.auth().currentUser else {return}
-        let docRef = FirestoreManager.shared.db.collection("users").document(user.uid)
-        
-        docRef.getDocument { (document, error) in
-            
-            if let document = document, document.exists {
-                //get token from firestore
-                let token = document.get("facebook_access_token") as! String
-                let credential = FacebookAuthProvider.credential(withAccessToken: token)
-                
-                user.reauthenticateAndRetrieveData(with: credential, completion: {(result, error) in
-                    if error != nil {
-                        self.showMessagePrompt("Could not authenticate user.")
-                    } else {
-                        user.delete { error in
-                            if error != nil {
-                                self.showMessagePrompt("Could not delete user.")
-                            } else {
-                                //sign out user after deleting their account
-                                let auth = AuthHandler(auth: Auth.auth())
-                                auth.signOut(onError: self.showMessagePrompt) {
-                                    BuddiesStoryboard.Login.goTo()
-                                }
-                            }
-                        }
-                    }
-                })
-            } else {
-                print("Document does not exist")
+        user.reauthenticateAndRetrieveData(with: credential, completion: {(result, error) in
+            if let error = error {
+                self.showMessagePrompt("Reauthentication with facebook failed.\n\n\(error.localizedDescription)")
+                return
             }
-        }
+            
+            user.delete { error in
+                if let error = error {
+                    self.showMessagePrompt("Delete account failed.\n\n\(error.localizedDescription)")
+                    return
+                }
+                
+                //sign out user after deleting their account
+                let auth = AuthHandler(auth: Auth.auth())
+                auth.signOut(onError: self.showMessagePrompt) {
+                    BuddiesStoryboard.Login.goTo()
+                }
+            }
+        })
     }
 }
