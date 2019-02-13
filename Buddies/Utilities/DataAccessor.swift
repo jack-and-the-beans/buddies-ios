@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 
+// Helpers...
 typealias Canceler = () -> Void
 class Listener<T> {
     let fn: (T) -> Void
@@ -17,68 +18,147 @@ class Listener<T> {
     }
 }
 
+// !----------------------------------------------!
+// ! See example usage in Profile/ProfileVC.swift !
+// !----------------------------------------------!
 class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
     static let instance = DataAccessor()
     
-    var userListeners: [UserId : [Listener<User>]] = [:]
-    var activityListeners: [ActivityId : [Listener<Activity>]] = [:]
+    var _userListeners: [UserId : [Listener<User>]] = [:]
+    var _activityListeners: [ActivityId : [Listener<Activity>]] = [:]
+    
+    var _userRegistration: [UserId : ListenerRegistration] = [:]
+    var _activityRegistration: [ActivityId : ListenerRegistration] = [:]
+    
+    let _userCache = NSCache<AnyObject/*UserId*/, User>()
+    let _activityCache = NSCache<AnyObject/*ActivityId*/, Activity>()
+    
+    // To deduplicate requests!
+    var _usersLoading: [UserId] = []
+    var _activitiesLoading: [ActivityId] = []
     
     func useUser(id: UserId, fn: @escaping (User) -> Void) -> (() -> Void) {
-        // TEMP
-        let testUser = User(delegate: self, imageUrl: "https://firebasestorage.googleapis.com/v0/b/beans-buddies.appspot.com/o/users%2F0VGQuKhyutT9YN12mobZauv6gtx2%2FprofilePicture.jpg?alt=media&token=1bc36e80-e3bb-4fbe-9444-50937651c3bd", isAdmin: true, uid: "n5vz1YkFqiP2IJ5rYDCEGve3QlG2", name: "Luke the Dummy", bio: "Hello blah blah blah bio", email: "noahtallen@waitImLuke.com", facebookId: nil, favoriteTopics: [], blockedUsers: [], blockedBy: [], blockedActivities: [], dateJoined: Date(), location: nil, shouldSendJoinedActivityNotification: true, shouldSendActivitySuggestionNotification: true, notificationToken: nil, chatReadAt: [:])
-        
-        
         // Wrap the callback for comparison later
         let callback = Listener(fn: fn)
         
         // Insert it into the set of listeners
-        if userListeners[id] == nil { userListeners[id] = [] }
-        userListeners[id]?.append(callback)
+        if _userListeners[id] == nil { _userListeners[id] = [] }
+        _userListeners[id]?.append(callback)
         
-        // Call the function initially,
-        //  TODO: load actual user data
-        callback.fn(testUser)
+        // Handle calling the callback
+        if let user = _userCache.object(forKey: id as AnyObject) {
+            callback.fn(user)
+            
+            // If we removed the listener, add it back
+            if _userRegistration[id] == nil {
+                _userRegistration[id] = self._loadUser(id: id)
+            }
+        }
+        else if !_usersLoading.contains(id) {
+            _usersLoading.append(id)
+            
+            _userRegistration[id] = self._loadUser(id: id)
+        }
     
         // Return a cancel callback
         return {
-            self.userListeners[id] = self.userListeners[id]?.filter {
+            self._userListeners[id] = self._userListeners[id]?.filter {
                 $0 !== callback
             }
+            
+            // If there are no listeners, stop listening to firebase
+            if self._userListeners[id]?.isEmpty ?? true,
+                let reg = self._userRegistration[id] {
+                reg.remove()
+            }
+        }
+    }
+    
+    func _loadUser(id: UserId, users: CollectionReference = Firestore.firestore().collection("users")) -> ListenerRegistration {
+        return users.document(id).addSnapshotListener {
+            guard let snap = $0 else {
+                print($1!)
+                return
+            }
+            
+            guard let user = User.from(snap: snap, with: self) else {
+                print("invalid user :( \(id)")
+                return
+            }
+            
+            self._usersLoading.removeAll(where: { $0 == id })
+            
+            self.onInvalidateUser(user: user)
         }
     }
     
     func useActivity(id: ActivityId, fn: @escaping (Activity) -> Void) -> (() -> Void) {
-        // TEMP
-        let testActivity = Activity(delegate: self, activityId: "0LtIRbcC92irk3jYcjWg", dateCreated: Date(), members: ["n5vz1YkFqiP2IJ5rYDCEGve3QlG2"], location: GeoPoint(latitude: 37.376272812760504, longitude: -122.03007651230622), ownerId: "n5vz1YkFqiP2IJ5rYDCEGve3QlG2", title: "Do stuff", description: "please do stuff with me", startTime: Date(), endTime: Date(), topicIds: ["FO5Eg18UeGpcqeiCD4KB"])
-
         // Wrap the callback for comparison later
         let callback = Listener(fn: fn)
         
         // Insert it into the set of listeners
-        if activityListeners[id] == nil { activityListeners[id] = [] }
-        activityListeners[id]?.append(callback)
+        if _activityListeners[id] == nil { _activityListeners[id] = [] }
+        _activityListeners[id]?.append(callback)
         
-        // Call the function initially,
-        //  later this will be after loading the user
-        callback.fn(testActivity)
+        // Handle calling the callback
+        if let activity = _activityCache.object(forKey: id as AnyObject) {
+            callback.fn(activity)
+            
+            // If we removed the firebase listener, add it back
+            if _activityRegistration[id] == nil {
+                _activityRegistration[id] = self._loadActivity(id: id)
+            }
+        }
+        else if !_activitiesLoading.contains(id) {
+            _activitiesLoading.append(id)
+            
+            _activityRegistration[id] = self._loadActivity(id: id)
+        }
         
         // Return a cancel callback
         return {
-            self.activityListeners[id] = self.activityListeners[id]?.filter {
+            self._activityListeners[id] = self._activityListeners[id]?.filter {
                 $0 !== callback
+            }
+            
+            // If there are no listeners, stop listening to firebase
+            if self._activityListeners[id]?.isEmpty ?? true,
+                let reg = self._activityRegistration[id] {
+                reg.remove()
             }
         }
     }
     
-    func onInvalidateUser(user: User) {
-        //TODO: Invalidate cache!
-        
-        userListeners[user.uid]?.forEach { $0.fn(user) }
+    func _loadActivity(id: ActivityId,activities: CollectionReference = Firestore.firestore().collection("activities")) -> ListenerRegistration {
+        return activities.document(id).addSnapshotListener {
+            guard let snap = $0 else {
+                print($1!)
+                return
+            }
+            
+            guard let activity = Activity.from(snap: snap, with: self) else {
+                print("invalid activity :( \(id)")
+                return
+            }
+            
+            self._activitiesLoading.removeAll(where: { $0 == id })
+            
+            self.onInvalidateActivity(activity: activity)
+        }
     }
     
-    func onInvalidateActivity(activity: Activity) {
-        //TODO: Invalidate cache!
+    
+    // MARK: UserInvalidationDelegate
+    func onInvalidateUser(user: User) {
+        _userCache.setObject(user, forKey: user.uid as AnyObject)
         
-        activityListeners[activity.activityId]?.forEach { $0.fn(activity) }
+        _userListeners[user.uid]?.forEach { $0.fn(user) }
+    }
+    
+    // MARK: ActivityInvalidationDelegate
+    func onInvalidateActivity(activity: Activity) {
+        _activityCache.setObject(activity, forKey: activity.activityId as AnyObject)
+        
+        _activityListeners[activity.activityId]?.forEach { $0.fn(activity) }
     }
 }
