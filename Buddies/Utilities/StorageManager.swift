@@ -19,13 +19,13 @@ class StorageManager {
     
     static let shared = StorageManager()
     
-    func getImage(imageUrl: String, localFileName: String, callback: @escaping ((UIImage) -> Void)) {
+    func getImage(imageUrl: String, localFileName: String, session providedSession: URLSession? = nil, callback: @escaping ((UIImage) -> Void)) {
         if let cached = getSavedImage(filename: localFileName) {
             callback(cached)
             return
         }
         
-        let _ = downloadFile(for: imageUrl, to: localFileName, session: nil) { imageUrl in
+        let _ = downloadFile(for: imageUrl, to: localFileName, session: providedSession) { imageUrl in
             do {
                 let imageData = try Data(contentsOf: imageUrl)
                 if let image = UIImage(data: imageData) {

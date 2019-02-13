@@ -64,6 +64,7 @@
 		A95B958522133DDB00453AEA /* DataAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958422133DDB00453AEA /* DataAccessor.swift */; };
 		A95B958822133FA500453AEA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958722133FA500453AEA /* User.swift */; };
 		A95B958A22133FB100453AEA /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958922133FB100453AEA /* Activity.swift */; };
+		A95B958C2214B6A800453AEA /* DataAccessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958B2214B6A800453AEA /* DataAccessorTests.swift */; };
 		A9B144AF220B4165004C614E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144AE220B4165004C614E /* SettingsVC.swift */; };
 		A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144B0220C82A0004C614E /* AppDelegateTests.swift */; };
 		A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF3F2201427A00C05F2C /* LoginVC.swift */; };
@@ -158,6 +159,7 @@
 		A95B958422133DDB00453AEA /* DataAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAccessor.swift; sourceTree = "<group>"; };
 		A95B958722133FA500453AEA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A95B958922133FB100453AEA /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		A95B958B2214B6A800453AEA /* DataAccessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAccessorTests.swift; sourceTree = "<group>"; };
 		A9B144AE220B4165004C614E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		A9B144B0220C82A0004C614E /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		A9E8BF3F2201427A00C05F2C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				58EA1EF622041436003F6A3A /* StorageManagerTests.swift */,
+				A95B958B2214B6A800453AEA /* DataAccessorTests.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				58EF8DA82208A2C600872770 /* DiscoverVCTests.swift in Sources */,
 				58EF8DA32208A2BC00872770 /* CreateActivityVCTests.swift in Sources */,
 				A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */,
+				A95B958C2214B6A800453AEA /* DataAccessorTests.swift in Sources */,
 				58AAA6772203FD3A00AA538A /* TopicCollectionTests.swift in Sources */,
 				58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */,
 				450CC0F5220964F000282BAB /* SignUpInfoVCTests.swift in Sources */,
