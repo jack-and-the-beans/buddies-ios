@@ -50,17 +50,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func getHasUserDoc(callback: @escaping (Bool) -> Void,
                      uid: String? = Auth.auth().currentUser?.uid,
                      src: CollectionReference = Firestore.firestore().collection("users")) {
+        // If we're not logged in, there is no doc
         guard let uid = uid else {
             callback(false)
             return
         }
         
+        // If the user is cached, it's already fine
+        if DataAccessor.instance.isUserCached(id: uid) {
+            callback(true)
+            return
+        }
+        
+        // Otherwise reload it and make sure it parses correctly
         src.document(uid).getDocument { (snap, err) in
-            if let snap = snap
-                , snap.exists
-                , let data = snap.data()
-                , let _ = data["image_url"]
-                , let _ = data["bio"] {
+            if let snap = snap, let _ = User.from(snap: snap, with: nil) {
                 callback(true)
             }
             else {
