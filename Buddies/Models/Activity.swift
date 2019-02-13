@@ -35,7 +35,12 @@ class Activity {
     private func onChange(_ key: String, _ value: Any?) {
         delegate.onInvalidateActivity(activity: self)
         
-        //TODO: post change to firebase
+        let collection = Firestore.firestore().collection("activities")
+        let doc = collection.document(activityId)
+        
+        if let value = value {
+            doc.setData([ key: value ], merge: true)
+        }
     }
     
     init(delegate: ActivityInvalidationDelegate,
