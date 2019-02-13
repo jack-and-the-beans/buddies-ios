@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import XCTest
 
 class MockExistingUser : NSObject, UserInfo {
     var providerID: String = "test"
@@ -42,11 +43,16 @@ class MockCollectionReference : CollectionReference {
 
 class MockDocumentReference : DocumentReference {
     var exposedData = [String: Any]()
+    var docId: String? = nil
+    var listeners = [FIRDocumentSnapshotBlock]()
+    
     override func updateData(_ fields: [AnyHashable : Any], completion: ((Error?) -> Void)? = nil) {
         if let data = fields as? [String: Any] {
             //Update exposedData
             data.forEach { (k,v) in exposedData[k] = v }
             completion?(nil)
+            
+            listeners.forEach { getDocument(completion: $0) }
         } else {
             completion?(NSError(domain: "Testing", code: -1, userInfo: nil))
         }
@@ -59,20 +65,44 @@ class MockDocumentReference : DocumentReference {
             exposedData = documentData
         }
         completion?(nil)
+        listeners.forEach { getDocument(completion: $0) }
     }
     
     override func getDocument(completion: @escaping FIRDocumentSnapshotBlock) {
-        let snap = MockDocumentSnapshot(data: exposedData)
+        let snap = MockDocumentSnapshot(data: exposedData, docId: docId)
         completion(snap, nil)
     }
     
+    override func addSnapshotListener(_ listener: @escaping FIRDocumentSnapshotBlock) -> ListenerRegistration {
+        listeners.append(listener)
+        getDocument(completion: listener)
+        return ListenerCanceler()
+    }
+    
     // THANK YOU STACK OVERFLOW: https://stackoverflow.com/a/47272501
-    init(workaround _: Void = ()) {}
+    init(docId: String? = nil) {
+        self.docId = docId
+    }
+    
+    class ListenerCanceler : NSObject, ListenerRegistration {
+        var isCleaned = false
+        deinit {
+            XCTAssertFalse(true, "Failed to cleanup :(")
+        }
+        
+        func remove() {
+            if isCleaned {
+                XCTAssertFalse(true, "Cleanup listener twice!")
+            }
+            
+            isCleaned = true
+        }
+    }
 }
 
 class MockDocumentSnapshot : DocumentSnapshot {
     var exposedData = [String: Any]()
-    let _documentID = UUID().uuidString
+    let _documentID: String
     override var documentID: String {
         get {
             return _documentID
@@ -88,9 +118,12 @@ class MockDocumentSnapshot : DocumentSnapshot {
     }
     
     // THANK YOU STACK OVERFLOW: https://stackoverflow.com/a/47272501
-    init(workaround _: Void = ()) {}
+    init(workaround _: Void = ()) {
+        _documentID = UUID().uuidString
+    }
     
-    init(data: [String: Any]){
+    init(data: [String: Any], docId: String? = nil){
         exposedData = data
+        _documentID = docId ?? UUID().uuidString
     }
 }
