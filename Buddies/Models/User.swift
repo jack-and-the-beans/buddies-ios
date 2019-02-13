@@ -23,7 +23,7 @@ class User {
     let email : String?
     let isAdmin : Bool
     let facebookId : String?
-    let dateJoined : Date
+    let dateJoined : Timestamp
     let notificationToken : String?
     
     // MARK: Mutable Properties
@@ -53,12 +53,17 @@ class User {
     let blockedBy : [UserId] // Shouldn't be updated directly! Automatic inverse of blocked_users.
     
     // map of activity ID to timestamp - when the user last read the chat.
-    var chatReadAt: [ ActivityId: Date ] { didSet { onChange("chat_read_at", chatReadAt) } }
+    var chatReadAt: [ ActivityId: Timestamp ] { didSet { onChange("chat_read_at", chatReadAt) } }
     
     private func onChange(_ key: String, _ value: Any?) {
         delegate?.onInvalidateUser(user: self)
         
-        //TODO: post change to firebase
+        let collection = Firestore.firestore().collection("users")
+        let doc = collection.document(uid)
+        
+        if let value = value {
+            doc.setData([ key: value ], merge: true)
+        }
     }
     
     init(delegate: UserInvalidationDelegate?,
@@ -72,12 +77,12 @@ class User {
          blockedUsers: [UserId],
          blockedBy: [UserId],
          blockedActivities: [ActivityId],
-         dateJoined: Date,
+         dateJoined: Timestamp,
          location: GeoPoint?,
          shouldSendJoinedActivityNotification: Bool,
          shouldSendActivitySuggestionNotification: Bool,
          notificationToken: String?,
-         chatReadAt: [ ActivityId: Date ]) {
+         chatReadAt: [ ActivityId: Timestamp ]) {
         self.delegate = delegate
         self.imageUrl = imageUrl
         self.isAdmin = isAdmin
@@ -101,20 +106,20 @@ class User {
     static func from(snap: DocumentSnapshot, with delegate: UserInvalidationDelegate?) -> User? {
         guard let data = snap.data(),
               let imageUrl = data["image_url"] as? String,
-              let uid = data["uid"] as? UserId,
               let name = data["name"] as? String,
               let bio = data["bio"] as? String,
-              let dateJoined = data["date_joined"] as? Date
+              let dateJoined = data["date_joined"] as? Timestamp
         else { return nil }
         
+        let uid = snap.documentID
         let isAdmin = data["is_admin"] as? Bool ?? false
         let email = data["email"] as? String
         let facebookId = data["facebook_access_token"] as? String
         let favoriteTopics = data["favorite_topics"] as? [String] ?? []
-        let blockedUsers = data["blocked_users"] as? [UserId] ?? []
-        let blockedBy = data["blocked_by"] as? [UserId] ?? []
-        let blockedActivities = data["blocked_activities"] as? [ActivityId] ?? []
-        let chatReadAt = data["chat_read_at"] as? [ActivityId:Date] ?? [:]
+        let blockedUsers = data["blocked_users"] as? [String] ?? []
+        let blockedBy = data["blocked_by"] as? [String] ?? []
+        let blockedActivities = data["blocked_activities"] as? [String] ?? []
+        let chatReadAt = data["chat_read_at"] as? [String:Timestamp] ?? [:]
         
         let shouldSendJoinedActivityNotification =
             data["should_send_joined_activity_notification"] as? Bool ?? true
