@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import Firebase
 
 class ActivityTableVC: UITableViewController {
 
+    var stopListeningToUser: Canceler?
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.tableView.rowHeight = 100
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -24,23 +28,39 @@ class ActivityTableVC: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 1
     }
 
-    /*
+    //USES TEST ACTIVITY RN
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "activityCell", for: indexPath) as! ActivityCell
+        
+        self.stopListeningToUser = DataAccessor.instance.useActivity(id: "tPiDK17X1QcEhYEIAm87"){ activity in
+            cell.titleLabel.text = activity.title
+            cell.descriptionLabel.text = activity.description
+            cell.locationLabel.text = String(activity.location.latitude) + ", " + String(activity.location.longitude)
+            cell.dateLabel.text = activity.endTime.dateValue().description
+            
+            self.stopListeningToUser = DataAccessor.instance.useUser(id: activity.members[0]){ user in
+                
+                cell.picture1.tintColor = UIColor.clear
+                cell.picture1.setImage(StorageManager.shared.getSavedImage(filename: user.imageUrl), for: .normal)
+            }
+            
+        }
+        
+        
         // Configure the cell...
 
         return cell
     }
-    */
+ 
 
     /*
     // Override to support conditional editing of the table view.
