@@ -79,6 +79,7 @@
 		A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5F220239EE00C05F2C /* UIApplicationTests.swift */; };
 		A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */; };
 		B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
+		B6337F422215E48B00158549 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6337F412215E48B00158549 /* Keys.plist */; };
 		B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */; };
 		B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A521F8DB8500B075B8 /* Assets.xcassets */; };
 		BC97CE98FE7521FEC111E8D8 /* Pods_Buddies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */; };
@@ -176,6 +177,7 @@
 		A9E8BF5D22022F3400C05F2C /* UIVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVIewController.swift; sourceTree = "<group>"; };
 		A9E8BF5F220239EE00C05F2C /* UIApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationTests.swift; sourceTree = "<group>"; };
 		A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControlTests.swift; sourceTree = "<group>"; };
+		B6337F412215E48B00158549 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Keys.plist; sourceTree = "<group>"; };
 		B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaSearch.swift; sourceTree = "<group>"; };
 		B6AC549B21F8DB8300B075B8 /* Buddies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buddies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -497,6 +499,7 @@
 		B6AC549D21F8DB8300B075B8 /* Buddies */ = {
 			isa = PBXGroup;
 			children = (
+				B6337F412215E48B00158549 /* Keys.plist */,
 				58A915BA220E30DA008C325F /* Activities */,
 				45FBF7A722095A030007DD6D /* CreateActivity */,
 				A850ED5F2203A0C100DBF1A6 /* Buddies.entitlements */,
@@ -633,6 +636,7 @@
 			files = (
 				58EF8DC22208BE5E00872770 /* Login.storyboard in Resources */,
 				58EF8DC32208BE5E00872770 /* Topics.storyboard in Resources */,
+				B6337F422215E48B00158549 /* Keys.plist in Resources */,
 				58EF8DC12208BE5E00872770 /* Main.storyboard in Resources */,
 				58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */,
 				A850ED612203A12900DBF1A6 /* GoogleService-Info.plist in Resources */,

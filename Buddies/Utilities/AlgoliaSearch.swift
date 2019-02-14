@@ -20,13 +20,28 @@ class AlgoliaSearch {
               location: (Double, Double), // Tuple: (lat, lng)
               completionHandler: @escaping ([String], Error?) -> Void) {
         
-        let client = Client(appID: "YourApplicationID", apiKey: "YourAPIKey")
+        // Grab API key from key file if it exists:
+        var algoliaAppID = "NOPE"
+        var algoliaApiKey = "NOPE"
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+            let keys = NSDictionary(contentsOfFile: path)
+            if
+                let k = keys,
+                let apiKey = k["AlgoliaSearchKey"] as? String,
+                let appid = k["AlgoliaAppId"] as? String {
+                algoliaAppID = appid
+                algoliaApiKey = apiKey
+            }
+        }
+
+        // Initialize client and activity index:
+        let client = Client(appID: algoliaAppID, apiKey: algoliaApiKey)
         let index = client.index(withName: "BUD_ACTIVITIES")
         
         // Use text search if text is given:
         let query = withText != nil ? Query(query: withText) : Query()
         
-        // We only need the objectID for firebase
+        // We only need the objectID for activities
         // query.attributesToRetrieve = ["objectID"]
         
         // Location Filter:
