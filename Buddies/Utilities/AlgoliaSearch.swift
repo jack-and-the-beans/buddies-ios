@@ -34,21 +34,25 @@ class AlgoliaSearch {
     static let ACTIVITY_INDEX = "BUD_ACTIVITIES"
     var client: Client
 
-    init () {
-        var algoliaAppID = "NOPE"
-        var algoliaApiKey = "NOPE"
-        // Grab API key from key file if it exists:
-        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
-            let keys = NSDictionary(contentsOfFile: path)
-            if
-                let k = keys,
-                let apiKey = k["AlgoliaSearchKey"] as? String,
-                let appid = k["AlgoliaAppId"] as? String {
-                algoliaAppID = appid
-                algoliaApiKey = apiKey
+    init (algoliaClient: Client? = nil) {
+        if let client = algoliaClient {
+            self.client = client
+        } else {
+            var algoliaAppID = "NOPE"
+            var algoliaApiKey = "NOPE"
+            // Grab API key from key file if it exists:
+            if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+                let keys = NSDictionary(contentsOfFile: path)
+                if
+                    let k = keys,
+                    let apiKey = k["AlgoliaSearchKey"] as? String,
+                    let appid = k["AlgoliaAppId"] as? String {
+                    algoliaAppID = appid
+                    algoliaApiKey = apiKey
+                }
             }
+            self.client = Client(appID: algoliaAppID, apiKey: algoliaApiKey)
         }
-        self.client = Client(appID: algoliaAppID, apiKey: algoliaApiKey)
     }
 
     // Searches for Activities with optional params

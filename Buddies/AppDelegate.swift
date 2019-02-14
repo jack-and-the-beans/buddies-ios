@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         self.window?.makeKeyAndVisible()
-
+        let client = AlgoliaSearch()
         return true
     }
     
