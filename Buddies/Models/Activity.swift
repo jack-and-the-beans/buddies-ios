@@ -13,6 +13,7 @@ typealias ActivityId = String
 
 protocol ActivityInvalidationDelegate {
     func onInvalidateActivity(activity: Activity)
+    func triggerServerUpdate(activityId: ActivityId, key: String, value: Any?)
 }
 
 class Activity {
@@ -34,13 +35,7 @@ class Activity {
     
     private func onChange(_ key: String, _ value: Any?) {
         delegate?.onInvalidateActivity(activity: self)
-        
-        let collection = Firestore.firestore().collection("activities")
-        let doc = collection.document(activityId)
-        
-        if let value = value {
-            doc.setData([ key: value ], merge: true)
-        }
+        delegate?.triggerServerUpdate(activityId: activityId, key: key, value: value)
     }
     
     init(delegate: ActivityInvalidationDelegate?,
