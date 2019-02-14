@@ -47,6 +47,11 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
     var _usersLoading: [UserId] = []
     var _activitiesLoading: [ActivityId] = []
     
+    deinit {
+        _userRegistration.values.forEach { $0.remove() }
+        _activityRegistration.values.forEach { $0.remove() }
+    }
+    
     func isUserCached(id: UserId) -> Bool {
         return _userCache.object(forKey: id as AnyObject) != nil
     }

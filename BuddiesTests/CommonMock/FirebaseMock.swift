@@ -87,14 +87,10 @@ class MockDocumentReference : DocumentReference {
     class ListenerCanceler : NSObject, ListenerRegistration {
         var isCleaned = false
         deinit {
-            XCTAssertFalse(true, "Failed to cleanup :(")
+            XCTAssert(isCleaned, "Failed to cleanup :(")
         }
         
         func remove() {
-            if isCleaned {
-                XCTAssertFalse(true, "Cleanup listener twice!")
-            }
-            
             isCleaned = true
         }
     }

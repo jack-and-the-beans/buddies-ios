@@ -79,11 +79,82 @@ class DataAccessorTests: XCTestCase {
             exp1.fulfill()
             calls1 += 1
         }
+        
         cancels.append(cancel1)
         
         self.waitForExpectations(timeout: 2.0)
         
         XCTAssert(calls1 == 1, "expected callback to be called once")
+    }
+    
+    func testUseUserAfterCacheMiss() {
+        // first call
+        let exp1 = self.expectation(description: "user loaded")
+        var calls1 = 0
+        let cancel1 = instance.useUser(id: me.uid) { user in
+            if calls1 == 0 {
+                exp1.fulfill()
+            }
+            calls1 += 1
+        }
+        cancels.append(cancel1)
+        
+        self.waitForExpectations(timeout: 2.0)
+        
+        instance._userCache.removeAllObjects()
+        
+        // repeat
+        let exp2 = self.expectation(description: "user loaded second time")
+        var calls2 = 0
+        let cancel2 = instance.useUser(id: me.uid) { user in
+            exp2.fulfill()
+            calls2 += 1
+        }
+        cancels.append(cancel2)
+        
+        self.waitForExpectations(timeout: 2.0)
+        
+        XCTAssert(calls1 == 2, "expected first callback to be called twice")
+        XCTAssert(calls2 == 1, "expected second callback to be called once")
+    }
+    
+    func testUseUserAfterCancel() {
+        // first call
+        let exp1 = self.expectation(description: "user loaded")
+        var calls1 = 0
+        var firstUser: Buddies.User?
+        let cancel1 = instance.useUser(id: me.uid) { user in
+            firstUser = user
+            exp1.fulfill()
+            calls1 += 1
+        }
+        
+        self.waitForExpectations(timeout: 2.0)
+        
+        // Manually call cancel function
+        cancel1()
+        
+        // repeat
+        let exp2 = self.expectation(description: "user loaded second time")
+        var calls2 = 0
+        let cancel2 = instance.useUser(id: me.uid) { user in
+            if calls2 == 0 {
+                XCTAssert(user === firstUser)
+            }
+            else if calls2 == 1 {
+                exp2.fulfill()
+            }
+            calls2 += 1
+        }
+        cancels.append(cancel2)
+        
+        // invalidate, to call again
+        instance.onInvalidateUser(user: me)
+        
+        self.waitForExpectations(timeout: 2.0)
+        
+        XCTAssert(calls1 == 1, "expected first callback to be called once")
+        XCTAssert(calls2 >= 2, "expected second callback to be called at least twice")
     }
     
     func testUseUserTwice() {
@@ -138,7 +209,7 @@ class DataAccessorTests: XCTestCase {
         
         self.waitForExpectations(timeout: 2.0)
         
-        // invalidate, call again
+        // invalidate, to call again
         instance.onInvalidateUser(user: me)
         
         XCTAssert(calls1 == 2, "expected first callback to be called twice")
@@ -193,6 +264,76 @@ class DataAccessorTests: XCTestCase {
         self.waitForExpectations(timeout: 2.0)
         
         XCTAssert(calls1 == 1, "expected first callback to be called once")
+        XCTAssert(calls2 == 1, "expected second callback to be called once")
+    }
+    
+    func testUseActivityAfterCancel() {
+        // first call
+        let exp1 = self.expectation(description: "activity loaded")
+        var calls1 = 0
+        var firstActivity: Activity?
+        let cancel1 = instance.useActivity(id: myActivity.activityId) { activity in
+            firstActivity = activity
+            exp1.fulfill()
+            calls1 += 1
+        }
+        
+        self.waitForExpectations(timeout: 2.0)
+        
+        // manually cancel first useActivity call
+        cancel1()
+        
+        // repeat
+        let exp2 = self.expectation(description: "activity loaded second time")
+        var calls2 = 0
+        let cancel2 = instance.useActivity(id: myActivity.activityId) { activity in
+            if calls2 == 0 {
+                XCTAssert(activity === firstActivity)
+            }
+            else if calls2 == 1 {
+                exp2.fulfill()
+            }
+            calls2 += 1
+        }
+        cancels.append(cancel2)
+        
+        // invalidate, to call again
+        instance.onInvalidateActivity(activity: myActivity)
+
+        self.waitForExpectations(timeout: 2.0)
+        
+        XCTAssert(calls1 == 1, "expected first callback to be called once")
+        XCTAssert(calls2 >= 2, "expected second callback to be called at least twice")
+    }
+    
+    func testUseActivityAfterCacheMiss() {
+        // first call
+        let exp1 = self.expectation(description: "activity loaded")
+        var calls1 = 0
+        let cancel1 = instance.useActivity(id: myActivity.activityId) { activity in
+            if calls1 == 0 {
+                exp1.fulfill()
+            }
+            calls1 += 1
+        }
+        cancels.append(cancel1)
+        
+        self.waitForExpectations(timeout: 2.0)
+
+        instance._activityCache.removeAllObjects()
+        
+        // repeat
+        let exp2 = self.expectation(description: "activity loaded second time")
+        var calls2 = 0
+        let cancel2 = instance.useActivity(id: myActivity.activityId) { activity in
+            exp2.fulfill()
+            calls2 += 1
+        }
+        cancels.append(cancel2)
+        
+        self.waitForExpectations(timeout: 2.0)
+        
+        XCTAssert(calls1 == 2, "expected first callback to be called twice")
         XCTAssert(calls2 == 1, "expected second callback to be called once")
     }
     
