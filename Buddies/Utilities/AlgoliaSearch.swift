@@ -11,18 +11,20 @@ import InstantSearchClient
 
 class AlgoliaSearch {
     // Searches for Activities with optional params
-    static func searchActivities(text: String? = nil,
-                          topicIds: [String]? = nil,
-                          startDate: Date,
-                          endDate: Date,
-                          locationRadius: UInt = 20000, // In meters, defaults to 20km
-                          location: (Double, Double)) { // Tuple: (lat, lng)
+    static func searchActivities(
+              withText: String? = nil,
+              topicIds: [String]? = nil,
+              startDate: Date,
+              endDate: Date,
+              locationRadius: UInt = 20000, // In meters, defaults to 20km
+              location: (Double, Double), // Tuple: (lat, lng)
+              completionHandler: @escaping ([String], Error?) -> Void) {
         
         let client = Client(appID: "YourApplicationID", apiKey: "YourAPIKey")
         let index = client.index(withName: "BUD_ACTIVITIES")
         
         // Use text search if text is given:
-        let query = text != nil ? Query(query: text) : Query()
+        let query = withText != nil ? Query(query: withText) : Query()
         
         // We only need the objectID for firebase
         // query.attributesToRetrieve = ["objectID"]
@@ -39,9 +41,11 @@ class AlgoliaSearch {
         query.filters = dateFilter + (topicFilter != nil ? "AND \(topicFilter!)" : "")
         
         index.search(query, completionHandler: { (content, error) -> Void in
-            if error == nil {
-                print("Result: \(content)")
+            print("\(content)")
+            if let err = error {
+                completionHandler([], err); return
             }
+            completionHandler(["hello"], nil)
         })
     }
     
