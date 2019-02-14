@@ -19,10 +19,14 @@ class ProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        profilePic?.imageView?.layer.cornerRadius = profilePic.bounds.size.width / 2
-        profilePic?.imageView?.clipsToBounds = true
-
         loadProfileData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        profilePic.layer.cornerRadius = profilePic.frame.size.width / 2
+        profilePic.clipsToBounds = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
