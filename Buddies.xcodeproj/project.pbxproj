@@ -44,7 +44,6 @@
 		58EF8DA32208A2BC00872770 /* CreateActivityVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA22208A2BC00872770 /* CreateActivityVCTests.swift */; };
 		58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */; };
 		58EF8DA82208A2C600872770 /* DiscoverVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA62208A2C600872770 /* DiscoverVCTests.swift */; };
-		58EF8DB22208A2E900872770 /* TopicCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DAE2208A2E900872770 /* TopicCollectionTests.swift */; };
 		58EF8DB42208A2E900872770 /* LayoutMeasurementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DB02208A2E900872770 /* LayoutMeasurementsTests.swift */; };
 		58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DB72208BE5E00872770 /* CreateActivity.storyboard */; };
 		58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DB82208BE5E00872770 /* BuddiesStoryboard.swift */; };
@@ -79,8 +78,8 @@
 		A9E8BF5E22022F3400C05F2C /* UIVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5D22022F3400C05F2C /* UIVIewController.swift */; };
 		A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5F220239EE00C05F2C /* UIApplicationTests.swift */; };
 		A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */; };
+		B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
 		B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */; };
-		B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
 		B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A521F8DB8500B075B8 /* Assets.xcassets */; };
 		BC97CE98FE7521FEC111E8D8 /* Pods_Buddies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */; };
 		D224642A61925CB2F139C62A /* Pods_BuddiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A75D052FEF0993FE926DD6A9 /* Pods_BuddiesTests.framework */; };
@@ -749,7 +748,7 @@
 				A95B958A22133FB100453AEA /* Activity.swift in Sources */,
 				58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */,
 				58EF8D8D2208A24700872770 /* DiscoverVC.swift in Sources */,
-				B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */,
+				B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */,
 				58EF8D8E2208A24700872770 /* MyActivitiesVC.swift in Sources */,
 				58AAA6752203F52E00AA538A /* Initialization.swift in Sources */,
 				58EF8D962208A25F00872770 /* TopicCell.swift in Sources */,
@@ -757,7 +756,6 @@
 				450779DF2210D7B00008D0DF /* TapticEngine.swift in Sources */,
 				B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */,
 				582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */,
-				B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */,
 				A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */,
 				5802266A220BE5E90068E08E /* ToggleButton.swift in Sources */,
 				A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */,
@@ -806,7 +804,6 @@
 				589AD64122092F950090A96C /* FirebaseMock.swift in Sources */,
 				589AD644220948270090A96C /* UtilitiesMock.swift in Sources */,
 				A91BA3372202404600DED6B3 /* LoginVCTests.swift in Sources */,
-				58EF8DB22208A2E900872770 /* TopicCollectionTests.swift in Sources */,
 				A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */,
 				A91BA33A22024A8900DED6B3 /* LoginExistingVCTests.swift in Sources */,
 				A95B958F2214FA4200453AEA /* UserTests.swift in Sources */,
