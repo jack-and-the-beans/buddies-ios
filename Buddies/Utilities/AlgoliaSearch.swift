@@ -31,19 +31,13 @@ struct AlgoliaObject {
 }
 
 class AlgoliaSearch {
-    // Searches for Activities with optional params
-    static func searchActivities(
-              withText: String? = nil,
-              topicIds: [String]? = nil,
-              startDate: Date,
-              endDate: Date,
-              locationRadius: UInt = 20000, // In meters, defaults to 20km
-              location: (Double, Double), // Tuple: (lat, lng)
-              completionHandler: @escaping ([String], Error?) -> Void) {
+    static let ACTIVITY_INDEX = "BUD_ACTIVITIES"
+    var client: Client
 
-        // Grab API key from key file if it exists:
+    init () {
         var algoliaAppID = "NOPE"
         var algoliaApiKey = "NOPE"
+        // Grab API key from key file if it exists:
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
             let keys = NSDictionary(contentsOfFile: path)
             if
@@ -54,10 +48,21 @@ class AlgoliaSearch {
                 algoliaApiKey = apiKey
             }
         }
+        self.client = Client(appID: algoliaAppID, apiKey: algoliaApiKey)
+    }
+
+    // Searches for Activities with optional params
+    func searchActivities(
+              withText: String? = nil,
+              topicIds: [String]? = nil,
+              startDate: Date?,
+              endDate: Date?,
+              locationRadius: UInt = 20000, // In meters, defaults to 20km
+              location: (Double, Double)?, // Tuple: (lat, lng)
+              completionHandler: @escaping ([String], Error?) -> Void) {
 
         // Initialize client and activity index:
-        let client = Client(appID: algoliaAppID, apiKey: algoliaApiKey)
-        let index = client.index(withName: "BUD_ACTIVITIES")
+        let index = self.client.index(withName: AlgoliaSearch.ACTIVITY_INDEX)
         
         // Use text search if text is given:
         let query = withText != nil ? Query(query: withText) : Query()
@@ -65,40 +70,56 @@ class AlgoliaSearch {
         // We only need the objectID for activities
          query.attributesToRetrieve = ["objectID"]
         
-        // Location Filter:
-        query.aroundLatLng = LatLng(lat: location.0, lng: location.1)
-        query.aroundRadius = .explicit(locationRadius)
+        // Set location filter if there is a location:
+        if let loc = location {
+            query.aroundLatLng = LatLng(lat: loc.0, lng: loc.1)
+            query.aroundRadius = .explicit(locationRadius)
+        }
         
-        // Get filter strings:
-        let dateFilter = getDateFilter(fromDate: startDate, toDate: endDate)
-        let topicFilter = getTopicFilterFrom(topicIds)
-        
-        // Only include topic filter if we want:
-        query.filters = dateFilter + (topicFilter != nil ? "AND \(topicFilter!)" : "")
+        // Get date filter if there are dates:
+        var dateFilter: String? = nil
+        if let start = startDate, let end = endDate {
+            dateFilter = self.getDateFilter(fromDate: start, toDate: end)
+        }
+
+        // Get topic filter if there are topics:
+        let topicFilter = self.getTopicFilterFrom(topicIds)
+
+        // Conditionally set up filters:
+        if let dates = dateFilter, let topics = topicFilter {
+            query.filters = "\(dates) AND \(topics)"
+        } else if let dates = dateFilter {
+            query.filters = dates
+        } else if let topics = topicFilter {
+            query.filters = topics
+        }
         
         index.search(query, completionHandler: { (content, error) -> Void in
             if let err = error {
-                completionHandler([], err); return
+                // Return the error:
+                completionHandler([], err);
+            } else if let res = content?["hits"] as? [[String: AnyObject]] {
+                let ids = res.compactMap { $0["objectID"] as? String }
+                // Return topic IDs:
+                completionHandler(ids, nil)
+            } else {
+                // Return no topics and no IDs:
+                completionHandler([], nil)
             }
-            guard let res = content?["hits"] as? [[String: AnyObject]] else { completionHandler([], nil); return }
-
-            let ids = res.compactMap { $0["objectID"] as? String }
-            
-            completionHandler(ids, nil)
         })
     }
     
     // Note: Any Algolia attribute set up as an array will
     // match the filter as soon as one of the values in the
     // array match. (source: https://www.algolia.com/doc/api-reference/api-parameters/filters/#examples)
-    private static func getTopicFilterFrom(_ topicIds: [String]?) -> String? {
+    private func getTopicFilterFrom(_ topicIds: [String]?) -> String? {
         guard let topics = topicIds else { return nil }
         let withQueryKey = topics.map { "topic_ids:\($0)" }
         return "(\(withQueryKey.joined(separator: " OR ")))"
     }
     
     // Returns the Algolia Query to match between the two dates.
-    private static func getDateFilter(fromDate: Date, toDate: Date) -> String {
+    private func getDateFilter(fromDate: Date, toDate: Date) -> String {
         let startDate = Int(fromDate.timeIntervalSince1970 * 1000)
         let endDate = Int(toDate.timeIntervalSince1970 * 1000)
         return "(end_time_num >= \(startDate) AND start_time_num <= \(endDate))"
