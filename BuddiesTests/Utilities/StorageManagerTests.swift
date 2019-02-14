@@ -16,6 +16,7 @@ class StorageManagerTests: XCTestCase {
         var persistDownloadInvocations = [(source: URL, dest: URL)]()
         override func persistDownload(temp: URL, dest: URL, callback: ((URL) -> Void)?) {
             persistDownloadInvocations.append((source: temp, dest: dest))
+            callback?(temp)
         }
         override func localURL(for path: String) -> URL? {
             return URL(string: path)
@@ -59,19 +60,59 @@ class StorageManagerTests: XCTestCase {
         
         let firstCall = manager.persistDownloadInvocations[0]
         XCTAssert(firstCall.dest.absoluteString == "testDownloadDest")
-        XCTAssert(firstCall.source.absoluteString == "mockTempURL")
+        XCTAssert(firstCall.source.absoluteString == "testDownloadURL")
     }
     
-    func testGetImage() {
-        let manager = StorageNoIO()
+    class StorageManualSaved : StorageNoIO {
+        var savedImage : UIImage?
+        override func getSavedImage(filename: String) -> UIImage? {
+            return savedImage
+        }
+    }
+    
+    func testGetImage_saved() {
+        let exp = expectation(description: "image loaded")
+        let manager = StorageManualSaved()
         let session = MockURLSession()
         
-        manager.getImage(imageUrl: "testDownloadURL",
-                         localFileName: "testDownloadDest",
+        // Write a bean
+        do {
+            let path = Bundle.main.path(forResource: "bean", ofType: "jpg")
+            let url = URL(fileURLWithPath: path!)
+            let imageData = try Data(contentsOf: url)
+            manager.savedImage = UIImage(data: imageData)
+        } catch {
+            XCTAssertTrue(false, "bean pic not loaded into test manager :(")
+            return
+        }
+        
+        manager.getImage(imageUrl: "blah",
+                         localFileName: "hello",
                          session: session,
-                         callback: { _ in /**/ })
-        let firstCall = manager.persistDownloadInvocations[0]
-        XCTAssert(firstCall.dest.absoluteString == "testDownloadDest")
-        XCTAssert(firstCall.source.absoluteString == "mockTempURL")
+                         callback: { _ in exp.fulfill() })
+        
+        self.waitForExpectations(timeout: 2.0)
+        
+        // Should not call persist!
+        XCTAssert(manager.persistDownloadInvocations.count == 0)
+    }
+    
+    func testGetImage_nocache() {
+        let exp = expectation(description: "image loaded")
+        let manager = StorageManualSaved()
+        let session = MockURLSession()
+        
+        let path = Bundle.main.path(forResource: "bean", ofType: "jpg")
+        let url = URL(fileURLWithPath: path!)
+        
+        manager.getImage(imageUrl: url.absoluteString,
+                         localFileName: "hello",
+                         session: session,
+                         callback: { _ in exp.fulfill() })
+        
+        self.waitForExpectations(timeout: 2.0)
+        
+        // Should only write once!
+        XCTAssert(manager.persistDownloadInvocations.count == 1)
     }
 }

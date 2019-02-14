@@ -21,7 +21,7 @@ class MockURLSession: URLSession {
         
         urlString = request.url?.absoluteString
         
-        completionHandler(URL(string: "mockTempURL"), nil, nil)
+        completionHandler(URL(string: urlString ?? "mockTempURL"), nil, nil)
         
         return MockURLSessionDownloadTask()
     }
