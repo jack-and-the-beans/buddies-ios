@@ -23,6 +23,7 @@ class TopicCollectionTests: XCTestCase {
         var addFromStorageCalls = 0
         var addWithoutImageCalls = 0
         var updateImageCalls = 0
+        var loadTopicCalls = 0
         
         override func addFromStorage(using data: [String : Any]?, for id: String, image: UIImage) {
             addFromStorageCalls += 1
@@ -32,6 +33,10 @@ class TopicCollectionTests: XCTestCase {
         }
         override func updateImage(with imageURL: URL, for id: String) {
             updateImageCalls += 1
+        }
+        
+        override func loadTopics() {
+            loadTopicCalls += 1
         }
     }
     
@@ -281,5 +286,22 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(mockCollection.addFromStorageCalls == 0)
         XCTAssert(mockCollection.addWithoutImageCalls == 1)
         XCTAssert(mockCollection.updateImageCalls == 1)
+    }
+    
+    func testInit() {
+        // Setup
+        let deli = UIApplication.shared.delegate as! AppDelegate
+        let mock = MockTopicCollection()
+        let oldCollection = deli.topicCollection
+        deli.topicCollection = mock
+        
+        // Call
+        AppContent.setup()
+        
+        // Test
+        XCTAssert(mock.loadTopicCalls == 1)
+        
+        //Tear down
+        deli.topicCollection = oldCollection
     }
 }

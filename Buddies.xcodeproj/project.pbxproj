@@ -415,16 +415,23 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		A9E8BF482201F7DB00C05F2C /* Controls */ = {
+		A9BFA00F2215F36500A489A7 /* _ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
 				450779DD2210D7B00008D0DF /* RangeSeekSlider.swift */,
 				450779DB2210D7B00008D0DF /* RangeSeekSliderDelegate.swift */,
 				450779DC2210D7B00008D0DF /* TapticEngine.swift */,
+				458CE72B220D36DC00012637 /* SearchTextField.swift */,
+			);
+			path = _ThirdParty;
+			sourceTree = "<group>";
+		};
+		A9E8BF482201F7DB00C05F2C /* Controls */ = {
+			isa = PBXGroup;
+			children = (
 				58EF8D832208A1DF00872770 /* FAB.swift */,
 				A9E8BF492201F9D700C05F2C /* UnderlinedTextbox.swift */,
 				A9E8BF4B2201FB9C00C05F2C /* ControlColors.swift */,
-				458CE72B220D36DC00012637 /* SearchTextField.swift */,
 				58022669220BE5E90068E08E /* ToggleButton.swift */,
 			);
 			path = Controls;
@@ -495,6 +502,7 @@
 		B6AC549D21F8DB8300B075B8 /* Buddies */ = {
 			isa = PBXGroup;
 			children = (
+				A9BFA00F2215F36500A489A7 /* _ThirdParty */,
 				58A915BA220E30DA008C325F /* Activities */,
 				45FBF7A722095A030007DD6D /* CreateActivity */,
 				A850ED5F2203A0C100DBF1A6 /* Buddies.entitlements */,
