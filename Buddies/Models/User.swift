@@ -13,6 +13,7 @@ typealias UserId = String
 
 protocol UserInvalidationDelegate {
     func onInvalidateUser(user: User)
+    func triggerServerUpdate(userId: UserId, key: String, value: Any?)
 }
 
 class User {
@@ -31,7 +32,7 @@ class User {
     var name : String { didSet { onChange("name", name) } }
     var bio : String { didSet { onChange("bio", bio) } }
     var favoriteTopics : [String] { didSet { onChange("favorite_topics", favoriteTopics) } }
-    var location : GeoPoint? { didSet { onChange("favorite_topics", location) } }
+    var location : GeoPoint? { didSet { onChange("location", location) } }
     
     // MARK: User Settings
     var shouldSendJoinedActivityNotification : Bool {
@@ -57,13 +58,7 @@ class User {
     
     private func onChange(_ key: String, _ value: Any?) {
         delegate?.onInvalidateUser(user: self)
-        
-        let collection = Firestore.firestore().collection("users")
-        let doc = collection.document(uid)
-        
-        if let value = value {
-            doc.setData([ key: value ], merge: true)
-        }
+        delegate?.triggerServerUpdate(userId: uid, key: key, value: value)
     }
     
     init(delegate: UserInvalidationDelegate?,

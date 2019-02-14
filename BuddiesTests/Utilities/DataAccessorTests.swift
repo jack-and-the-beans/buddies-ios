@@ -381,4 +381,42 @@ class DataAccessorTests: XCTestCase {
         let result2 = instance.isUserCached(id: me.uid)
         XCTAssertTrue(result2)
     }
+    
+    func testTriggerServerUpdateUser() {
+        let exp1 = self.expectation(description: "user loaded")
+        let exp2 = self.expectation(description: "user listener called again")
+
+        var calls = 0
+        let cancel1 = instance.useUser(id: me.uid) { user in
+            if calls == 0 { exp1.fulfill() }
+            if calls == 1 { exp2.fulfill() }
+            calls += 1
+        }
+        cancels.append(cancel1)
+        self.wait(for: [exp1], timeout: 2.0)
+        
+        instance.triggerServerUpdate(userId: me.uid, key: "name", value: "bob")
+        self.waitForExpectations(timeout: 2.0)
+
+        XCTAssert(calls == 2, "expected callback to be called twice")
+    }
+    
+    func testTriggerServerUpdateActivity() {
+        let exp1 = self.expectation(description: "activity loaded")
+        let exp2 = self.expectation(description: "activity listener called again")
+
+        var calls = 0
+        let cancel1 = instance.useActivity(id: myActivity.activityId) { activity in
+            if calls == 0 { exp1.fulfill() }
+            if calls == 1 { exp2.fulfill() }
+            calls += 1
+        }
+        cancels.append(cancel1)
+        self.wait(for: [exp1], timeout: 2.0)
+        
+        instance.triggerServerUpdate(activityId: myActivity.activityId, key: "title", value: "bob's birthday")
+        self.waitForExpectations(timeout: 2.0)
+        
+        XCTAssert(calls == 2, "expected callback to be called twice")
+    }
 }

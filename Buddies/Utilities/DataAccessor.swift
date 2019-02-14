@@ -182,10 +182,26 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
         _userListeners[user.uid]?.forEach { $0.fn(user) }
     }
     
+    func triggerServerUpdate(userId: UserId, key: String, value: Any?) {
+        let doc = usersCollection.document(userId)
+        
+        if let value = value {
+            doc.setData([ key: value ], merge: true)
+        }
+    }
+    
     // MARK: ActivityInvalidationDelegate
     func onInvalidateActivity(activity: Activity) {
         _activityCache.setObject(activity, forKey: activity.activityId as AnyObject)
         
         _activityListeners[activity.activityId]?.forEach { $0.fn(activity) }
+    }
+    
+    func triggerServerUpdate(activityId: ActivityId, key: String, value: Any?) {
+        let doc = activitiesCollection.document(activityId)
+        
+        if let value = value {
+            doc.setData([ key: value ], merge: true)
+        }
     }
 }
