@@ -82,6 +82,7 @@
 		B6337F422215E48B00158549 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6337F412215E48B00158549 /* Keys.plist */; };
 		B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */; };
 		B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A521F8DB8500B075B8 /* Assets.xcassets */; };
+		B6F8D98F22173E5200CDD081 /* AlgoliaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */; };
 		BC97CE98FE7521FEC111E8D8 /* Pods_Buddies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */; };
 		D224642A61925CB2F139C62A /* Pods_BuddiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A75D052FEF0993FE926DD6A9 /* Pods_BuddiesTests.framework */; };
 /* End PBXBuildFile section */
@@ -185,6 +186,7 @@
 		B6AC54AA21F8DB8500B075B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6AC54AF21F8DB8500B075B8 /* BuddiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BuddiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6AC54B521F8DB8500B075B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaTest.swift; sourceTree = "<group>"; };
 		B99012110D81D232FCCCF814 /* Pods-BuddiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuddiesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BuddiesTests/Pods-BuddiesTests.release.xcconfig"; sourceTree = "<group>"; };
 		E239FFC5C11CDB70A2230436 /* Pods-Buddies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buddies.release.xcconfig"; path = "Pods/Target Support Files/Pods-Buddies/Pods-Buddies.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -281,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				58EA1EF622041436003F6A3A /* StorageManagerTests.swift */,
+				B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */,
 				A95B958B2214B6A800453AEA /* DataAccessorTests.swift */,
 			);
 			path = Utilities;
@@ -816,6 +819,7 @@
 				A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */,
 				58EF8DB42208A2E900872770 /* LayoutMeasurementsTests.swift in Sources */,
 				58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */,
+				B6F8D98F22173E5200CDD081 /* AlgoliaTest.swift in Sources */,
 				A95B95912214FA6600453AEA /* ActivityTests.swift in Sources */,
 				A9203538220CD4E500D115F2 /* DeleteAccountVCTests.swift in Sources */,
 			);
