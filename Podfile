@@ -11,6 +11,8 @@ target 'Buddies' do
   pod 'Firebase/Storage'
   pod 'Firebase/Messaging'
   
+  pod 'SwiftDate'
+  
   # Login Flow
   pod 'FBSDKLoginKit'
   
