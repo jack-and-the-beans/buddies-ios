@@ -26,15 +26,28 @@
 import Foundation
 import InstantSearchClient
 
+// @TODO: Index
+// @TODO: Query
+protocol SearchIndex {
+    func search(_ query: Query, requestOptions: RequestOptions?, completionHandler: @escaping CompletionHandler) -> Operation
+}
+extension Index: SearchIndex {}
+
+protocol SearchClient {
+    func index(withName indexName: String) -> Index
+}
+
+extension Client: SearchClient {}
+
 struct AlgoliaObject {
     var objectID: String
 }
 
 class AlgoliaSearch {
     static let ACTIVITY_INDEX = "BUD_ACTIVITIES"
-    var client: Client
+    var client: SearchClient
 
-    init (algoliaClient: Client? = nil) {
+    init (algoliaClient: SearchClient? = nil) {
         if let client = algoliaClient {
             self.client = client
         } else {
@@ -63,10 +76,11 @@ class AlgoliaSearch {
               endDate: Date?,
               locationRadius: UInt = 20000, // In meters, defaults to 20km
               location: (Double, Double)?, // Tuple: (lat, lng)
+              searchIndex: SearchIndex? = nil,
               completionHandler: @escaping ([String], Error?) -> Void) {
 
         // Initialize client and activity index:
-        let index = self.client.index(withName: AlgoliaSearch.ACTIVITY_INDEX)
+        let index = searchIndex == nil ? self.client.index(withName: AlgoliaSearch.ACTIVITY_INDEX) : searchIndex!
         
         // Use text search if text is given:
         let query = withText != nil ? Query(query: withText) : Query()
@@ -97,8 +111,8 @@ class AlgoliaSearch {
         } else if let topics = topicFilter {
             query.filters = topics
         }
-        
-        index.search(query, completionHandler: { (content, error) -> Void in
+
+        let _ = index.search(query, requestOptions: nil, completionHandler: { (content, error) -> Void in
             if let err = error {
                 // Return the error:
                 completionHandler([], err);
