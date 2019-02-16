@@ -14,6 +14,7 @@
 		4515BC24220BA95F0027B415 /* CreateActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515BC23220BA95F0027B415 /* CreateActivityVC.swift */; };
 		4544D3032214E90E007CB73D /* ActivityTable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4544D3022214E90E007CB73D /* ActivityTable.storyboard */; };
 		4544D3052214E93F007CB73D /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4544D3042214E93F007CB73D /* ActivityCell.swift */; };
+		457F576B2218C54C00F27BFE /* ActivityTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F576A2218C54C00F27BFE /* ActivityTableVC.swift */; };
 		458CE72C220D36DC00012637 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CE72B220D36DC00012637 /* SearchTextField.swift */; };
 		458CE72E220D472200012637 /* MapItemSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CE72D220D472200012637 /* MapItemSearchResult.swift */; };
 		45DA93A8220957CE0064CBEF /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DA93A7220957CE0064CBEF /* Testing.swift */; };
@@ -105,6 +106,7 @@
 		4515BC23220BA95F0027B415 /* CreateActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityVC.swift; sourceTree = "<group>"; };
 		4544D3022214E90E007CB73D /* ActivityTable.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ActivityTable.storyboard; sourceTree = "<group>"; };
 		4544D3042214E93F007CB73D /* ActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
+		457F576A2218C54C00F27BFE /* ActivityTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableVC.swift; sourceTree = "<group>"; };
 		458CE72B220D36DC00012637 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		458CE72D220D472200012637 /* MapItemSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemSearchResult.swift; sourceTree = "<group>"; };
 		45DA93A7220957CE0064CBEF /* Testing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			children = (
 				4544D3022214E90E007CB73D /* ActivityTable.storyboard */,
 				4544D3042214E93F007CB73D /* ActivityCell.swift */,
+				457F576A2218C54C00F27BFE /* ActivityTableVC.swift */,
 			);
 			path = Activities;
 			sourceTree = "<group>";
@@ -755,6 +758,7 @@
 				A9E8BF5E22022F3400C05F2C /* UIVIewController.swift in Sources */,
 				58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */,
 				458CE72C220D36DC00012637 /* SearchTextField.swift in Sources */,
+				457F576B2218C54C00F27BFE /* ActivityTableVC.swift in Sources */,
 				A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */,
 				A95B958522133DDB00453AEA /* DataAccessor.swift in Sources */,
 				458CE72E220D472200012637 /* MapItemSearchResult.swift in Sources */,
