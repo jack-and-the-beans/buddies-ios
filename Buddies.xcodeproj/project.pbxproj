@@ -30,7 +30,6 @@
 		58A915B9220E2A5F008C325F /* PickTopics.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58A915B8220E2A5F008C325F /* PickTopics.storyboard */; };
 		58A915BC220E30F4008C325F /* ActivityTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A915BB220E30F4008C325F /* ActivityTableVC.swift */; };
 		58AAA6752203F52E00AA538A /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6742203F52E00AA538A /* Initialization.swift */; };
-		58AAA6772203FD3A00AA538A /* TopicCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6762203FD3A00AA538A /* TopicCollectionTests.swift */; };
 		58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EA1EF622041436003F6A3A /* StorageManagerTests.swift */; };
 		58EF8D852208A1DF00872770 /* FAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D832208A1DF00872770 /* FAB.swift */; };
 		58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D872208A20500872770 /* SignUpInfoVC.swift */; };
@@ -44,7 +43,6 @@
 		58EF8DA32208A2BC00872770 /* CreateActivityVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA22208A2BC00872770 /* CreateActivityVCTests.swift */; };
 		58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */; };
 		58EF8DA82208A2C600872770 /* DiscoverVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA62208A2C600872770 /* DiscoverVCTests.swift */; };
-		58EF8DB22208A2E900872770 /* TopicCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DAE2208A2E900872770 /* TopicCollectionTests.swift */; };
 		58EF8DB42208A2E900872770 /* LayoutMeasurementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DB02208A2E900872770 /* LayoutMeasurementsTests.swift */; };
 		58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DB72208BE5E00872770 /* CreateActivity.storyboard */; };
 		58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DB82208BE5E00872770 /* BuddiesStoryboard.swift */; };
@@ -52,6 +50,8 @@
 		58EF8DC12208BE5E00872770 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DBB2208BE5E00872770 /* Main.storyboard */; };
 		58EF8DC22208BE5E00872770 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DBC2208BE5E00872770 /* Login.storyboard */; };
 		58EF8DC32208BE5E00872770 /* Topics.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DBD2208BE5E00872770 /* Topics.storyboard */; };
+		58FC665322188CF100D13723 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
+		58FC665422188D3B00D13723 /* TopicCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6762203FD3A00AA538A /* TopicCollectionTests.swift */; };
 		A850ED5D2203934200DBF1A6 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850ED5C2203934200DBF1A6 /* NotificationService.swift */; };
 		A850ED612203A12900DBF1A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A850ED602203A12900DBF1A6 /* GoogleService-Info.plist */; };
 		A850ED622203A12900DBF1A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A850ED602203A12900DBF1A6 /* GoogleService-Info.plist */; };
@@ -79,7 +79,6 @@
 		A9E8BF5E22022F3400C05F2C /* UIVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5D22022F3400C05F2C /* UIVIewController.swift */; };
 		A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5F220239EE00C05F2C /* UIApplicationTests.swift */; };
 		A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */; };
-		B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
 		B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A521F8DB8500B075B8 /* Assets.xcassets */; };
 		BC97CE98FE7521FEC111E8D8 /* Pods_Buddies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */; };
 		D224642A61925CB2F139C62A /* Pods_BuddiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A75D052FEF0993FE926DD6A9 /* Pods_BuddiesTests.framework */; };
@@ -754,14 +753,13 @@
 				A95B958A22133FB100453AEA /* Activity.swift in Sources */,
 				58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */,
 				58EF8D8D2208A24700872770 /* DiscoverVC.swift in Sources */,
-				B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */,
+				58FC665322188CF100D13723 /* AppDelegate.swift in Sources */,
 				58EF8D8E2208A24700872770 /* MyActivitiesVC.swift in Sources */,
 				58AAA6752203F52E00AA538A /* Initialization.swift in Sources */,
 				58EF8D962208A25F00872770 /* TopicCell.swift in Sources */,
 				58EF8D952208A25F00872770 /* TopicCollection.swift in Sources */,
 				450779DF2210D7B00008D0DF /* TapticEngine.swift in Sources */,
 				582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */,
-				B6AC549F21F8DB8300B075B8 /* AppDelegate.swift in Sources */,
 				A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */,
 				5802266A220BE5E90068E08E /* ToggleButton.swift in Sources */,
 				A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */,
@@ -802,7 +800,6 @@
 				58EF8DA32208A2BC00872770 /* CreateActivityVCTests.swift in Sources */,
 				A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */,
 				A95B958C2214B6A800453AEA /* DataAccessorTests.swift in Sources */,
-				58AAA6772203FD3A00AA538A /* TopicCollectionTests.swift in Sources */,
 				58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */,
 				450CC0F5220964F000282BAB /* SignUpInfoVCTests.swift in Sources */,
 				5802266F220CC1210068E08E /* ToggleButtonTests.swift in Sources */,
@@ -810,7 +807,6 @@
 				589AD64122092F950090A96C /* FirebaseMock.swift in Sources */,
 				589AD644220948270090A96C /* UtilitiesMock.swift in Sources */,
 				A91BA3372202404600DED6B3 /* LoginVCTests.swift in Sources */,
-				58EF8DB22208A2E900872770 /* TopicCollectionTests.swift in Sources */,
 				A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */,
 				A91BA33A22024A8900DED6B3 /* LoginExistingVCTests.swift in Sources */,
 				A95B958F2214FA4200453AEA /* UserTests.swift in Sources */,
@@ -821,6 +817,7 @@
 				58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */,
 				A95B95912214FA6600453AEA /* ActivityTests.swift in Sources */,
 				A9203538220CD4E500D115F2 /* DeleteAccountVCTests.swift in Sources */,
+				58FC665422188D3B00D13723 /* TopicCollectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
