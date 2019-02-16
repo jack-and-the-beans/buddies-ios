@@ -17,20 +17,23 @@ class ActivityCell: UITableViewCell {
     
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var extraPicturesLabel: UILabel!
-    @IBOutlet weak var picture1: UIButton!
     
-    @IBOutlet weak var picture2: UIButton!
+    @IBOutlet var memberPics:[UIButton]!
     
-    @IBOutlet weak var picture3: UIButton!
+    
+    @IBAction func goToUserProfile(_ sender: UIButton) {
+    }
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        picture1.layer.cornerRadius = picture1.frame.size.width / 2
-        picture2.layer.cornerRadius = picture2.frame.size.width / 2
-        picture3.layer.cornerRadius = picture2.frame.size.width / 2
+        for memberPic in memberPics{
+            memberPic.imageView?.layer.cornerRadius = memberPic.bounds.size.width / 2
+            memberPic.imageView?.clipsToBounds = true
+        }
+      
         
     }
 
