@@ -77,12 +77,14 @@ class DateIntervalTests: XCTestCase {
         
     }
     
-    func testShortRangeString() {
+    func testShortRangeString_Present() {
         
         let yestThruTom = DateInterval(start: yesterday, end: tomorrow)
         
         XCTAssert(yestThruTom.shortRangePhrase(relativeTo: now)
             == "through tomorrow")
+    }
+    func testShortRangeString_UpcomingClose() {
         
         let friThruSat = DateInterval(start: friday, end: saturday)
         
@@ -93,7 +95,8 @@ class DateIntervalTests: XCTestCase {
         
         XCTAssert(monThruThurs.shortRangePhrase(relativeTo: saturday)
             == "Monday through Thursday")
-        
+    }
+    func testShortRangeString_toRelative(){
         let tenDaysAgo = DateInterval(start: now - 20.days, end: now
         - 10.days)
         
@@ -103,14 +106,9 @@ class DateIntervalTests: XCTestCase {
             + 20.days)
 
         XCTAssert(tenDaysAhead.shortRangePhrase(relativeTo: now) == "in a week")
-        
-        
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
-    func testWeekRangeString(){
-        //MARK:- past
+    func testWeekRangeString_Past(){
         let tenDaysAgo = DateInterval(start: monday - 30.days, end: monday - 10.days)
         XCTAssert(tenDaysAgo.weekRangePhrase(relativeTo: monday) == "a week ago")
         
@@ -119,10 +117,9 @@ class DateIntervalTests: XCTestCase {
         
         let lastWeek = DateInterval(start: monday - 30.days, end: monday - 4.days)
         XCTAssert(lastWeek.weekRangePhrase(relativeTo: monday) == "last week")
+    }
         
-        
-        //MARK:- future
-        
+    func testWeekRangeString_Future(){
         let tenDaysAheadMonday = DateInterval(start: monday + 10.days, end: monday + 20.days)
         XCTAssert(tenDaysAheadMonday.weekRangePhrase(relativeTo: monday) == "next week")
         
@@ -134,9 +131,9 @@ class DateIntervalTests: XCTestCase {
         
         let nextWeek = DateInterval(start: monday + 7.days, end: monday + 12.days)
         XCTAssert(nextWeek.weekRangePhrase(relativeTo: monday) == "next week")
+    }
         
-        
-        //MARK:- now
+    func testWeekRangeString_Present() {
         let thisWeek = DateInterval(start: monday - 2.days, end: monday + 2.days)
         XCTAssert(thisWeek.weekRangePhrase(relativeTo: monday) == "this week")
         
@@ -144,7 +141,8 @@ class DateIntervalTests: XCTestCase {
         XCTAssert(nextTwoWeeks.weekRangePhrase(relativeTo: monday) == "next 2 weeks")
     }
     
-    func testMonthRangeString() {
+    
+    func testMonthRangeString_NearNow() {
         let thisMonth = DateInterval(start: monday.dateAt(.startOfMonth), end: monday.dateAt(.endOfMonth))
         
         XCTAssert(thisMonth.monthRangePhrase(relativeTo: monday) == "this month")
@@ -160,7 +158,8 @@ class DateIntervalTests: XCTestCase {
         let next2Months = DateInterval(start: monday.dateAt(.startOfMonth), end: monday.dateAt(.startOfMonth) + 2.months)
         
         XCTAssert(next2Months.monthRangePhrase(relativeTo: monday.dateAt(.startOfMonth)) == "next 2 months")
-        
+    }
+    func testMonthRangeString_MonthName(){
         let dec = monday - 11.months
         let oct = monday + 11.months
         let lastDec = DateInterval(start: dec - 2.months, end:  dec )
@@ -169,8 +168,9 @@ class DateIntervalTests: XCTestCase {
         XCTAssert(lastDec.monthRangePhrase(relativeTo: monday) == "last December")
 
         XCTAssert(nextOct.monthRangePhrase(relativeTo: monday) == "next October")
-
-        
+    }
+    
+    func testMonthRangeString_toRelative(){
         for i in 0...10 {
             let pastRange = DateInterval(start: monday - (i + 2).months, end: monday - (i + 1).months)
             let pastStr = pastRange.end.toRelative(since: DateInRegion(monday),
@@ -187,10 +187,12 @@ class DateIntervalTests: XCTestCase {
         }
     }
     
-    func testGeneralRangeString(){
+    func testGeneralRangeString_Short(){
         let shortGap = DateInterval(start: monday, duration: 3.days.timeInterval)
         XCTAssert(shortGap.rangePhrase(relativeTo: monday) == shortGap.shortRangePhrase(relativeTo: monday))
+    }
 
+    func testGeneralRangeString_Weeks(){
         let oneWeek = DateInterval(start: monday, duration: 1.weeks.timeInterval)
         XCTAssert(oneWeek.rangePhrase(relativeTo: monday) == oneWeek.shortRangePhrase(relativeTo: monday))
         
@@ -199,7 +201,9 @@ class DateIntervalTests: XCTestCase {
 
         let fourWeek = DateInterval(start: monday, duration: 4.weeks.timeInterval)
         XCTAssert(fourWeek.rangePhrase(relativeTo: monday) == fourWeek.monthRangePhrase(relativeTo: monday))
+    }
 
+    func testGeneralRangeString_Months(){
         
         let oneMonth = DateInterval(start: monday, duration: 1.months.timeInterval)
         XCTAssert(oneMonth.rangePhrase(relativeTo: monday) == oneMonth.monthRangePhrase(relativeTo: monday))
@@ -209,19 +213,10 @@ class DateIntervalTests: XCTestCase {
         
         let threeMonth = DateInterval(start: monday, duration: 3.months.timeInterval)
         XCTAssert(threeMonth.rangePhrase(relativeTo: monday) == threeMonth.monthRangePhrase(relativeTo: monday))
-        
+    }
+    func testGeneralRangeString_Years(){
         let huge = DateInterval(start: monday, duration: 3.years.timeInterval)
         XCTAssert(huge.rangePhrase(relativeTo: monday) == "today through \(huge.end.calendarString(relativeTo: monday))")
-
-
-
-    }
-
-    func quickStringGeneration() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
     }
 
 }
