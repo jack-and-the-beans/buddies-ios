@@ -34,9 +34,9 @@ extension DateInterval {
         let overlappingThisWeek = start.isBeforeDate(now, orEqual: true, granularity: .day)
                                   && end.isAfterDate(now, orEqual: true, granularity: .day)
         
-        if weeksLeft < 2 && overlappingThisWeek  {
+        if weeksLeft < 2 && (start.compare(.isSameWeek(now)) || overlappingThisWeek)  {
             return "this week"
-        } else if overlappingThisWeek {
+        } else if start.compare(.isSameWeek(now)) || overlappingThisWeek {
             return "next \(weeksLeft) weeks"
         } else if (now + 1.weeks).compare(.isSameWeek(start)) {
             return "next week"
@@ -54,7 +54,7 @@ extension DateInterval {
         let overlappingThisMonth = start.isBeforeDate(now, orEqual: true, granularity: .day)
                                   && end.isAfterDate(now, orEqual: true, granularity: .day)
 
-        if monthsLeft < 2 && overlappingThisMonth  {
+        if monthsLeft < 2 && (start.compare(.isSameMonth(now)) || overlappingThisMonth) {
             return "this month"
         } else if overlappingThisMonth {
             return "next \(monthsLeft) months"
