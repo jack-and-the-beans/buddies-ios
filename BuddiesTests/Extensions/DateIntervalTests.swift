@@ -85,7 +85,6 @@ class DateIntervalTests: XCTestCase {
             == "through tomorrow")
     }
     func testShortRangeString_UpcomingClose() {
-        
         let friThruSat = DateInterval(start: friday, end: saturday)
         
         XCTAssert(friThruSat.shortRangePhrase(relativeTo: wednesday)
