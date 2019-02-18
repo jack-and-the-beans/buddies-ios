@@ -19,12 +19,13 @@ class DateIntervalTests: XCTestCase {
     
     override func setUp() {
         monday = refDate.dateAt(.nextWeekday(.monday)).date
-        tuesday = refDate.dateAt(.nextWeekday(.tuesday)).date
-        wednesday = refDate.dateAt(.nextWeekday(.wednesday)).date
-        thursday = refDate.dateAt(.nextWeekday(.thursday)).date
-        friday = refDate.dateAt(.nextWeekday(.friday)).date
-        saturday = refDate.dateAt(.nextWeekday(.saturday)).date
-        sunday = refDate.dateAt(.nextWeekday(.sunday)).date
+        tuesday = monday.dateAt(.nextWeekday(.tuesday)).date
+        wednesday = tuesday.dateAt(.nextWeekday(.wednesday)).date
+        thursday = wednesday.dateAt(.nextWeekday(.thursday)).date
+        friday = thursday.dateAt(.nextWeekday(.friday)).date
+        saturday = friday.dateAt(.nextWeekday(.saturday)).date
+        sunday = saturday.dateAt(.nextWeekday(.sunday)).date
+        
         now = Date()
         tomorrow = now.dateAt(.tomorrow)
         yesterday = now.dateAt(.yesterday)
@@ -84,17 +85,19 @@ class DateIntervalTests: XCTestCase {
         XCTAssert(yestThruTom.shortRangePhrase(relativeTo: now)
             == "through tomorrow")
     }
+    
     func testShortRangeString_UpcomingClose() {
         let friThruSat = DateInterval(start: friday, end: friday + 1.days)
         
         XCTAssert(friThruSat.shortRangePhrase(relativeTo: wednesday)
             == "Friday through Saturday")
         
-        let monThruThurs = DateInterval(start: monday, end: monday + 3.days)
+        let monThruThurs = DateInterval(start: monday, end: monday.dateAt(.nextWeekday(.thursday)))
         
         XCTAssert(monThruThurs.shortRangePhrase(relativeTo: saturday)
             == "Monday through Thursday")
     }
+    
     func testShortRangeString_toRelative(){
         let tenDaysAgo = DateInterval(start: now - 20.days, end: now
         - 10.days)
@@ -158,6 +161,7 @@ class DateIntervalTests: XCTestCase {
         
         XCTAssert(next2Months.monthRangePhrase(relativeTo: monday.dateAt(.startOfMonth)) == "next 2 months")
     }
+    
     func testMonthRangeString_MonthName(){
         let dec = monday - 11.months
         let oct = monday + 11.months
