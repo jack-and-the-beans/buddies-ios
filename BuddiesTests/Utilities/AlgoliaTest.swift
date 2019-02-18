@@ -13,5 +13,105 @@ import XCTest
 @testable import Buddies
 
 class AlgoliaTest: XCTestCase {
+    func testSearchWithText() {
+        let client = TestClient(appID: "foo", apiKey: "bar")
+        let search = AlgoliaSearch(algoliaClient: client)
+        let index = TestIndex()
+        let textQuery = "Mickey Mouse"
+        search.searchActivities(withText: textQuery, usingIndex: index) { (ids, err) in
+            var checker = false
+            XCTAssert(ids.count > 0, "The query completed.")
+            if let query = index.query {
+                checker = query.query == textQuery
+            }
+            XCTAssert(checker, "Constructs textual query correctly.")
+        }
+    }
+    func testSearchWithTopics() {
+        let client = TestClient(appID: "foo", apiKey: "bar")
+        let search = AlgoliaSearch(algoliaClient: client)
+        let index = TestIndex()
+        let topics = ["a", "b"]
+        search.searchActivities(matchingAnyTopicOf: topics, usingIndex: index) { (ids, err) in
+            var checker = false
+            XCTAssert(ids.count > 0, "The query completed.")
+            if let query = index.query {
+                let filterText = query.filters
+                checker = filterText == "(topic_ids:a OR topic_ids:b)"
+            }
+            XCTAssert(checker, "Constructs topic query correctly.")
+        }
+    }
+    func testSearchWithDateAndTopics() {
+        let client = TestClient(appID: "foo", apiKey: "bar")
+        let search = AlgoliaSearch(algoliaClient: client)
+        let index = TestIndex()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        let start = formatter.date(from: "2019/02/15")
+        let end = formatter.date(from: "2019/02/20")
+        let topics = ["a", "b"]
+        search.searchActivities(matchingAnyTopicOf: topics, startingAt: start, endingAt: end, usingIndex: index) { (ids, err) in
+            var checker = false
+            XCTAssert(ids.count > 0, "The query completed.")
+            if let query = index.query {
+                let filterText = query.filters
+                checker = filterText == "(end_time_num >= 1550206800000 AND start_time_num <= 1550638800000) AND (topic_ids:a OR topic_ids:b)"
+            }
+            XCTAssert(checker, "Constructs topic AND date query correctly.")
+        }
+    }
+    func testSearchWithDate() {
+        let client = TestClient(appID: "foo", apiKey: "bar")
+        let search = AlgoliaSearch(algoliaClient: client)
+        let index = TestIndex()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        let start = formatter.date(from: "2019/02/15")
+        let end = formatter.date(from: "2019/02/20")
+        search.searchActivities(startingAt: start, endingAt: end, usingIndex: index) { (ids, err) in
+            var checker = false
+            XCTAssert(ids.count > 0, "The query completed.")
+            if let query = index.query {
+                let filterText = query.filters
+                checker = filterText == "(end_time_num >= 1550206800000 AND start_time_num <= 1550638800000)"
+            }
+            XCTAssert(checker, "Constructs topic query correctly.")
+        }
+    }
 
+    func testSearchWithLocation() {
+        let client = TestClient(appID: "foo", apiKey: "bar")
+        let search = AlgoliaSearch(algoliaClient: client)
+        let index = TestIndex()
+        let location = (1.0, 2.0)
+        let distance = 10000
+        search.searchActivities(atLocation: location, upToDisatnce: distance, usingIndex: index) { (ids, err) in
+            var checker = false
+            XCTAssert(ids.count > 0, "The query completed.")
+            if let query = index.query, let loc = query.aroundLatLng {
+                let radius = Int(query.parameters["aroundRadius"] ?? "-1")
+                checker = loc.lat == location.0 && loc.lng == location.1 && radius == distance
+            }
+            XCTAssert(checker, "Constructs location query correctly.")
+        }
+    }
+    
+    func testErrrorResult() {
+        let client = TestClient(appID: "foo", apiKey: "bar")
+        let search = AlgoliaSearch(algoliaClient: client)
+        let index = TestIndex()
+        let text = "TEST_ERR_CASE"
+        search.searchActivities(withText: text, usingIndex: index) { (ids, err) in
+            let code = err?._code
+            XCTAssert(code != nil, "Returns error case to caller.")
+        }
+    }
+    
+    // Test that we do not
+    func testAlgoliaFactory() {
+        let client = AlgoliaSearch.algoliaFactory()
+        XCTAssert(client.apiKey != "NOPE", "Uses the non-default API key.")
+        XCTAssert(client.appID != "Uses the non-default app ID")
+    }
 }
