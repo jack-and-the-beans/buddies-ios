@@ -11,9 +11,8 @@ import UIKit
 
 
 class AppContent {
-    static func setup(){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.topicCollection.topics = []
-        appDelegate.topicCollection.loadTopics()
+    static func setup(delegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate){
+        delegate.topicCollection.topics = []
+        delegate.topicCollection.loadTopics()
     }
 }

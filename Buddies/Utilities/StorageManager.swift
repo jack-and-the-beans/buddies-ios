@@ -50,9 +50,7 @@ class StorageManager {
         
         let request = URLRequest(url:url!)
         
-        guard let localDestURL = localURL(for: localPath) else {
-            return nil
-        }
+        guard let localDestURL = localURL(for: localPath) else { return nil }
 
         let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
             if let tempLocalUrl = tempLocalUrl, error == nil {
