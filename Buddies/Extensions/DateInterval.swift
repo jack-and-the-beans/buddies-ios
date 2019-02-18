@@ -27,20 +27,20 @@ extension DateInterval {
             return "\(startStr) through \(endStr)"
         }
     }
-    
+
     
     func weekRangePhrase(relativeTo now: Date) -> String{
         let weeksLeft = (end-now).weekOfYear! + Int(round(Double((end-now).day!/7)))
         let overlappingThisWeek = start.isBeforeDate(now, orEqual: true, granularity: .day)
-            && end.isAfterDate(now, orEqual: true, granularity: .day)
+                                  && end.isAfterDate(now, orEqual: true, granularity: .day)
         
         if weeksLeft < 2 && overlappingThisWeek  {
             return "this week"
         } else if overlappingThisWeek {
             return "next \(weeksLeft) weeks"
-        } else if start.weekOfYear == (now + 1.weeks).weekOfYear {
+        } else if (now + 1.weeks).compare(.isSameWeek(start)) {
             return "next week"
-        } else if end.weekOfYear == (now - 1.weeks).weekOfYear {
+        } else if (now - 1.weeks).compare(.isSameWeek(end)) {
             return "last week"
         } else if end < now {
             return end.toRelative(since: DateInRegion(now), style: RelativeFormatter.defaultStyle(), locale: Locales.english)
@@ -52,20 +52,20 @@ extension DateInterval {
     func monthRangePhrase(relativeTo now: Date) -> String{
         let monthsLeft = (end-now).month! + Int(round(Double((end-now).weekOfYear!/5)))
         let overlappingThisMonth = start.isBeforeDate(now, orEqual: true, granularity: .day)
-                                    && end.isAfterDate(now, orEqual: true, granularity: .day)
-        
+                                  && end.isAfterDate(now, orEqual: true, granularity: .day)
+
         if monthsLeft < 2 && overlappingThisMonth  {
             return "this month"
         } else if overlappingThisMonth {
             return "next \(monthsLeft) months"
-        } else if start.month == (now + 1.months).month {
+        } else if (now + 1.months).compare(.isSameMonth(start)) {
             return "next month"
-        } else if end.month == (now - 1.months).month {
+        } else if (now - 1.months).compare(.isSameMonth(end)) {
             return "last month"
         } else if start.compareCloseTo(now, precision: 1.years.timeInterval) {
             return "next \(start.monthName(.default))"
         } else if end.compareCloseTo(now, precision: 1.years.timeInterval) {
-            return "last \(start.monthName(.default))"
+            return "last \(end.monthName(.default))"
         } else if end < now {
             return end.toRelative(since: DateInRegion(now), style: RelativeFormatter.defaultStyle(), locale: Locales.english)
         } else {
@@ -84,7 +84,7 @@ extension DateInterval {
             return "this weekend"
         } else if timeDiff.weekOfYear == 1 && isWeekend {
             return "next weekend"
-        } else if end < now && timeDiff.weekOfYear ?? 0 > -1 && isWeekend {
+        } else if end < now && timeDiff.weekOfYear! > -1 && isWeekend {
             return "last weekend"
         } else if timeDiff.weekOfYear == 0 {
             return "\(start.calendarString(relativeTo: now)) through \(end.calendarString(relativeTo: now))"
@@ -103,14 +103,12 @@ extension Date {
                         monthFormat: SymbolFormatStyle = .short,
                         dayFormat:   SymbolFormatStyle = .default) -> String {
         
-        let sameYear = year == now.year
-        
-        if      dayOfYear      == now.dayOfYear  && sameYear { return "today" }
-        else if dayOfYear  - 1 == now.dayOfYear  && sameYear { return "tomorrow" }
-        else if dayOfYear  + 1 == now.dayOfYear  && sameYear { return "yesterday" }
-        else if weekOfYear - 1 == now.weekOfYear && sameYear { return "next \(weekdayName(dayFormat))" }
-        else if weekOfYear + 1 == now.weekOfYear && sameYear { return "last \(weekdayName(dayFormat))" }
-        else if weekOfYear     == now.weekOfYear && sameYear { return "\(weekdayName(dayFormat))" }
+        if      compare(.isSameDay(now))            { return "today" }
+        else if compare(.isSameDay(now + 1.days))   { return "tomorrow" }
+        else if compare(.isSameDay(now - 1.days))   { return "yesterday" }
+        else if compare(.isSameWeek(now))           { return "\(weekdayName(dayFormat))" }
+        else if compare(.isSameWeek(now + 1.weeks)) { return "next \(weekdayName(dayFormat))" }
+        else if compare(.isSameWeek(now - 1.weeks)) { return "last \(weekdayName(dayFormat))" }
         else { return "\(monthName(monthFormat)) \(ordinalDay)" }
     }
 }

@@ -130,21 +130,17 @@ class DateIntervalTests: XCTestCase {
         XCTAssert(tenDaysAheadFri.weekRangePhrase(relativeTo: friday) == "in a week")
         
         let twentyDaysAhead = DateInterval(start: monday + 20.days, end: monday + 30.days)
-        print("here", twentyDaysAhead.weekRangePhrase(relativeTo: monday))
         XCTAssert(twentyDaysAhead.weekRangePhrase(relativeTo: monday) == "in 3 weeks")
         
         let nextWeek = DateInterval(start: monday + 7.days, end: monday + 12.days)
-        print("here", nextWeek.weekRangePhrase(relativeTo: monday))
         XCTAssert(nextWeek.weekRangePhrase(relativeTo: monday) == "next week")
         
         
         //MARK:- now
         let thisWeek = DateInterval(start: monday - 2.days, end: monday + 2.days)
-        print("here", thisWeek.weekRangePhrase(relativeTo: monday))
         XCTAssert(thisWeek.weekRangePhrase(relativeTo: monday) == "this week")
         
         let nextTwoWeeks = DateInterval(start: monday - 2.days, end: monday + 14.days)
-        print("here", nextTwoWeeks.weekRangePhrase(relativeTo: monday))
         XCTAssert(nextTwoWeeks.weekRangePhrase(relativeTo: monday) == "next 2 weeks")
     }
     
@@ -165,8 +161,8 @@ class DateIntervalTests: XCTestCase {
         
         XCTAssert(next2Months.monthRangePhrase(relativeTo: monday.dateAt(.startOfMonth)) == "next 2 months")
         
-        let dec = monday.dateAt(.prevYear) + 1.months
-        let oct = monday.dateAt(.nextYear) - 1.months
+        let dec = monday - 11.months
+        let oct = monday + 11.months
         let lastDec = DateInterval(start: dec - 2.months, end:  dec )
         let nextOct = DateInterval(start: oct, end:  oct + 2.months)
 
@@ -196,7 +192,7 @@ class DateIntervalTests: XCTestCase {
         XCTAssert(shortGap.rangePhrase(relativeTo: monday) == shortGap.shortRangePhrase(relativeTo: monday))
 
         let oneWeek = DateInterval(start: monday, duration: 1.weeks.timeInterval)
-        XCTAssert(oneWeek.rangePhrase(relativeTo: monday) == oneWeek.weekRangePhrase(relativeTo: monday))
+        XCTAssert(oneWeek.rangePhrase(relativeTo: monday) == oneWeek.shortRangePhrase(relativeTo: monday))
         
         let threeWeek = DateInterval(start: monday, duration: 3.weeks.timeInterval)
         XCTAssert(threeWeek.rangePhrase(relativeTo: monday) == threeWeek.weekRangePhrase(relativeTo: monday))
