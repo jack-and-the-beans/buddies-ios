@@ -7,6 +7,9 @@ xcode_workspace: Buddies.xcworkspace # path to the workspace to build
 xcode_scheme: Buddies
 xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone XR
 
+before_install: 
+  - openssl aes-256-cbc -K $encryption_key -iv $encryption_iv -in Buddies/Keys.enc.plist -out Buddies/Keys.plist -d
+
 install:
   - echo Hello
 
