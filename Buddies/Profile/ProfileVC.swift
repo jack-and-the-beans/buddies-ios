@@ -18,8 +18,12 @@ class ProfileVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        loadProfileData()
+        
+        stopListeningToUser = stopListeningToUser ?? loadProfileData()
+    }
+    
+    deinit {
+        stopListeningToUser?()
     }
     
     override func viewDidLayoutSubviews() {
@@ -29,18 +33,12 @@ class ProfileVC: UIViewController {
         profilePic.clipsToBounds = true
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        stopListeningToUser?()
-    }
-    
     func loadProfileData(uid: String = Auth.auth().currentUser!.uid,
                         storageManger: StorageManager = StorageManager.shared,
-                        dataAccess: DataAccessor = DataAccessor.instance) {
+                        dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
         var lastImageUrl: String? = nil
         
-        self.stopListeningToUser = dataAccess.useUser(id: uid) { user in
+        return dataAccess.useUser(id: uid) { user in
             self.bioLabel.text = user.bio
             self.nameLabel.text = user.name
             
