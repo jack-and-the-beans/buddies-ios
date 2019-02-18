@@ -19,3 +19,6 @@ branches:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
+after_failure:
+  - tail -n +1 `find /Users/travis/Library/Developer/Xcode/DerivedData -name "StandardOutputAndStandardError.txt"`
+
