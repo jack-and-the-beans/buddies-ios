@@ -6,15 +6,16 @@
 //  Copyright © 2019 Jack and the Beans. All rights reserved.
 //
 
-// Usage example:
-// let formatter = DateFormatter()
-// formatter.dateFormat = "yyyy/MM/dd"
-// let start = formatter.date(from: "2019/02/15")
-// let end = formatter.date(from: "2019/02/20") // it comes from here
-// AlgoliaSearch.searchActivities(startDate: s, endDate: e, location: (41.1603988, -80.0866907)) { (activities: [String], err: Error?) in
-//     if let error = err { print(error) }
-//     print(activities )
-// }
+/** Usage example:
+let search = AlgoliaSearch()
+let s = "2019/02/15".toDate()?.date
+let e = "2019/02/20".toDate()?.date
+search.searchActivities(startingAt: s, endingAt: e, atLocation: (41.1603988, -80.0866907)) { (activities: [String], err: Error?) in
+ 
+    if let error = err { print(error) }
+    print(activities)
+}
+**/
 
 import Foundation
 import InstantSearchClient

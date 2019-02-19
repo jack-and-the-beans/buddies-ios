@@ -45,7 +45,6 @@
 		58EF8DA32208A2BC00872770 /* CreateActivityVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA22208A2BC00872770 /* CreateActivityVCTests.swift */; };
 		58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */; };
 		58EF8DA82208A2C600872770 /* DiscoverVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA62208A2C600872770 /* DiscoverVCTests.swift */; };
-		58EF8DB42208A2E900872770 /* LayoutMeasurementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DB02208A2E900872770 /* LayoutMeasurementsTests.swift */; };
 		58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DB72208BE5E00872770 /* CreateActivity.storyboard */; };
 		58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DB82208BE5E00872770 /* BuddiesStoryboard.swift */; };
 		58EF8DC02208BE5E00872770 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DB92208BE5E00872770 /* LaunchScreen.storyboard */; };
@@ -149,7 +148,6 @@
 		58EF8DA62208A2C600872770 /* DiscoverVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverVCTests.swift; sourceTree = "<group>"; };
 		58EF8DAE2208A2E900872770 /* TopicCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCollectionTests.swift; sourceTree = "<group>"; };
 		58EF8DAF2208A2E900872770 /* TopicModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicModelTests.swift; sourceTree = "<group>"; };
-		58EF8DB02208A2E900872770 /* LayoutMeasurementsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutMeasurementsTests.swift; sourceTree = "<group>"; };
 		58EF8DB12208A2E900872770 /* TopicCellTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCellTest.swift; sourceTree = "<group>"; };
 		58EF8DB72208BE5E00872770 /* CreateActivity.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CreateActivity.storyboard; sourceTree = "<group>"; };
 		58EF8DB82208BE5E00872770 /* BuddiesStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuddiesStoryboard.swift; sourceTree = "<group>"; };
@@ -334,7 +332,6 @@
 			children = (
 				58EF8DAE2208A2E900872770 /* TopicCollectionTests.swift */,
 				58EF8DAF2208A2E900872770 /* TopicModelTests.swift */,
-				58EF8DB02208A2E900872770 /* LayoutMeasurementsTests.swift */,
 				58EF8DB12208A2E900872770 /* TopicCellTest.swift */,
 			);
 			path = Topics;
@@ -846,7 +843,6 @@
 				58FC665922188E3F00D13723 /* DateIntervalTests.swift in Sources */,
 				A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */,
 				A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */,
-				58EF8DB42208A2E900872770 /* LayoutMeasurementsTests.swift in Sources */,
 				B6F8D991221748F100CDD081 /* AlgoliaMock.swift in Sources */,
 				58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */,
 				B6F8D98F22173E5200CDD081 /* AlgoliaTest.swift in Sources */,
