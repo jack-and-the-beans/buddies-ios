@@ -25,6 +25,7 @@
 		5802266F220CC1210068E08E /* ToggleButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802266E220CC1210068E08E /* ToggleButtonTests.swift */; };
 		582D0FA622035C3D004F71E3 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA522035C3D004F71E3 /* FirestoreManager.swift */; };
 		582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA722036C93004F71E3 /* StorageManager.swift */; };
+		584C350C221BC192000442B2 /* ActivityTableVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C350B221BC192000442B2 /* ActivityTableVCTests.swift */; };
 		589AD64122092F950090A96C /* FirebaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589AD64022092F950090A96C /* FirebaseMock.swift */; };
 		589AD644220948270090A96C /* UtilitiesMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589AD643220948270090A96C /* UtilitiesMock.swift */; };
 		58A5A404220258E000E0BF38 /* bean.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58A5A403220258E000E0BF38 /* bean.jpg */; };
@@ -126,6 +127,7 @@
 		582D0FA722036C93004F71E3 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		583FD2DA220238F7005B2C75 /* LayoutMeasurementsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutMeasurementsTests.swift; sourceTree = "<group>"; };
 		583FD2DD220244F8005B2C75 /* TopicModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicModelTests.swift; sourceTree = "<group>"; };
+		584C350B221BC192000442B2 /* ActivityTableVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableVCTests.swift; sourceTree = "<group>"; };
 		589AD64022092F950090A96C /* FirebaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMock.swift; sourceTree = "<group>"; };
 		589AD643220948270090A96C /* UtilitiesMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilitiesMock.swift; sourceTree = "<group>"; };
 		58A5A403220258E000E0BF38 /* bean.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bean.jpg; sourceTree = "<group>"; };
@@ -260,6 +262,14 @@
 				58AAA6762203FD3A00AA538A /* TopicCollectionTests.swift */,
 			);
 			path = Topics;
+			sourceTree = "<group>";
+		};
+		584C350A221BC17B000442B2 /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				584C350B221BC192000442B2 /* ActivityTableVCTests.swift */,
+			);
+			path = Activities;
 			sourceTree = "<group>";
 		};
 		589AD642220934FD0090A96C /* CommonMock */ = {
@@ -554,6 +564,7 @@
 		B6AC54B221F8DB8500B075B8 /* BuddiesTests */ = {
 			isa = PBXGroup;
 			children = (
+				584C350A221BC17B000442B2 /* Activities */,
 				A95B958D2214FA2F00453AEA /* Models */,
 				A9203534220CCB2E00D115F2 /* Profile */,
 				58EF8DAD2208A2E900872770 /* Topics */,
@@ -848,6 +859,7 @@
 				A95B958F2214FA4200453AEA /* UserTests.swift in Sources */,
 				A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */,
 				58FC665922188E3F00D13723 /* DateIntervalTests.swift in Sources */,
+				584C350C221BC192000442B2 /* ActivityTableVCTests.swift in Sources */,
 				A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */,
 				A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */,
 				B6F8D991221748F100CDD081 /* AlgoliaMock.swift in Sources */,
