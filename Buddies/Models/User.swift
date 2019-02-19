@@ -16,6 +16,35 @@ protocol UserInvalidationDelegate {
     func triggerServerUpdate(userId: UserId, key: String, value: Any?)
 }
 
+class UserComponent {
+    var user: User? = nil
+    var canceler: Canceler = {}
+    var image: UIImage? = nil
+    
+    init(uid: UserId,
+             dataAccessor: DataAccessor = DataAccessor.instance,
+             storageManager: StorageManager = StorageManager.shared,
+             userLoadedFn: @escaping (User) -> Void,
+             imageLoadedFn: @escaping (UIImage) -> Void){
+        
+        canceler = dataAccessor.useUser(id: uid){ user in
+            self.user = user
+            userLoadedFn(user)
+            
+            storageManager.getImage(
+                imageUrl: user.imageUrl,
+                localFileName: user.uid) { image in
+                    self.image = image
+                    imageLoadedFn(image)
+            }
+        }
+    }
+    
+    deinit {
+        self.canceler()
+    }
+}
+
 class User {
     let delegate: UserInvalidationDelegate?
     

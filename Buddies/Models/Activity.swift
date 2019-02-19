@@ -16,6 +16,25 @@ protocol ActivityInvalidationDelegate {
     func triggerServerUpdate(activityId: ActivityId, key: String, value: Any?)
 }
 
+class ActivityComponent {
+    var activity: Activity? = nil
+    var canceler: Canceler = {}
+
+    init(uid: ActivityId,
+         dataAccessor: DataAccessor = DataAccessor.instance,
+         activityLoadedFn: @escaping (Activity) -> Void){
+        
+        canceler = dataAccessor.useActivity(id: uid){ activity in
+            self.activity = activity
+            activityLoadedFn(activity)
+        }
+    }
+    
+    deinit {
+        self.canceler()
+    }
+}
+
 class Activity {
     let delegate: ActivityInvalidationDelegate?
     
