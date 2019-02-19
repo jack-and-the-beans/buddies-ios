@@ -10,122 +10,99 @@ import UIKit
 import Firebase
 
 class ActivityTableVC: UITableViewController {
+    var displayIds = [ActivityId]()
+    var activities = [ActivityComponent]()
+    var users      = [UserId: UserComponent]()
     
-    var stopListeningToUser: Canceler?
-    
+    var handleUserLoaded: ((User) -> Void)!
+    var handleImageLoaded: ((UIImage) -> Void)!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = 100
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        self.tableView.rowHeight = 120
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        handleUserLoaded = { user in self.tableView.reloadData() }
+        handleImageLoaded = { image in self.tableView.reloadData() }
+        
+        loadData()
     }
     
-    // MARK: - Table view data source
+    func loadUser(uid: UserId) -> UserComponent?{
+        if users[uid] == nil {
+            users[uid] = UserComponent(uid: uid, userLoadedFn: handleUserLoaded, imageLoadedFn: handleImageLoaded)
+        }
+        return users[uid]
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1
+    func loadData(){
+        displayIds = getDisplayIds()
+        activities = []
+
+        for id in displayIds {
+            let activity = ActivityComponent(uid: id) { activity in
+                self.tableView.reloadData()
+                activity.members.forEach() { let _ = self.loadUser(uid: $0) }
+            }
+            activities.append(activity)
+        }
     }
     
-    //USES TEST ACTIVITY RN
+   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "activityCell", for: indexPath) as! ActivityCell
+    
+        let activity = getActivity(at: indexPath)
+    
+        return format(cell: cell, using: activity, at: indexPath)
+    }
+    
+    
+    //MARK:- Override for custom ActivityViewVCs
+    func format(cell: ActivityCell, using activity: Activity?, at indexPath: IndexPath) -> ActivityCell{
         
-        self.stopListeningToUser = DataAccessor.instance.useActivity(id: "EgGiWaHiEKWYnaGW6cR3"){ activity in
-            cell.titleLabel.text = activity.title
-            cell.descriptionLabel.text = activity.description
-            cell.locationLabel.text = String(activity.location.latitude) + ", " + String(activity.location.longitude)
-            cell.dateLabel.text = activity.endTime.dateValue().description
-            
-            for memberID in activity.members{
-                self.stopListeningToUser = DataAccessor.instance.useUser(id: memberID){ user in
-                    
-                    for memberPic in cell.memberPics{
-                        
-                        if memberPic.currentImage == nil{
-                            StorageManager.shared.getImage(imageUrl: user.imageUrl, localFileName: user.uid){
-                                image in memberPic.setImage(image, for: .normal)
-                            }
-                            break
-                        }
-                    }
-                    
-                }
-            }
-            
-            // hide "..." as needed
-            if activity.members.count <= 3{
-                cell.extraPicturesLabel.isHidden = true
-            }else
-            {
-                cell.extraPicturesLabel.isHidden = false
-            }
-            
-            
-            
+        cell.titleLabel.text = activity?.title
+        cell.descriptionLabel.text = activity?.description
+        cell.locationLabel.text = String(activity?.location.latitude ?? 0) + ", " + String(activity?.location.longitude ?? 0)
+        
+        //TODO: Handle this ambiguity
+        let dateRange = DateInterval(start:  activity?.startTime.dateValue() ?? Date(),
+                                     end: activity?.endTime.dateValue() ?? Date())
+        
+        cell.dateLabel.text = dateRange.rangePhrase(relativeTo: Date())
+        
+        let activityUserImages = activity?.members.compactMap { users[$0]?.image } ?? []
+        
+        zip(cell.memberPics, activityUserImages).forEach() { (btn, img) in btn.setImage(img, for: .normal)
         }
         
-        
-        // Configure the cell...
+        // hide "..." as needed
+        if activity?.members.count ?? 0 <= 3{
+            cell.extraPicturesLabel.isHidden = true
+        } else {
+            cell.extraPicturesLabel.isHidden = false
+        }
         
         return cell
     }
     
+    func getActivity(at indexPath: IndexPath) -> Activity? {
+        return activities[indexPath.row].activity
+    }
     
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
     
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
+    func getDisplayIds() -> [ActivityId] {
+        return ["EgGiWaHiEKWYnaGW6cR3"]
+    }
     
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
+    // MARK: - Table view data source
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return activities.count
+    }
 }
 
