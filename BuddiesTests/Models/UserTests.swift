@@ -55,4 +55,29 @@ class UserTests: XCTestCase {
         XCTAssert(deli.invalidations == deli.triggers, "should call both")
         XCTAssert(deli.invalidations == 10, "one per line here. no de-dup expected")
     }
+    
+    func testInit(){
+        let u = Buddies.User(delegate: deli,
+                                      imageUrl: "testURL",
+                                      isAdmin: false,
+                                      uid: "testUID",
+                                      name: "name",
+                                      bio: "bio",
+                                      email: "testEmail",
+                                      facebookId: nil,
+                                      favoriteTopics: [],
+                                      blockedUsers: [],
+                                      blockedBy: [],
+                                      blockedActivities: [],
+                                      dateJoined: Timestamp(date: Date()),
+                                      location: nil,
+                                      shouldSendJoinedActivityNotification: false,
+                                      shouldSendActivitySuggestionNotification: false,
+                                      notificationToken: nil,
+                                      chatReadAt: [:])
+        XCTAssert(u.imageUrl == "testURL")
+        XCTAssert(u.isAdmin == false)
+        XCTAssert(u.uid == "testUID")
+        XCTAssert(u.email == "testEmail")
+    }
 }

@@ -56,4 +56,23 @@ class ActivityTests: XCTestCase {
         XCTAssert(deli.invalidations == deli.triggers, "should call both")
         XCTAssert(deli.invalidations == 9, "one per line here. no de-dup expected")
     }
+    
+    func testInit(){
+        let a = Activity.init(delegate: deli,
+                              activityId: "activityId",
+                              dateCreated: Timestamp(date: Date()),
+                              members: [],
+                              location: GeoPoint(latitude: 0, longitude: 0),
+                              ownerId: "ownerId",
+                              title: "title",
+                              description: "description",
+                              startTime: Timestamp(date: Date()),
+                              endTime: Timestamp(date: Date()),
+                              topicIds: [])
+        
+        XCTAssert(a.activityId == "activityId")
+        XCTAssert(a.title == "title")
+        XCTAssert(a.ownerId == "ownerId")
+        XCTAssert(a.description == "description")
+    }
 }
