@@ -153,6 +153,7 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Protobuf (3.6.1)
+  - SwiftDate (5.1.0)
 
 DEPENDENCIES:
   - FBSDKLoginKit
@@ -163,6 +164,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - InstantSearchClient (~> 6.0)
   - MaterialComponents/Buttons
+  - SwiftDate
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -192,6 +194,7 @@ SPEC REPOS:
     - MDFTextAccessibility
     - nanopb
     - Protobuf
+    - SwiftDate
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -220,6 +223,7 @@ SPEC CHECKSUMS:
   MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
+  SwiftDate: 6329e58969a2de31cea7f1ee1143b247693196e7
 
 PODFILE CHECKSUM: 0f79df2fc8d0761813d05c755f94f53563903441
 
