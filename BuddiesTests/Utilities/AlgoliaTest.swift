@@ -46,17 +46,20 @@ class AlgoliaTest: XCTestCase {
         let client = TestClient(appID: "foo", apiKey: "bar")
         let search = AlgoliaSearch(algoliaClient: client)
         let index = TestIndex()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
-        let start = formatter.date(from: "2019/02/15")
-        let end = formatter.date(from: "2019/02/20")
+    
+        let start = "2019/02/15".toDate()?.date
+        let end = "2019/02/20".toDate()?.date
+    
         let topics = ["a", "b"]
         search.searchActivities(matchingAnyTopicOf: topics, startingAt: start, endingAt: end, usingIndex: index) { (ids, err) in
             var checker = false
             XCTAssert(ids.count > 0, "The query completed.")
             if let query = index.query {
                 let filterText = query.filters
-                checker = filterText == "(end_time_num >= 1550206800000 AND start_time_num <= 1550638800000) AND (topic_ids:a OR topic_ids:b)"
+                let s = Int((start?.timeIntervalSince1970 ?? 20) * 1000)
+                let e = Int((end?.timeIntervalSince1970 ?? 20) * 1000)
+
+                checker = filterText == "(end_time_num >= \(s) AND start_time_num <= \(e)) AND (topic_ids:a OR topic_ids:b)"
             }
             XCTAssert(checker, "Constructs topic AND date query correctly.")
         }
@@ -65,16 +68,19 @@ class AlgoliaTest: XCTestCase {
         let client = TestClient(appID: "foo", apiKey: "bar")
         let search = AlgoliaSearch(algoliaClient: client)
         let index = TestIndex()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
-        let start = formatter.date(from: "2019/02/15")
-        let end = formatter.date(from: "2019/02/20")
+
+        let start = "2019/02/15".toDate()?.date
+        let end = "2019/02/20".toDate()?.date
+
         search.searchActivities(startingAt: start, endingAt: end, usingIndex: index) { (ids, err) in
             var checker = false
             XCTAssert(ids.count > 0, "The query completed.")
             if let query = index.query {
+                let s = Int((start?.timeIntervalSince1970 ?? 20) * 1000)
+                let e = Int((end?.timeIntervalSince1970 ?? 20) * 1000)
                 let filterText = query.filters
-                checker = filterText == "(end_time_num >= 1550206800000 AND start_time_num <= 1550638800000)"
+                print("END FILTER: (end_time_num >= \(s) AND start_time_num <= \(e))")
+                checker = filterText == "(end_time_num >= \(s) AND start_time_num <= \(e))"
             }
             XCTAssert(checker, "Constructs topic query correctly.")
         }
