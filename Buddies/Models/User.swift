@@ -21,6 +21,8 @@ class UserComponent {
     var canceler: Canceler = {}
     var image: UIImage? = nil
     
+    init(){}
+    
     init(uid: UserId,
              dataAccessor: DataAccessor = DataAccessor.instance,
              storageManager: StorageManager = StorageManager.shared,

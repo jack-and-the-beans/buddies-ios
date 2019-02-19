@@ -19,7 +19,9 @@ protocol ActivityInvalidationDelegate {
 class ActivityComponent {
     var activity: Activity? = nil
     var canceler: Canceler = {}
-
+    
+    init(){}
+    
     init(uid: ActivityId,
          dataAccessor: DataAccessor = DataAccessor.instance,
          activityLoadedFn: @escaping (Activity) -> Void){
