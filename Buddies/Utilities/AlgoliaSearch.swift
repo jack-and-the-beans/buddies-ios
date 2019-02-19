@@ -41,13 +41,13 @@ class AlgoliaSearch {
     var client: SearchClient
 
     init (algoliaClient: SearchClient? = nil) {
-        self.client = algoliaClient != nil ? algoliaClient! : AlgoliaSearch.algoliaFactory()
+        self.client = algoliaClient ?? AlgoliaSearch.algoliaFactory()
     }
 
     // Constructs an instance of the Algolia Client SDK:
     static func algoliaFactory() -> Client {
-        var algoliaAppID = "NOPE"
-        var algoliaApiKey = "NOPE"
+        var algoliaAppID = ""
+        var algoliaApiKey = ""
         // Grab API key from key file if it exists:
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
             let keys = NSDictionary(contentsOfFile: path)
@@ -74,7 +74,7 @@ class AlgoliaSearch {
               completionHandler: @escaping ([String], Error?) -> Void) {
 
         // Initialize activity index if no index is given:
-        let index = usingIndex == nil ? self.client.getIndex(withName: AlgoliaSearch.ACTIVITY_INDEX) : usingIndex!
+        let index = usingIndex ?? self.client.getIndex(withName: AlgoliaSearch.ACTIVITY_INDEX)
         
         // Use text search if text is given:
         let query = withText != nil ? Query(query: withText) : Query()

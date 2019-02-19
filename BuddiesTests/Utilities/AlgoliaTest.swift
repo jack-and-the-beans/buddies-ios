@@ -117,7 +117,8 @@ class AlgoliaTest: XCTestCase {
     // Test that we do not
     func testAlgoliaFactory() {
         let client = AlgoliaSearch.algoliaFactory()
-        XCTAssert(client.apiKey != "NOPE", "Uses the non-default API key.")
-        XCTAssert(client.appID != "Uses the non-default app ID")
+        // Note: the default key is an empty string.
+        XCTAssert(client.apiKey.count > 0, "Uses the non-default API key.")
+        XCTAssert(client.appID.count > 0, "Uses the non-default app ID")
     }
 }
