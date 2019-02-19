@@ -79,7 +79,7 @@ class AlgoliaTest: XCTestCase {
                 let s = Int((start?.timeIntervalSince1970 ?? 20) * 1000)
                 let e = Int((end?.timeIntervalSince1970 ?? 20) * 1000)
                 let filterText = query.filters
-                print("END FILTER: (end_time_num >= \(s) AND start_time_num <= \(e))")
+
                 checker = filterText == "(end_time_num >= \(s) AND start_time_num <= \(e))"
             }
             XCTAssert(checker, "Constructs topic query correctly.")

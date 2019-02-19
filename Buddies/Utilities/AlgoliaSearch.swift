@@ -92,7 +92,6 @@ class AlgoliaSearch {
         var dateFilter: String? = nil
         if let start = startingAt, let end = endingAt {
             dateFilter = self.getDateFilter(fromDate: start, toDate: end)
-            print("DATE FILTER STRING: \(dateFilter)")
         }
 
         // Get topic filter if there are topics:
@@ -134,9 +133,7 @@ class AlgoliaSearch {
     // Returns the Algolia Query to match between the two dates.
     private func getDateFilter(fromDate: Date, toDate: Date) -> String {
         let startDate = Int(fromDate.timeIntervalSince1970 * 1000)
-        print("START DATE IN FILTER: \(startDate)")
         let endDate = Int(toDate.timeIntervalSince1970 * 1000)
-        print("END DATE IN FILTER: \(endDate)")
         return "(end_time_num >= \(startDate) AND start_time_num <= \(endDate))"
     }
 }
