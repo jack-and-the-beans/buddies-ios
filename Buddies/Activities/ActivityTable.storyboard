@@ -141,6 +141,7 @@
                                     <outletCollection property="memberPics" destination="405-rP-pIC" collectionClass="NSMutableArray" id="JRK-as-i9F"/>
                                     <outletCollection property="memberPics" destination="22y-gi-tnt" collectionClass="NSMutableArray" id="yO9-DW-d4m"/>
                                     <outletCollection property="memberPics" destination="BJJ-E7-oE8" collectionClass="NSMutableArray" id="i5h-f5-LV9"/>
+                                    <segue destination="Dhk-C0-uhg" kind="show" id="yZg-RU-eFd"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -152,7 +153,15 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sqr-mz-PXb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="76" y="182.15892053973016"/>
+            <point key="canvasLocation" x="-273" y="178"/>
+        </scene>
+        <!--viewActivity-->
+        <scene sceneID="I78-XC-bxq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ViewActivity" referencedIdentifier="viewActivity" id="Dhk-C0-uhg" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Rh-7A-BdK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="540" y="30"/>
         </scene>
     </scenes>
 </document>

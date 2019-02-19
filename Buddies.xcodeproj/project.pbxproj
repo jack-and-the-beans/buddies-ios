@@ -51,7 +51,6 @@
 		58EF8DC12208BE5E00872770 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DBB2208BE5E00872770 /* Main.storyboard */; };
 		58EF8DC22208BE5E00872770 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DBC2208BE5E00872770 /* Login.storyboard */; };
 		58EF8DC32208BE5E00872770 /* Topics.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DBD2208BE5E00872770 /* Topics.storyboard */; };
-		58FC665322188CF100D13723 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
 		58FC665422188D3B00D13723 /* TopicCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6762203FD3A00AA538A /* TopicCollectionTests.swift */; };
 		58FC665722188E0E00D13723 /* DateInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC665522188D8C00D13723 /* DateInterval.swift */; };
 		58FC665922188E3F00D13723 /* DateIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC665822188E3F00D13723 /* DateIntervalTests.swift */; };
@@ -85,6 +84,8 @@
 		B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
 		B6337F422215E48B00158549 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6337F412215E48B00158549 /* Keys.plist */; };
 		B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */; };
+		B688B477221C74610031A364 /* ViewActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B688B476221C74610031A364 /* ViewActivity.storyboard */; };
+		B688B479221C789B0031A364 /* ViewActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B478221C789B0031A364 /* ViewActivityController.swift */; };
 		B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A521F8DB8500B075B8 /* Assets.xcassets */; };
 		B6F8D98F22173E5200CDD081 /* AlgoliaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */; };
 		B6F8D991221748F100CDD081 /* AlgoliaMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D990221748F100CDD081 /* AlgoliaMock.swift */; };
@@ -188,6 +189,8 @@
 		A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControlTests.swift; sourceTree = "<group>"; };
 		B6337F412215E48B00158549 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Keys.plist; sourceTree = "<group>"; };
 		B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaSearch.swift; sourceTree = "<group>"; };
+		B688B476221C74610031A364 /* ViewActivity.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ViewActivity.storyboard; sourceTree = "<group>"; };
+		B688B478221C789B0031A364 /* ViewActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewActivityController.swift; sourceTree = "<group>"; };
 		B6AC549B21F8DB8300B075B8 /* Buddies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buddies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6AC54A521F8DB8500B075B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -274,6 +277,7 @@
 			children = (
 				4544D3022214E90E007CB73D /* ActivityTable.storyboard */,
 				4544D3042214E93F007CB73D /* ActivityCell.swift */,
+				B688B478221C789B0031A364 /* ViewActivityController.swift */,
 				457F576A2218C54C00F27BFE /* ActivityTableVC.swift */,
 			);
 			path = Activities;
@@ -345,6 +349,7 @@
 				58EF8DB92208BE5E00872770 /* LaunchScreen.storyboard */,
 				58EF8DBB2208BE5E00872770 /* Main.storyboard */,
 				58EF8DBC2208BE5E00872770 /* Login.storyboard */,
+				B688B476221C74610031A364 /* ViewActivity.storyboard */,
 				58EF8DBD2208BE5E00872770 /* Topics.storyboard */,
 				45FED0AC220A5F0300B90C3B /* Profile.storyboard */,
 				58A915B8220E2A5F008C325F /* PickTopics.storyboard */,
@@ -668,6 +673,7 @@
 				58EF8DC02208BE5E00872770 /* LaunchScreen.storyboard in Resources */,
 				45FED0AD220A5F0300B90C3B /* Profile.storyboard in Resources */,
 				58A915B9220E2A5F008C325F /* PickTopics.storyboard in Resources */,
+				B688B477221C74610031A364 /* ViewActivity.storyboard in Resources */,
 				B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */,
 				58A5A40522025B6400E0BF38 /* bean.jpg in Resources */,
 			);
@@ -779,6 +785,7 @@
 				A95B958A22133FB100453AEA /* Activity.swift in Sources */,
 				58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */,
 				4544D3052214E93F007CB73D /* ActivityCell.swift in Sources */,
+				B688B479221C789B0031A364 /* ViewActivityController.swift in Sources */,
 				58EF8D8D2208A24700872770 /* DiscoverVC.swift in Sources */,
 				B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */,
 				58EF8D8E2208A24700872770 /* MyActivitiesVC.swift in Sources */,
