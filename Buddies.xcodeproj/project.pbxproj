@@ -82,7 +82,12 @@
 		A9E8BF5E22022F3400C05F2C /* UIVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5D22022F3400C05F2C /* UIVIewController.swift */; };
 		A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5F220239EE00C05F2C /* UIApplicationTests.swift */; };
 		A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */; };
+		B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
+		B6337F422215E48B00158549 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6337F412215E48B00158549 /* Keys.plist */; };
+		B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */; };
 		B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A521F8DB8500B075B8 /* Assets.xcassets */; };
+		B6F8D98F22173E5200CDD081 /* AlgoliaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */; };
+		B6F8D991221748F100CDD081 /* AlgoliaMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D990221748F100CDD081 /* AlgoliaMock.swift */; };
 		BC97CE98FE7521FEC111E8D8 /* Pods_Buddies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */; };
 		D224642A61925CB2F139C62A /* Pods_BuddiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A75D052FEF0993FE926DD6A9 /* Pods_BuddiesTests.framework */; };
 /* End PBXBuildFile section */
@@ -181,12 +186,16 @@
 		A9E8BF5D22022F3400C05F2C /* UIVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVIewController.swift; sourceTree = "<group>"; };
 		A9E8BF5F220239EE00C05F2C /* UIApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationTests.swift; sourceTree = "<group>"; };
 		A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControlTests.swift; sourceTree = "<group>"; };
+		B6337F412215E48B00158549 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Keys.plist; sourceTree = "<group>"; };
+		B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaSearch.swift; sourceTree = "<group>"; };
 		B6AC549B21F8DB8300B075B8 /* Buddies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buddies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6AC54A521F8DB8500B075B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6AC54AA21F8DB8500B075B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6AC54AF21F8DB8500B075B8 /* BuddiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BuddiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6AC54B521F8DB8500B075B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaTest.swift; sourceTree = "<group>"; };
+		B6F8D990221748F100CDD081 /* AlgoliaMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaMock.swift; sourceTree = "<group>"; };
 		B99012110D81D232FCCCF814 /* Pods-BuddiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuddiesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BuddiesTests/Pods-BuddiesTests.release.xcconfig"; sourceTree = "<group>"; };
 		E239FFC5C11CDB70A2230436 /* Pods-Buddies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buddies.release.xcconfig"; path = "Pods/Target Support Files/Pods-Buddies/Pods-Buddies.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -231,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				582D0FA522035C3D004F71E3 /* FirestoreManager.swift */,
+				B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */,
 				582D0FA722036C93004F71E3 /* StorageManager.swift */,
 				58AAA6742203F52E00AA538A /* Initialization.swift */,
 				A95B958422133DDB00453AEA /* DataAccessor.swift */,
@@ -254,6 +264,7 @@
 			children = (
 				589AD64022092F950090A96C /* FirebaseMock.swift */,
 				589AD643220948270090A96C /* UtilitiesMock.swift */,
+				B6F8D990221748F100CDD081 /* AlgoliaMock.swift */,
 			);
 			path = CommonMock;
 			sourceTree = "<group>";
@@ -284,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				58EA1EF622041436003F6A3A /* StorageManagerTests.swift */,
+				B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */,
 				A95B958B2214B6A800453AEA /* DataAccessorTests.swift */,
 			);
 			path = Utilities;
@@ -510,6 +522,7 @@
 		B6AC549D21F8DB8300B075B8 /* Buddies */ = {
 			isa = PBXGroup;
 			children = (
+				B6337F412215E48B00158549 /* Keys.plist */,
 				A9BFA00F2215F36500A489A7 /* _ThirdParty */,
 				58A915BA220E30DA008C325F /* Activities */,
 				45FBF7A722095A030007DD6D /* CreateActivity */,
@@ -647,6 +660,7 @@
 			files = (
 				58EF8DC22208BE5E00872770 /* Login.storyboard in Resources */,
 				58EF8DC32208BE5E00872770 /* Topics.storyboard in Resources */,
+				B6337F422215E48B00158549 /* Keys.plist in Resources */,
 				58EF8DC12208BE5E00872770 /* Main.storyboard in Resources */,
 				58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */,
 				A850ED612203A12900DBF1A6 /* GoogleService-Info.plist in Resources */,
@@ -702,6 +716,7 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/InstantSearchClient/InstantSearchClient.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
@@ -720,6 +735,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InstantSearchClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
@@ -764,12 +780,13 @@
 				58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */,
 				4544D3052214E93F007CB73D /* ActivityCell.swift in Sources */,
 				58EF8D8D2208A24700872770 /* DiscoverVC.swift in Sources */,
-				58FC665322188CF100D13723 /* AppDelegate.swift in Sources */,
+				B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */,
 				58EF8D8E2208A24700872770 /* MyActivitiesVC.swift in Sources */,
 				58AAA6752203F52E00AA538A /* Initialization.swift in Sources */,
 				58EF8D962208A25F00872770 /* TopicCell.swift in Sources */,
 				58EF8D952208A25F00872770 /* TopicCollection.swift in Sources */,
 				450779DF2210D7B00008D0DF /* TapticEngine.swift in Sources */,
+				B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */,
 				582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */,
 				A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */,
 				5802266A220BE5E90068E08E /* ToggleButton.swift in Sources */,
@@ -826,7 +843,9 @@
 				58FC665922188E3F00D13723 /* DateIntervalTests.swift in Sources */,
 				A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */,
 				A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */,
+				B6F8D991221748F100CDD081 /* AlgoliaMock.swift in Sources */,
 				58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */,
+				B6F8D98F22173E5200CDD081 /* AlgoliaTest.swift in Sources */,
 				A95B95912214FA6600453AEA /* ActivityTests.swift in Sources */,
 				A9203538220CD4E500D115F2 /* DeleteAccountVCTests.swift in Sources */,
 				58FC665422188D3B00D13723 /* TopicCollectionTests.swift in Sources */,
