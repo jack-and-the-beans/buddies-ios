@@ -84,12 +84,10 @@ class ActivityTableVCTests: XCTestCase {
         cell.extraPicturesLabel = extraPicturesLabel
         cell.memberPics = memberPics
         
-        let comp = UserComponent()
-        comp.image = UIImage()
         
-        activityTableVC.users["user1"] = comp
-        activityTableVC.users["user2"] = comp
-        activityTableVC.users["user3"] = comp
+        activityTableVC.userImages["user1"] = UIImage()
+        activityTableVC.userImages["user2"] = UIImage()
+        activityTableVC.userImages["user3"] = UIImage()
 
         
         let activity = Activity(delegate: nil,
@@ -134,15 +132,10 @@ class ActivityTableVCTests: XCTestCase {
         cell.extraPicturesLabel = extraPicturesLabel
         cell.memberPics = memberPics
         
-        let comp = UserComponent()
-        comp.image = UIImage()
-        
-        activityTableVC.users["user1"] = comp
-        activityTableVC.users["user2"] = comp
-        activityTableVC.users["user3"] = comp
-        activityTableVC.users["user4"] = comp
-
-        
+        activityTableVC.userImages["user1"] = UIImage()
+        activityTableVC.userImages["user2"] = UIImage()
+        activityTableVC.userImages["user3"] = UIImage()
+        activityTableVC.userImages["user4"] = UIImage()
         
         let activity = Activity(delegate: nil,
                                 activityId: "test_id",
@@ -170,12 +163,12 @@ class ActivityTableVCTests: XCTestCase {
     }
     
     func testLoadDisplayIds(){
-        XCTAssert(activityTableVC.getDisplayIds().sorted() == ["EgGiWaHiEKWYnaGW6cR3"].sorted(), "Displays are returned correctly. (Dummy function)")
+        XCTAssert(activityTableVC.getDisplayIds() == [["EgGiWaHiEKWYnaGW6cR3"]], "Displays are returned correctly. (Dummy function)")
     }
     
     func testGetActivity(){
         let activity = Activity(delegate: nil,
-                                activityId: "test_id",
+                                activityId: "test_id1",
                                 dateCreated: Timestamp(date: "11/23/1998".toDate()!.date),
                                 members: ["user1", "user2", "user3", "user4"],
                                 location: GeoPoint(latitude: 1, longitude: 2),
@@ -185,25 +178,31 @@ class ActivityTableVCTests: XCTestCase {
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
                                 topicIds: [])
-        let comp = ActivityComponent()
-        comp.activity = activity
         
+        let activity2 = Activity(delegate: nil,
+                                activityId: "test_id2",
+                                dateCreated: Timestamp(date: "11/23/1998".toDate()!.date),
+                                members: ["user1", "user2", "user3", "user4"],
+                                location: GeoPoint(latitude: 1, longitude: 2),
+                                ownerId: "ownerId",
+                                title: "activityTitle",
+                                description: "activityDescription",
+                                startTime: Timestamp(date: "11/23/1998".toDate()!.date),
+                                endTime: Timestamp(date: "11/24/1998".toDate()!.date),
+                                topicIds: [])
         
-        activityTableVC.activities = [comp, ActivityComponent(), ActivityComponent(), ActivityComponent()]
-        let activities = activityTableVC.activities
+        activityTableVC.activities = [activity, activity2]
+    
         let indexPath = IndexPath(row: 0, section: 0)
         
         let resActivity = activityTableVC.getActivity(at: indexPath)
         XCTAssert(resActivity === activity, "getActivity fetches the right activity component")
         
-        XCTAssert(activities.first !== activities.last, "Every fake ActivityComponent does not evaluate == with the others")
     }
     func testNumRows() {
         let count = 10
-        activityTableVC.activities = [ActivityComponent](repeating: ActivityComponent(), count: count)
+        activityTableVC.activities = [Activity?](repeating: nil, count: count)
         XCTAssert(activityTableVC.tableView(UITableView(), numberOfRowsInSection: 0) == count)
-        
-        
     }
     
     func testNumSections(){

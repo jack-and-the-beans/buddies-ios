@@ -10,41 +10,58 @@ import UIKit
 import Firebase
 
 class ActivityTableVC: UITableViewController {
-    var displayIds = [ActivityId]()
-    var activities = [ActivityComponent]()
-    var users      = [UserId: UserComponent]()
+    var activities = [Activity?]()
+    var activityCancelers = [Canceler]()
     
-    var handleUserLoaded: ((User) -> Void)!
-    var handleImageLoaded: ((UIImage) -> Void)!
+    var users      = [UserId: User]()
+    var userImages = [UserId: UIImage]()
+    var userCancelers = [ActivityId: [Canceler]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 120
         
-        handleUserLoaded = { user in self.tableView.reloadData() }
-        handleImageLoaded = { image in self.tableView.reloadData() }
-        
         loadData()
     }
     
-    func loadUser(uid: UserId) -> UserComponent?{
-        if users[uid] == nil {
-            users[uid] = UserComponent(uid: uid, userLoadedFn: handleUserLoaded, imageLoadedFn: handleImageLoaded)
+    func loadUser(uid: UserId, forPosition index: IndexPath, dataAccessor: DataAccessor = DataAccessor.instance) {
+        let canceler = dataAccessor.useUser(id: uid) { user in
+            self.users[user.uid] = user
+            self.loadUserImage(user: user, forPosition: index)
+            self.tableView.reloadRows(at: [index], with: .automatic)
         }
-        return users[uid]
-    
+        userCancelers[uid]?.append(canceler)
     }
     
-    func loadData(){
-        displayIds = getDisplayIds()
-        activities = []
+    func loadUserImage(user: User, forPosition index: IndexPath, storageManager: StorageManager = StorageManager.shared) {
+        if userImages[user.uid] != nil { return }
+        
+        storageManager.getImage(
+            imageUrl: user.imageUrl,
+            localFileName: user.uid) { image in
+                self.userImages[user.uid] = image
+                self.tableView.reloadRows(at: [index], with: .automatic)
+        }
+    }
+    
+    func loadData(dataAccessor: DataAccessor = DataAccessor.instance){
+        let displayIds = getDisplayIds()
+        activities = [Activity?](repeating: nil, count: displayIds.count)
 
-        for id in displayIds {
-            let activity = ActivityComponent(uid: id) { activity in
-                self.tableView.reloadData()
-                activity.members.forEach() { let _ = self.loadUser(uid: $0) }
+        for (section, ids) in displayIds.enumerated() {
+            for (row, id) in ids.enumerated(){
+                //Index that these users and activity are bound to
+                let indexPath = indexPathForActivity(row: row, section: section)
+                
+                let canceler = dataAccessor.useActivity(id: id) { activity in
+                    self.userCancelers[activity.activityId]?.forEach() { $0() }
+                    activity.members.forEach() { self.loadUser(uid: $0, forPosition: indexPath) }
+                    
+                    self.activities[row] = activity
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+                activityCancelers.append(canceler)
             }
-            activities.append(activity)
         }
     }
     
@@ -72,11 +89,11 @@ class ActivityTableVC: UITableViewController {
         
         cell.dateLabel.text = dateRange.rangePhrase(relativeTo: Date())
         
-        let activityUserImages = activity?.members.compactMap { users[$0]?.image } ?? []
+        let activityUserImages = activity?.members.compactMap { userImages[$0] } ?? []
         
         zip(cell.memberPics, activityUserImages).forEach() { (btn, img) in btn.setImage(img, for: .normal)
         }
-        
+
         // hide "..." as needed
         if activity?.members.count ?? 0 <= 3{
             cell.extraPicturesLabel.isHidden = true
@@ -88,12 +105,16 @@ class ActivityTableVC: UITableViewController {
     }
     
     func getActivity(at indexPath: IndexPath) -> Activity? {
-        return activities[indexPath.row].activity
+        return activities[indexPath.row]
     }
     
+    //Nested array, each subarray is for a section
+    func getDisplayIds() -> [[ActivityId]] {
+        return [["EgGiWaHiEKWYnaGW6cR3"]]
+    }
     
-    func getDisplayIds() -> [ActivityId] {
-        return ["EgGiWaHiEKWYnaGW6cR3"]
+    func indexPathForActivity(row: Int, section: Int) -> IndexPath {
+        return IndexPath(row: row, section: section)
     }
     
     // MARK: - Table view data source
