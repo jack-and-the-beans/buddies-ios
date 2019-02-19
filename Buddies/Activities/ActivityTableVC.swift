@@ -20,8 +20,16 @@ class ActivityTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 120
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadData()
+    }
+    
+    
+    deinit {
+        cleanup()
     }
     
     func loadUser(uid: UserId, forPosition index: IndexPath, dataAccessor: DataAccessor = DataAccessor.instance) {
@@ -45,13 +53,15 @@ class ActivityTableVC: UITableViewController {
     }
     
     func loadData(dataAccessor: DataAccessor = DataAccessor.instance){
+        cleanup()
+        
         let displayIds = getDisplayIds()
         activities = [Activity?](repeating: nil, count: displayIds.count)
 
         for (section, ids) in displayIds.enumerated() {
             for (row, id) in ids.enumerated(){
                 //Index that these users and activity are bound to
-                let indexPath = indexPathForActivity(row: row, section: section)
+                let indexPath = IndexPath(row: row, section: section)
                 
                 let canceler = dataAccessor.useActivity(id: id) { activity in
                     self.userCancelers[activity.activityId]?.forEach() { $0() }
@@ -65,14 +75,25 @@ class ActivityTableVC: UITableViewController {
         }
     }
     
+    func cleanup(){
+        activityCancelers.forEach() { $0() }
+        activityCancelers = []
+        for cancelers in userCancelers.values {
+            cancelers.forEach { $0() }
+        }
+        userCancelers = [:]
+    }
+    
    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "activityCell", for: indexPath) as! ActivityCell
     
-        let activity = getActivity(at: indexPath)
-    
-        return format(cell: cell, using: activity, at: indexPath)
+        if let activity = getActivity(at: indexPath) {
+            return format(cell: cell, using: activity, at: indexPath)
+        } else {
+            return cell
+        }
     }
     
     
@@ -111,10 +132,6 @@ class ActivityTableVC: UITableViewController {
     //Nested array, each subarray is for a section
     func getDisplayIds() -> [[ActivityId]] {
         return [["EgGiWaHiEKWYnaGW6cR3"]]
-    }
-    
-    func indexPathForActivity(row: Int, section: Int) -> IndexPath {
-        return IndexPath(row: row, section: section)
     }
     
     // MARK: - Table view data source
