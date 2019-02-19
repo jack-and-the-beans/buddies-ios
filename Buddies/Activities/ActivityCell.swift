@@ -33,14 +33,5 @@ class ActivityCell: UITableViewCell {
             memberPic.imageView?.layer.cornerRadius = memberPic.bounds.size.width / 2
             memberPic.imageView?.clipsToBounds = true
         }
-      
-        
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }
