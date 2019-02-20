@@ -96,13 +96,39 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         }
     }
     
+    
+    @IBAction func newLocationSearch(_ sender: Any) {
+        if let query = self.locationField.text {
+            
+            self.searchCompleter.queryFragment = query
+            
+            // Show the loading indicator
+            self.completerDidUpdateResults(completer: self.searchCompleter)
+            
+        }
+        
+        
+        var displayResults:[MapItemSearchResult] = []
+        
+        for item in self.searchResults {
+            let temp = MapItemSearchResult(title: item.title)
+            temp.subtitle = item.subtitle
+            temp.mapData = item
+            displayResults.append(temp)
+        }
+        
+        locationField.filterItems(displayResults)
+        locationField.stopLoadingIndicator()
+        
+    }
+    
     //MARK: -
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        searchCompleter.queryFragment = "warm up"
+        searchCompleter.queryFragment = ""
         
         dateSlider.delegate = self
         dateSlider.tintColor = UIColor.lightGray
@@ -254,6 +280,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         
     }
     
+    
+    
     //MARK: - Location field
     func configureSearchTextField()
     {
@@ -261,43 +289,10 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         locationField.theme.cellHeight = 50
         locationField.maxNumberOfResults = 10
         locationField.maxResultsListHeight = 250
-        locationField.minCharactersNumberToStartFiltering = 1
+        locationField.minCharactersNumberToStartFiltering = 0
         locationField.comparisonOptions = [.caseInsensitive]
         locationField.theme.font = UIFont.systemFont(ofSize: 12)
         locationField.theme.bgColor = UIColor.white
-        
-        
-        
-        locationField.userStoppedTypingHandler = {
-            if let query = self.locationField.text {
-                if query.count > 1 {
-                    
-                    
-                    if(self.searchCompleter.isSearching){
-                        self.searchCompleter.cancel()
-                    }
-                    
-                    self.searchCompleter.queryFragment = query
-                    
-                    // Show the loading indicator
-                    self.locationField.showLoadingIndicator()
-                    self.completerDidUpdateResults(completer: self.searchCompleter)
-                    
-                    var displayResults:[MapItemSearchResult] = []
-                    
-                    for item in self.searchResults {
-                        let temp = MapItemSearchResult(title: item.title)
-                        temp.subtitle = item.subtitle
-                        temp.mapData = item
-                        displayResults.append(temp)
-                    }
-                    
-                    self.locationField.filterItems(displayResults)
-                    self.locationField.stopLoadingIndicator()
-                    
-                }
-            }
-        }
         
         
         locationField.itemSelectionHandler = { filteredResults, itemPosition in
@@ -338,6 +333,7 @@ extension CreateActivityVC: MKLocalSearchCompleterDelegate {
     
     private func completerDidUpdateResults(completer: MKLocalSearchCompleter) {
         searchResults = completer.results
+        
     }
     
 }
