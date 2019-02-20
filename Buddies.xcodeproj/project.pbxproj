@@ -91,6 +91,8 @@
 		B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */; };
 		B688B477221C74610031A364 /* ViewActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B688B476221C74610031A364 /* ViewActivity.storyboard */; };
 		B688B479221C789B0031A364 /* ViewActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B478221C789B0031A364 /* ViewActivityController.swift */; };
+		B688B47B221CCB6D0031A364 /* ActivityDescriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B47A221CCB6D0031A364 /* ActivityDescriptionController.swift */; };
+		B688B47D221CCBAE0031A364 /* ActivityChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B47C221CCBAE0031A364 /* ActivityChatController.swift */; };
 		B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A521F8DB8500B075B8 /* Assets.xcassets */; };
 		BC97CE98FE7521FEC111E8D8 /* Pods_Buddies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */; };
 		D224642A61925CB2F139C62A /* Pods_BuddiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A75D052FEF0993FE926DD6A9 /* Pods_BuddiesTests.framework */; };
@@ -198,6 +200,8 @@
 		B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaSearch.swift; sourceTree = "<group>"; };
 		B688B476221C74610031A364 /* ViewActivity.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ViewActivity.storyboard; sourceTree = "<group>"; };
 		B688B478221C789B0031A364 /* ViewActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewActivityController.swift; sourceTree = "<group>"; };
+		B688B47A221CCB6D0031A364 /* ActivityDescriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDescriptionController.swift; sourceTree = "<group>"; };
+		B688B47C221CCBAE0031A364 /* ActivityChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityChatController.swift; sourceTree = "<group>"; };
 		B6AC549B21F8DB8300B075B8 /* Buddies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buddies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6AC54A521F8DB8500B075B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -292,7 +296,9 @@
 			children = (
 				4544D3022214E90E007CB73D /* ActivityTable.storyboard */,
 				4544D3042214E93F007CB73D /* ActivityCell.swift */,
+				B688B47A221CCB6D0031A364 /* ActivityDescriptionController.swift */,
 				B688B478221C789B0031A364 /* ViewActivityController.swift */,
+				B688B47C221CCBAE0031A364 /* ActivityChatController.swift */,
 				457F576A2218C54C00F27BFE /* ActivityTableVC.swift */,
 			);
 			path = Activities;
@@ -805,6 +811,7 @@
 				58B42611221CE7EE000ACB28 /* TopicActivityTableVC.swift in Sources */,
 				58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */,
 				4544D3052214E93F007CB73D /* ActivityCell.swift in Sources */,
+				B688B47B221CCB6D0031A364 /* ActivityDescriptionController.swift in Sources */,
 				B688B479221C789B0031A364 /* ViewActivityController.swift in Sources */,
 				58EF8D8D2208A24700872770 /* DiscoverVC.swift in Sources */,
 				B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */,
@@ -837,6 +844,7 @@
 				A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */,
 				A95B958522133DDB00453AEA /* DataAccessor.swift in Sources */,
 				458CE72E220D472200012637 /* MapItemSearchResult.swift in Sources */,
+				B688B47D221CCBAE0031A364 /* ActivityChatController.swift in Sources */,
 				45FED0AF220A657100B90C3B /* DeleteAccountVC.swift in Sources */,
 				450779E02210D7B00008D0DF /* RangeSeekSlider.swift in Sources */,
 				58FC665722188E0E00D13723 /* DateInterval.swift in Sources */,

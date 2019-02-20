@@ -16,6 +16,12 @@ protocol ActivityInvalidationDelegate {
     func triggerServerUpdate(activityId: ActivityId, key: String, value: Any?)
 }
 
+enum MemberStatus {
+    case owner
+    case member
+    case none
+}
+
 class Activity {
     let delegate: ActivityInvalidationDelegate?
     
@@ -88,5 +94,15 @@ class Activity {
                         startTime: startTime,
                         endTime: endTime,
                         topicIds: topicIds)
+    }
+
+    func getMemberStatus(of userId: String) -> MemberStatus {
+        if (userId == self.ownerId) {
+            return MemberStatus.owner
+        } else if (self.members.contains(userId)) {
+            return MemberStatus.member
+        } else {
+            return MemberStatus.none
+        }
     }
 }
