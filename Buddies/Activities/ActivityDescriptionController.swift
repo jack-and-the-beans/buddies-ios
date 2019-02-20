@@ -38,7 +38,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource {
         self.locationLabel.text = "Location"
         self.titleLabel.text = activity.title
         self.descriptionLabel.text = activity.description
-        self.dateLabel.text = activity.dateCreated.dateValue().calendarString(relativeTo: Date()).capitalized
+        
+        self.dateLabel.text = DateInterval(start: activity.startTime.dateValue(), end: activity.endTime.dateValue()).rangePhrase(relativeTo: Date()).capitalized
         self.topics = topics
         self.users = users
         self.memberStatus = status
