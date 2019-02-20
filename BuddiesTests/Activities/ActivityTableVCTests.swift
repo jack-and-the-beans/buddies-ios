@@ -162,9 +162,6 @@ class ActivityTableVCTests: XCTestCase {
         XCTAssert(!resCell.extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
     }
     
-    func testLoadDisplayIds(){
-        XCTAssert(activityTableVC.getDisplayIds() == [["EgGiWaHiEKWYnaGW6cR3"]], "Displays are returned correctly. (Dummy function)")
-    }
     
     func testGetActivity(){
         let activity = Activity(delegate: nil,
@@ -191,7 +188,7 @@ class ActivityTableVCTests: XCTestCase {
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
                                 topicIds: [])
         
-        activityTableVC.activities = [activity, activity2]
+        activityTableVC.activities = [[activity, activity2]]
     
         let indexPath = IndexPath(row: 0, section: 0)
         
@@ -201,12 +198,13 @@ class ActivityTableVCTests: XCTestCase {
     }
     func testNumRows() {
         let count = 10
-        activityTableVC.activities = [Activity?](repeating: nil, count: count)
+        activityTableVC.displayIds = [[String](repeating: "ex", count: count)]
         XCTAssert(activityTableVC.tableView(UITableView(), numberOfRowsInSection: 0) == count)
     }
     
     func testNumSections(){
-        XCTAssert(activityTableVC.numberOfSections(in: UITableView()) == 1)
+        activityTableVC.displayIds = [[],[]]
+        XCTAssert(activityTableVC.numberOfSections(in: UITableView()) == 2)
     }
 
 }
