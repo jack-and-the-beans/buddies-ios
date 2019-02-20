@@ -33,48 +33,83 @@ class ActivityTableVC: UITableViewController {
         cleanup()
     }
     
-    func loadUser(uid: UserId, forPosition index: IndexPath, dataAccessor: DataAccessor = DataAccessor.instance) {
+    func loadUser(uid: UserId,
+                  forPosition index: IndexPath,
+                  dataAccessor: DataAccessor = DataAccessor.instance,
+                  storageManager: StorageManager = StorageManager.shared,
+                  onLoaded: (()->Void)?) {
+        
         let canceler = dataAccessor.useUser(id: uid) { user in
             self.users[user.uid] = user
-            self.loadUserImage(user: user, forPosition: index)
-            self.tableView.reloadRows(at: [index], with: .automatic)
+            self.loadUserImage(user: user, forPosition: index, storageManager: storageManager, onLoaded: onLoaded)
+            onLoaded?()
         }
         userCancelers[uid]?.append(canceler)
     }
     
-    func loadUserImage(user: User, forPosition index: IndexPath, storageManager: StorageManager = StorageManager.shared) {
+    func loadUserImage(user: User,
+                       forPosition index: IndexPath,
+                       storageManager: StorageManager = StorageManager.shared,
+                       onLoaded: (()->Void)?) {
+        
         if userImages[user.uid] != nil { return }
         
         storageManager.getImage(
             imageUrl: user.imageUrl,
             localFileName: user.uid) { image in
                 self.userImages[user.uid] = image
-                self.tableView.reloadRows(at: [index], with: .automatic)
+                onLoaded?()
         }
     }
     
-    func loadData(for displayIds: [[String]], dataAccessor: DataAccessor = DataAccessor.instance){
+    func loadActivity(_ id: ActivityId,
+                      at indexPath: IndexPath,
+                      dataAccessor: DataAccessor = DataAccessor.instance,
+                      storageManager: StorageManager = StorageManager.shared,
+                      onLoaded: (()->Void)?){
+        
+        let canceler = dataAccessor.useActivity(id: id) { activity in
+            self.userCancelers[activity.activityId]?.forEach() { $0() }
+            
+            activity.members.forEach() { uid in
+                self.loadUser(uid: uid,
+                              forPosition: indexPath,
+                              storageManager: storageManager,
+                              onLoaded: onLoaded)
+            }
+            
+            self.activities[indexPath.section][indexPath.row] = activity
+            onLoaded?()
+        }
+        activityCancelers.append(canceler)
+
+    }
+    
+    func loadData(for displayIds: [[String]],
+                  dataAccessor: DataAccessor = DataAccessor.instance,
+                  storageManager: StorageManager = StorageManager.shared){
+        
+        //Each time we load data, get rid of old listeners
         cleanup()
+        
         self.displayIds = displayIds
 
         //Create an nil-filled nested array of activities
         activities = displayIds.map { $0.map { _ in nil } }
         
+        //Reload here so that we have the right number of empty cells
+        //Since we are loading async and data size,
+        // we reload here to avoid inconsistency errors
         tableView.reloadData()
 
         for (section, ids) in displayIds.enumerated() {
             for (row, id) in ids.enumerated(){
                 //Index that these users and activity are bound to
                 let indexPath = IndexPath(row: row, section: section)
-                
-                let canceler = dataAccessor.useActivity(id: id) { activity in
-                    self.userCancelers[activity.activityId]?.forEach() { $0() }
-                    activity.members.forEach() { self.loadUser(uid: $0, forPosition: indexPath) }
-                    
-                    self.activities[section][row] = activity
+                loadActivity(id, at: indexPath) {
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
-                activityCancelers.append(canceler)
+                
             }
         }
     }
@@ -101,25 +136,24 @@ class ActivityTableVC: UITableViewController {
         }
     }
     
-    func format(cell: ActivityCell, using activity: Activity?, at indexPath: IndexPath) -> ActivityCell{
+    func format(cell: ActivityCell, using activity: Activity, at indexPath: IndexPath) -> ActivityCell{
         
-        cell.titleLabel.text = activity?.title
-        cell.descriptionLabel.text = activity?.description
-        cell.locationLabel.text = String(activity?.location.latitude ?? 0) + ", " + String(activity?.location.longitude ?? 0)
+        cell.titleLabel.text = activity.title
+        cell.descriptionLabel.text = activity.description
+        cell.locationLabel.text = String(activity.location.latitude) + ", " + String(activity.location.longitude)
         
-        //TODO: Handle this ambiguity
-        let dateRange = DateInterval(start:  activity?.startTime.dateValue() ?? Date(),
-                                     end: activity?.endTime.dateValue() ?? Date())
+        let dateRange = DateInterval(start: activity.startTime.dateValue(),
+                                     end: activity.endTime.dateValue())
         
         cell.dateLabel.text = dateRange.rangePhrase(relativeTo: Date())
         
-        let activityUserImages = activity?.members.compactMap { userImages[$0] } ?? []
+        let activityUserImages = activity.members.compactMap { userImages[$0] }
         
         zip(cell.memberPics, activityUserImages).forEach() { (btn, img) in btn.setImage(img, for: .normal)
         }
 
         // hide "..." as needed
-        if activity?.members.count ?? 0 <= 3{
+        if activity.members.count <= 3{
             cell.extraPicturesLabel.isHidden = true
         } else {
             cell.extraPicturesLabel.isHidden = false
@@ -141,10 +175,8 @@ class ActivityTableVC: UITableViewController {
         return displayIds[section].count
     }
     
-    //Must call loadData() once displayIds is set
-    func fetchAndLoadActivities(){
-        let ids = [["EgGiWaHiEKWYnaGW6cR3"], ["6nnWmZxFFcZiEiEOr1b1"]]
-        loadData(for: displayIds)
-    }
+    // "abstract"
+    // Must call loadData() once displayIds is set
+    func fetchAndLoadActivities(){}
 }
 

@@ -14,10 +14,46 @@ import UIKit
 class ActivityTableVCTests: XCTestCase {
 
     var activityTableVC: ActivityTableVC!
+    var instance: DataAccessor!
     
     override func setUp() {
         activityTableVC = ActivityTableVC()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        // Create user stuff
+        let uid = "my_uid"
+        let usersCollection = MockCollectionReference()
+        let meDoc = MockDocumentReference(docId: uid)
+        meDoc.exposedData = [
+            "image_url" : "image_url",
+            "name" : "Test User",
+            "bio" : "This is my bio\nDo you like it?",
+            "email" : "fake@example.com",
+            "date_joined" : Timestamp(date: Date())
+        ]
+        usersCollection.documents[uid] = meDoc
+        
+        // Create activity stuff
+        let activityId = "my_activity"
+        let activitiesCollection = MockCollectionReference()
+        let activityDoc = MockDocumentReference(docId: activityId)
+        activityDoc.exposedData = [
+            "members": [uid],
+            "location": GeoPoint(latitude: 10.0, longitude: 10.0),
+            "date_created": Timestamp(date: Date()),
+            "owner_id": uid,
+            "title": "My Event",
+            "topic_ids": [],
+            "start_time": Timestamp(date: Date()),
+            "end_time": Timestamp(date: Date()),
+        ]
+        activitiesCollection.documents[activityId] = activityDoc
+        
+        // Create the instance to test
+        instance = DataAccessor(usersCollection: usersCollection,
+                                activitiesCollection: activitiesCollection)
+        
+        
     }
 
     override func tearDown() {
@@ -205,6 +241,35 @@ class ActivityTableVCTests: XCTestCase {
     func testNumSections(){
         activityTableVC.displayIds = [[],[]]
         XCTAssert(activityTableVC.numberOfSections(in: UITableView()) == 2)
+    }
+    
+    func testCleanup () {
+        var userCancels = 0
+        let userCancelsPerActivity = 5
+        activityTableVC.userCancelers["fakeActivity"] = [Canceler](repeating: { userCancels += 1}, count: userCancelsPerActivity)
+        activityTableVC.userCancelers["fakeActivity2"] = [Canceler](repeating: { userCancels += 1}, count: userCancelsPerActivity)
+        
+        var activityCancels = 0
+        let totalActivityCancels = 10
+        activityTableVC.activityCancelers = [Canceler](repeating: { activityCancels += 1}, count: totalActivityCancels)
+        
+        activityTableVC.cleanup()
+        
+        XCTAssert(userCancels == userCancelsPerActivity*2, "Each user canceler is called during cleanup")
+        XCTAssert(activityCancels == totalActivityCancels, "Each activity canceler is called during cleanup")
+       
+        XCTAssert(activityTableVC.userCancelers.isEmpty, "No remaining/nil'd user cancels remain after cleanup")
+        XCTAssert(activityTableVC.activityCancelers.isEmpty, "No remaining/nil'd activity cancels remain after cleanup")
+
+    }
+    
+    func testLoadData(){
+        let storageManager = MockStorageManager()
+    
+        activityTableVC.loadData(for: [["my_activity"]], dataAccessor: instance, storageManager: storageManager)
+        
+        
+        
     }
 
 }
