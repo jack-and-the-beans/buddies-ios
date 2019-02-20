@@ -13,6 +13,8 @@ typealias SearchParams = (filterText: String?, when: DateInterval?, maxMetersAwa
 
 class TopicActivityTableVC : ActivityTableVC, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
+    var fab: FAB!
+    
     var topicId: String!
     
     // Default is a sentinal because XCode hates nil tuples :(
@@ -27,6 +29,12 @@ class TopicActivityTableVC : ActivityTableVC, UISearchBarDelegate {
         searchBar.delegate = self
         
         self.setupHideKeyboardOnTap()
+        
+        // We need to store a local so that the
+        //  instance isn't deallocated along with
+        //  the event handler!
+        fab = FAB(for: self)
+        fab.renderCreateActivityFab()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
