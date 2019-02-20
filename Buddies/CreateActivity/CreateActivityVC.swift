@@ -105,6 +105,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         searchCompleter.queryFragment = "warm up"
         
         dateSlider.delegate = self
+        dateSlider.tintColor = UIColor.lightGray
         
         descriptionTextView.delegate = self
         descriptionTextView.textColor = UIColor.lightGray
