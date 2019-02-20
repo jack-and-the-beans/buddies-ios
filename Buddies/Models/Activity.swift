@@ -29,6 +29,12 @@ class Activity {
     let activityId : ActivityId
     let dateCreated : Timestamp
     
+    var timeRange: DateInterval {
+        get {
+            return DateInterval(start: self.startTime.dateValue(), end: self.endTime.dateValue())
+        }
+    }
+
     // MARK: Mutable properties
     var members : [UserId] { didSet { onChange("members", members) } }
     var location : GeoPoint { didSet { onChange("location", location) } }
