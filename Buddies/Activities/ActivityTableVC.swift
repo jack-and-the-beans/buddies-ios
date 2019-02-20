@@ -25,14 +25,9 @@ class ActivityTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = 120
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        self.tableView.rowHeight = 110
         fetchAndLoadActivities()
     }
-    
     
     deinit {
         cleanup()
@@ -58,11 +53,14 @@ class ActivityTableVC: UITableViewController {
         }
     }
     
-    func loadData(dataAccessor: DataAccessor = DataAccessor.instance){
+    func loadData(for displayIds: [[String]], dataAccessor: DataAccessor = DataAccessor.instance){
         cleanup()
+        self.displayIds = displayIds
 
         //Create an nil-filled nested array of activities
         activities = displayIds.map { $0.map { _ in nil } }
+        
+        tableView.reloadData()
 
         for (section, ids) in displayIds.enumerated() {
             for (row, id) in ids.enumerated(){
@@ -98,6 +96,7 @@ class ActivityTableVC: UITableViewController {
         if let activity = getActivity(at: indexPath) {
             return format(cell: cell, using: activity, at: indexPath)
         } else {
+            cell.isHidden = true
             return cell
         }
     }
@@ -144,8 +143,8 @@ class ActivityTableVC: UITableViewController {
     
     //Must call loadData() once displayIds is set
     func fetchAndLoadActivities(){
-        displayIds = [["EgGiWaHiEKWYnaGW6cR3"], ["6nnWmZxFFcZiEiEOr1b1"]]
-        loadData()
+        let ids = [["EgGiWaHiEKWYnaGW6cR3"], ["6nnWmZxFFcZiEiEOr1b1"]]
+        loadData(for: displayIds)
     }
 }
 

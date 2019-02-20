@@ -13,8 +13,7 @@ class TopicActivityTableVC : ActivityTableVC {
     override func fetchAndLoadActivities() {
         search.searchActivities(matchingAnyTopicOf: [topicId]) { (activities: [String], err: Error?) in
             if let error = err { print(error) }
-            self.displayIds = [activities]
-            self.loadData()
+            self.loadData(for: [activities])
         }
     }
 }
