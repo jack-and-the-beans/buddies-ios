@@ -26,6 +26,8 @@
 		582D0FA622035C3D004F71E3 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA522035C3D004F71E3 /* FirestoreManager.swift */; };
 		582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA722036C93004F71E3 /* StorageManager.swift */; };
 		584C350C221BC192000442B2 /* ActivityTableVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C350B221BC192000442B2 /* ActivityTableVCTests.swift */; };
+		5868DEE2221DEEAE008B86FE /* AlgoliaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */; };
+		5868DEE3221DEEC3008B86FE /* AlgoliaMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D990221748F100CDD081 /* AlgoliaMock.swift */; };
 		589AD64122092F950090A96C /* FirebaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589AD64022092F950090A96C /* FirebaseMock.swift */; };
 		589AD644220948270090A96C /* UtilitiesMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589AD643220948270090A96C /* UtilitiesMock.swift */; };
 		58A5A404220258E000E0BF38 /* bean.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58A5A403220258E000E0BF38 /* bean.jpg */; };
@@ -89,8 +91,6 @@
 		B688B477221C74610031A364 /* ViewActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B688B476221C74610031A364 /* ViewActivity.storyboard */; };
 		B688B479221C789B0031A364 /* ViewActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B478221C789B0031A364 /* ViewActivityController.swift */; };
 		B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A521F8DB8500B075B8 /* Assets.xcassets */; };
-		B6F8D98F22173E5200CDD081 /* AlgoliaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */; };
-		B6F8D991221748F100CDD081 /* AlgoliaMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D990221748F100CDD081 /* AlgoliaMock.swift */; };
 		BC97CE98FE7521FEC111E8D8 /* Pods_Buddies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */; };
 		D224642A61925CB2F139C62A /* Pods_BuddiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A75D052FEF0993FE926DD6A9 /* Pods_BuddiesTests.framework */; };
 /* End PBXBuildFile section */
@@ -849,10 +849,12 @@
 				58A5A40722025C2B00E0BF38 /* TopicCellTest.swift in Sources */,
 				58EF8DA82208A2C600872770 /* DiscoverVCTests.swift in Sources */,
 				58EF8DA32208A2BC00872770 /* CreateActivityVCTests.swift in Sources */,
+				5868DEE3221DEEC3008B86FE /* AlgoliaMock.swift in Sources */,
 				A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */,
 				A95B958C2214B6A800453AEA /* DataAccessorTests.swift in Sources */,
 				58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */,
 				450CC0F5220964F000282BAB /* SignUpInfoVCTests.swift in Sources */,
+				5868DEE2221DEEAE008B86FE /* AlgoliaTest.swift in Sources */,
 				5802266F220CC1210068E08E /* ToggleButtonTests.swift in Sources */,
 				45DA93A9220957CE0064CBEF /* Testing.swift in Sources */,
 				589AD64122092F950090A96C /* FirebaseMock.swift in Sources */,
