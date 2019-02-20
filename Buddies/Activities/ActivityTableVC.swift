@@ -34,21 +34,19 @@ class ActivityTableVC: UITableViewController {
     }
     
     func loadUser(uid: UserId,
-                  forPosition index: IndexPath,
                   dataAccessor: DataAccessor = DataAccessor.instance,
                   storageManager: StorageManager = StorageManager.shared,
                   onLoaded: (()->Void)?) {
         
         let canceler = dataAccessor.useUser(id: uid) { user in
             self.users[user.uid] = user
-            self.loadUserImage(user: user, forPosition: index, storageManager: storageManager, onLoaded: onLoaded)
+            self.loadUserImage(user: user, storageManager: storageManager, onLoaded: onLoaded)
             onLoaded?()
         }
         userCancelers[uid]?.append(canceler)
     }
     
     func loadUserImage(user: User,
-                       forPosition index: IndexPath,
                        storageManager: StorageManager = StorageManager.shared,
                        onLoaded: (()->Void)?) {
         
@@ -72,10 +70,7 @@ class ActivityTableVC: UITableViewController {
             self.userCancelers[activity.activityId]?.forEach() { $0() }
             
             activity.members.forEach() { uid in
-                self.loadUser(uid: uid,
-                              forPosition: indexPath,
-                              storageManager: storageManager,
-                              onLoaded: onLoaded)
+                self.loadUser(uid: uid, storageManager: storageManager, onLoaded: onLoaded)
             }
             
             self.activities[indexPath.section][indexPath.row] = activity

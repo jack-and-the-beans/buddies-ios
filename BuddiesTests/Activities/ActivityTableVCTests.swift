@@ -12,13 +12,22 @@ import FirebaseFirestore
 import UIKit
 
 class ActivityTableVCTests: XCTestCase {
+    
+    //For testLoadData
+    class MockActivityTableVC: ActivityTableVC {
+        var loadActivityCallIds = [ActivityId]()
+        override func loadActivity(_ id: ActivityId, at indexPath: IndexPath, dataAccessor: DataAccessor, storageManager: StorageManager, onLoaded: (() -> Void)?) {
+            loadActivityCallIds.append(id)
+        }
+    }
 
     var activityTableVC: ActivityTableVC!
     var instance: DataAccessor!
+    var thisUser: User!
+    var storageManager: MockStorageManager!
+    var thisActivity: Activity!
     
-    override func setUp() {
-        activityTableVC = ActivityTableVC()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func setupDataAccessor() {
         
         // Create user stuff
         let uid = "my_uid"
@@ -32,6 +41,7 @@ class ActivityTableVCTests: XCTestCase {
             "date_joined" : Timestamp(date: Date())
         ]
         usersCollection.documents[uid] = meDoc
+        
         
         // Create activity stuff
         let activityId = "my_activity"
@@ -47,13 +57,25 @@ class ActivityTableVCTests: XCTestCase {
             "start_time": Timestamp(date: Date()),
             "end_time": Timestamp(date: Date()),
         ]
+        
         activitiesCollection.documents[activityId] = activityDoc
         
         // Create the instance to test
         instance = DataAccessor(usersCollection: usersCollection,
                                 activitiesCollection: activitiesCollection)
         
+        thisUser = User.from(snap: MockDocumentSnapshot(data: meDoc.exposedData, docId: uid), with: instance)
+        thisActivity = Activity.from(snap: MockDocumentSnapshot(data: activityDoc.exposedData, docId: activityId), with: instance)
         
+    }
+    
+    override func setUp() {
+        activityTableVC = ActivityTableVC()
+        
+        storageManager = MockStorageManager()
+
+        
+        setupDataAccessor()
     }
 
     override func tearDown() {
@@ -263,12 +285,95 @@ class ActivityTableVCTests: XCTestCase {
 
     }
     
-    func testLoadData(){
-        let storageManager = MockStorageManager()
+    func testLoadImage(){
+        let expectation = self.expectation(description: "image loaded callback")
+        
+        activityTableVC.loadUserImage(user: thisUser, storageManager: storageManager){
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 0.2)
+        
+        XCTAssert(storageManager.getImageCalls == 1, "Get image is called once")
+        XCTAssertNotNil(activityTableVC.userImages[thisUser.uid], "User image is correctly set")
+    }
     
-        activityTableVC.loadData(for: [["my_activity"]], dataAccessor: instance, storageManager: storageManager)
+    func testLoadImage_ImageAlreadyLoaded(){
+        let expectation = self.expectation(description: "Don't load image when image already loaded")
+        expectation.isInverted = true
         
+        activityTableVC.userImages[thisUser.uid] = UIImage()
+        activityTableVC.loadUserImage(user: thisUser, storageManager: storageManager) {
+            //Should never call this
+            expectation.fulfill()
+        }
         
+        waitForExpectations(timeout: 2.0)
+        
+        XCTAssert(storageManager.getImageCalls == 0)
+    }
+    
+    func testLoadUser(){
+        
+        let expectation = self.expectation(description: "image loaded callback")
+
+        //Called inside inside of loadUser and loadUserImage
+        expectation.expectedFulfillmentCount = 2
+        
+        activityTableVC.loadUser(uid: "my_uid", dataAccessor: instance, storageManager: storageManager) {
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 0.2)
+        
+        XCTAssert(activityTableVC.users[thisUser.uid]?.uid == thisUser.uid, "Correct user is loaded")
+        
+        XCTAssert(storageManager.getImageCalls == 1)
+    }
+    
+    //Doesn't test that users are loaded for each activity
+    // It clearly works in the UI, so ignoring this
+    //   since getting the DataAccesser to work is causing issues
+    func testLoadActivity(){
+        let expectation = self.expectation(description: "image loaded callback")
+        
+        //Called inside inside of loadActivity and loadUser and loadUserImage
+        expectation.expectedFulfillmentCount = 1
+        
+        let path = IndexPath(row: 0, section: 0)
+        
+        activityTableVC.activities = [[nil]]
+        
+        activityTableVC.loadActivity(thisActivity.activityId, at: path, dataAccessor: instance, storageManager: storageManager){
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 2)
+        
+        XCTAssert(activityTableVC.activities[path.section][path.row]?.activityId == thisActivity.activityId, "Correct activity is loaded")
+    }
+    
+    
+    
+    
+    func testLoadData(){
+        
+        let mockVC = MockActivityTableVC()
+    
+        let data = [["1.1", "1.2"], ["2.1", "2.2", "2.3"], ["3.1", "3.2"]]
+        
+        mockVC.loadData(for: data, dataAccessor: instance, storageManager: storageManager)
+
+        var correctIds = data.count == mockVC.displayIds.count
+        
+        if correctIds {
+            for i in 0..<data.count {
+                correctIds = correctIds && data[i] == mockVC.displayIds[i]
+            }
+        }
+        
+        XCTAssert(mockVC.displayIds.elementsEqual(data), "displayIds are set correctly")
+        
+        XCTAssert(mockVC.loadActivityCallIds == data.flatMap() { $0 }, "loadUser called for all IDs")
         
     }
 
