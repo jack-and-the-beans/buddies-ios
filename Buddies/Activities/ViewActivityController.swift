@@ -68,11 +68,17 @@ class ViewActivityController: UIViewController {
                 contentArea.addSubview(descriptionView)
                 descriptionView.bindFrameToSuperviewBounds()
             }
-            let topic = Topic(id: "hi", name: "HELLO", image: nil)
-            let topic2 = Topic(id: "2", name: "HELLO@21", image: nil)
+            let topic = Topic(id: "hi", name: "Nature is a cool but big topic", image: nil)
+            let topic2 = Topic(id: "2", name: "AAB", image: nil)
+            let topic3 = Topic(id: "2", name: "Nature", image: nil)
+            let topic4 = Topic(id: "2", name: "Coding Camp", image: nil)
+            let topic5 = Topic(id: "2", name: "Smash Bros (tm)", image: nil)
+            let topic6 = Topic(id: "2", name: "Abcd", image: nil)
+            let topic7 = Topic(id: "2", name: "69", image: nil)
+
             let user1 = User(name: "NOAH ALLEN")
             let user2 = User(name: "NOAH ALLEN2")
-            descriptionController?.render(withActivity: activity, withUsers: [user1, user2], withMemberStatus: memberStatus, withTopics: [topic, topic2])
+            descriptionController?.render(withActivity: activity, withUsers: [user1, user2], withMemberStatus: memberStatus, withTopics: [topic, topic2, topic3, topic4, topic5, topic6, topic7, topic7])
         } else {
             // @TODO: remove existing subviews
             if(chatController == nil) {

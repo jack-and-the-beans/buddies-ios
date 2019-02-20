@@ -33,7 +33,7 @@
                         <viewLayoutGuide key="safeArea" id="rsa-8a-YMU"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="fMO-fz-Z2Y">
-                        <barButtonItem key="leftBarButtonItem" title="Leave Me Now ☹️" id="n4L-qX-5lO">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="n4L-qX-5lO">
                             <connections>
                                 <action selector="onBackPress:" destination="cD4-BZ-J7g" id="z7Q-Oa-s6e"/>
                             </connections>

@@ -30,18 +30,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
-    func registerCollectionViews () {
-        self.topicsArea.dataSource = self
-        self.usersArea.dataSource = self
-        self.topicsArea.register(UINib.init(nibName: "TopicCollectionCell", bundle: nil), forCellWithReuseIdentifier: "topic_cell")
-        self.usersArea.register(UINib.init(nibName: "UserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
-    }
 
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
-    
+    // Refreshes the UI elements with new data:
     func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic] ) {
         registerCollectionViews()
         joinButton?.layer.cornerRadius = 5
@@ -56,6 +46,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource {
         self.usersArea.reloadData()
     }
     
+    // Returns the number of topics or users for their collections
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (collectionView === self.topicsArea) {
             return topics.count
@@ -64,6 +55,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource {
         }
     }
     
+    // Returns the correct cell for users and topics
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if (collectionView === self.topicsArea) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "topic_cell", for: indexPath) as! TopicCollectionCell
@@ -75,5 +67,13 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource {
             cell.render(withUser: users[indexPath.row], shouldRemoveUser: self.memberStatus == .owner)
             return cell
         }
+    }
+    
+    // Registers the nibs and data sources for the users and topics
+    func registerCollectionViews () {
+        self.topicsArea.dataSource = self
+        self.usersArea.dataSource = self
+        self.topicsArea.register(UINib.init(nibName: "TopicCollectionCell", bundle: nil), forCellWithReuseIdentifier: "topic_cell")
+        self.usersArea.register(UINib.init(nibName: "UserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
     }
 }
