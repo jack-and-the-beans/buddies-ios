@@ -70,9 +70,10 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
         }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let dest = segue.destination as? ActivityTableVC,
+        if let dest = segue.destination as? TopicActivityTableVC,
             let indexPath = collectionView.indexPathsForSelectedItems {
             dest.title = topicCollection.topics[indexPath[0].row].name
+            dest.topicId = topicCollection.topics[indexPath[0].row].id
         }
     }
     

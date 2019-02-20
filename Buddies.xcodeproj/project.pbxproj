@@ -33,6 +33,7 @@
 		58A5A40722025C2B00E0BF38 /* TopicCellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A5A40622025C2B00E0BF38 /* TopicCellTest.swift */; };
 		58A915B9220E2A5F008C325F /* PickTopics.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58A915B8220E2A5F008C325F /* PickTopics.storyboard */; };
 		58AAA6752203F52E00AA538A /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6742203F52E00AA538A /* Initialization.swift */; };
+		58B42611221CE7EE000ACB28 /* TopicActivityTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B42610221CE7EE000ACB28 /* TopicActivityTableVC.swift */; };
 		58DBF760221CB7B3008512B3 /* ActivityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DBF75E221CB7B3008512B3 /* ActivityTests.swift */; };
 		58DBF761221CB7B3008512B3 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DBF75F221CB7B3008512B3 /* UserTests.swift */; };
 		58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EA1EF622041436003F6A3A /* StorageManagerTests.swift */; };
@@ -135,6 +136,7 @@
 		58A915B8220E2A5F008C325F /* PickTopics.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PickTopics.storyboard; sourceTree = "<group>"; };
 		58AAA6742203F52E00AA538A /* Initialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initialization.swift; sourceTree = "<group>"; };
 		58AAA6762203FD3A00AA538A /* TopicCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionTests.swift; sourceTree = "<group>"; };
+		58B42610221CE7EE000ACB28 /* TopicActivityTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicActivityTableVC.swift; sourceTree = "<group>"; };
 		58DBF75E221CB7B3008512B3 /* ActivityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTests.swift; sourceTree = "<group>"; };
 		58DBF75F221CB7B3008512B3 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
 		58EA1EF622041436003F6A3A /* StorageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerTests.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				58EF8D8F2208A25E00872770 /* TopicCollection.swift */,
 				58EF8D922208A25F00872770 /* TopicLayout.swift */,
 				58EF8D932208A25F00872770 /* TopicsVC.swift */,
+				58B42610221CE7EE000ACB28 /* TopicActivityTableVC.swift */,
 			);
 			path = Topics;
 			sourceTree = "<group>";
@@ -794,6 +797,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A95B958A22133FB100453AEA /* Activity.swift in Sources */,
+				58B42611221CE7EE000ACB28 /* TopicActivityTableVC.swift in Sources */,
 				58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */,
 				4544D3052214E93F007CB73D /* ActivityCell.swift in Sources */,
 				B688B479221C789B0031A364 /* ViewActivityController.swift in Sources */,

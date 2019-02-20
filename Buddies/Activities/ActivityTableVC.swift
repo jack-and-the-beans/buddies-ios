@@ -10,12 +10,18 @@ import UIKit
 import Firebase
 
 class ActivityTableVC: UITableViewController {
-    var activities = [Activity?]()
+    let search = AlgoliaSearch()
+    
+    var activities = [[Activity?]]()
     var activityCancelers = [Canceler]()
     
     var users      = [UserId: User]()
     var userImages = [UserId: UIImage]()
     var userCancelers = [ActivityId: [Canceler]]()
+    
+    //Doubly nested array of Activity Ids.
+    //Each array is a section of the table view
+    var displayIds = [[ActivityId]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +30,7 @@ class ActivityTableVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadData()
+        fetchAndLoadActivities()
     }
     
     
@@ -54,9 +60,9 @@ class ActivityTableVC: UITableViewController {
     
     func loadData(dataAccessor: DataAccessor = DataAccessor.instance){
         cleanup()
-        
-        let displayIds = getDisplayIds()
-        activities = [Activity?](repeating: nil, count: displayIds.count)
+
+        //Create an nil-filled nested array of activities
+        activities = displayIds.map { $0.map { _ in nil } }
 
         for (section, ids) in displayIds.enumerated() {
             for (row, id) in ids.enumerated(){
@@ -67,7 +73,7 @@ class ActivityTableVC: UITableViewController {
                     self.userCancelers[activity.activityId]?.forEach() { $0() }
                     activity.members.forEach() { self.loadUser(uid: $0, forPosition: indexPath) }
                     
-                    self.activities[row] = activity
+                    self.activities[section][row] = activity
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
                 activityCancelers.append(canceler)
@@ -96,8 +102,6 @@ class ActivityTableVC: UITableViewController {
         }
     }
     
-    
-    //MARK:- Override for custom ActivityViewVCs
     func format(cell: ActivityCell, using activity: Activity?, at indexPath: IndexPath) -> ActivityCell{
         
         cell.titleLabel.text = activity?.title
@@ -126,21 +130,22 @@ class ActivityTableVC: UITableViewController {
     }
     
     func getActivity(at indexPath: IndexPath) -> Activity? {
-        return activities[indexPath.row]
-    }
-    
-    //Nested array, each subarray is for a section
-    func getDisplayIds() -> [[ActivityId]] {
-        return [["EgGiWaHiEKWYnaGW6cR3"]]
+        return activities[indexPath.section][indexPath.row]
     }
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return displayIds.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return activities.count
+        return displayIds[section].count
+    }
+    
+    //Must call loadData() once displayIds is set
+    func fetchAndLoadActivities(){
+        displayIds = [["EgGiWaHiEKWYnaGW6cR3"], ["6nnWmZxFFcZiEiEOr1b1"]]
+        loadData()
     }
 }
 
