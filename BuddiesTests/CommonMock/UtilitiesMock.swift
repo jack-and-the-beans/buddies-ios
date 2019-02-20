@@ -30,6 +30,7 @@ class MockURLSession: URLSession {
 class MockStorageManager: StorageManager {
     var downloadFileCalls = 0
     var getSavedImageCalls = 0
+    var getImageCalls = 0
     var shouldFindSavedImage = false
     
     
@@ -51,4 +52,10 @@ class MockStorageManager: StorageManager {
             return UIImage()
         } else { return nil }
     }
+    
+    override func getImage(imageUrl: String, localFileName: String, session providedSession: URLSession?, callback: @escaping ((UIImage) -> Void)) {
+        getImageCalls += 1
+        callback(UIImage())
+    }
 }
+
