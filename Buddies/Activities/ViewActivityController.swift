@@ -11,16 +11,21 @@ import FirebaseAuth
 
 class ViewActivityController: UIViewController {
     var stopListeningToActivity: Canceler?
+    private var descriptionController: ActivityDescriptionController? = nil
+    private var chatController: ActivityChatController? = nil
     
+    @IBOutlet weak var contentArea: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loadWith()
+    }
+    @IBOutlet weak var navTitleLabel: UINavigationItem!
+    
+    @IBAction func onBackPress(_ sender: Any) {
+        self.dismiss(animated: true)
     }
     
-//    func setCornerRadius(to radiusValue: Float) {
-//        joinButton.layer.cornerRadius = CGFloat(radiusValue);
-//    }
-
-    @IBAction func onReportTap(_ sender: UIBarButtonItem) {
+    @IBAction func onReportTap(_ sender: Any) {
         let alert = UIAlertController(title: "Report", message: "Why do you want to report this?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             switch action.style{
@@ -52,19 +57,37 @@ class ViewActivityController: UIViewController {
             self.render(for: activity, withStatus: status)
         }
     }
-    
-    // Renders the activity UI stuff:
+
+    // Renders the activity UI stuff. Can be called multiple times.
     func render(for activity: Activity, withStatus memberStatus: MemberStatus) {
-        switch memberStatus {
-        case .member:
-            print("member")
-        case .owner:
-            print("owner")
-        default:
-            print("public")
+        navTitleLabel.title = activity.title
+        if (memberStatus == .none) {
+            if (descriptionController == nil) {
+                descriptionController = ActivityDescriptionController()
+                let descriptionView = UINib(nibName: "ActivityDescription", bundle: nil).instantiate(withOwner: descriptionController, options: nil)[0] as! UIView
+                contentArea.addSubview(descriptionView)
+                descriptionView.bindFrameToSuperviewBounds()
+            }
+            let topic = Topic(id: "hi", name: "HELLO", image: nil)
+            let topic2 = Topic(id: "2", name: "HELLO@21", image: nil)
+            let user1 = User(name: "NOAH ALLEN")
+            let user2 = User(name: "NOAH ALLEN2")
+            descriptionController?.render(withActivity: activity, withUsers: [user1, user2], withMemberStatus: memberStatus, withTopics: [topic, topic2])
+        } else {
+            // @TODO: remove existing subviews
+            if(chatController == nil) {
+                chatController = ActivityChatController()
+                let chatView = UINib(nibName: "ActivityChat", bundle: nil).instantiate(withOwner: chatController, options: nil)[0] as! UIView
+                contentArea.addSubview(chatView)
+                chatView.bindFrameToSuperviewBounds()
+            }
+            chatController?.render()
         }
     }
+    
+    
 }
 
 // owner (leave / delete / kick user)
 // member (leave )
+//

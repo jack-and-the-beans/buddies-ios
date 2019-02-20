@@ -8,23 +8,72 @@
 
 import UIKit
 
-class ActivityDescriptionController: UIViewController {
+class ActivityDescriptionController: UIView, UICollectionViewDataSource {
+    @IBOutlet var contentView: UIView!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
 
-        // Do any additional setup after loading the view.
+    @IBOutlet weak var joinButton: UIButton!
+
+    @IBOutlet weak var topicsArea: UICollectionView!
+
+    @IBOutlet weak var usersArea: UICollectionView!
+
+    var topics: [Topic] = []
+    var users: [User] = []
+
+    var memberStatus: MemberStatus = .none
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func registerCollectionViews () {
+        self.topicsArea.dataSource = self
+        self.usersArea.dataSource = self
+        self.topicsArea.register(UINib.init(nibName: "TopicCollectionCell", bundle: nil), forCellWithReuseIdentifier: "topic_cell")
+        self.usersArea.register(UINib.init(nibName: "UserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
     }
-    */
 
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//    }
+    
+    func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic] ) {
+        registerCollectionViews()
+        joinButton?.layer.cornerRadius = 5
+        self.locationLabel.text = "Location"
+        self.titleLabel.text = activity.title
+        self.descriptionLabel.text = activity.description
+        self.dateLabel.text = activity.dateCreated.dateValue().calendarString(relativeTo: Date())
+        self.topics = topics
+        self.users = users
+        self.memberStatus = status
+        self.topicsArea.reloadData()
+        self.usersArea.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if (collectionView === self.topicsArea) {
+            return topics.count
+        } else {
+            return users.count
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if (collectionView === self.topicsArea) {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "topic_cell", for: indexPath) as! TopicCollectionCell
+            let topic = topics[indexPath.row]
+            cell.render(withTopic: topic)
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "user_cell", for: indexPath) as! UserCollectionCell
+            cell.render(withUser: users[indexPath.row], shouldRemoveUser: self.memberStatus == .owner)
+            return cell
+        }
+    }
 }

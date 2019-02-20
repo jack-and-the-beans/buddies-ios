@@ -89,6 +89,13 @@
 		A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */; };
 		B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
 		B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */; };
+		B6428EEF221DB5130052E469 /* ActivityDescription.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6428EEE221DB5130052E469 /* ActivityDescription.xib */; };
+		B6428EF1221DB51D0052E469 /* ActivityChat.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6428EF0221DB51D0052E469 /* ActivityChat.xib */; };
+		B6428EF5221DD42F0052E469 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6428EF4221DD42F0052E469 /* UIView.swift */; };
+		B6428EFC221DEB720052E469 /* TopicCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6428EFA221DEB720052E469 /* TopicCollectionCell.swift */; };
+		B6428EFD221DEB720052E469 /* TopicCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6428EFB221DEB720052E469 /* TopicCollectionCell.xib */; };
+		B6428F00221DEC0B0052E469 /* UserCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6428EFE221DEC0B0052E469 /* UserCollectionCell.swift */; };
+		B6428F01221DEC0B0052E469 /* UserCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6428EFF221DEC0B0052E469 /* UserCollectionCell.xib */; };
 		B688B477221C74610031A364 /* ViewActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B688B476221C74610031A364 /* ViewActivity.storyboard */; };
 		B688B479221C789B0031A364 /* ViewActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B478221C789B0031A364 /* ViewActivityController.swift */; };
 		B688B47B221CCB6D0031A364 /* ActivityDescriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B47A221CCB6D0031A364 /* ActivityDescriptionController.swift */; };
@@ -198,6 +205,13 @@
 		A9E8BF5F220239EE00C05F2C /* UIApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationTests.swift; sourceTree = "<group>"; };
 		A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControlTests.swift; sourceTree = "<group>"; };
 		B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaSearch.swift; sourceTree = "<group>"; };
+		B6428EEE221DB5130052E469 /* ActivityDescription.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityDescription.xib; sourceTree = "<group>"; };
+		B6428EF0221DB51D0052E469 /* ActivityChat.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityChat.xib; sourceTree = "<group>"; };
+		B6428EF4221DD42F0052E469 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		B6428EFA221DEB720052E469 /* TopicCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionCell.swift; sourceTree = "<group>"; };
+		B6428EFB221DEB720052E469 /* TopicCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopicCollectionCell.xib; sourceTree = "<group>"; };
+		B6428EFE221DEC0B0052E469 /* UserCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionCell.swift; sourceTree = "<group>"; };
+		B6428EFF221DEC0B0052E469 /* UserCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCollectionCell.xib; sourceTree = "<group>"; };
 		B688B476221C74610031A364 /* ViewActivity.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ViewActivity.storyboard; sourceTree = "<group>"; };
 		B688B478221C789B0031A364 /* ViewActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewActivityController.swift; sourceTree = "<group>"; };
 		B688B47A221CCB6D0031A364 /* ActivityDescriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDescriptionController.swift; sourceTree = "<group>"; };
@@ -295,10 +309,16 @@
 			isa = PBXGroup;
 			children = (
 				4544D3022214E90E007CB73D /* ActivityTable.storyboard */,
+				B6428EEE221DB5130052E469 /* ActivityDescription.xib */,
+				B6428EF0221DB51D0052E469 /* ActivityChat.xib */,
+				B6428EFF221DEC0B0052E469 /* UserCollectionCell.xib */,
+				B6428EFB221DEB720052E469 /* TopicCollectionCell.xib */,
 				4544D3042214E93F007CB73D /* ActivityCell.swift */,
 				B688B47A221CCB6D0031A364 /* ActivityDescriptionController.swift */,
 				B688B478221C789B0031A364 /* ViewActivityController.swift */,
 				B688B47C221CCBAE0031A364 /* ActivityChatController.swift */,
+				B6428EFE221DEC0B0052E469 /* UserCollectionCell.swift */,
+				B6428EFA221DEB720052E469 /* TopicCollectionCell.swift */,
 				457F576A2218C54C00F27BFE /* ActivityTableVC.swift */,
 			);
 			path = Activities;
@@ -500,6 +520,7 @@
 			children = (
 				58FC665522188D8C00D13723 /* DateInterval.swift */,
 				A9E8BF592202055B00C05F2C /* UIApplication.swift */,
+				B6428EF4221DD42F0052E469 /* UIView.swift */,
 				A9E8BF5D22022F3400C05F2C /* UIVIewController.swift */,
 			);
 			path = Extensions;
@@ -690,6 +711,10 @@
 			files = (
 				4594D96C221D0A540082E8DA /* Keys.plist in Resources */,
 				58EF8DC22208BE5E00872770 /* Login.storyboard in Resources */,
+				B6428EF1221DB51D0052E469 /* ActivityChat.xib in Resources */,
+				B6428EEF221DB5130052E469 /* ActivityDescription.xib in Resources */,
+				B6428EFD221DEB720052E469 /* TopicCollectionCell.xib in Resources */,
+				B6428F01221DEC0B0052E469 /* UserCollectionCell.xib in Resources */,
 				58EF8DC32208BE5E00872770 /* Topics.storyboard in Resources */,
 				58EF8DC12208BE5E00872770 /* Main.storyboard in Resources */,
 				58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */,
@@ -816,6 +841,7 @@
 				58EF8D8D2208A24700872770 /* DiscoverVC.swift in Sources */,
 				B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */,
 				58EF8D8E2208A24700872770 /* MyActivitiesVC.swift in Sources */,
+				B6428EFC221DEB720052E469 /* TopicCollectionCell.swift in Sources */,
 				58AAA6752203F52E00AA538A /* Initialization.swift in Sources */,
 				58EF8D962208A25F00872770 /* TopicCell.swift in Sources */,
 				58EF8D952208A25F00872770 /* TopicCollection.swift in Sources */,
@@ -828,11 +854,13 @@
 				45DA93A8220957CE0064CBEF /* Testing.swift in Sources */,
 				58EF8D972208A25F00872770 /* Topic.swift in Sources */,
 				58EF8D852208A1DF00872770 /* FAB.swift in Sources */,
+				B6428F00221DEC0B0052E469 /* UserCollectionCell.swift in Sources */,
 				A850ED5D2203934200DBF1A6 /* NotificationService.swift in Sources */,
 				A9E8BF4A2201F9D700C05F2C /* UnderlinedTextbox.swift in Sources */,
 				A9E8BF45220143A300C05F2C /* AuthHandler.swift in Sources */,
 				58EF8D992208A25F00872770 /* TopicsVC.swift in Sources */,
 				582D0FA622035C3D004F71E3 /* FirestoreManager.swift in Sources */,
+				B6428EF5221DD42F0052E469 /* UIView.swift in Sources */,
 				58EF8D982208A25F00872770 /* TopicLayout.swift in Sources */,
 				A9E8BF5A2202055B00C05F2C /* UIApplication.swift in Sources */,
 				450779DE2210D7B00008D0DF /* RangeSeekSliderDelegate.swift in Sources */,
