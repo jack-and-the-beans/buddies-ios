@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ActivityDescriptionController: UIView, UICollectionViewDataSource {
+class ActivityDescriptionController: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     @IBOutlet var contentView: UIView!
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -74,9 +74,27 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if (collectionView == self.topicsArea) {
+            let margin = 20
+            let height = CGFloat(40)
+            let collectionWidth = self.contentView.frame.width - CGFloat(margin * 2)
+            if (self.topics.count > 4) {
+                let base = collectionWidth / 2
+                return CGSize(width: base, height: height)
+            } else {
+                let cellWidth = collectionWidth / 2 - 10
+                return CGSize(width: cellWidth, height: height)
+            }
+        } else {
+            return CGSize(width: 270, height: 50)
+        }
+    }
+
     // Registers the nibs and data sources for the users and topics
     func registerCollectionViews () {
         self.topicsArea.dataSource = self
+        self.topicsArea.delegate = self
         self.usersArea.dataSource = self
         self.topicsArea.register(UINib.init(nibName: "TopicCollectionCell", bundle: nil), forCellWithReuseIdentifier: "topic_cell")
         self.usersArea.register(UINib.init(nibName: "UserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
