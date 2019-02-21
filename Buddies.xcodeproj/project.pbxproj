@@ -17,7 +17,6 @@
 		457F576B2218C54C00F27BFE /* ActivityTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F576A2218C54C00F27BFE /* ActivityTableVC.swift */; };
 		458CE72C220D36DC00012637 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CE72B220D36DC00012637 /* SearchTextField.swift */; };
 		458CE72E220D472200012637 /* MapItemSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CE72D220D472200012637 /* MapItemSearchResult.swift */; };
-		4594D96C221D0A540082E8DA /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4594D96B221D0A540082E8DA /* Keys.plist */; };
 		45DA93A8220957CE0064CBEF /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DA93A7220957CE0064CBEF /* Testing.swift */; };
 		45DA93A9220957CE0064CBEF /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DA93A7220957CE0064CBEF /* Testing.swift */; };
 		45FED0AD220A5F0300B90C3B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45FED0AC220A5F0300B90C3B /* Profile.storyboard */; };
@@ -62,6 +61,7 @@
 		58FC665422188D3B00D13723 /* TopicCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6762203FD3A00AA538A /* TopicCollectionTests.swift */; };
 		58FC665722188E0E00D13723 /* DateInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC665522188D8C00D13723 /* DateInterval.swift */; };
 		58FC665922188E3F00D13723 /* DateIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC665822188E3F00D13723 /* DateIntervalTests.swift */; };
+		A809B9DE221F598C0071067B /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4594D96B221D0A540082E8DA /* Keys.plist */; };
 		A81722B9221F1AA700DF6935 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81722B8221F1AA700DF6935 /* UIImageView.swift */; };
 		A81722BB221F24AC00DF6935 /* ActivityUserCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A81722BA221F24AB00DF6935 /* ActivityUserCollectionCell.xib */; };
 		A81722BD221F254E00DF6935 /* ActivityTopicCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A81722BC221F254E00DF6935 /* ActivityTopicCollectionCell.xib */; };
@@ -718,7 +718,6 @@
 				B6428EEF221DB5130052E469 /* ActivityDescription.xib in Resources */,
 				58EF8DC32208BE5E00872770 /* Topics.storyboard in Resources */,
 				A81722BB221F24AC00DF6935 /* ActivityUserCollectionCell.xib in Resources */,
-				B6337F422215E48B00158549 /* Keys.plist in Resources */,
 				58EF8DC12208BE5E00872770 /* Main.storyboard in Resources */,
 				58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */,
 				A850ED612203A12900DBF1A6 /* GoogleService-Info.plist in Resources */,
@@ -729,6 +728,7 @@
 				B688B477221C74610031A364 /* ViewActivity.storyboard in Resources */,
 				B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */,
 				58A5A40522025B6400E0BF38 /* bean.jpg in Resources */,
+				A809B9DE221F598C0071067B /* Keys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -59,6 +59,14 @@ class ViewActivityController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func joinActivity() -> Void {
+        let uid = Auth.auth().currentUser!.uid
+        guard let activity = self.curActivity, let status = self.curMemberStatus else { return }
+        if (status == .none) {
+            activity.members.append(uid)
+        }
+    }
+
     // Handles data based on the given activity ID:
     // NOTE WELL: this function gets called during the parent segue prepare,
     // BEFORE viewDidLoad. As a result, the actual view elements may not
@@ -125,7 +133,7 @@ class ViewActivityController: UIViewController {
                 contentArea.addSubview(descriptionView)
                 descriptionView.bindFrameToSuperviewBounds()
             }
-            descriptionController?.render(withActivity: activity, withUsers: users, withMemberStatus: memberStatus, withTopics: topics)
+            descriptionController?.render(withActivity: activity, withUsers: users, withMemberStatus: memberStatus, withTopics: topics, onJoin: self.joinActivity)
         } else {
             // @TODO: remove existing subviews
             if (chatController == nil) {

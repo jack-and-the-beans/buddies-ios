@@ -22,11 +22,15 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     @IBOutlet weak var usersArea: UICollectionView!
 
+    @IBAction func onJoinTap(_ sender: Any) {
+        self.joinActivity?()
+    }
+
     var topics: [Topic] = []
     var users: [User] = []
-
     var memberStatus: MemberStatus = .none
-    
+    var joinActivity: (() -> Void)?
+
     var curActivity: Activity?
 
     override func awakeFromNib() {
@@ -34,7 +38,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     }
 
     // Refreshes the UI elements with new data:
-    func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic] ) {
+    func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic], onJoin: @escaping () -> Void ) {
         self.curActivity = activity
         registerCollectionViews()
         joinButton?.layer.cornerRadius = 5
@@ -45,6 +49,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.dateLabel.text = activity.timeRange.rangePhrase(relativeTo: Date()).capitalized
         self.topics = topics
         self.users = users
+        self.joinActivity = onJoin
         self.memberStatus = status
         self.topicsArea.reloadData()
         self.usersArea.reloadData()
