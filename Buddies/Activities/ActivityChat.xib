@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ActivityChatController" customModule="Buddies" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -22,6 +22,9 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cIp-m8-MJf">
                             <rect key="frame" x="168.5" y="15" width="38" height="30"/>
                             <state key="normal" title="Show"/>
+                            <connections>
+                                <action selector="onShowDetailsTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="Tbb-xw-Wd3"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -31,14 +34,26 @@
                         <constraint firstAttribute="height" constant="60" id="mdY-3u-hPu"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3wL-5T-rRh">
+                    <rect key="frame" x="166.5" y="323" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="6oA-Uh-7mE" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="MeV-GL-Az0"/>
                 <constraint firstItem="6oA-Uh-7mE" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="SEt-OA-AIe"/>
+                <constraint firstItem="3wL-5T-rRh" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="kdN-dO-2SK"/>
                 <constraint firstItem="6oA-Uh-7mE" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="roY-3C-wju"/>
+                <constraint firstItem="3wL-5T-rRh" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="tGB-fW-Zoh"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="statusLabel" destination="3wL-5T-rRh" id="xRY-RZ-nFE"/>
+                <outlet property="topActivityView" destination="6oA-Uh-7mE" id="WGX-vr-w11"/>
+            </connections>
         </view>
     </objects>
 </document>

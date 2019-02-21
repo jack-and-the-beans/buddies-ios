@@ -11,6 +11,7 @@ import FirebaseAuth
 
 class ViewActivityController: UIViewController {
     private var stopListeningToActivity: Canceler?
+    private var stopListeningToUsers: Canceler?
     private var descriptionController: ActivityDescriptionController?
     private var chatController: ActivityChatController?
     
@@ -21,10 +22,6 @@ class ViewActivityController: UIViewController {
     private var activityUsers: [User]?
 
     private var viewHasMounted = false
-
-    var users         = [UserId: User]()
-    var userImages    = [UserId: UIImage]()
-    var userCancelers = [ActivityId: [Canceler]]()
     
     @IBOutlet weak var contentArea: UIView!
 
@@ -36,9 +33,9 @@ class ViewActivityController: UIViewController {
 
     deinit {
         self.stopListeningToActivity?()
+        self.stopListeningToUsers?()
     }
 
-    @IBOutlet weak var navTitleLabel: UINavigationItem!
     
     @IBAction func onBackPress(_ sender: Any) {
         self.dismiss(animated: true)
@@ -75,43 +72,29 @@ class ViewActivityController: UIViewController {
 
         self.stopListeningToActivity = dataAccess.useActivity(id: id) { activity in
             self.curActivity = activity
-            self.activityUsers = self.getUsers(from: activity.members)
+            self.getUsers(from: activity.members)
             self.activityTopics = self.getTopics(from: activity.topicIds)
             self.curMemberStatus = activity.getMemberStatus(of: uid)
             self.render()
         }
     }
 
-    func getUsers(from userIds: [String]) -> [User] {
-        return []
-    }
+    func getUsers(from newUserIds: [String]) {
+        let existingIds = self.activityUsers?.map { $0.uid }
+        let usersHaveChanged = existingIds?.sorted() != newUserIds.sorted()
 
-//    func loadUser(uid: UserId,
-//                  dataAccessor: DataAccessor = DataAccessor.instance,
-//                  storageManager: StorageManager = StorageManager.shared,
-//                  onLoaded: (()->Void)?) {
-//
-//        let canceler = dataAccessor.useUser(id: uid) { user in
-//            self.users[user.uid] = user
-//            self.loadUserImage(user: user, storageManager: storageManager, onLoaded: onLoaded)
-//            onLoaded?()
-//        }
-//        userCancelers[uid]?.append(canceler)
-//    }
-//
-//    func loadUserImage(user: User,
-//                       storageManager: StorageManager = StorageManager.shared,
-//                       onLoaded: (()->Void)?) {
-//
-//        if userImages[user.uid] != nil { return }
-//
-//        storageManager.getImage(
-//            imageUrl: user.imageUrl,
-//            localFileName: user.uid) { image in
-//                self.userImages[user.uid] = image
-//                onLoaded?()
-//        }
-//    }
+        // If there are different users from the activity,
+        // stop listening to the existing users and create
+        // a new listener with the changed user ids.
+        if (usersHaveChanged) {
+            self.stopListeningToUsers?()
+            self.stopListeningToUsers = DataAccessor.instance.useUsers(from: newUserIds) { users in
+                // re-render when the users change:
+                self.activityUsers = users
+                self.render()
+            }
+        }
+    }
 
     func getTopics(from topicIds: [String]) -> [Topic] {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -135,7 +118,6 @@ class ViewActivityController: UIViewController {
             let topics = self.activityTopics,
             let users = self.activityUsers else { return }
 
-        navTitleLabel.title = activity.title
         if (memberStatus == .none) {
             if (descriptionController == nil) {
                 descriptionController = ActivityDescriptionController()
@@ -152,9 +134,7 @@ class ViewActivityController: UIViewController {
                 contentArea.addSubview(chatView)
                 chatView.bindFrameToSuperviewBounds()
             }
-            chatController?.render()
+            chatController?.refreshData(with: activity, memberStatus: memberStatus)
         }
     }
-    
-    
 }

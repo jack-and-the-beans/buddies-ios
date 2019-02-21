@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Title-->
+        <!--Activity-->
         <scene sceneID="Eus-47-I3a">
             <objects>
                 <viewController id="cD4-BZ-J7g" customClass="ViewActivityController" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
@@ -32,7 +32,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rsa-8a-YMU"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="fMO-fz-Z2Y">
+                    <navigationItem key="navigationItem" title="Activity" id="fMO-fz-Z2Y">
                         <barButtonItem key="leftBarButtonItem" title="Close" id="n4L-qX-5lO">
                             <connections>
                                 <action selector="onBackPress:" destination="cD4-BZ-J7g" id="z7Q-Oa-s6e"/>
@@ -47,7 +47,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="contentArea" destination="gkP-p0-4aG" id="5oK-dY-hhu"/>
-                        <outlet property="navTitleLabel" destination="fMO-fz-Z2Y" id="9sy-Ft-cTP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="74C-z0-LJt" userLabel="First Responder" sceneMemberID="firstResponder"/>

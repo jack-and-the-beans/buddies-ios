@@ -9,19 +9,39 @@
 import UIKit
 
 class ActivityChatController: UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
+    private var showActivityDetails = false
+    private var activity: Activity?
+    private var memberStatus: MemberStatus?
+
+    @IBOutlet weak var topActivityView: UIView!
+    @IBOutlet weak var statusLabel: UILabel!
+
+    @IBAction func onShowDetailsTap(_ sender: Any) {
+        self.showActivityDetails = !self.showActivityDetails
+        render()
     }
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        render()
     }
-    private func commonInit() {
-        // Do stuff here
+    
+    func refreshData(with activity: Activity?, memberStatus: MemberStatus?) {
+        self.activity = activity
+        self.memberStatus = memberStatus
+        render()
     }
     
     func render() {
-        
+        guard let _ = self.activity, let status = self.memberStatus else { return }
+        if (showActivityDetails) {
+            self.topActivityView.bindFrameToSuperviewBounds()
+        }
+        self.statusLabel?.text = status == .owner ? "Owner" : "Member"
+    }
+
+    func animateView() {
+        UIView.animate(withDuration: 1.5) {
+        }
     }
 }

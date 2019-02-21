@@ -26,6 +26,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     var users: [User] = []
 
     var memberStatus: MemberStatus = .none
+    
+    var curActivity: Activity?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,6 +35,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     // Refreshes the UI elements with new data:
     func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic] ) {
+        self.curActivity = activity
         registerCollectionViews()
         joinButton?.layer.cornerRadius = 5
         self.locationLabel.text = "Location"
@@ -61,13 +64,16 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     // Returns the correct cell for users and topics
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if (collectionView === self.topicsArea) {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "topic_cell", for: indexPath) as! TopicCollectionCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "topic_cell", for: indexPath) as! ActivityTopicCollectionCell
             let topic = topics[indexPath.row]
             cell.render(withTopic: topic)
             return cell
         } else if (collectionView === self.usersArea){
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "user_cell", for: indexPath) as! UserCollectionCell
-            cell.render(withUser: users[indexPath.row], shouldRemoveUser: self.memberStatus == .owner)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "user_cell", for: indexPath) as! ActivityUserCollectionCell
+            let user = users[indexPath.row]
+            let isIndividualOwner = self.curActivity?.getMemberStatus(of: user.uid) == .owner
+            let isCurUserOwner = self.memberStatus == .owner
+            cell.render(withUser: users[indexPath.row], isCurUserOwner: isCurUserOwner, isIndividualOwner: isIndividualOwner)
             return cell
         } else {
             return UICollectionViewCell()
@@ -96,7 +102,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.topicsArea.dataSource = self
         self.topicsArea.delegate = self
         self.usersArea.dataSource = self
-        self.topicsArea.register(UINib.init(nibName: "TopicCollectionCell", bundle: nil), forCellWithReuseIdentifier: "topic_cell")
-        self.usersArea.register(UINib.init(nibName: "UserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
+        self.topicsArea.register(UINib.init(nibName: "ActivityTopicCollectionCell", bundle: nil), forCellWithReuseIdentifier: "topic_cell")
+        self.usersArea.register(UINib.init(nibName: "ActivityUserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TopicCollectionCell: UICollectionViewCell {
+class ActivityTopicCollectionCell: UICollectionViewCell {
 
     @IBOutlet var topicButton: UIButton!
     func render(withTopic topic: Topic) {

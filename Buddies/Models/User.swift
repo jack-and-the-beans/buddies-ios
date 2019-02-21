@@ -19,6 +19,8 @@ protocol UserInvalidationDelegate {
 class User {
     let delegate: UserInvalidationDelegate?
     
+    var image : UIImage?
+
     // MARK: Immutable Properties
     let uid : UserId
     let email : String?

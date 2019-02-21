@@ -1,5 +1,5 @@
 //
-//  UserCollectionCell.swift
+//  ActivityUserCollectionCell.swift
 //  Buddies
 //
 //  Created by Noah Allen on 2/20/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserCollectionCell: UICollectionViewCell {
+class ActivityUserCollectionCell: UICollectionViewCell {
 
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
@@ -17,15 +17,21 @@ class UserCollectionCell: UICollectionViewCell {
     @IBAction func onRemoveUser(_ sender: UIButton) {
         print("CLICKED REMOVE USER")
     }
-    func render(withUser user: User, shouldRemoveUser: Bool) {
+
+    func render(withUser user: User, isCurUserOwner: Bool, isIndividualOwner: Bool) {
         userName.text = user.name
-        if (!shouldRemoveUser) {
+        if (isIndividualOwner) {
+            userName.text?.append(" (owner)")
+        }
+        if (!isCurUserOwner) {
             removeButton.removeFromSuperview()
         }
+        userImage.image = user.image
+        userImage.makeCircle()
     }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
 }
