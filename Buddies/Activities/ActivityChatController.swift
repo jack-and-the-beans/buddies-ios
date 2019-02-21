@@ -13,12 +13,12 @@ class ActivityChatController: UIView {
     private var activity: Activity?
     private var memberStatus: MemberStatus?
 
+    @IBOutlet weak var chatAreaView: UIView!
     @IBOutlet weak var topActivityView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
 
     @IBAction func onShowDetailsTap(_ sender: Any) {
-        self.showActivityDetails = !self.showActivityDetails
-        render()
+        animateView()
     }
 
     override func awakeFromNib() {
@@ -41,7 +41,11 @@ class ActivityChatController: UIView {
     }
 
     func animateView() {
-        UIView.animate(withDuration: 1.5) {
+        self.showActivityDetails = !self.showActivityDetails
+        let viewHeight = showActivityDetails ? chatAreaView.frame.height : 80
+        let viewWidth = chatAreaView.frame.width
+        UIView.animate(withDuration: 0.5) {
+            self.topActivityView.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
         }
     }
 }
