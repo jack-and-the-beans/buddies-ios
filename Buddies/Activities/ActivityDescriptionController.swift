@@ -33,10 +33,6 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     var curActivity: Activity?
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
     // Refreshes the UI elements with new data:
     func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic], onJoin: @escaping () -> Void ) {
         self.curActivity = activity

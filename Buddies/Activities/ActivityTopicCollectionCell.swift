@@ -15,9 +15,4 @@ class ActivityTopicCollectionCell: UICollectionViewCell {
         self.topicButton.layer.cornerRadius = 5
         self.topicButton.setTitle(topic.name, for: .normal)
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 }

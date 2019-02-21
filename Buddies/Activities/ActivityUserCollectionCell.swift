@@ -29,9 +29,4 @@ class ActivityUserCollectionCell: UICollectionViewCell {
         userImage.image = user.image
         userImage.makeCircle()
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 }
