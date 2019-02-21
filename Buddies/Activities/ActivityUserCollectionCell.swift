@@ -24,7 +24,7 @@ class ActivityUserCollectionCell: UICollectionViewCell {
             userName.text?.append(" (owner)")
         }
         if (!isCurUserOwner) {
-            removeButton.removeFromSuperview()
+            removeButton?.removeFromSuperview()
         }
         userImage.image = user.image
         userImage.makeCircle()
