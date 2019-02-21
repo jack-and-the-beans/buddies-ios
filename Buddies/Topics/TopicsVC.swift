@@ -16,10 +16,8 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
     var topicCollection: TopicCollection!
     
     var selectedTopics = [Topic]()
-    
-    var stopListeningToUser: Canceler?
-    var user: User?
-  
+
+      
     @IBAction func toggleSelected(_ sender: ToggleButton) {
         guard let cell = sender.superview?.superview?.superview as? TopicCell,
             let topic = cell.topic else { return }
@@ -29,22 +27,10 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
         } else {
             selectedTopics = selectedTopics.filter({ $0.id != topic.id })
         }
-        user?.favoriteTopics = selectedTopics.map { $0.id }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        topicCollection = appDelegate.topicCollection
-        topicCollection.delegate = self
-        
         collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
-    
-        stopListeningToUser = stopListeningToUser ?? loadProfileData()
-    }
-    
-    deinit {
-        stopListeningToUser?()
     }
     
     func updateTopicImages() {
@@ -74,16 +60,6 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
             let indexPath = collectionView.indexPathsForSelectedItems {
             dest.title = topicCollection.topics[indexPath[0].row].name
             dest.topicId = topicCollection.topics[indexPath[0].row].id
-        }
-    }
-    
-    func loadProfileData(uid: String = Auth.auth().currentUser!.uid,
-                         dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
-        
-        return dataAccess.useUser(id: uid) { user in
-            self.user = user
-            self.selectedTopics = (self.topicCollection.topics).filter { user.favoriteTopics.contains($0.id) }
-            self.collectionView.reloadData()
         }
     }
     
