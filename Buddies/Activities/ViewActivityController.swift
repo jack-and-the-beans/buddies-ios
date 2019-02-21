@@ -14,6 +14,10 @@ class ViewActivityController: UIViewController {
     private var descriptionController: ActivityDescriptionController? = nil
     private var chatController: ActivityChatController? = nil
     
+    var users         = [UserId: User]()
+    var userImages    = [UserId: UIImage]()
+    var userCancelers = [ActivityId: [Canceler]]()
+    
     @IBOutlet weak var contentArea: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,18 +52,64 @@ class ViewActivityController: UIViewController {
         self.stopListeningToActivity = loadActivity(activityId)
     }
     
-    // Loads the data needed for the activity:
+    // Loads all of the data needed for the view:
     func loadActivity(uid: String = Auth.auth().currentUser!.uid,
                       _ activityId: String,
                       dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
         return dataAccess.useActivity(id: activityId){ activity in
             let status = activity.getMemberStatus(of: uid)
-            self.render(for: activity, withStatus: status)
+            let topics = self.getTopics(fromIds: activity.topicIds)
+            let users = self.getUsers(fromIds: activity.members)
+            self.render(for: activity, withStatus: status, withTopics: topics, withUsers: users)
         }
     }
 
-    // Renders the activity UI stuff. Can be called multiple times.
-    func render(for activity: Activity, withStatus memberStatus: MemberStatus) {
+    func getUsers(fromIds userIds: [String]) -> [User] {
+        
+    }
+
+    func loadUser(uid: UserId,
+                  dataAccessor: DataAccessor = DataAccessor.instance,
+                  storageManager: StorageManager = StorageManager.shared,
+                  onLoaded: (()->Void)?) {
+        
+        let canceler = dataAccessor.useUser(id: uid) { user in
+            self.users[user.uid] = user
+            self.loadUserImage(user: user, storageManager: storageManager, onLoaded: onLoaded)
+            onLoaded?()
+        }
+        userCancelers[uid]?.append(canceler)
+    }
+
+    func loadUserImage(user: User,
+                       storageManager: StorageManager = StorageManager.shared,
+                       onLoaded: (()->Void)?) {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "activityCell", for: indexPath) as! ActivityCell
+        if userImages[user.uid] != nil { return }
+        
+        storageManager.getImage(
+            imageUrl: user.imageUrl,
+            localFileName: user.uid) { image in
+                self.userImages[user.uid] = image
+                onLoaded?()
+        }
+    }
+
+    func getTopics(fromIds topicIds: [String]) -> [Topic] {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        var neededTopics: [Topic] = []
+        let topicsArr = appDelegate.topicCollection.topics
+        for topic in topicsArr {
+            if (topicIds.contains(topic.id)) {
+                neededTopics.append(topic)
+            }
+        }
+        return neededTopics
+    }
+
+    // Renders the activity UI stuff given the data.
+    func render(for activity: Activity, withStatus memberStatus: MemberStatus, withTopics topics: [Topic], withUsers users: [User]) {
         navTitleLabel.title = activity.title
         if (memberStatus == .none) {
             if (descriptionController == nil) {
@@ -68,17 +118,7 @@ class ViewActivityController: UIViewController {
                 contentArea.addSubview(descriptionView)
                 descriptionView.bindFrameToSuperviewBounds()
             }
-            let topic = Topic(id: "hi", name: "Nature is a cool but big topic", image: nil)
-            let topic2 = Topic(id: "2", name: "AAB", image: nil)
-            let topic3 = Topic(id: "2", name: "Nature", image: nil)
-            let topic4 = Topic(id: "2", name: "Coding Camp", image: nil)
-            let topic5 = Topic(id: "2", name: "Smash Bros (tm)", image: nil)
-            let topic6 = Topic(id: "2", name: "Abcd", image: nil)
-            let topic7 = Topic(id: "2", name: "69", image: nil)
-
-            let user1 = User(name: "NOAH ALLEN")
-            let user2 = User(name: "NOAH ALLEN2")
-            descriptionController?.render(withActivity: activity, withUsers: [user1, user2], withMemberStatus: memberStatus, withTopics: [topic, topic2, topic3, topic4, topic5, topic6, topic7, topic7])
+            descriptionController?.render(withActivity: activity, withUsers: users, withMemberStatus: memberStatus, withTopics: topics)
         } else {
             // @TODO: remove existing subviews
             if(chatController == nil) {
@@ -93,7 +133,3 @@ class ViewActivityController: UIViewController {
     
     
 }
-
-// owner (leave / delete / kick user)
-// member (leave )
-//
