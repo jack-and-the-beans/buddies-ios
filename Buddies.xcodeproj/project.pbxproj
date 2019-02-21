@@ -114,6 +114,7 @@
 		4515BC23220BA95F0027B415 /* CreateActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityVC.swift; sourceTree = "<group>"; };
 		4544D3022214E90E007CB73D /* ActivityTable.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ActivityTable.storyboard; sourceTree = "<group>"; };
 		4544D3042214E93F007CB73D /* ActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
+		4574D3A9221F4E0800DDFD0F /* Keys.plist.enc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Keys.plist.enc; sourceTree = "<group>"; };
 		457F576A2218C54C00F27BFE /* ActivityTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableVC.swift; sourceTree = "<group>"; };
 		458CE72B220D36DC00012637 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		458CE72D220D472200012637 /* MapItemSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemSearchResult.swift; sourceTree = "<group>"; };
@@ -528,6 +529,7 @@
 			isa = PBXGroup;
 			children = (
 				4594D96B221D0A540082E8DA /* Keys.plist */,
+				4574D3A9221F4E0800DDFD0F /* Keys.plist.enc */,
 				A9BFA00F2215F36500A489A7 /* _ThirdParty */,
 				58A915BA220E30DA008C325F /* Activities */,
 				45FBF7A722095A030007DD6D /* CreateActivity */,
