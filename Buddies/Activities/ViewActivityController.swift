@@ -10,19 +10,30 @@ import UIKit
 import FirebaseAuth
 
 class ViewActivityController: UIViewController {
-    var stopListeningToActivity: Canceler?
+    private var stopListeningToActivity: Canceler?
     private var descriptionController: ActivityDescriptionController? = nil
     private var chatController: ActivityChatController? = nil
     
+    // MARK: Activity specific data which is refreshed by the updater:
+    private var curActivity: Activity? = nil
+    private var curMemberStatus: MemberStatus? = nil
+    private var activityTopics: [Topic]? = nil
+    private var activityUsers: [User]? = nil
+
+    private var viewHasMounted = false
+
     var users         = [UserId: User]()
     var userImages    = [UserId: UIImage]()
     var userCancelers = [ActivityId: [Canceler]]()
     
     @IBOutlet weak var contentArea: UIView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.loadWith()
+        viewHasMounted = true
+        self.render()
     }
+
     @IBOutlet weak var navTitleLabel: UINavigationItem!
     
     @IBAction func onBackPress(_ sender: Any) {
@@ -47,56 +58,58 @@ class ViewActivityController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    // Generates the view based on the given activity:
-    func loadWith(_ activityId: String = "EgGiWaHiEKWYnaGW6cR3") {
-        self.stopListeningToActivity = loadActivity(activityId)
-    }
-    
-    // Loads all of the data needed for the view:
-    func loadActivity(uid: String = Auth.auth().currentUser!.uid,
-                      _ activityId: String,
-                      dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
-        return dataAccess.useActivity(id: activityId){ activity in
-            let status = activity.getMemberStatus(of: uid)
-            let topics = self.getTopics(fromIds: activity.topicIds)
-            let users = self.getUsers(fromIds: activity.members)
-            self.render(for: activity, withStatus: status, withTopics: topics, withUsers: users)
+    // Handles data based on the given activity ID:
+    // NOTE WELL: this function gets called during the parent segue prepare,
+    // BEFORE viewDidLoad. As a result, the actual view elements may not
+    // be mounted in time for this function (or others) to use them.
+    func loadWith(
+        _ activityId: ActivityId? = "EgGiWaHiEKWYnaGW6cR3",
+        dataAccess: DataAccessor = DataAccessor.instance,
+        withCurrentUser uid: String = Auth.auth().currentUser!.uid
+        ) {
+        guard let id = activityId else { return }
+
+        self.stopListeningToActivity = dataAccess.useActivity(id: id) { activity in
+            self.curActivity = activity
+            self.activityUsers = self.getUsers(from: activity.members)
+            self.activityTopics = self.getTopics(from: activity.topicIds)
+            self.curMemberStatus = activity.getMemberStatus(of: uid)
+            self.render()
         }
     }
 
-    func getUsers(fromIds userIds: [String]) -> [User] {
-        
+    func getUsers(from userIds: [String]) -> [User] {
+        return []
     }
 
-    func loadUser(uid: UserId,
-                  dataAccessor: DataAccessor = DataAccessor.instance,
-                  storageManager: StorageManager = StorageManager.shared,
-                  onLoaded: (()->Void)?) {
-        
-        let canceler = dataAccessor.useUser(id: uid) { user in
-            self.users[user.uid] = user
-            self.loadUserImage(user: user, storageManager: storageManager, onLoaded: onLoaded)
-            onLoaded?()
-        }
-        userCancelers[uid]?.append(canceler)
-    }
+//    func loadUser(uid: UserId,
+//                  dataAccessor: DataAccessor = DataAccessor.instance,
+//                  storageManager: StorageManager = StorageManager.shared,
+//                  onLoaded: (()->Void)?) {
+//
+//        let canceler = dataAccessor.useUser(id: uid) { user in
+//            self.users[user.uid] = user
+//            self.loadUserImage(user: user, storageManager: storageManager, onLoaded: onLoaded)
+//            onLoaded?()
+//        }
+//        userCancelers[uid]?.append(canceler)
+//    }
+//
+//    func loadUserImage(user: User,
+//                       storageManager: StorageManager = StorageManager.shared,
+//                       onLoaded: (()->Void)?) {
+//
+//        if userImages[user.uid] != nil { return }
+//
+//        storageManager.getImage(
+//            imageUrl: user.imageUrl,
+//            localFileName: user.uid) { image in
+//                self.userImages[user.uid] = image
+//                onLoaded?()
+//        }
+//    }
 
-    func loadUserImage(user: User,
-                       storageManager: StorageManager = StorageManager.shared,
-                       onLoaded: (()->Void)?) {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "activityCell", for: indexPath) as! ActivityCell
-        if userImages[user.uid] != nil { return }
-        
-        storageManager.getImage(
-            imageUrl: user.imageUrl,
-            localFileName: user.uid) { image in
-                self.userImages[user.uid] = image
-                onLoaded?()
-        }
-    }
-
-    func getTopics(fromIds topicIds: [String]) -> [Topic] {
+    func getTopics(from topicIds: [String]) -> [Topic] {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         var neededTopics: [Topic] = []
         let topicsArr = appDelegate.topicCollection.topics
@@ -109,7 +122,16 @@ class ViewActivityController: UIViewController {
     }
 
     // Renders the activity UI stuff given the data.
-    func render(for activity: Activity, withStatus memberStatus: MemberStatus, withTopics topics: [Topic], withUsers users: [User]) {
+    func render() {
+        // Do not render until view has mounted:
+        guard viewHasMounted else { return }
+
+        // Get data for the activity:
+        guard let activity = self.curActivity,
+            let memberStatus = self.curMemberStatus,
+            let topics = self.activityTopics,
+            let users = self.activityUsers else { return }
+
         navTitleLabel.title = activity.title
         if (memberStatus == .none) {
             if (descriptionController == nil) {
@@ -121,7 +143,7 @@ class ViewActivityController: UIViewController {
             descriptionController?.render(withActivity: activity, withUsers: users, withMemberStatus: memberStatus, withTopics: topics)
         } else {
             // @TODO: remove existing subviews
-            if(chatController == nil) {
+            if (chatController == nil) {
                 chatController = ActivityChatController()
                 let chatView = UINib(nibName: "ActivityChat", bundle: nil).instantiate(withOwner: chatController, options: nil)[0] as! UIView
                 contentArea.addSubview(chatView)

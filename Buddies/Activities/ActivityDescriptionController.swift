@@ -51,8 +51,10 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (collectionView === self.topicsArea) {
             return topics.count
-        } else {
+        } else if (collectionView === self.usersArea){
             return users.count
+        } else {
+            return 0
         }
     }
     
@@ -63,10 +65,12 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource {
             let topic = topics[indexPath.row]
             cell.render(withTopic: topic)
             return cell
-        } else {
+        } else if (collectionView === self.usersArea){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "user_cell", for: indexPath) as! UserCollectionCell
             cell.render(withUser: users[indexPath.row], shouldRemoveUser: self.memberStatus == .owner)
             return cell
+        } else {
+            return UICollectionViewCell()
         }
     }
     

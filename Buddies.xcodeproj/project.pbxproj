@@ -837,7 +837,6 @@
 				58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */,
 				4544D3052214E93F007CB73D /* ActivityCell.swift in Sources */,
 				B688B47B221CCB6D0031A364 /* ActivityDescriptionController.swift in Sources */,
-				B688B479221C789B0031A364 /* ViewActivityController.swift in Sources */,
 				58EF8D8D2208A24700872770 /* DiscoverVC.swift in Sources */,
 				B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */,
 				58EF8D8E2208A24700872770 /* MyActivitiesVC.swift in Sources */,
@@ -881,6 +880,7 @@
 				4515BC24220BA95F0027B415 /* CreateActivityVC.swift in Sources */,
 				5868DEE7221F0564008B86FE /* TopicTabVC.swift in Sources */,
 				A95B958822133FA500453AEA /* User.swift in Sources */,
+				B688B479221C789B0031A364 /* ViewActivityController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
