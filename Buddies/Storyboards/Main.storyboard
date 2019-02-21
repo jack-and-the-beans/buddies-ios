@@ -21,8 +21,8 @@
                     <connections>
                         <segue destination="jTO-HI-2Vb" kind="relationship" relationship="viewControllers" id="RZU-pY-DOI"/>
                         <segue destination="b1W-0B-UGl" kind="relationship" relationship="viewControllers" id="5Rv-xB-Boj"/>
-                        <segue destination="1D8-rx-tRj" kind="relationship" relationship="viewControllers" id="Vl3-pw-uaf"/>
                         <segue destination="gRJ-5v-O3W" kind="relationship" relationship="viewControllers" id="Gs4-oD-Ueq"/>
+                        <segue destination="1D8-rx-tRj" kind="relationship" relationship="viewControllers" id="Vl3-pw-uaf"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0gu-pJ-Tei" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -52,7 +52,7 @@
                             <outlet property="delegate" destination="gRJ-5v-O3W" id="kwh-GD-UJ0"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="My Activities" id="iRr-Jg-rcf"/>
+                    <tabBarItem key="tabBarItem" title="My Activities" image="My-Activities" id="iRr-Jg-rcf"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MPz-hH-xNv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -62,7 +62,7 @@
         <scene sceneID="nwe-fG-SLO">
             <objects>
                 <navigationController title="Profile" id="1D8-rx-tRj" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" id="ba8-bF-WtM"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="Profile" id="ba8-bF-WtM"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Vu7-6k-s4K">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -108,7 +108,7 @@
                             <outlet property="delegate" destination="jTO-HI-2Vb" id="i8A-UW-klT"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Discover" id="SFH-LK-a8R"/>
+                    <tabBarItem key="tabBarItem" title="Discover" image="Discover" id="SFH-LK-a8R"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Agp-Yw-O7X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -129,7 +129,7 @@
         <scene sceneID="wYe-0Z-hku">
             <objects>
                 <navigationController title="Topics" id="b1W-0B-UGl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Topics" id="re6-HY-2vE"/>
+                    <tabBarItem key="tabBarItem" title="Topics" image="Topics" id="re6-HY-2vE"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1aj-52-qzw">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -143,4 +143,10 @@
             <point key="canvasLocation" x="564" y="-257"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Discover" width="20" height="20"/>
+        <image name="My-Activities" width="18" height="20"/>
+        <image name="Profile" width="16" height="16"/>
+        <image name="Topics" width="20" height="20"/>
+    </resources>
 </document>
