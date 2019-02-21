@@ -276,7 +276,6 @@
 				582D0FA722036C93004F71E3 /* StorageManager.swift */,
 				58AAA6742203F52E00AA538A /* Initialization.swift */,
 				A95B958422133DDB00453AEA /* DataAccessor.swift */,
-				A9C9852B221E658C003462AC /* SearchHandler.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -501,6 +500,7 @@
 			isa = PBXGroup;
 			children = (
 				58EF8D832208A1DF00872770 /* FAB.swift */,
+				A9C9852B221E658C003462AC /* SearchHandler.swift */,
 				A9E8BF492201F9D700C05F2C /* UnderlinedTextbox.swift */,
 				A9E8BF4B2201FB9C00C05F2C /* ControlColors.swift */,
 				58022669220BE5E90068E08E /* ToggleButton.swift */,
