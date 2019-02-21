@@ -17,8 +17,6 @@ class TopicActivityTableVC : ActivityTableVC, SearchHandlerDelegate {
     var topicId: String!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
         self.setupHideKeyboardOnTap()
         
         // We need to store a local so that the
@@ -28,6 +26,8 @@ class TopicActivityTableVC : ActivityTableVC, SearchHandlerDelegate {
         fab.renderCreateActivityFab()
         
         searchHandler = SearchHandler(for: searchBar, delegate: self, api: AlgoliaSearch())
+
+        super.viewDidLoad()
     }
     
     func endEditing() {
