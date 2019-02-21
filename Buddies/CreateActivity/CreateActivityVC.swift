@@ -19,6 +19,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     //MARK: - Variables/setup
     
     var chosenLocation: CLLocationCoordinate2D!
+    var locationText : String!
     var locationManager = CLLocationManager()
     
     var searchCompleter = MKLocalSearchCompleter()
@@ -63,6 +64,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                 description: description,
                 location: GeoPoint(latitude: chosenLocation.latitude,
                                    longitude: chosenLocation.longitude),
+                location_text: locationText,
                 start_time: getSliderDate(sliderValue: dateSlider.minValue),
                 end_time: getSliderDate(sliderValue: dateSlider.maxValue),
                 topicIDs: topicIDs
@@ -114,7 +116,12 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             let temp = MapItemSearchResult(title: item.title)
             temp.subtitle = item.subtitle
             temp.mapData = item
-            displayResults.append(temp)
+            
+            if (item.subtitle != "Search Nearby")
+            {
+                 displayResults.append(temp)
+            }
+           
         }
         
         locationField.filterItems(displayResults)
@@ -198,6 +205,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         title: String = "Title",
         description: String = "Description",
         location: GeoPoint = GeoPoint(latitude: 0, longitude: 0),
+        location_text: String = "Location",
         user: UserInfo? = Auth.auth().currentUser,
         collection: CollectionReference = Firestore.firestore().collection("activities"),
         start_time: Date = Date(),
@@ -212,6 +220,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             "description" : description,
             "date_created": Date(),
             "location": location,
+            "location_text": location_text,
             "start_time": start_time,
             "end_time": end_time,
             "topic_ids": topicIDs,
@@ -307,7 +316,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                 self.chosenLocation = response?.mapItems[0].placemark.coordinate ?? CLLocationCoordinate2D()
             }
             
-            self.locationField.text = temp.title + " - " + temp.subtitle!
+            self.locationField.text = temp.title
+            self.locationText = temp.title
             
         }
         
