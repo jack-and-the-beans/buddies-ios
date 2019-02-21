@@ -38,7 +38,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.curActivity = activity
         registerCollectionViews()
         joinButton?.layer.cornerRadius = 5
-        self.locationLabel.text = "Location"
+        self.locationLabel.text = activity.locationText
         self.titleLabel.text = activity.title
         self.descriptionLabel.text = activity.description
         
