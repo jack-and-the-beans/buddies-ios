@@ -11,14 +11,14 @@ import FirebaseAuth
 
 class ViewActivityController: UIViewController {
     private var stopListeningToActivity: Canceler?
-    private var descriptionController: ActivityDescriptionController? = nil
-    private var chatController: ActivityChatController? = nil
+    private var descriptionController: ActivityDescriptionController?
+    private var chatController: ActivityChatController?
     
     // MARK: Activity specific data which is refreshed by the updater:
-    private var curActivity: Activity? = nil
-    private var curMemberStatus: MemberStatus? = nil
-    private var activityTopics: [Topic]? = nil
-    private var activityUsers: [User]? = nil
+    private var curActivity: Activity?
+    private var curMemberStatus: MemberStatus?
+    private var activityTopics: [Topic]?
+    private var activityUsers: [User]?
 
     private var viewHasMounted = false
 
@@ -32,6 +32,10 @@ class ViewActivityController: UIViewController {
         super.viewDidLoad()
         viewHasMounted = true
         self.render()
+    }
+
+    deinit {
+        self.stopListeningToActivity?()
     }
 
     @IBOutlet weak var navTitleLabel: UINavigationItem!
@@ -63,9 +67,9 @@ class ViewActivityController: UIViewController {
     // BEFORE viewDidLoad. As a result, the actual view elements may not
     // be mounted in time for this function (or others) to use them.
     func loadWith(
-        _ activityId: ActivityId? = "EgGiWaHiEKWYnaGW6cR3",
+        _ activityId: ActivityId?,
         dataAccess: DataAccessor = DataAccessor.instance,
-        withCurrentUser uid: String = Auth.auth().currentUser!.uid
+        currentUser uid: String = Auth.auth().currentUser!.uid
         ) {
         guard let id = activityId else { return }
 
@@ -121,12 +125,11 @@ class ViewActivityController: UIViewController {
         return neededTopics
     }
 
-    // Renders the activity UI stuff given the data.
     func render() {
         // Do not render until view has mounted:
         guard viewHasMounted else { return }
 
-        // Get data for the activity:
+        // Do not render until data exists:
         guard let activity = self.curActivity,
             let memberStatus = self.curMemberStatus,
             let topics = self.activityTopics,
