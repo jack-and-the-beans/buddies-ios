@@ -9,9 +9,7 @@
 import UIKit
 import Firebase
 
-class ActivityTableVC: UITableViewController {
-    let search = AlgoliaSearch()
-    
+class ActivityTableVC: UITableViewController {    
     var activities = [[Activity?]]()
     var activityCancelers = [Canceler]()
     
@@ -79,7 +77,7 @@ class ActivityTableVC: UITableViewController {
         activityCancelers.append(canceler)
 
     }
-    
+        
     func loadData(for displayIds: [[String]],
                   dataAccessor: DataAccessor = DataAccessor.instance,
                   storageManager: StorageManager = StorageManager.shared){

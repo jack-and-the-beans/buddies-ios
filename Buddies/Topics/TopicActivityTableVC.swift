@@ -9,24 +9,15 @@
 import Foundation
 import UIKit
 
-typealias SearchParams = (filterText: String?, when: DateInterval?, maxMetersAway: Int)
-
-class TopicActivityTableVC : ActivityTableVC, UISearchBarDelegate {
+class TopicActivityTableVC : ActivityTableVC, SearchHandlerDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     var fab: FAB!
+    var searchHandler: SearchHandler!
     
     var topicId: String!
     
-    // Default is a sentinal because XCode hates nil tuples :(
-    var lastSearchParams: SearchParams = ("", nil, 0)
-    
-    var searchActive = false
-    var searchTimer: Timer?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        searchBar.delegate = self
         
         self.setupHideKeyboardOnTap()
         
@@ -35,55 +26,23 @@ class TopicActivityTableVC : ActivityTableVC, UISearchBarDelegate {
         //  the event handler!
         fab = FAB(for: self)
         fab.renderCreateActivityFab()
+        
+        searchHandler = SearchHandler(for: searchBar, delegate: self, api: AlgoliaSearch())
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    func endEditing() {
         self.view.endEditing(false)
-        
-        searchTimer?.invalidate()
-        fetchAndLoadActivities()
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        // Create a timer to reload stuff so that we don't just call algolia for every time a letter pressed in the search bar
-        searchTimer?.invalidate()
-        searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-            self.fetchAndLoadActivities()
-        }
+    func display(activities: [ActivityId]) {
+        self.loadData(for: [activities])
     }
     
-    func getSearchParams() -> SearchParams {
-        let text = searchBar.text == "" ? nil : searchBar.text
-        
-        return (text, nil, 20000)
+    func getTopics() -> [String] {
+        return [topicId]
     }
     
     override func fetchAndLoadActivities() {
-        let myParams = getSearchParams()
-        
-        //Cancel if nothing has changed
-        if lastSearchParams == myParams { return }
-        
-        // Store request params #NoRaceConditions
-        self.lastSearchParams = myParams
-        
-        // Load data from algolia!
-        search.searchActivities(withText: myParams.filterText,
-                                matchingAnyTopicOf: [topicId],
-                                startingAt: myParams.when?.start,
-                                endingAt: myParams.when?.end,
-                                upToDisatnce: myParams.maxMetersAway) {
-            (activities: [String], err: Error?) in
-            
-            // Cancel if we've made a new request #NoRaceConditions
-            if self.lastSearchParams != myParams { return }
-            
-            // Handle errors
-            if let error = err { print(error) }
-            
-            // Load new data
-            self.loadData(for: [activities])
-        }
+        searchHandler.fetchAndLoadActivities()
     }
 }
