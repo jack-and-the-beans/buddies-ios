@@ -135,8 +135,7 @@ class ActivityTableVC: UITableViewController {
         
         cell.titleLabel.text = activity.title
         cell.descriptionLabel.text = activity.description
-        cell.locationLabel.text = String(activity.location.latitude) + ", " + String(activity.location.longitude)
-        
+        cell.locationLabel.text = activity.locationText
         let dateRange = DateInterval(start: activity.startTime.dateValue(),
                                      end: activity.endTime.dateValue())
         

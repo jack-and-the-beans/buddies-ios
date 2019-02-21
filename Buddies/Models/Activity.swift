@@ -44,7 +44,8 @@ class Activity {
     var startTime : Timestamp { didSet { onChange("start_time", startTime) } }
     var endTime : Timestamp { didSet { onChange("end_time", endTime) } }
     var topicIds : [String] { didSet { onChange("topic_ids", topicIds) } }
-    
+    var locationText: String { didSet { onChange("location_text", locationText) }}
+
     private func onChange(_ key: String, _ value: Any?) {
         delegate?.onInvalidateActivity(activity: self)
         delegate?.triggerServerUpdate(activityId: activityId, key: key, value: value)
@@ -60,6 +61,7 @@ class Activity {
          description: String,
          startTime: Timestamp,
          endTime: Timestamp,
+         locationText: String,
          topicIds: [String]) {
         self.delegate = delegate
         self.activityId = activityId
@@ -72,6 +74,7 @@ class Activity {
         self.startTime = startTime
         self.endTime = endTime
         self.topicIds = topicIds
+        self.locationText = locationText
     }
     
     static func from(snap: DocumentSnapshot, with delegate: ActivityInvalidationDelegate?) -> Activity? {
@@ -88,7 +91,8 @@ class Activity {
         
         let activityId = snap.documentID
         let description = data["description"] as? String ?? ""
-        
+        let locationText = data["location_text"] as? String ?? "🌍"
+
         return Activity(delegate: delegate,
                         activityId: activityId,
                         dateCreated: dateCreated,
@@ -99,6 +103,7 @@ class Activity {
                         description: description,
                         startTime: startTime,
                         endTime: endTime,
+                        locationText: locationText,
                         topicIds: topicIds)
     }
 
