@@ -22,7 +22,7 @@ class ActivityTableVC: UITableViewController {
     //Doubly nested array of Activity Ids.
     //Each array is a section of the table view
     var displayIds = [[ActivityId]]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 110
@@ -173,5 +173,15 @@ class ActivityTableVC: UITableViewController {
     // "abstract"
     // Must call loadData() once displayIds is set
     func fetchAndLoadActivities(){}
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let selectedIndex = self.tableView.indexPath(for: sender as! UITableViewCell)
+        if let nav = segue.destination as? UINavigationController,
+            let path = selectedIndex,
+            let activityController = nav.viewControllers[0] as? ViewActivityController{
+            let tappedActivity = getActivity(at: path)
+            activityController.loadWith(tappedActivity?.activityId)
+        }
+    }
 }
 

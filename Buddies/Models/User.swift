@@ -19,6 +19,8 @@ protocol UserInvalidationDelegate {
 class User {
     let delegate: UserInvalidationDelegate?
     
+    var image : UIImage?
+
     // MARK: Immutable Properties
     let uid : UserId
     let email : String?
@@ -97,7 +99,27 @@ class User {
         self.notificationToken = notificationToken
         self.chatReadAt = chatReadAt
     }
-    
+    init(name: String) {
+        self.delegate = nil
+        self.imageUrl = ""
+        self.isAdmin = false
+        self.uid = name
+        self.name = name
+        self.bio = name
+        self.email = name
+        self.facebookId = name
+        self.favoriteTopics = []
+        self.blockedUsers = []
+        self.blockedBy = []
+        self.blockedActivities = []
+        self.dateJoined = Timestamp()
+        self.location = nil
+        self.shouldSendJoinedActivityNotification = false
+        self.shouldSendActivitySuggestionNotification = false
+        self.notificationToken = name
+        self.chatReadAt = ["no": Timestamp()]
+
+    }
     static func from(snap: DocumentSnapshot, with delegate: UserInvalidationDelegate?) -> User? {
         guard let data = snap.data(),
               let imageUrl = data["image_url"] as? String,

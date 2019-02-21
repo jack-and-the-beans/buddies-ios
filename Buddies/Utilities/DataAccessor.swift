@@ -56,7 +56,30 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
         return _userCache.object(forKey: id as AnyObject) != nil
     }
     
-    func useUser(id: UserId, fn: @escaping (User) -> Void) -> (() -> Void) {
+    func useUsers(from userIds: [String], fn: @escaping ([User]) -> Void) -> Canceler {
+        let numUsersNeeded = userIds.count
+        var users: [UserId: User] = [:]
+        let cb = {
+            var allUsers: [User] = []
+            for (_, user) in users {
+                allUsers.append(user)
+            }
+            // This avoids the case where we re-update the view again and again
+            // for each user ID in the initial array. We instead wait to update
+            // until all of the users have been initially populated, and then
+            // subsequently on any change to any user.
+            if (allUsers.count == numUsersNeeded) {
+                fn(allUsers)
+            }
+        }
+        let cancelers = userIds.map { useUser(id: $0) { user in
+            users[user.uid] = user
+            cb()
+        } }
+        return { for c in cancelers { c() } }
+    }
+
+    func useUser(id: UserId, fn: @escaping (User) -> Void) -> Canceler {
         // Wrap the callback for comparison later
         let callback = Listener(fn: fn)
         
@@ -93,7 +116,7 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
         }
     }
     
-    func _loadUser(id: UserId) {
+    func _loadUser(id: UserId, storageManager: StorageManager = StorageManager.shared) {
         if let oldReg = _userRegistration[id] {
             oldReg.remove()
         }
@@ -109,6 +132,11 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
                 return
             }
             
+            storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
+                user.image = img
+                self.onInvalidateUser(user: user)
+            }
+
             self._usersLoading.removeAll(where: { $0 == id })
             
             self.onInvalidateUser(user: user)

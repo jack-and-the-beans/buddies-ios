@@ -239,7 +239,7 @@
                                     <outletCollection property="memberPics" destination="Fcd-IC-jcN" collectionClass="NSMutableArray" id="Eu9-Qe-chp"/>
                                     <outletCollection property="memberPics" destination="KuL-7h-pqY" collectionClass="NSMutableArray" id="Nri-mL-uXm"/>
                                     <outletCollection property="memberPics" destination="Qve-HN-jk6" collectionClass="NSMutableArray" id="ahx-pE-m3g"/>
-                                    <segue destination="Oi1-3u-3ez" kind="show" id="wMa-mB-xJT"/>
+                                    <segue destination="Oi1-3u-3ez" kind="presentation" id="wMa-mB-xJT"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
