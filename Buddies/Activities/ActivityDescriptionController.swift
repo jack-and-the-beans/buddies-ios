@@ -8,71 +8,85 @@
 
 import UIKit
 
+// Subclass ...ViewDelegate and ...FlowLayout are so
+// we can dynamically layout the Topic Collection.
 class ActivityDescriptionController: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    var hasRendered = false
+    // Tracks the initial render of the view:
+    private var hasRendered = false
 
+    // MARK UIViews which we use for things:
     @IBOutlet var contentView: UIView!
     @IBOutlet var miniView: UIView!
     @IBOutlet weak var miniContentView: UIView!
     @IBOutlet weak var bigBoyView: UIView!
+    
+    // MARK Mini description view outlets:
     @IBOutlet weak var miniLocationLabel: UILabel!
     @IBOutlet weak var miniTimeLabel: UILabel!
-    
+    @IBOutlet weak var miniUser3: UIImageView!
+    @IBOutlet weak var miniUser2: UIImageView!
+    @IBOutlet weak var miniUser1: UIImageView!
+
+    // MARK Big description view outlets:
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var topicsArea: UICollectionView!
+    @IBOutlet weak var usersArea: UICollectionView!
 
     @IBOutlet weak var shrinkButton: UIButton!
     @IBOutlet weak var joinButton: UIButton!
-
-    @IBOutlet weak var topicsArea: UICollectionView!
-
-    @IBOutlet weak var usersArea: UICollectionView!
-
     
-    @IBOutlet weak var miniUser3: UIImageView!
-    @IBOutlet weak var miniUser2: UIImageView!
-    @IBOutlet weak var miniUser1: UIImageView!
-    
+    // Tap on the Join button to call this
+    var joinActivity: (() -> Void)? // Set from the parent controller
     @IBAction func onJoinTap(_ sender: Any) {
-        self.joinActivity?()
+       joinActivity?()
     }
-
+    
+    // Tap the little ^ button to call this
+    var toggleBigView: (() -> Void)? // Set from the parent controller
     @IBAction func onShrinkTap(_ sender: Any) {
-        expandDesc?()
+        toggleBigView?()
     }
 
-    @objc func onShowTap(_ sender: UITapGestureRecognizer) {
-        expandDesc?()
+    // Tap anywhere in the miniview to call this:
+    @objc private func onShowTap(_ sender: UITapGestureRecognizer) {
+        toggleBigView?()
     }
 
+    // MARK: Local data sources for rendering:
     var topics: [Topic] = []
     var users: [User] = []
     var memberStatus: MemberStatus = .none
-    var joinActivity: (() -> Void)?
-    var expandDesc: (() -> Void)?
-    var isExpanded: Bool = false
     var curActivity: Activity?
 
-    // Refreshes the UI elements with new data:
-    func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic], shouldExpand: Bool, onExpand: @escaping () -> Void, onJoin: @escaping () -> Void ) {
-        // Setup stuff the first time:
+    // MARK: Render: Refreshes the UI elements with new data.
+    func render(
+        withActivity activity: Activity,
+        withUsers users: [User],
+        withMemberStatus status: MemberStatus,
+        withTopics topics: [Topic],
+        shouldExpand: Bool,
+        onExpand: @escaping () -> Void,
+        onJoin: @escaping () -> Void ) {
+
+        // Handle first-time setup:
         if (!hasRendered) {
-            registerCollectionViews()
-            let tap = UITapGestureRecognizer(target: self, action: #selector(self.onShowTap(_:)))
-            miniContentView.isUserInteractionEnabled = true
-            miniContentView.addGestureRecognizer(tap)
+            self.registerCollectionViews()
+            self.initMiniArea()
+            self.joinButton?.layer.cornerRadius = 5
         }
+        
+        // Set local data sources & functions to new data:
         self.curActivity = activity
-        joinButton?.layer.cornerRadius = 5
-        if (memberStatus != .none) {
-            joinButton.isHidden = true
-            shrinkButton.isHidden = false
-        } else {
-            joinButton.isHidden = false
-            shrinkButton.isHidden = true
-        }
+        self.topics = topics
+        self.users = users
+        self.joinActivity = onJoin
+        self.memberStatus = status
+        self.toggleBigView = onExpand
+        
+        // Set UI elements to new data:
         self.locationLabel.text = activity.locationText
         self.miniLocationLabel.text = activity.locationText
         self.titleLabel.text = activity.title
@@ -80,23 +94,40 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         let dateText = activity.timeRange.rangePhrase(relativeTo: Date()).capitalized
         self.dateLabel.text = dateText
         self.miniTimeLabel.text = dateText
-        self.topics = topics
-        self.users = users
-        self.joinActivity = onJoin
-        self.memberStatus = status
         self.topicsArea.reloadData()
         self.usersArea.reloadData()
-        self.expandDesc = onExpand
         self.configureMiniImages()
-        if (shouldExpand) {
-            expandMe()
+        
+        // Conditionally show stuff based on
+        // the current user's member status:
+        if (memberStatus != .none) {
+            self.joinButton.isHidden = true
+            self.shrinkButton.isHidden = false
         } else {
-            shrinkMe()
+            self.joinButton.isHidden = false
+            self.shrinkButton.isHidden = true
         }
-        hasRendered = true
+        
+        // Conditionally handle hiding/showing
+        // the expanded description view:
+        if (shouldExpand) {
+            self.expandMe()
+        } else {
+            self.shrinkMe()
+        }
+        
+        // Save that the first render has completed:
+        self.hasRendered = true
     }
     
-    func configureMiniImages () {
+    private func initMiniArea () {
+        // Setup gesture handler for the mini area:
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.onShowTap(_:)))
+        miniContentView.isUserInteractionEnabled = true
+        miniContentView.addGestureRecognizer(tap)
+    }
+
+    private func configureMiniImages () {
         if (users.count > 0) {
             miniUser1.image = users[0].image
             miniUser1.makeCircle()
@@ -110,6 +141,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
             miniUser3.makeCircle()
         }
     }
+
+    /* ---- MARK: COLLECTION VIEW STUFF ---- */
 
     // Returns the number of topics or users for their collections
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -141,6 +174,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         }
     }
     
+    // Dynamically sizes the topic cells based on the screen size:
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if (collectionView == self.topicsArea) {
             let margin = 20
@@ -154,12 +188,13 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
                 return CGSize(width: cellWidth, height: height)
             }
         } else {
+            // Dummy - should never be called.
             return CGSize(width: 270, height: 50)
         }
     }
 
     // Registers the nibs and data sources for the users and topics
-    func registerCollectionViews () {
+    private func registerCollectionViews () {
         self.topicsArea.dataSource = self
         self.topicsArea.delegate = self
         self.usersArea.dataSource = self
@@ -167,79 +202,113 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.usersArea.register(UINib.init(nibName: "ActivityUserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
     }
 
-    func createConstraint(for view: UIView, withHeight height: CGFloat) -> NSLayoutConstraint {
+    /* ---- MARK: ANIMATION STUFF ---- */
+    
+    // Creates a simple height constraint for the given view:
+    private func createConstraint(for view: UIView, withHeight height: CGFloat) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: height)
     }
 
-    private var heightConstraint: NSLayoutConstraint?
-    func constrainContaierView(toHeight height: CGFloat) {
-        if (self.heightConstraint == nil) {
+    // Handles the height constraint for the large description view:
+    private var bigViewHeightConstraint: NSLayoutConstraint?
+    private func constrainContaierView(toHeight height: CGFloat) {
+        // Create and add it if it doesn't exist
+        if (self.bigViewHeightConstraint == nil) {
             let hc = createConstraint(for: self.contentView, withHeight: height)
-            self.heightConstraint = hc
+            self.bigViewHeightConstraint = hc
             self.contentView.addConstraint(hc)
         } else {
-            self.heightConstraint?.constant = height
+            // Otherwise, modify the existing constraint:
+            self.bigViewHeightConstraint?.constant = height
         }
     }
 
     private var miniConstraint: NSLayoutConstraint?
-    func constrainMiniView(toHeight height: CGFloat) {
+    private func constrainMiniView(toHeight height: CGFloat) {
+        // Constrain the view to match the parent top, left, and right sides
         miniView.bindFrameToSuperviewBounds(shouldConstraintBottom: false)
+        // Create and add it if it doesn't exist
         if (miniConstraint == nil) {
-            miniView.backgroundColor = UIColor.white
             let hc = createConstraint(for: miniView, withHeight: height)
             self.miniConstraint = hc
             miniView.addConstraint(hc)
         } else {
+            // Otherwise modify the existing constraint
             self.miniConstraint?.constant = height
         }
     }
 
+    // Minimizes the big description and shows the small one:
     func shrinkMe() {
         let smallHeight = CGFloat(80)
+        // Display the miniView at the top of the view hierarchy
         self.contentView.insertSubview(miniView, at: 0)
+        // Change height constraints to be the small height:
         constrainContaierView(toHeight: smallHeight)
         constrainMiniView(toHeight: smallHeight)
-        if (hasRendered) {
-            // Animate opacity of big view as it
-            // hides to reduce jaring close.
-            UIView.animate(withDuration: 0.3) {
-                self.bigBoyView.alpha = 0
-            }
-        }
-        performConstraintLayout() {thing in
+        // Do the animate:
+        performAnimation(type: .shrink) { thing in
+            // After it closes, hide the big description view.
+            // Note, its opacity will already be 0, so this should
+            // not be a jaring change.
             self.bigBoyView.isHidden = true
+            // Need to add the border here because
+            // it uses the layout to put itself into
+            // place, and the layout changes during
+            // the animation.
             self.miniView.addBottomBorderWithColor(color: UIColor.lightGray, thisThicc: 1)
         }
     }
 
+    // Maximizes the big description and hides the small one:
     func expandMe() {
+        // Remove the miniview and show the big view:
         self.miniView.removeFromSuperview()
         self.bigBoyView.isHidden = false
         self.bigBoyView.alpha = 1
+        // Re-constrain the big view to fill the page
         let superview = self.contentView.superview
         let superviewHeight = superview?.frame.height ?? 400 // Should always exist and never hit 400
         constrainContaierView(toHeight: superviewHeight)
-        performConstraintLayout() { thing in }
+        // Do the animiate:
+        performAnimation(type: .expand) { thing in } // Unused in this case.
     }
 
-    // https://stackoverflow.com/a/27417189
-    func performConstraintLayout(then: @escaping (Bool) -> Void) {
+    private enum AnimationType {
+        case expand
+        case shrink
+    }
+
+    // Some small info on constraint-based animations: https://stackoverflow.com/a/27417189
+    private func performAnimation(type: AnimationType, onComplete: ((Bool) -> Void)?) {
         // We do not want to animate on the first time it loads
         // - e.g. we don't want to animate while the activity is
         // getting displayed modally.
         if hasRendered {
+            if type == .shrink {
+                // Animate opacity of big view as it
+                // hides to reduce a jaring close.
+                UIView.animate(withDuration: 0.3) {
+                    self.bigBoyView.alpha = 0
+                }
+            }
+            // Springy animation:
             UIView.animate(withDuration: 0.5,
                         delay: 0,
                         usingSpringWithDamping: 0.7,
                         initialSpringVelocity: 0.4,
                         options: .beginFromCurrentState,
-                        animations: { () -> Void in
-           self.contentView.superview?.layoutIfNeeded()
-            }, completion: then)
+                        animations: {
+                            // Re-does the layout with new constraints
+                            // within the parameters of the animation:
+                            self.contentView.superview?.layoutIfNeeded()
+            }, completion: onComplete)
         } else {
+            // In this case, we don't animate the layout change
+            // because the view is displaying modally for the
+            // first time.
             self.contentView.superview?.layoutIfNeeded()
-            then(true)
+            onComplete?(true) // Fake bool because of
         }
     }
 

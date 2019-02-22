@@ -10,31 +10,34 @@ import UIKit
 import FirebaseAuth
 
 class ViewActivityController: UIViewController {
+    // Tracks whether or not the view
+    // has loaded/mounted yet. (We need
+    // to avoid rendering until it has.)
+    private var viewHasMounted = false
+
+    // MARK: Listeners
     private var stopListeningToActivity: Canceler?
     private var stopListeningToUsers: Canceler?
+    
+    // UIViews and controllers:
     private var descriptionController: ActivityDescriptionController?
     private var chatController: ActivityChatController?
-    
+    private var descriptionView: UIView?
+    @IBOutlet weak var contentArea: UIView! // We render EVERYTHING inside this.
+
     // MARK: Activity specific data which is refreshed by the updater:
     private var curActivity: Activity?
     private var curMemberStatus: MemberStatus?
     private var activityTopics: [Topic]?
     private var activityUsers: [User]?
 
-    private var viewHasMounted = false
-    
-    private var descriptionView: UIView?
-
-    @IBOutlet weak var contentArea: UIView!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
+    // Need to wait to render until here
+    // so that the layout is ready to go.
+    // Note: viewDidLoad did work for this,
+    // but the animations didn't work correctly
+    // because the layout didn't have the correct
+    // positioning yet.
     override func viewDidLayoutSubviews () {
-        // Need to re-render here so that
-        // animations have the correct
-        // layout values.
         viewHasMounted = true
         self.render()
     }
@@ -44,6 +47,7 @@ class ViewActivityController: UIViewController {
         self.stopListeningToUsers?()
     }
 
+    // MARK: Actions the user can do in the subviews:
     @IBAction func onBackPress(_ sender: Any) {
         self.dismiss(animated: true)
     }
@@ -66,6 +70,8 @@ class ViewActivityController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    // Adds the current user to the activity
+    // if they are not yet in it.
     func joinActivity() -> Void {
         let uid = Auth.auth().currentUser!.uid
         guard let activity = self.curActivity, let status = self.curMemberStatus else { return }
@@ -74,11 +80,14 @@ class ViewActivityController: UIViewController {
         }
     }
 
+    // Local state for toggling the expanded description
     var shouldExpand = false
     func expandDescription() -> Void {
         shouldExpand = !shouldExpand
         render()
     }
+
+    /* ---- MARK: DATA SET UP ---- */
 
     // Handles data based on the given activity ID:
     // NOTE WELL: this function gets called during the parent segue prepare,
@@ -100,6 +109,7 @@ class ViewActivityController: UIViewController {
         }
     }
 
+    // Gets user info based on the activity's members:
     func getUsers(from newUserIds: [String]) {
         let existingIds = self.activityUsers?.map { $0.uid }
         let usersHaveChanged = existingIds?.sorted() != newUserIds.sorted()
@@ -117,6 +127,7 @@ class ViewActivityController: UIViewController {
         }
     }
 
+    // Gets topics from the root topic store:
     func getTopics(from topicIds: [String]) -> [Topic] {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         var neededTopics: [Topic] = []
@@ -139,6 +150,7 @@ class ViewActivityController: UIViewController {
             let topics = self.activityTopics,
             let users = self.activityUsers else { return }
         
+        // We always load the description view because it is for all member statuses:
         // Instantiate description view if it does not exist:
         if (descriptionController == nil) {
             descriptionController = ActivityDescriptionController()
@@ -152,26 +164,39 @@ class ViewActivityController: UIViewController {
         }
     
         // Render description with updated data:
-        let shouldExpand = memberStatus == .none || self.shouldExpand
-        descriptionController?.render(withActivity: activity, withUsers: users, withMemberStatus: memberStatus, withTopics: topics, shouldExpand: shouldExpand, onExpand: self.expandDescription, onJoin: self.joinActivity)
+        let shouldExpand = memberStatus == .none || self.shouldExpand // Always stay expanded if the user is not a member.
+        descriptionController?.render(
+            withActivity: activity,
+            withUsers: users,
+            withMemberStatus: memberStatus,
+            withTopics: topics,
+            shouldExpand: shouldExpand,
+            onExpand: self.expandDescription,
+            onJoin: self.joinActivity )
 
-        // If the user is a member, display the
+        // If (and only if) the user is a member, display the
         // chat area underneath the description:
         if (memberStatus != .none) {
+            // Initialize chat area if it's nil:
             if (chatController == nil) {
                 chatController = ActivityChatController()
                 let chatView = UINib(nibName: "ActivityChat", bundle: nil).instantiate(withOwner: chatController, options: nil)[0] as! UIView
 
+                // Note: the description view should always be initialized
+                // before this is called. The else case should never be called.
+                // Insert it underneath the description view in the hierarchy.
                 if let desc = self.descriptionView {
                     contentArea.insertSubview(chatView, belowSubview: desc)
                 } else {
                     contentArea.addSubview(chatView)
                 }
+
                 // Bind chat view to parent on all sides
                 // so that it takes up the whole screen:
                 chatView.bindFrameToSuperviewBounds()
             }
-            chatController?.refreshData(with: activity, memberStatus: memberStatus)
+            // Refresh the chat
+            chatController?.render(with: activity, memberStatus: memberStatus)
         }
     }
 }

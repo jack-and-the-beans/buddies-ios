@@ -9,29 +9,17 @@
 import UIKit
 
 class ActivityChatController: UIView {
-    private var showActivityDetails = false
-    private var activity: Activity?
-    private var memberStatus: MemberStatus?
-
     @IBOutlet weak var chatAreaView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
 
-    private var hasMounted = false
+    // Local data for rendering:
+    private var activity: Activity?
+    private var memberStatus: MemberStatus?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        hasMounted = true
-        render()
-    }
-    
-    func refreshData(with activity: Activity?, memberStatus: MemberStatus?) {
+    // Call this to re-render with new data:
+    func render(with activity: Activity?, memberStatus: MemberStatus?) {
         self.activity = activity
         self.memberStatus = memberStatus
-        render()
-    }
-    
-    func render() {
-        guard hasMounted, let _ = self.activity, let status = self.memberStatus else { return }
-        self.statusLabel?.text = status == .owner ? "Owner" : "Member"
+        self.statusLabel?.text = memberStatus == .owner ? "You are this activity's owner." : "You are a member of this activity."
     }
 }
