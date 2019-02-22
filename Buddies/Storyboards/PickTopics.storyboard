@@ -53,11 +53,14 @@
                                                             <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="unselectedColor">
-                                                            <color key="value" white="1" alpha="0.49440817636986301" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="value" white="1" alpha="0.68688463184931503" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="image" keyPath="selectedImg" value="check_circle"/>
-                                                        <userDefinedRuntimeAttribute type="image" keyPath="unselectedImg" value="check_circle"/>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="unselectedImg" value="uncheck_circle"/>
                                                     </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="toggleSelected:" destination="m8H-6g-PPe" eventType="touchUpInside" id="ALe-W4-6qr"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" red="0.14901960780000001" green="0.59999999999999998" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -139,5 +142,6 @@
     </scenes>
     <resources>
         <image name="check_circle" width="100" height="100"/>
+        <image name="uncheck_circle" width="100" height="100"/>
     </resources>
 </document>
