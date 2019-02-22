@@ -135,14 +135,17 @@ class ViewActivityController: UIViewController {
             self.descriptionView = descView
             // Put the view on the superview if the member is public:
             contentArea.addSubview(descView)
+            
+            // Bind description view to all sides except the bottom, so that we can animate it.
+            descView.bindFrameToSuperviewBounds(shouldConstraintBottom: false)
         }
+    
         // Render description with updated data:
-        descriptionController?.render(withActivity: activity, withUsers: users, withMemberStatus: memberStatus, withTopics: topics, onJoin: self.joinActivity)
-        
-        if (memberStatus == .none) {
-            descriptionController?.expand(animate: false)
-        }
+        let shouldExpand = memberStatus == .none
+        descriptionController?.render(withActivity: activity, withUsers: users, withMemberStatus: memberStatus, withTopics: topics, shouldExpand: shouldExpand, onJoin: self.joinActivity)
 
+        // If the user is a member, display the
+        // chat area underneath the description:
         if (memberStatus != .none) {
             if (chatController == nil) {
                 chatController = ActivityChatController()
@@ -150,11 +153,12 @@ class ViewActivityController: UIViewController {
 
                 if let desc = self.descriptionView {
                     contentArea.insertSubview(chatView, belowSubview: desc)
-                    descriptionController?.shrink(animate: false)
                 } else {
                     contentArea.addSubview(chatView)
                 }
-                let _ = chatView.bindFrameToSuperviewBounds()
+                // Bind chat view to parent on all sides
+                // so that it takes up the whole screen:
+                chatView.bindFrameToSuperviewBounds()
             }
             chatController?.refreshData(with: activity, memberStatus: memberStatus)
         }

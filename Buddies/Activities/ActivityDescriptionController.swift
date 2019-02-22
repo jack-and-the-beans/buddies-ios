@@ -9,6 +9,8 @@
 import UIKit
 
 class ActivityDescriptionController: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    var hasRendered = false
+
     @IBOutlet var contentView: UIView!
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -30,11 +32,11 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     var users: [User] = []
     var memberStatus: MemberStatus = .none
     var joinActivity: (() -> Void)?
-
+    var isExpanded: Bool = false
     var curActivity: Activity?
 
     // Refreshes the UI elements with new data:
-    func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic], onJoin: @escaping () -> Void ) {
+    func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic], shouldExpand: Bool, onJoin: @escaping () -> Void ) {
         self.curActivity = activity
         registerCollectionViews()
         joinButton?.layer.cornerRadius = 5
@@ -49,6 +51,12 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.memberStatus = status
         self.topicsArea.reloadData()
         self.usersArea.reloadData()
+        if (shouldExpand) {
+            expandMe()
+        } else {
+            shrinkMe()
+        }
+        hasRendered = true
     }
     
     // Returns the number of topics or users for their collections
@@ -107,24 +115,35 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.usersArea.register(UINib.init(nibName: "ActivityUserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
     }
     
-    func shrink(animate: Bool) {
-        let bottomConstraint = self.contentView.bindFrameToSuperviewBounds()
-        if let constraint = bottomConstraint {
-            contentView.removeConstraint(constraint)
+    private var heightConstraint: NSLayoutConstraint?
+    func createConstraint(height: CGFloat) {
+        if (self.heightConstraint == nil) {
+            let hc = NSLayoutConstraint(item: self.contentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: height)
+            self.heightConstraint = hc
+            self.contentView.addConstraint(hc)
+        } else {
+            self.heightConstraint?.constant = height
         }
-        self.contentView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-//        contentView.addConstraint(heightConstraint)
-        performConstraintLayout(animated: animate)
+    }
+
+    func shrinkMe() {
+        createConstraint(height: 100)
+        performConstraintLayout()
     }
     
-    func expand(animate: Bool) {
-        let _ = self.contentView.bindFrameToSuperviewBounds()
-        performConstraintLayout(animated: animate)
+    func expandMe() {
+        let superview = self.contentView.superview
+        let superviewHeight = superview?.frame.height
+        createConstraint(height: superviewHeight ?? 400)
+        performConstraintLayout()
     }
 
     // https://stackoverflow.com/a/27417189
-    func performConstraintLayout(animated: Bool) {
-        if animated == true {
+    func performConstraintLayout() {
+        // We do not want to animate on the first time it loads
+        // - e.g. we don't want to animate while the activity is
+        // getting displayed modally.
+        if hasRendered {
             UIView.animate(withDuration: 1,
                         delay: 0,
                         usingSpringWithDamping: 0.5,
