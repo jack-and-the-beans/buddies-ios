@@ -13,7 +13,7 @@ import Firebase
 //https://stackoverflow.com/questions/33380711/how-to-implement-auto-complete-for-address-using-apple-map-kit
 //https://www.thorntech.com/2016/01/how-to-search-for-location-using-apples-mapkit/
 //https://stackoverflow.com/questions/39946100/search-for-address-using-swift
-class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDelegate, RangeSeekSliderDelegate{
+class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var dateSlider: RangeSeekSlider!
     //MARK: - Variables/setup
@@ -83,8 +83,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                 location: GeoPoint(latitude: chosenLocation.latitude,
                                    longitude: chosenLocation.longitude),
                 location_text: locationText,
-                start_time: getSliderDate(sliderValue: minSliderValue),
-                end_time: getSliderDate(sliderValue: maxSliderValue),
+                start_time: DateRangeSliderDelegate.instance.getSliderDate(sliderValue: dateSlider.selectedMinValue),
+                end_time: DateRangeSliderDelegate.instance.getSliderDate(sliderValue: dateSlider.selectedMaxValue),
                 topicIDs: topicIDs
             )
             dismiss(animated: true, completion: _dismissHook)
@@ -144,7 +144,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         
         searchCompleter.queryFragment = ""
         
-        dateSlider.delegate = self
+        dateSlider.delegate = DateRangeSliderDelegate.instance
         dateSlider.tintColor = UIColor.lightGray
         
         descriptionTextView.delegate = self
@@ -252,70 +252,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         ])
     }
     
-    func getSliderString(sliderValue: CGFloat) -> String
-    {
-        switch sliderValue {
-        case 1:
-            return "Today"
-        case 2:
-            return "Tomorrow"
-        case 3:
-            return "Next 3 Days"
-        case 4:
-            return "Next Week"
-        case 5:
-            return "Next 2 Weeks"
-        case 6:
-            return "Next Month"
-        default:
-            return "Today"
-        }
-
-    }
- 
-    
-    func getSliderDate(sliderValue: CGFloat) -> Date {
-        
-        var dateComponent = DateComponents()
-        
-        switch sliderValue {
-        case 1:
-            dateComponent.day = 0
-        case 2:
-            dateComponent.day = 1
-        case 3:
-            dateComponent.day = 3
-        case 4:
-            dateComponent.day = 7
-        case 5:
-            dateComponent.day = 14
-        case 6:
-            dateComponent.day = 30
-        default:
-            dateComponent.day = 0
-        }
-        
-        return Calendar.current.date(byAdding: dateComponent, to: Date())!
-        
-    }
-    
-    
-    func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMinValue minValue: CGFloat) -> String? {
-        
-        minSliderValue = minValue
-        return getSliderString(sliderValue: minValue)
-        
-    }
-    
-    func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMaxValue maxValue: CGFloat) -> String? {
-
-        maxSliderValue = maxValue
-        return getSliderString(sliderValue: maxValue)
-        
-    }
-    
-    func setChosenLocation(location:MapItemSearchResult)
-    {
+    func setChosenLocation(location:MapItemSearchResult) {
         let searchRequest = MKLocalSearch.Request(completion: location.mapData!)
         let search = MKLocalSearch(request: searchRequest)
         
@@ -323,12 +260,12 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             self.chosenLocation = response?.mapItems[0].placemark.coordinate ?? CLLocationCoordinate2D()
         }
         
-         self.locationText = location.title
+        self.locationText = location.title
     }
+
     
     //MARK: - Location field
-    func configureSearchTextField()
-    {
+    func configureSearchTextField() {
         
         locationField.theme.cellHeight = 50
         locationField.maxNumberOfResults = 10
