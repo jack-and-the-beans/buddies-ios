@@ -82,6 +82,7 @@
 		A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144B0220C82A0004C614E /* AppDelegateTests.swift */; };
 		A9C9852C221E658C003462AC /* FilterSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C9852B221E658C003462AC /* FilterSearchBar.swift */; };
 		A9C98530221FB1E5003462AC /* TopicActivityTableVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C9852F221FB1E5003462AC /* TopicActivityTableVCTests.swift */; };
+		A9C9853222205E68003462AC /* FilterSearchBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C9853122205E68003462AC /* FilterSearchBarTests.swift */; };
 		A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF3F2201427A00C05F2C /* LoginVC.swift */; };
 		A9E8BF45220143A300C05F2C /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF44220143A300C05F2C /* AuthHandler.swift */; };
 		A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */; };
@@ -202,6 +203,7 @@
 		A9B144B0220C82A0004C614E /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		A9C9852B221E658C003462AC /* FilterSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSearchBar.swift; sourceTree = "<group>"; };
 		A9C9852F221FB1E5003462AC /* TopicActivityTableVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicActivityTableVCTests.swift; sourceTree = "<group>"; };
+		A9C9853122205E68003462AC /* FilterSearchBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSearchBarTests.swift; sourceTree = "<group>"; };
 		A9E8BF3F2201427A00C05F2C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		A9E8BF44220143A300C05F2C /* AuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandler.swift; sourceTree = "<group>"; };
 		A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVC.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 			children = (
 				58EF8D9F2208A2B300872770 /* FABTests.swift */,
 				5802266E220CC1210068E08E /* ToggleButtonTests.swift */,
+				A9C9853122205E68003462AC /* FilterSearchBarTests.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -920,6 +923,7 @@
 				A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */,
 				58FC665922188E3F00D13723 /* DateIntervalTests.swift in Sources */,
 				584C350C221BC192000442B2 /* ActivityTableVCTests.swift in Sources */,
+				A9C9853222205E68003462AC /* FilterSearchBarTests.swift in Sources */,
 				A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */,
 				A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */,
 				58DBF760221CB7B3008512B3 /* ActivityTests.swift in Sources */,
