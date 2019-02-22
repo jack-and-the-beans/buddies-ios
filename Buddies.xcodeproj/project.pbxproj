@@ -317,16 +317,8 @@
 			isa = PBXGroup;
 			children = (
 				4544D3022214E90E007CB73D /* ActivityTable.storyboard */,
-				B6428EEE221DB5130052E469 /* ActivityDescription.xib */,
-				B6428EF0221DB51D0052E469 /* ActivityChat.xib */,
-				A81722BA221F24AB00DF6935 /* ActivityUserCollectionCell.xib */,
-				A81722BC221F254E00DF6935 /* ActivityTopicCollectionCell.xib */,
+				B6A57B6F22209BAE00C26948 /* View Activity */,
 				4544D3042214E93F007CB73D /* ActivityCell.swift */,
-				B688B47A221CCB6D0031A364 /* ActivityDescriptionController.swift */,
-				B688B478221C789B0031A364 /* ViewActivityController.swift */,
-				B688B47C221CCBAE0031A364 /* ActivityChatController.swift */,
-				B6428EFE221DEC0B0052E469 /* ActivityUserCollectionCell.swift */,
-				B6428EFA221DEB720052E469 /* ActivityTopicCollectionCell.swift */,
 				457F576A2218C54C00F27BFE /* ActivityTableVC.swift */,
 			);
 			path = Activities;
@@ -557,6 +549,22 @@
 				450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		B6A57B6F22209BAE00C26948 /* View Activity */ = {
+			isa = PBXGroup;
+			children = (
+				B6428EEE221DB5130052E469 /* ActivityDescription.xib */,
+				B6428EF0221DB51D0052E469 /* ActivityChat.xib */,
+				A81722BA221F24AB00DF6935 /* ActivityUserCollectionCell.xib */,
+				A81722BC221F254E00DF6935 /* ActivityTopicCollectionCell.xib */,
+				B688B47A221CCB6D0031A364 /* ActivityDescriptionController.swift */,
+				B688B478221C789B0031A364 /* ViewActivityController.swift */,
+				B688B47C221CCBAE0031A364 /* ActivityChatController.swift */,
+				B6428EFE221DEC0B0052E469 /* ActivityUserCollectionCell.swift */,
+				B6428EFA221DEB720052E469 /* ActivityTopicCollectionCell.swift */,
+			);
+			path = "View Activity";
 			sourceTree = "<group>";
 		};
 		B6AC549221F8DB8300B075B8 = {
