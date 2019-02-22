@@ -109,6 +109,7 @@ class ActivityTableVCTests: XCTestCase {
                                 description: "activityDescription",
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
+                                locationText: "What up buddy",
                                 topicIds: [])
         
         let resCell = activityTableVC.format(cell: cell, using: activity, at: IndexPath(index: 0))
@@ -158,6 +159,7 @@ class ActivityTableVCTests: XCTestCase {
                                 description: "activityDescription",
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
+                                locationText: "What up buddy",
                                 topicIds: [])
         
         let resCell = activityTableVC.format(cell: cell, using: activity, at: IndexPath(index: 0))
@@ -205,6 +207,7 @@ class ActivityTableVCTests: XCTestCase {
                                 description: "activityDescription",
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
+                                locationText: "What up buddy",
                                 topicIds: [])
         
         let resCell = activityTableVC.format(cell: cell, using: activity, at: IndexPath(index: 0))
@@ -232,6 +235,7 @@ class ActivityTableVCTests: XCTestCase {
                                 description: "activityDescription",
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
+                                locationText: "What up buddy",
                                 topicIds: [])
         
         let activity2 = Activity(delegate: nil,
@@ -244,6 +248,7 @@ class ActivityTableVCTests: XCTestCase {
                                 description: "activityDescription",
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
+                                locationText: "What up buddy",
                                 topicIds: [])
         
         activityTableVC.activities = [[activity, activity2]]
