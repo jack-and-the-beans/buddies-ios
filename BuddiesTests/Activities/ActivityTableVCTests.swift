@@ -16,7 +16,7 @@ class ActivityTableVCTests: XCTestCase {
     //For testLoadData
     class MockActivityTableVC: ActivityTableVC {
         var loadActivityCallIds = [ActivityId]()
-        override func loadActivity(_ id: ActivityId, at indexPath: IndexPath, dataAccessor: DataAccessor, storageManager: StorageManager, onLoaded: (() -> Void)?) {
+        override func loadActivity(_ id: ActivityId, at indexPath: IndexPath, dataAccessor: DataAccessor, onLoaded: (() -> Void)?) {
             loadActivityCallIds.append(id)
         }
     }
@@ -143,10 +143,12 @@ class ActivityTableVCTests: XCTestCase {
         cell.extraPicturesLabel = extraPicturesLabel
         cell.memberPics = memberPics
         
+        thisUser.image = UIImage()
         
-        activityTableVC.userImages["user1"] = UIImage()
-        activityTableVC.userImages["user2"] = UIImage()
-        activityTableVC.userImages["user3"] = UIImage()
+        
+        activityTableVC.users["user1"] = thisUser
+        activityTableVC.users["user2"] = thisUser
+        activityTableVC.users["user3"] = thisUser
 
         
         let activity = Activity(delegate: nil,
@@ -191,12 +193,16 @@ class ActivityTableVCTests: XCTestCase {
         cell.locationLabel = locationLabel
         cell.extraPicturesLabel = extraPicturesLabel
         cell.memberPics = memberPics
+       
         
-        activityTableVC.userImages["user1"] = UIImage()
-        activityTableVC.userImages["user2"] = UIImage()
-        activityTableVC.userImages["user3"] = UIImage()
-        activityTableVC.userImages["user4"] = UIImage()
+        thisUser.image = UIImage()
         
+        
+        activityTableVC.users["user1"] = thisUser
+        activityTableVC.users["user2"] = thisUser
+        activityTableVC.users["user3"] = thisUser
+        activityTableVC.users["user4"] = thisUser
+
         let activity = Activity(delegate: nil,
                                 activityId: "test_id",
                                 dateCreated: Timestamp(date: "11/23/1998".toDate()!.date),
@@ -290,49 +296,17 @@ class ActivityTableVCTests: XCTestCase {
 
     }
     
-    func testLoadImage(){
-        let expectation = self.expectation(description: "image loaded callback")
-        
-        activityTableVC.loadUserImage(user: thisUser, storageManager: storageManager){
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 0.2)
-        
-        XCTAssert(storageManager.getImageCalls == 1, "Get image is called once")
-        XCTAssertNotNil(activityTableVC.userImages[thisUser.uid], "User image is correctly set")
-    }
-    
-    func testLoadImage_ImageAlreadyLoaded(){
-        let expectation = self.expectation(description: "Don't load image when image already loaded")
-        expectation.isInverted = true
-        
-        activityTableVC.userImages[thisUser.uid] = UIImage()
-        activityTableVC.loadUserImage(user: thisUser, storageManager: storageManager) {
-            //Should never call this
-            expectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 2.0)
-        
-        XCTAssert(storageManager.getImageCalls == 0)
-    }
-    
     func testLoadUser(){
         
         let expectation = self.expectation(description: "image loaded callback")
 
-        //Called inside inside of loadUser and loadUserImage
-        expectation.expectedFulfillmentCount = 2
-        
-        activityTableVC.loadUser(uid: "my_uid", dataAccessor: instance, storageManager: storageManager) {
+        activityTableVC.loadUser(uid: "my_uid", dataAccessor: instance) {
             expectation.fulfill()
         }
         
         waitForExpectations(timeout: 0.2)
         
         XCTAssert(activityTableVC.users[thisUser.uid]?.uid == thisUser.uid, "Correct user is loaded")
-        
-        XCTAssert(storageManager.getImageCalls == 1)
     }
     
     //Doesn't test that users are loaded for each activity
@@ -348,7 +322,7 @@ class ActivityTableVCTests: XCTestCase {
         
         activityTableVC.activities = [[nil]]
         
-        activityTableVC.loadActivity(thisActivity.activityId, at: path, dataAccessor: instance, storageManager: storageManager){
+        activityTableVC.loadActivity(thisActivity.activityId, at: path, dataAccessor: instance){
             expectation.fulfill()
         }
         
@@ -366,7 +340,7 @@ class ActivityTableVCTests: XCTestCase {
     
         let data = [["1.1", "1.2"], ["2.1", "2.2", "2.3"], ["3.1", "3.2"]]
         
-        mockVC.loadData(for: data, dataAccessor: instance, storageManager: storageManager)
+        mockVC.loadData(for: data, dataAccessor: instance)
 
         var correctIds = data.count == mockVC.displayIds.count
         

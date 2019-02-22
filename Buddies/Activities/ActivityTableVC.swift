@@ -14,7 +14,6 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     var activityCancelers = [Canceler]()
     
     var users      = [UserId: User]()
-    var userImages = [UserId: UIImage]()
     var userCancelers = [ActivityId: [Canceler]]()
     
     //Doubly nested array of Activity Ids.
@@ -59,43 +58,26 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     
     func loadUser(uid: UserId,
                   dataAccessor: DataAccessor = DataAccessor.instance,
-                  storageManager: StorageManager = StorageManager.shared,
                   onLoaded: (()->Void)?) {
         
         let canceler = dataAccessor.useUser(id: uid) { user in
             self.users[user.uid] = user
-            self.loadUserImage(user: user, storageManager: storageManager, onLoaded: onLoaded)
             onLoaded?()
         }
         if userCancelers[uid] == nil { userCancelers[uid] = [] }
         userCancelers[uid]?.append(canceler)
     }
     
-    func loadUserImage(user: User,
-                       storageManager: StorageManager = StorageManager.shared,
-                       onLoaded: (()->Void)?) {
-        
-        if userImages[user.uid] != nil { return }
-        
-        storageManager.getImage(
-            imageUrl: user.imageUrl,
-            localFileName: user.uid) { image in
-                self.userImages[user.uid] = image
-                onLoaded?()
-        }
-    }
-    
     func loadActivity(_ id: ActivityId,
                       at indexPath: IndexPath,
                       dataAccessor: DataAccessor = DataAccessor.instance,
-                      storageManager: StorageManager = StorageManager.shared,
                       onLoaded: (()->Void)?){
         
         let canceler = dataAccessor.useActivity(id: id) { activity in
             self.userCancelers[activity.activityId]?.forEach() { $0() }
             
             activity.members.forEach() { uid in
-                self.loadUser(uid: uid, storageManager: storageManager, onLoaded: onLoaded)
+                self.loadUser(uid: uid, onLoaded: onLoaded)
             }
             
             self.activities[indexPath.section][indexPath.row] = activity
@@ -104,11 +86,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         activityCancelers.append(canceler)
 
     }
-        
-    func loadData(for displayIds: [[String]],
-                  dataAccessor: DataAccessor = DataAccessor.instance,
-                  storageManager: StorageManager = StorageManager.shared){
-        
+    
+    func loadData(for displayIds: [[String]], dataAccessor: DataAccessor = DataAccessor.instance){
         //Each time we load data, get rid of old listeners
         cleanup()
         
@@ -166,7 +145,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         
         cell.dateLabel.text = dateRange.rangePhrase(relativeTo: Date())
         
-        let activityUserImages = activity.members.compactMap { userImages[$0] }
+        let activityUserImages = activity.members.compactMap { users[$0]?.image }
         
         zip(cell.memberPics, activityUserImages).forEach() { (btn, img) in btn.setImage(img, for: .normal)
         }
