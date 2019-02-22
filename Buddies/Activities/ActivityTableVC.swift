@@ -26,6 +26,10 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 110
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchAndLoadActivities()
         
         // We need to store a local so that the
@@ -35,13 +39,15 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         fab.renderCreateActivityFab()
     }
     
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        cleanup()
+    }
+    
     // "abstract"
     func fetchAndLoadActivities(){} // Must call loadData() once displayIds is set
     func getTopics() -> [String] {return []} // Must get a list of the appropiate topics for the view
-    
-    deinit {
-        cleanup()
-    }
     
     func endEditing() {
         self.view.endEditing(false)
@@ -61,6 +67,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
             self.loadUserImage(user: user, storageManager: storageManager, onLoaded: onLoaded)
             onLoaded?()
         }
+        if userCancelers[uid] == nil { userCancelers[uid] = [] }
         userCancelers[uid]?.append(canceler)
     }
     
