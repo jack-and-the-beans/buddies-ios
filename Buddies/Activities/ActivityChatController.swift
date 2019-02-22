@@ -17,12 +17,12 @@ class ActivityChatController: UIView {
     @IBOutlet weak var topActivityView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
 
-    @IBAction func onShowDetailsTap(_ sender: Any) {
-        animateView()
-    }
-
     override func awakeFromNib() {
         super.awakeFromNib()
+        let tap = UILongPressGestureRecognizer(target: self, action: #selector(animateView))
+        tap.minimumPressDuration = 0
+        topActivityView.addGestureRecognizer(tap)
+
         render()
     }
     
@@ -40,12 +40,14 @@ class ActivityChatController: UIView {
         self.statusLabel?.text = status == .owner ? "Owner" : "Member"
     }
 
-    func animateView() {
-        self.showActivityDetails = !self.showActivityDetails
-        let viewHeight = showActivityDetails ? chatAreaView.frame.height : 80
-        let viewWidth = chatAreaView.frame.width
-        UIView.animate(withDuration: 0.5) {
-            self.topActivityView.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
+    @objc func animateView(gesture: UITapGestureRecognizer) {
+        if (gesture.state == .ended) {
+            self.showActivityDetails = !self.showActivityDetails
+            let viewHeight = showActivityDetails ? chatAreaView.frame.height : 80
+            let viewWidth = chatAreaView.frame.width
+            UIView.animate(withDuration: 0.2) {
+                self.topActivityView.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
+            }
         }
     }
 }
