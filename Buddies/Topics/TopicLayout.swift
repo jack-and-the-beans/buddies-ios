@@ -33,7 +33,7 @@ import UIKit
 class TopicLayout: UICollectionViewLayout {
 
     let topicWidth = CGFloat(150);
-    let heightToWidthRatio = 0.9
+    let heightToWidthRatio = 1
     var cellPadding: CGFloat = 6
     
     var topicElementWidth: CGFloat {
