@@ -23,6 +23,8 @@ class ViewActivityController: UIViewController {
 
     private var viewHasMounted = false
     
+    private var descriptionView: UIView?
+
     @IBOutlet weak var contentArea: UIView!
 
     override func viewDidLoad() {
@@ -125,22 +127,34 @@ class ViewActivityController: UIViewController {
             let memberStatus = self.curMemberStatus,
             let topics = self.activityTopics,
             let users = self.activityUsers else { return }
-
+        
+        // Instantiate description view if it does not exist:
+        if (descriptionController == nil) {
+            descriptionController = ActivityDescriptionController()
+            let descView = (UINib(nibName: "ActivityDescription", bundle: nil).instantiate(withOwner: descriptionController, options: nil)[0] as! UIView)
+            self.descriptionView = descView
+            // Put the view on the superview if the member is public:
+            contentArea.addSubview(descView)
+        }
+        // Render description with updated data:
+        descriptionController?.render(withActivity: activity, withUsers: users, withMemberStatus: memberStatus, withTopics: topics, onJoin: self.joinActivity)
+        
         if (memberStatus == .none) {
-            if (descriptionController == nil) {
-                descriptionController = ActivityDescriptionController()
-                let descriptionView = UINib(nibName: "ActivityDescription", bundle: nil).instantiate(withOwner: descriptionController, options: nil)[0] as! UIView
-                contentArea.addSubview(descriptionView)
-                descriptionView.bindFrameToSuperviewBounds()
-            }
-            descriptionController?.render(withActivity: activity, withUsers: users, withMemberStatus: memberStatus, withTopics: topics, onJoin: self.joinActivity)
-        } else {
-            // @TODO: remove existing subviews
+            descriptionController?.expand(animate: false)
+        }
+
+        if (memberStatus != .none) {
             if (chatController == nil) {
                 chatController = ActivityChatController()
                 let chatView = UINib(nibName: "ActivityChat", bundle: nil).instantiate(withOwner: chatController, options: nil)[0] as! UIView
-                contentArea.addSubview(chatView)
-                chatView.bindFrameToSuperviewBounds()
+
+                if let desc = self.descriptionView {
+                    contentArea.insertSubview(chatView, belowSubview: desc)
+                    descriptionController?.shrink(animate: false)
+                } else {
+                    contentArea.addSubview(chatView)
+                }
+                let _ = chatView.bindFrameToSuperviewBounds()
             }
             chatController?.refreshData(with: activity, memberStatus: memberStatus)
         }

@@ -106,4 +106,36 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.topicsArea.register(UINib.init(nibName: "ActivityTopicCollectionCell", bundle: nil), forCellWithReuseIdentifier: "topic_cell")
         self.usersArea.register(UINib.init(nibName: "ActivityUserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
     }
+    
+    func shrink(animate: Bool) {
+        let bottomConstraint = self.contentView.bindFrameToSuperviewBounds()
+        if let constraint = bottomConstraint {
+            contentView.removeConstraint(constraint)
+        }
+        self.contentView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+//        contentView.addConstraint(heightConstraint)
+        performConstraintLayout(animated: animate)
+    }
+    
+    func expand(animate: Bool) {
+        let _ = self.contentView.bindFrameToSuperviewBounds()
+        performConstraintLayout(animated: animate)
+    }
+
+    // https://stackoverflow.com/a/27417189
+    func performConstraintLayout(animated: Bool) {
+        if animated == true {
+            UIView.animate(withDuration: 1,
+                        delay: 0,
+                        usingSpringWithDamping: 0.5,
+                        initialSpringVelocity: 0.6,
+                        options: .beginFromCurrentState,
+                        animations: { () -> Void in
+           self.contentView.superview?.layoutIfNeeded()
+            }, completion: nil)
+        } else {
+            self.contentView.superview?.layoutIfNeeded()
+        }
+    }
+
 }
