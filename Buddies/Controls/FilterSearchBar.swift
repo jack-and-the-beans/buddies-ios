@@ -18,7 +18,7 @@ protocol FilterSearchBarDelegate {
 }
 
 class FilterSearchBar : UISearchBar, UISearchBarDelegate {
-    let api: AlgoliaSearch
+    var api: AlgoliaSearch //Should only be changed by unit tests
     
     var displayDelegate: FilterSearchBarDelegate?
     
