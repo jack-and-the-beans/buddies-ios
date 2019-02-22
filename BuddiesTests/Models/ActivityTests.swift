@@ -68,6 +68,7 @@ class ActivityTests: XCTestCase {
                               description: "description",
                               startTime: Timestamp(date: Date()),
                               endTime: Timestamp(date: Date()),
+                              locationText: "What up buddy",
                               topicIds: [])
         
         XCTAssert(a.activityId == "activityId")
