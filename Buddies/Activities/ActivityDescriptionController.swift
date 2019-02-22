@@ -174,6 +174,9 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.contentView.insertSubview(miniView, at: 0)
         constrainContaierView(toHeight: smallHeight)
         constrainMiniView(toHeight: smallHeight)
+        UIView.animate(withDuration: 0.3) {
+            self.bigBoyView.alpha = 0
+        }
         performConstraintLayout() {thing in
             self.bigBoyView.isHidden = true
             self.miniView.addBottomBorderWithColor(color: UIColor.lightGray, thisThicc: 1)
@@ -183,6 +186,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     func expandMe() {
         self.miniView.removeFromSuperview()
         self.bigBoyView.isHidden = false
+        self.bigBoyView.alpha = 1
         let superview = self.contentView.superview
         let superviewHeight = superview?.frame.height ?? 400
         constrainContaierView(toHeight: superviewHeight)
