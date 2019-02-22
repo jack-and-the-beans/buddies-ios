@@ -120,7 +120,7 @@ class ActivityTableVCTests: XCTestCase {
         
         XCTAssert(resCell.titleLabel.text == "activityTitle", "Cell Description correctly set")
         
-        XCTAssert(resCell.locationLabel.text == "\(Double(1)), \(Double(2))", "Cell location correctly set")
+        XCTAssert(resCell.locationLabel.text == "What up buddy", "Cell location correctly set")
         
         XCTAssert(resCell.extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
     }
@@ -170,7 +170,7 @@ class ActivityTableVCTests: XCTestCase {
         
         XCTAssert(resCell.titleLabel.text == "activityTitle", "Cell Description correctly set")
         
-        XCTAssert(resCell.locationLabel.text == "\(Double(1)), \(Double(2))", "Cell location correctly set")
+        XCTAssert(resCell.locationLabel.text == "What up buddy", "Cell location correctly set")
         
         XCTAssert(resCell.extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
     }
@@ -218,7 +218,7 @@ class ActivityTableVCTests: XCTestCase {
         
         XCTAssert(resCell.titleLabel.text == "activityTitle", "Cell Description correctly set")
         
-        XCTAssert(resCell.locationLabel.text == "\(Double(1)), \(Double(2))", "Cell location correctly set")
+        XCTAssert(resCell.locationLabel.text == "What up buddy", "Cell location correctly set")
         
         XCTAssert(!resCell.extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
     }
