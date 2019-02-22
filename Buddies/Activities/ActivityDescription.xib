@@ -17,6 +17,7 @@
                 <outlet property="descriptionLabel" destination="OXm-Bd-NvL" id="ddg-TF-6H3"/>
                 <outlet property="joinButton" destination="cJW-lR-984" id="rms-kx-EHI"/>
                 <outlet property="locationLabel" destination="rdM-j3-Msi" id="JLN-pE-3iF"/>
+                <outlet property="miniView" destination="8iC-Jl-PSq" id="xnS-FQ-qKc"/>
                 <outlet property="titleLabel" destination="Oux-xo-Ey0" id="E0a-gC-6Op"/>
                 <outlet property="topicsArea" destination="CYG-vO-n8i" id="Hrq-Gi-ywJ"/>
                 <outlet property="usersArea" destination="m3l-r3-swk" id="PRB-Zi-YY4"/>
@@ -48,13 +49,6 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OXm-Bd-NvL">
                     <rect key="frame" x="20" y="98" width="340" height="81.5"/>
                     <string key="text">Wow isn't this a cool event that I'm making, this is totally not fake lololololololol uW and it goes really long like 4 lines long but then it cuts off as expected ;)  right gosh I hate that I'm typing so much informationr ight now. ug</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5h-BY-LSZ">
-                    <rect key="frame" x="20" y="247" width="335" height="172.5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -144,6 +138,26 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="I7N-C4-DAa"/>
             <point key="canvasLocation" x="90.400000000000006" y="48.125937031484263"/>
+        </view>
+        <view contentMode="scaleToFill" id="8iC-Jl-PSq">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpG-iG-SKl">
+                    <rect key="frame" x="164.5" y="25" width="46" height="30"/>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="onShowTap:" destination="-1" eventType="touchUpInside" id="nOb-2K-7Xe"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="dpG-iG-SKl" firstAttribute="centerX" secondItem="8iC-Jl-PSq" secondAttribute="centerX" id="BHd-r2-1vw"/>
+                <constraint firstItem="dpG-iG-SKl" firstAttribute="top" secondItem="2qq-Kx-3Rd" secondAttribute="top" constant="5" id="hVR-Sv-wxb"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="2qq-Kx-3Rd"/>
+            <point key="canvasLocation" x="854" y="48"/>
         </view>
     </objects>
 </document>

@@ -12,7 +12,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     var hasRendered = false
 
     @IBOutlet var contentView: UIView!
-
+    @IBOutlet var miniView: UIView!
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
@@ -28,15 +29,20 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.joinActivity?()
     }
 
+    @IBAction func onShowTap(_ sender: Any) {
+        expandDesc?()
+    }
+
     var topics: [Topic] = []
     var users: [User] = []
     var memberStatus: MemberStatus = .none
     var joinActivity: (() -> Void)?
+    var expandDesc: (() -> Void)?
     var isExpanded: Bool = false
     var curActivity: Activity?
 
     // Refreshes the UI elements with new data:
-    func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic], shouldExpand: Bool, onJoin: @escaping () -> Void ) {
+    func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic], shouldExpand: Bool, onExpand: @escaping () -> Void, onJoin: @escaping () -> Void ) {
         self.curActivity = activity
         registerCollectionViews()
         joinButton?.layer.cornerRadius = 5
@@ -51,6 +57,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.memberStatus = status
         self.topicsArea.reloadData()
         self.usersArea.reloadData()
+        self.expandDesc = onExpand
         if (shouldExpand) {
             expandMe()
         } else {
@@ -114,11 +121,15 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.topicsArea.register(UINib.init(nibName: "ActivityTopicCollectionCell", bundle: nil), forCellWithReuseIdentifier: "topic_cell")
         self.usersArea.register(UINib.init(nibName: "ActivityUserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
     }
-    
+
+    func createConstraint(for view: UIView, withHeight height: CGFloat) -> NSLayoutConstraint {
+        return NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: height)
+    }
+
     private var heightConstraint: NSLayoutConstraint?
-    func createConstraint(height: CGFloat) {
+    func constrainContaierView(toHeight height: CGFloat) {
         if (self.heightConstraint == nil) {
-            let hc = NSLayoutConstraint(item: self.contentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: height)
+            let hc = createConstraint(for: self.contentView, withHeight: height)
             self.heightConstraint = hc
             self.contentView.addConstraint(hc)
         } else {
@@ -126,15 +137,31 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         }
     }
 
+    private var miniConstraint: NSLayoutConstraint?
+    func constrainMiniView(toHeight height: CGFloat) {
+        if (miniConstraint == nil) {
+            miniView.bindFrameToSuperviewBounds(shouldConstraintBottom: false)
+            let hc = createConstraint(for: miniView, withHeight: height)
+            self.miniConstraint = hc
+            miniView.addConstraint(hc)
+        } else {
+            self.miniConstraint?.constant = height
+        }
+    }
+
     func shrinkMe() {
-        createConstraint(height: 100)
+        let smallHeight = CGFloat(100)
+        self.contentView.insertSubview(miniView, at: 0)
+        constrainContaierView(toHeight: smallHeight)
+        constrainMiniView(toHeight: smallHeight)
         performConstraintLayout()
     }
-    
+
     func expandMe() {
+        self.miniView.removeFromSuperview()
         let superview = self.contentView.superview
-        let superviewHeight = superview?.frame.height
-        createConstraint(height: superviewHeight ?? 400)
+        let superviewHeight = superview?.frame.height ?? 400
+        constrainContaierView(toHeight: superviewHeight)
         performConstraintLayout()
     }
 
@@ -146,8 +173,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         if hasRendered {
             UIView.animate(withDuration: 1,
                         delay: 0,
-                        usingSpringWithDamping: 0.5,
-                        initialSpringVelocity: 0.6,
+                        usingSpringWithDamping: 0.2,
+                        initialSpringVelocity: 0.2,
                         options: .beginFromCurrentState,
                         animations: { () -> Void in
            self.contentView.superview?.layoutIfNeeded()
