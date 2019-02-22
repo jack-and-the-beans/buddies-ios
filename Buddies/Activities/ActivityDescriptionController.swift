@@ -171,10 +171,10 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         // - e.g. we don't want to animate while the activity is
         // getting displayed modally.
         if hasRendered {
-            UIView.animate(withDuration: 1,
+            UIView.animate(withDuration: 0.5,
                         delay: 0,
-                        usingSpringWithDamping: 0.2,
-                        initialSpringVelocity: 0.2,
+                        usingSpringWithDamping: 0.7,
+                        initialSpringVelocity: 0.4,
                         options: .beginFromCurrentState,
                         animations: { () -> Void in
            self.contentView.superview?.layoutIfNeeded()
