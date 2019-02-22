@@ -81,6 +81,7 @@
 		A9B144AF220B4165004C614E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144AE220B4165004C614E /* SettingsVC.swift */; };
 		A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B144B0220C82A0004C614E /* AppDelegateTests.swift */; };
 		A9C9852C221E658C003462AC /* FilterSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C9852B221E658C003462AC /* FilterSearchBar.swift */; };
+		A9C98530221FB1E5003462AC /* TopicActivityTableVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C9852F221FB1E5003462AC /* TopicActivityTableVCTests.swift */; };
 		A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF3F2201427A00C05F2C /* LoginVC.swift */; };
 		A9E8BF45220143A300C05F2C /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF44220143A300C05F2C /* AuthHandler.swift */; };
 		A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */; };
@@ -200,6 +201,7 @@
 		A9B144AE220B4165004C614E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		A9B144B0220C82A0004C614E /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		A9C9852B221E658C003462AC /* FilterSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSearchBar.swift; sourceTree = "<group>"; };
+		A9C9852F221FB1E5003462AC /* TopicActivityTableVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicActivityTableVCTests.swift; sourceTree = "<group>"; };
 		A9E8BF3F2201427A00C05F2C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		A9E8BF44220143A300C05F2C /* AuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandler.swift; sourceTree = "<group>"; };
 		A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVC.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				58EF8DAE2208A2E900872770 /* TopicCollectionTests.swift */,
 				58EF8DAF2208A2E900872770 /* TopicModelTests.swift */,
 				58EF8DB12208A2E900872770 /* TopicCellTest.swift */,
+				A9C9852F221FB1E5003462AC /* TopicActivityTableVCTests.swift */,
 			);
 			path = Topics;
 			sourceTree = "<group>";
@@ -900,6 +903,7 @@
 				58EF8DA82208A2C600872770 /* DiscoverVCTests.swift in Sources */,
 				58EF8DA32208A2BC00872770 /* CreateActivityVCTests.swift in Sources */,
 				5868DEE3221DEEC3008B86FE /* AlgoliaMock.swift in Sources */,
+				A9C98530221FB1E5003462AC /* TopicActivityTableVCTests.swift in Sources */,
 				A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */,
 				A95B958C2214B6A800453AEA /* DataAccessorTests.swift in Sources */,
 				58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */,
