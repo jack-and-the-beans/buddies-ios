@@ -9,40 +9,24 @@
 import Foundation
 import UIKit
 
-class TopicActivityTableVC : ActivityTableVC, SearchHandlerDelegate {
-    @IBOutlet weak var searchBar: UISearchBar!
-    var fab: FAB!
-    var searchHandler: SearchHandler!
+class TopicActivityTableVC : ActivityTableVC {
+    @IBOutlet weak var searchBar: FilterSearchBar!
     
     var topicId: String!
     
     override func viewDidLoad() {
         self.setupHideKeyboardOnTap()
         
-        // We need to store a local so that the
-        //  instance isn't deallocated along with
-        //  the event handler!
-        fab = FAB(for: self)
-        fab.renderCreateActivityFab()
-        
-        searchHandler = SearchHandler(for: searchBar, delegate: self, api: AlgoliaSearch())
+        searchBar.displayDelegate = self
 
         super.viewDidLoad()
     }
     
-    func endEditing() {
-        self.view.endEditing(false)
-    }
-    
-    func display(activities: [ActivityId]) {
-        self.loadData(for: [activities])
-    }
-    
-    func getTopics() -> [String] {
+    override func getTopics() -> [String] {
         return [topicId]
     }
     
     override func fetchAndLoadActivities() {
-        searchHandler.fetchAndLoadActivities()
+        searchBar.fetchAndLoadActivities()
     }
 }

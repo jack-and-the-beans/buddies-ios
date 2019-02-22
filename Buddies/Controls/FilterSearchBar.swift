@@ -11,39 +11,46 @@ import UIKit
 
 typealias SearchParams = (filterText: String?, when: DateInterval?, maxMetersAway: Int)
 
-protocol SearchHandlerDelegate {
+protocol FilterSearchBarDelegate {
     func endEditing()
     func display(activities: [ActivityId])
     func getTopics() -> [String]
 }
 
-class SearchHandler : NSObject, UISearchBarDelegate {
-    let delegate: SearchHandlerDelegate
-    let searchBar: UISearchBar
+class FilterSearchBar : UISearchBar, UISearchBarDelegate {
     let api: AlgoliaSearch
+    
+    var displayDelegate: FilterSearchBarDelegate?
     
     // Default is a sentinal because XCode hates nil tuples :(
     var lastSearchParams: SearchParams = ("", nil, 0)
     
     var searchTimer: Timer?
+    var filterMenu: UIView?
     
-    init(for searchBar: UISearchBar, delegate: SearchHandlerDelegate, api: AlgoliaSearch ) {
-        self.searchBar = searchBar
-        self.delegate = delegate
-        self.api = api
+    override init(frame: CGRect) {
+        self.api = AlgoliaSearch()
+        super.init(frame: frame)
         
-        super.init()
-        
-        // Add this as a delegate
-        searchBar.delegate = self
-        
-        // Create the filter button
-        renderFilterButton(searchBar)
+        setupView()
     }
     
-    private func renderFilterButton(_ searchBar: UISearchBar) {
-        let width = CGFloat(65)
+    required init?(coder aDecoder: NSCoder) {
+        self.api = AlgoliaSearch()
+        super.init(coder: aDecoder)
         
+        setupView()
+    }
+    
+    private func setupView() {
+        // I'm my own delegate!
+        self.delegate = self
+        
+        // Create the filter button
+        renderFilterButton()
+    }
+    
+    private func renderFilterButton() {
         let bttn = UIButton(type: .custom)
         
         // Event handler
@@ -60,28 +67,20 @@ class SearchHandler : NSObject, UISearchBarDelegate {
         bttn.layer.cornerRadius = 10
         bttn.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
         
-        searchBar.addSubview(bttn)
+        addSubview(bttn)
         
         // Size/Position
         NSLayoutConstraint.activate([
-            bttn.rightAnchor.constraint(equalTo: searchBar.rightAnchor, constant: -10),
-            bttn.topAnchor.constraint(equalTo: searchBar.topAnchor, constant: 10),
-            bttn.bottomAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: -10),
-            bttn.widthAnchor.constraint(equalToConstant: width)
+            bttn.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
+            bttn.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            bttn.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            bttn.widthAnchor.constraint(equalToConstant: 65)
         ])
     }
     
-    var filterMenu: UIView?
-    
-    @objc func onFilterTapped() {
-        if let filterMenu = filterMenu {
-            filterMenu.removeFromSuperview()
-            self.filterMenu = nil
-            return
-        }
-        
+    func renderNewFilterMenu() -> UIView {
         let height = CGFloat(200)
-        let container = UIView(frame: CGRect(x: 0, y: 0, width: searchBar.frame.width, height: height))
+        let container = UIView(frame: CGRect(x: 0, y: 0, width: frame.width, height: height))
         container.backgroundColor = UIColor(white: 0.98, alpha: 0.85)
         container.translatesAutoresizingMaskIntoConstraints = false
         
@@ -89,26 +88,36 @@ class SearchHandler : NSObject, UISearchBarDelegate {
         container.clipsToBounds = true
         container.layer.cornerRadius = 10
         
-        searchBar.superview?.addSubview(container)
-        searchBar.superview?.insertSubview(container, belowSubview: searchBar)
+        // render
+        superview?.addSubview(container)
         
         // Size/Position
         NSLayoutConstraint.activate([
-            container.leftAnchor.constraint(equalTo: searchBar.leftAnchor, constant: 10),
-            container.rightAnchor.constraint(equalTo: searchBar.rightAnchor, constant: -10),
-            container.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: -10),
+            container.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
+            container.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
+            container.topAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             container.heightAnchor.constraint(equalToConstant: height)
-            ])
+        ])
         
-        self.filterMenu = container
+        return container
     }
     
-    
+    @objc func onFilterTapped() {
+        // Hide the filter menu...
+        if let filterMenu = filterMenu {
+            filterMenu.removeFromSuperview()
+            self.filterMenu = nil
+            return
+        }
+        
+        // Show the filter menu...
+        self.filterMenu = renderNewFilterMenu()
+    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchTimer?.invalidate()
         
-        delegate.endEditing()
+        displayDelegate?.endEditing()
         fetchAndLoadActivities()
     }
     
@@ -127,7 +136,7 @@ class SearchHandler : NSObject, UISearchBarDelegate {
     }
     
     func getSearchParams() -> SearchParams {
-        let text = searchBar.text == "" ? nil : searchBar.text
+        let text = self.text == "" ? nil : self.text
         
         // TODO: the DateInterval and location radius are hardcoded for now
         //       this will change soon in coming BUD- stories ;)
@@ -145,7 +154,7 @@ class SearchHandler : NSObject, UISearchBarDelegate {
         
         // Load data from algolia!
         api.searchActivities(withText: myParams.filterText,
-                             matchingAnyTopicOf: delegate.getTopics(),
+                             matchingAnyTopicOf: displayDelegate?.getTopics(),
                              startingAt: myParams.when?.start,
                              endingAt: myParams.when?.end,
                              upToDisatnce: myParams.maxMetersAway) {
@@ -158,7 +167,7 @@ class SearchHandler : NSObject, UISearchBarDelegate {
             if let error = err { print(error) }
             
             // Load new data
-            self.delegate.display(activities: activities)
+            self.displayDelegate?.display(activities: activities)
         }
     }
 }

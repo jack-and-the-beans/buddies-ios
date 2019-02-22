@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ActivityTableVC: UITableViewController {    
+class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     var activities = [[Activity?]]()
     var activityCancelers = [Canceler]()
     
@@ -20,15 +20,35 @@ class ActivityTableVC: UITableViewController {
     //Doubly nested array of Activity Ids.
     //Each array is a section of the table view
     var displayIds = [[ActivityId]]()
+    
+    var fab: FAB!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 110
         fetchAndLoadActivities()
+        
+        // We need to store a local so that the
+        //  instance isn't deallocated along with
+        //  the event handler!
+        fab = FAB(for: self)
+        fab.renderCreateActivityFab()
     }
+    
+    // "abstract"
+    func fetchAndLoadActivities(){} // Must call loadData() once displayIds is set
+    func getTopics() -> [String] {return []} // Must get a list of the appropiate topics for the view
     
     deinit {
         cleanup()
+    }
+    
+    func endEditing() {
+        self.view.endEditing(false)
+    }
+    
+    func display(activities: [ActivityId]) {
+        self.loadData(for: [activities])
     }
     
     func loadUser(uid: UserId,
@@ -166,10 +186,6 @@ class ActivityTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayIds[section].count
     }
-    
-    // "abstract"
-    // Must call loadData() once displayIds is set
-    func fetchAndLoadActivities(){}
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let selectedIndex = self.tableView.indexPath(for: sender as! UITableViewCell)
