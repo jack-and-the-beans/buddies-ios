@@ -15,6 +15,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     @IBOutlet var miniView: UIView!
     @IBOutlet weak var miniContentView: UIView!
     @IBOutlet weak var bigBoyView: UIView!
+    @IBOutlet weak var miniLocationLabel: UILabel!
+    @IBOutlet weak var miniTimeLabel: UILabel!
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -67,9 +69,12 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
             shrinkButton.isHidden = true
         }
         self.locationLabel.text = activity.locationText
+        self.miniLocationLabel.text = activity.locationText
         self.titleLabel.text = activity.title
         self.descriptionLabel.text = activity.description
-        self.dateLabel.text = activity.timeRange.rangePhrase(relativeTo: Date()).capitalized
+        let dateText = activity.timeRange.rangePhrase(relativeTo: Date()).capitalized
+        self.dateLabel.text = dateText
+        self.miniTimeLabel.text = dateText
         self.topics = topics
         self.users = users
         self.joinActivity = onJoin
@@ -170,12 +175,16 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     }
 
     func shrinkMe() {
-        let smallHeight = CGFloat(100)
+        let smallHeight = CGFloat(80)
         self.contentView.insertSubview(miniView, at: 0)
         constrainContaierView(toHeight: smallHeight)
         constrainMiniView(toHeight: smallHeight)
-        UIView.animate(withDuration: 0.3) {
-            self.bigBoyView.alpha = 0
+        if (hasRendered) {
+            // Animate opacity of big view as it
+            // hides to reduce jaring close.
+            UIView.animate(withDuration: 0.3) {
+                self.bigBoyView.alpha = 0
+            }
         }
         performConstraintLayout() {thing in
             self.bigBoyView.isHidden = true
@@ -188,7 +197,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.bigBoyView.isHidden = false
         self.bigBoyView.alpha = 1
         let superview = self.contentView.superview
-        let superviewHeight = superview?.frame.height ?? 400
+        let superviewHeight = superview?.frame.height ?? 400 // Should always exist and never hit 400
         constrainContaierView(toHeight: superviewHeight)
         performConstraintLayout() { thing in }
     }
