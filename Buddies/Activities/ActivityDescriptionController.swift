@@ -13,12 +13,15 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     @IBOutlet var contentView: UIView!
     @IBOutlet var miniView: UIView!
+    @IBOutlet weak var miniContentView: UIView!
+    @IBOutlet weak var bigBoyView: UIView!
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
 
+    @IBOutlet weak var shrinkButton: UIButton!
     @IBOutlet weak var joinButton: UIButton!
 
     @IBOutlet weak var topicsArea: UICollectionView!
@@ -29,7 +32,11 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.joinActivity?()
     }
 
-    @IBAction func onShowTap(_ sender: Any) {
+    @IBAction func onShrinkTap(_ sender: Any) {
+        expandDesc?()
+    }
+
+    @objc func onShowTap(_ sender: UITapGestureRecognizer) {
         expandDesc?()
     }
 
@@ -43,13 +50,25 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     // Refreshes the UI elements with new data:
     func render(withActivity activity: Activity, withUsers users: [User], withMemberStatus status: MemberStatus, withTopics topics: [Topic], shouldExpand: Bool, onExpand: @escaping () -> Void, onJoin: @escaping () -> Void ) {
+        // Setup stuff the first time:
+        if (!hasRendered) {
+            registerCollectionViews()
+            let tap = UITapGestureRecognizer(target: self, action: #selector(self.onShowTap(_:)))
+            miniContentView.isUserInteractionEnabled = true
+            miniContentView.addGestureRecognizer(tap)
+        }
         self.curActivity = activity
-        registerCollectionViews()
         joinButton?.layer.cornerRadius = 5
+        if (memberStatus != .none) {
+            joinButton.isHidden = true
+            shrinkButton.isHidden = false
+        } else {
+            joinButton.isHidden = false
+            shrinkButton.isHidden = true
+        }
         self.locationLabel.text = activity.locationText
         self.titleLabel.text = activity.title
         self.descriptionLabel.text = activity.description
-        
         self.dateLabel.text = activity.timeRange.rangePhrase(relativeTo: Date()).capitalized
         self.topics = topics
         self.users = users
@@ -139,8 +158,9 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     private var miniConstraint: NSLayoutConstraint?
     func constrainMiniView(toHeight height: CGFloat) {
+        miniView.bindFrameToSuperviewBounds(shouldConstraintBottom: false)
         if (miniConstraint == nil) {
-            miniView.bindFrameToSuperviewBounds(shouldConstraintBottom: false)
+            miniView.backgroundColor = UIColor.white
             let hc = createConstraint(for: miniView, withHeight: height)
             self.miniConstraint = hc
             miniView.addConstraint(hc)
@@ -154,19 +174,23 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.contentView.insertSubview(miniView, at: 0)
         constrainContaierView(toHeight: smallHeight)
         constrainMiniView(toHeight: smallHeight)
-        performConstraintLayout()
+        performConstraintLayout() {thing in
+            self.bigBoyView.isHidden = true
+            self.miniView.addBottomBorderWithColor(color: UIColor.lightGray, thisThicc: 1)
+        }
     }
 
     func expandMe() {
         self.miniView.removeFromSuperview()
+        self.bigBoyView.isHidden = false
         let superview = self.contentView.superview
         let superviewHeight = superview?.frame.height ?? 400
         constrainContaierView(toHeight: superviewHeight)
-        performConstraintLayout()
+        performConstraintLayout() { thing in }
     }
 
     // https://stackoverflow.com/a/27417189
-    func performConstraintLayout() {
+    func performConstraintLayout(then: @escaping (Bool) -> Void) {
         // We do not want to animate on the first time it loads
         // - e.g. we don't want to animate while the activity is
         // getting displayed modally.
@@ -178,9 +202,10 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
                         options: .beginFromCurrentState,
                         animations: { () -> Void in
            self.contentView.superview?.layoutIfNeeded()
-            }, completion: nil)
+            }, completion: then)
         } else {
             self.contentView.superview?.layoutIfNeeded()
+            then(true)
         }
     }
 
