@@ -30,6 +30,11 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     @IBOutlet weak var usersArea: UICollectionView!
 
+    
+    @IBOutlet weak var miniUser3: UIImageView!
+    @IBOutlet weak var miniUser2: UIImageView!
+    @IBOutlet weak var miniUser1: UIImageView!
+    
     @IBAction func onJoinTap(_ sender: Any) {
         self.joinActivity?()
     }
@@ -82,6 +87,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.topicsArea.reloadData()
         self.usersArea.reloadData()
         self.expandDesc = onExpand
+        self.configureMiniImages()
         if (shouldExpand) {
             expandMe()
         } else {
@@ -90,6 +96,21 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         hasRendered = true
     }
     
+    func configureMiniImages () {
+        if (users.count > 0) {
+            miniUser1.image = users[0].image
+            miniUser1.makeCircle()
+        }
+        if (users.count > 1) {
+            miniUser2.image = users[1].image
+            miniUser2.makeCircle()
+        }
+        if (users.count > 2) {
+            miniUser3.image = users[2].image
+            miniUser3.makeCircle()
+        }
+    }
+
     // Returns the number of topics or users for their collections
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (collectionView === self.topicsArea) {
