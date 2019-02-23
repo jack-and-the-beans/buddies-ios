@@ -61,6 +61,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         leaveActivity?()
     }
     
+    var removeUser: ((_ uid: String) -> Void)?
+
     // MARK: Local data sources for rendering:
     var topics: [Topic] = []
     var users: [User] = []
@@ -76,6 +78,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         shouldExpand: Bool,
         onExpand: @escaping () -> Void,
         onLeave: @escaping () -> Void,
+        onRemoveUser: @escaping (_ uid: String) -> Void,
         onJoin: @escaping () -> Void ) {
 
         // Handle first-time setup:
@@ -93,6 +96,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.memberStatus = status
         self.toggleBigView = onExpand
         self.leaveActivity = onLeave
+        self.removeUser = onRemoveUser
 
         // Set UI elements to new data:
         self.locationLabel.text = activity.locationText
@@ -144,16 +148,28 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     private func configureMiniImages () {
         if (users.count > 0) {
+            miniUser1.isHidden = false
             miniUser1.image = users[0].image
             miniUser1.makeCircle()
         }
         if (users.count > 1) {
+            miniUser2.isHidden = false
             miniUser2.image = users[1].image
             miniUser2.makeCircle()
         }
         if (users.count > 2) {
+            miniUser3.isHidden = false
             miniUser3.image = users[2].image
             miniUser3.makeCircle()
+        }
+        if (users.count < 2) {
+            miniUser3.isHidden = true
+        }
+        if (users.count < 1) {
+            miniUser2.isHidden = true
+        }
+        if (users.count == 0) {
+            miniUser1.isHidden = true
         }
     }
 
@@ -182,7 +198,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
             let user = users[indexPath.row]
             let isIndividualOwner = self.curActivity?.getMemberStatus(of: user.uid) == .owner
             let isCurUserOwner = self.memberStatus == .owner
-            cell.render(withUser: users[indexPath.row], isCurUserOwner: isCurUserOwner, isIndividualOwner: isIndividualOwner)
+            cell.render(withUser: users[indexPath.row], isCurUserOwner: isCurUserOwner, isIndividualOwner: isIndividualOwner, removeUser: self.removeUser)
             return cell
         } else {
             return UICollectionViewCell()
@@ -191,10 +207,10 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     
     // Dynamically sizes the topic cells based on the screen size:
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let margin = 20
+        let collectionWidth = self.contentView.frame.width - CGFloat(margin * 2)
         if (collectionView == self.topicsArea) {
-            let margin = 20
             let height = CGFloat(40)
-            let collectionWidth = self.contentView.frame.width - CGFloat(margin * 2)
             if (self.topics.count > 4) {
                 let base = collectionWidth / 2
                 return CGSize(width: base, height: height)
@@ -202,6 +218,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
                 let cellWidth = collectionWidth / 2 - 10
                 return CGSize(width: cellWidth, height: height)
             }
+        } else if (collectionView == self.usersArea) {
+            return CGSize(width: collectionWidth, height: 50)
         } else {
             // Dummy - should never be called.
             return CGSize(width: 270, height: 50)
@@ -213,6 +231,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.topicsArea.dataSource = self
         self.topicsArea.delegate = self
         self.usersArea.dataSource = self
+        self.usersArea.delegate = self
         self.topicsArea.register(UINib.init(nibName: "ActivityTopicCollectionCell", bundle: nil), forCellWithReuseIdentifier: "topic_cell")
         self.usersArea.register(UINib.init(nibName: "ActivityUserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
     }

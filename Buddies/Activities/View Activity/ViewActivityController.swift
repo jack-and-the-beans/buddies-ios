@@ -82,12 +82,17 @@ class ViewActivityController: UIViewController {
 
     func leaveActivity() -> Void {
         let uid = Auth.auth().currentUser!.uid
-        guard let activity = self.curActivity, let status = self.curMemberStatus else { return }
+        guard let status = self.curMemberStatus else { return }
         if (status == .member) {
-            if let i = activity.members.index(of: uid) {
-                activity.members.remove(at: i)
-                self.dismiss(animated: true)
-            }
+            self.removeUser(uid: uid)
+            self.dismiss(animated: true)
+        }
+    }
+
+    func removeUser(uid: String) -> Void {
+        guard let activity = self.curActivity else { return }
+        if let i = activity.members.index(of: uid) {
+            activity.members.remove(at: i)
         }
     }
 
@@ -184,6 +189,7 @@ class ViewActivityController: UIViewController {
             shouldExpand: shouldExpand,
             onExpand: self.expandDescription,
             onLeave: self.leaveActivity,
+            onRemoveUser: self.removeUser,
             onJoin: self.joinActivity )
 
         // If (and only if) the user is a member, display the
