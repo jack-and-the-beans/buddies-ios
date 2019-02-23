@@ -258,7 +258,34 @@
                             <outlet property="delegate" destination="k11-m3-OhU" id="3hL-a0-pAU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Example Topic" id="hxX-za-jYO"/>
+                    <navigationItem key="navigationItem" title="Example Topic" id="hxX-za-jYO">
+                        <barButtonItem key="rightBarButtonItem" title="Item" style="plain" id="SG1-qq-buQ">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cO4-DD-aXy" customClass="ToggleButton" customModule="Buddies" customModuleProvider="target">
+                                <rect key="frame" x="315" y="0.0" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="2Eg-Jz-OhG"/>
+                                    <constraint firstAttribute="width" constant="40" id="BTB-be-HJC"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <inset key="imageEdgeInsets" minX="-5" minY="-5" maxX="-5" maxY="-5"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="unselectedColor">
+                                        <color key="value" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="selectedImg" value="favorite_star"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="unselectedImg" value="favorite_outline"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="toggleSelected:" destination="Zc6-W6-bDA" eventType="touchUpInside" id="tRK-b4-BR7"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="a1x-bw-EDq" id="tB3-fr-AwJ"/>
                     </connections>
@@ -293,6 +320,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="favorite_star" width="100" height="100"/>
+        <image name="favorite_outline" width="26.5" height="26"/>
+        <image name="favorite_star" width="25" height="25"/>
     </resources>
 </document>
