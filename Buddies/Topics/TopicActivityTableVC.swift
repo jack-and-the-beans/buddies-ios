@@ -12,18 +12,24 @@ import UIKit
 class TopicActivityTableVC : ActivityTableVC {
     @IBOutlet weak var searchBar: FilterSearchBar!
     
-    var topicId: String!
+    var topic: Topic!
+    var mainTopicVC: TopicTabVC!
+    @IBOutlet weak var favoriteButton: ToggleButton!
+    
+    @IBAction func favoriteTopic(_ sender: ToggleButton) {
+        mainTopicVC.changeSelectedState(for: topic, isSelected: sender.isSelected)
+    }
     
     override func viewDidLoad() {
         self.setupHideKeyboardOnTap()
-        
+
         searchBar.displayDelegate = self
 
         super.viewDidLoad()
     }
     
     override func getTopics() -> [String] {
-        return [topicId]
+        return [topic.id]
     }
     
     override func fetchAndLoadActivities() {

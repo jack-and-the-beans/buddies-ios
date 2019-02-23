@@ -21,8 +21,10 @@ class TopicActivityTableVCTests: XCTestCase {
     var mockSearchBar: MockSearchBar!
     
     override func setUp() {
+        let topic = Topic(id: "j0FFY5VI4Ti6SZ5jUsDJ", name: "testTopic", image: nil)
+        
         vc = BuddiesStoryboard.Topics.viewController(withID: "topicActivitiesTable")
-        vc.topicId = "j0FFY5VI4Ti6SZ5jUsDJ"
+        vc.topic = topic
         
         UIApplication.setRootView(vc, animated: false)
         

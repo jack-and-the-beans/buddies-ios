@@ -21,13 +21,17 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
     @IBAction func toggleSelected(_ sender: ToggleButton) {
         guard let cell = sender.superview?.superview?.superview as? TopicCell,
             let topic = cell.topic else { return }
+        changeSelectedState(for: topic, isSelected: sender.isSelected)
+    }
     
-        if sender.isSelected {
+    func changeSelectedState(for topic: Topic, isSelected: Bool){
+        if isSelected {
             selectedTopics.append(topic)
         } else {
             selectedTopics = selectedTopics.filter({ $0.id != topic.id })
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
@@ -54,14 +58,6 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
         
             return cell
         }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let dest = segue.destination as? TopicActivityTableVC,
-            let indexPath = collectionView.indexPathsForSelectedItems {
-            dest.title = topicCollection.topics[indexPath[0].row].name
-            dest.topicId = topicCollection.topics[indexPath[0].row].id
-        }
-    }
     
 }
 
