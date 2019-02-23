@@ -80,6 +80,17 @@ class ViewActivityController: UIViewController {
         }
     }
 
+    func leaveActivity() -> Void {
+        let uid = Auth.auth().currentUser!.uid
+        guard let activity = self.curActivity, let status = self.curMemberStatus else { return }
+        if (status == .member) {
+            if let i = activity.members.index(of: uid) {
+                activity.members.remove(at: i)
+                self.dismiss(animated: true)
+            }
+        }
+    }
+
     // Local state for toggling the expanded description
     var shouldExpand = false
     func expandDescription() -> Void {
@@ -172,6 +183,7 @@ class ViewActivityController: UIViewController {
             withTopics: topics,
             shouldExpand: shouldExpand,
             onExpand: self.expandDescription,
+            onLeave: self.leaveActivity,
             onJoin: self.joinActivity )
 
         // If (and only if) the user is a member, display the

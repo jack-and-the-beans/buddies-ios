@@ -37,6 +37,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     @IBOutlet weak var shrinkButton: UIButton!
     @IBOutlet weak var joinButton: UIButton!
+    @IBOutlet weak var leaveButton: UIButton!
     
     // Tap on the Join button to call this
     var joinActivity: (() -> Void)? // Set from the parent controller
@@ -55,6 +56,11 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         toggleBigView?()
     }
 
+    var leaveActivity: (() -> Void)? // Set from the parent controller
+    @IBAction func onLeaveTap(_ sender: Any) {
+        leaveActivity?()
+    }
+    
     // MARK: Local data sources for rendering:
     var topics: [Topic] = []
     var users: [User] = []
@@ -69,6 +75,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         withTopics topics: [Topic],
         shouldExpand: Bool,
         onExpand: @escaping () -> Void,
+        onLeave: @escaping () -> Void,
         onJoin: @escaping () -> Void ) {
 
         // Handle first-time setup:
@@ -85,7 +92,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.joinActivity = onJoin
         self.memberStatus = status
         self.toggleBigView = onExpand
-        
+        self.leaveActivity = onLeave
+
         // Set UI elements to new data:
         self.locationLabel.text = activity.locationText
         self.miniLocationLabel.text = activity.locationText
@@ -97,15 +105,22 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.topicsArea.reloadData()
         self.usersArea.reloadData()
         self.configureMiniImages()
-        
+
         // Conditionally show stuff based on
         // the current user's member status:
-        if (memberStatus != .none) {
+        if (memberStatus == .owner) {
+            self.leaveButton.isHidden = true
+            self.joinButton.isHidden = true
+            self.shrinkButton.isHidden = false
+        } else if (memberStatus == .member) {
+            self.leaveButton.isHidden = false
             self.joinButton.isHidden = true
             self.shrinkButton.isHidden = false
         } else {
+            // Public case
             self.joinButton.isHidden = false
             self.shrinkButton.isHidden = true
+            self.leaveButton.isHidden = true
         }
         
         // Conditionally handle hiding/showing
