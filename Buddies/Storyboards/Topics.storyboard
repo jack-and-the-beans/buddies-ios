@@ -133,14 +133,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="341" height="109.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Activity Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgD-aX-zsY">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgD-aX-zsY">
                                             <rect key="frame" x="20" y="5" width="95" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Next Week" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qQ-bJ-6FM">
-                                            <rect key="frame" x="222" y="10" width="119" height="16"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Week" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qQ-bJ-6FM">
+                                            <rect key="frame" x="222" y="11.5" width="119" height="14.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="119" id="5T5-CO-txg"/>
                                             </constraints>
@@ -148,7 +148,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQP-6N-2Y4">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQP-6N-2Y4">
                                             <rect key="frame" x="20" y="31" width="321" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="h7S-nt-A9g"/>
@@ -159,14 +159,14 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nR-gN-5El">
-                                            <rect key="frame" x="287.5" y="75" width="48.5" height="25.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nR-gN-5El">
+                                            <rect key="frame" x="287.5" y="75" width="48.5" height="24.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKW-B9-aQY">
-                                            <rect key="frame" x="119" y="79.5" width="14" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKW-B9-aQY">
+                                            <rect key="frame" x="119" y="79.5" width="14" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -227,7 +227,6 @@
                                         <constraint firstAttribute="trailing" secondItem="dQP-6N-2Y4" secondAttribute="trailing" id="EaI-HS-mBc"/>
                                         <constraint firstItem="rgD-aX-zsY" firstAttribute="leading" secondItem="oCq-dl-qhy" secondAttribute="leading" constant="20" id="Vzy-el-aob"/>
                                         <constraint firstAttribute="bottom" secondItem="KuL-7h-pqY" secondAttribute="bottom" constant="10" id="WSM-By-bDp"/>
-                                        <constraint firstItem="4qQ-bJ-6FM" firstAttribute="top" secondItem="oCq-dl-qhy" secondAttribute="top" constant="10" id="XYM-D6-o93"/>
                                         <constraint firstAttribute="bottom" secondItem="Qve-HN-jk6" secondAttribute="bottom" constant="10" id="bvN-Dm-9V4"/>
                                         <constraint firstItem="dQP-6N-2Y4" firstAttribute="top" secondItem="rgD-aX-zsY" secondAttribute="bottom" constant="5" id="cee-D2-djz"/>
                                         <constraint firstAttribute="trailing" secondItem="4qQ-bJ-6FM" secondAttribute="trailing" id="eE7-x7-DaG"/>
