@@ -25,17 +25,17 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 110
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        fetchAndLoadActivities()
         
         // We need to store a local so that the
         //  instance isn't deallocated along with
         //  the event handler!
         fab = FAB(for: self)
         fab.renderCreateActivityFab()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchAndLoadActivities()
     }
     
     
