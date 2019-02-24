@@ -57,8 +57,8 @@ class ViewActivityController: UIViewController {
     @objc func onReportTap(_ sender: Any) {
         guard self.curMemberStatus != .owner else { return }
         showCancelableAlert(withMsg: "What's wrong with this activity?", withTitle: "Report Activity", withAction: "Report", showTextEntry: true) { (didConfirm, msg) in
-            guard didConfirm, let reportMessage = msg else { return }
-            print("Report with text: \(reportMessage)")
+            guard didConfirm, let activity = self.curActivity else { return }
+            FirestoreManager.reportActivity(activity.activityId, reportMessage: msg ?? "")
         }
     }
     
@@ -96,7 +96,6 @@ class ViewActivityController: UIViewController {
                 let activity = self.curActivity,
                 let status = self.curMemberStatus,
                 status == .owner else { return }
-            // TODO: Delete
             print("DELETE \(activity.activityId)")
         }
     }

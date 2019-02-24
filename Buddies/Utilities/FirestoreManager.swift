@@ -10,6 +10,7 @@
 import FirebaseFirestore
 import FirebaseCore
 import FirebaseStorage
+import FirebaseAuth
 
 class FirestoreManager {
     var db: Firestore {
@@ -32,5 +33,15 @@ class FirestoreManager {
             }
             callback(result.documents)
         }
+    }
+    
+    static func reportActivity(_ activityId: String, reportMessage: String, curUid: String? = Auth.auth().currentUser?.uid) {
+        guard let uid = curUid else { return }
+        Firestore.firestore().collection("activity_report").addDocument(data: [
+            "report_by_id": uid,
+            "reported_activity_id": activityId,
+            "message": reportMessage,
+            "timestamp": Timestamp(date: Date())
+        ])
     }
 }
