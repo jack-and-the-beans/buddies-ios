@@ -8,6 +8,8 @@
 
 import XCTest
 import Firebase
+import FirebaseFirestore
+
 @testable import Buddies
 
 class UserTests: XCTestCase {

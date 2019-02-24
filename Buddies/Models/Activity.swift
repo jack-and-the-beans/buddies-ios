@@ -12,7 +12,7 @@ import Firebase
 typealias ActivityId = String
 
 protocol ActivityInvalidationDelegate {
-    func onInvalidateActivity(activity: Activity)
+    func onInvalidateActivity(activity: Activity?, id: String)
     func triggerServerUpdate(activityId: ActivityId, key: String, value: Any?)
 }
 
@@ -47,7 +47,7 @@ class Activity {
     var locationText: String { didSet { onChange("location_text", locationText) }}
 
     private func onChange(_ key: String, _ value: Any?) {
-        delegate?.onInvalidateActivity(activity: self)
+        delegate?.onInvalidateActivity(activity: self, id: activityId)
         delegate?.triggerServerUpdate(activityId: activityId, key: key, value: value)
     }
     

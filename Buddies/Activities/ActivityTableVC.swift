@@ -60,8 +60,12 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
                   dataAccessor: DataAccessor = DataAccessor.instance,
                   onLoaded: (()->Void)?) {
         
-        let canceler = dataAccessor.useUser(id: uid) { user in
-            self.users[user.uid] = user
+        let canceler = dataAccessor.useUser(id: uid) { usr in
+            if let user = usr {
+                self.users[user.uid] = user
+            } else if self.users[uid] != nil {
+                self.users.removeValue(forKey: uid)
+            }
             onLoaded?()
         }
         if userCancelers[uid] == nil { userCancelers[uid] = [] }
@@ -73,14 +77,17 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
                       dataAccessor: DataAccessor = DataAccessor.instance,
                       onLoaded: (()->Void)?){
         
-        let canceler = dataAccessor.useActivity(id: id) { activity in
-            self.userCancelers[activity.activityId]?.forEach() { $0() }
-            
-            activity.members.forEach() { uid in
-                self.loadUser(uid: uid, onLoaded: onLoaded)
+        let canceler = dataAccessor.useActivity(id: id) { actvty in
+            self.userCancelers[id]?.forEach() { $0() }
+
+            if let activity = actvty {
+                activity.members.forEach() { uid in
+                    self.loadUser(uid: uid, onLoaded: onLoaded)
+                }
             }
+
+            self.activities[indexPath.section][indexPath.row] = actvty
             
-            self.activities[indexPath.section][indexPath.row] = activity
             onLoaded?()
         }
         activityCancelers.append(canceler)

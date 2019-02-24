@@ -54,6 +54,10 @@ class ViewActivityController: UIViewController {
         self.stopListeningToUsers?()
     }
     
+    func goBack () {
+        self.navigationController?.popViewController(animated: true)
+    }
+
     @objc func onReportTap(_ sender: Any) {
         guard self.curMemberStatus != .owner else { return }
         showCancelableAlert(withMsg: "What's wrong with this activity?", withTitle: "Report Activity", withAction: "Report", showTextEntry: true) { (didConfirm, msg) in
@@ -78,7 +82,7 @@ class ViewActivityController: UIViewController {
                 let activity = self.curActivity,
                 status == .member else { return }
             activity.removeMember(with: uid)
-            self.navigationController?.popViewController(animated: true)
+            self.goBack()
         }
     }
 
@@ -96,7 +100,7 @@ class ViewActivityController: UIViewController {
                 let activity = self.curActivity,
                 let status = self.curMemberStatus,
                 status == .owner else { return }
-            print("DELETE \(activity.activityId)")
+            FirestoreManager.deleteActivity(activity)
         }
     }
     
@@ -141,12 +145,18 @@ class ViewActivityController: UIViewController {
         ) {
         guard let id = activityId else { return }
 
-        self.stopListeningToActivity = dataAccess.useActivity(id: id) { activity in
-            self.curActivity = activity
-            self.getUsers(from: activity.members)
-            self.activityTopics = self.getTopics(from: activity.topicIds)
-            self.curMemberStatus = activity.getMemberStatus(of: uid)
-            self.render()
+        self.stopListeningToActivity = dataAccess.useActivity(id: id) { actvty in
+            if let activity = actvty {
+                self.curActivity = activity
+                self.getUsers(from: activity.members)
+                self.activityTopics = self.getTopics(from: activity.topicIds)
+                self.curMemberStatus = activity.getMemberStatus(of: uid)
+                self.render()
+            } else {
+                // It has been deleted
+                self.stopListeningToActivity?()
+                self.goBack()
+            }
         }
     }
 

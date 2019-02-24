@@ -32,7 +32,8 @@ class SettingsVC: UITableViewController {
                     dataAccess: DataAccessor = DataAccessor.instance) {
         var isFirstRender = true
         
-        self.stopListeningToUser = dataAccess.useUser(id: uid) { user in
+        self.stopListeningToUser = dataAccess.useUser(id: uid) { usr in
+            guard let user = usr else { return }
             self.joinedActivityNotificationToggle.setOn(
                 user.shouldSendJoinedActivityNotification,
                 animated: !isFirstRender)

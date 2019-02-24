@@ -44,4 +44,11 @@ class FirestoreManager {
             "timestamp": Timestamp(date: Date())
         ])
     }
+    
+    static func deleteActivity(_ activity: Activity, curUid: String? = Auth.auth().currentUser?.uid) {
+        guard let uid = curUid else { return }
+        if activity.getMemberStatus(of: uid) == .owner {
+            Firestore.firestore().collection("activities").document(activity.activityId).delete()
+        }
+    }
 }

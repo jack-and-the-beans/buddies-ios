@@ -38,7 +38,8 @@ class ProfileVC: UIViewController {
                         dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
         var lastImageUrl: String? = nil
         
-        return dataAccess.useUser(id: uid) { user in
+        return dataAccess.useUser(id: uid) { usr in
+            guard let user = usr else { return }
             self.bioLabel.text = user.bio
             self.nameLabel.text = user.name
             
