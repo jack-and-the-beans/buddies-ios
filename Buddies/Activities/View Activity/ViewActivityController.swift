@@ -53,56 +53,72 @@ class ViewActivityController: UIViewController {
     }
     
     @IBAction func onReportTap(_ sender: Any) {
-        let alert = UIAlertController(title: "Report", message: "Why do you want to report this?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-            switch action.style{
-            case .default:
-                print("default")
-                
-            case .cancel:
-                print("cancel")
-                
-            case .destructive:
-                print("destructive")
-                
-                
-            }}))
-        self.present(alert, animated: true, completion: nil)
+        showCancelableAlert(withMsg: "What's wrong with this activity?", withTitle: "Report Activity", withAction: "Report", showTextEntry: true) { (didConfirm, msg) in
+            guard didConfirm, let reportMessage = msg else { return }
+            print("Report with text: \(reportMessage)")
+        }
     }
     
     // Adds the current user to the activity
     // if they are not yet in it.
     func joinActivity() -> Void {
         let uid = Auth.auth().currentUser!.uid
-        guard let activity = self.curActivity, let status = self.curMemberStatus else { return }
-        if (status == .none) {
-            activity.members.append(uid)
-        }
+        guard let activity = self.curActivity else { return }
+        activity.addMember(with: uid)
     }
 
     func leaveActivity() -> Void {
-        let uid = Auth.auth().currentUser!.uid
-        guard let status = self.curMemberStatus else { return }
-        if (status == .member) {
-            self.removeUser(uid: uid)
+        showCancelableAlert(withMsg: "Are you sure you want to leave this activity?", withTitle: "Leave Activity", withAction: "Leave") { didConfirm, msg in
+            guard didConfirm,
+                let uid = Auth.auth().currentUser?.uid,
+                let status = self.curMemberStatus,
+                let activity = self.curActivity,
+                status == .member else { return }
+            activity.removeMember(with: uid)
             self.dismiss(animated: true)
         }
     }
 
     func removeUser(uid: String) -> Void {
-        guard let activity = self.curActivity else { return }
-        if let i = activity.members.index(of: uid) {
-            activity.members.remove(at: i)
+        showCancelableAlert(withMsg: "Are you sure you want to remove this user?", withTitle: "Remove User", withAction: "Remove") { didConfirm, msg in
+            guard didConfirm,
+                let activity = self.curActivity else { return }
+            activity.removeMember(with: uid)
         }
     }
 
     func deleteActivity() -> Void {
-        guard let activity = self.curActivity, let status = self.curMemberStatus else { return }
-        if (status == .owner) {
+        showCancelableAlert(withMsg: "Are you sure you want to delete this activity?", withTitle: "Delete Activity", withAction: "Delete") { didConfirm, msg in
+            guard didConfirm,
+                let activity = self.curActivity,
+                let status = self.curMemberStatus,
+                status == .owner else { return }
             // TODO: Delete
-            print("DELTE!")
+            print("DELETE \(activity.activityId)")
         }
     }
+    
+    func showCancelableAlert(withMsg msg: String, withTitle title: String, withAction actionMsg: String, showTextEntry: Bool = false, onComplete: @escaping (_: Bool, _ msg: String?) -> Void) {
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: actionMsg, style: .destructive) { action in
+            if let textFields = alert.textFields, textFields.count > 0 {
+                let msg = textFields[0].text
+                onComplete(true, msg)
+            } else {
+                onComplete(true, nil)
+            }
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default) { action in
+            onComplete(false, nil)
+        })
+        if (showTextEntry) {
+            alert.addTextField { textField in
+                textField.placeholder = "Report details"
+            }
+        }
+        self.present(alert, animated: true, completion: nil)
+    }
+
     // Local state for toggling the expanded description
     var shouldExpand = false
     func expandDescription() -> Void {

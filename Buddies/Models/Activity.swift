@@ -116,4 +116,16 @@ class Activity {
             return MemberStatus.none
         }
     }
+    
+    func removeMember(with uid: String) {
+        if let i = self.members.index(of: uid) {
+            self.members.remove(at: i)
+        }
+    }
+    
+    func addMember(with uid: String) {
+        if (getMemberStatus(of: uid) == .none) {
+            self.members.append(uid)
+        }
+    }
 }
