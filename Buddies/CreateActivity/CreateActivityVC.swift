@@ -58,7 +58,17 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         guard let title = titleField.text,
             let description = descriptionTextView.text else { return }
         
-        if isValidActivityData(){
+        //display pop up corresponding to missing field
+        if let errorText = isValidActivityData(){
+            
+            let alert = UIAlertController(title: "Finish Suggesting Activity", message: "Please enter information for the " + errorText + " field.", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                
+                self.present(alert, animated: true)
+        
+        }else
+        {
             saveActivityToFirestore(
                 title: title,
                 description: description,
@@ -69,15 +79,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                 end_time: getSliderDate(sliderValue: dateSlider.maxValue),
                 topicIDs: topicIDs
             )
-            
             dismiss(animated: true, completion: _dismissHook)
-        }else
-        {
-            let alert = UIAlertController(title: "Finish Suggesting Activity", message: "Please enter information for every field.", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            
-            self.present(alert, animated: true)
         }
         
         
@@ -187,16 +189,20 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         
     }
     
-    func isValidActivityData() -> Bool{
+    func isValidActivityData() -> String?{
+    
         
-        if titleField.text == nil ||
-            chosenLocation == nil ||
-            topicDetails.text == "None" ||
-            descriptionTextView.text == "Description"{
-            return false
-        }else{
-            return true
+        if (titleField.text?.isEmpty)! {
+            return "title"
+        } else if chosenLocation == nil {
+            return "location"
+        } else if selectedTopics.count == 0 {
+            return "topic"
+        }else if descriptionTextView.text == "Description"{
+            return "description"
         }
+        
+        return nil
     }
     
     //MARK: - Firestore
