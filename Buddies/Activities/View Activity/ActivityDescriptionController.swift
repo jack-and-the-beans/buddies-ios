@@ -284,7 +284,12 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     }
 
     // Minimizes the big description and shows the small one:
+    private var isExpanded: Bool?
     func shrinkMe() {
+        // Only allow user to shrink if it's already expanded:
+        if (hasRendered) {
+            guard isExpanded == true else { return }
+        }
         let smallHeight = CGFloat(80)
         // Display the miniView at the top of the view hierarchy
         self.contentView.insertSubview(miniView, at: 0)
@@ -293,6 +298,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         constrainMiniView(toHeight: smallHeight)
         // Do the animate:
         performAnimation(type: .shrink) { thing in
+            self.isExpanded = false
             // After it closes, hide the big description view.
             // Note, its opacity will already be 0, so this should
             // not be a jaring change.
@@ -307,6 +313,10 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     // Maximizes the big description and hides the small one:
     func expandMe() {
+        // Only allow user to expand if it's currently shrunken:
+        if (hasRendered) {
+            guard isExpanded == false else { return }
+        }
         // Remove the miniview and show the big view:
         self.miniView.removeFromSuperview()
         self.bigBoyView.isHidden = false
@@ -316,7 +326,9 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         let superviewHeight = superview?.frame.height ?? 400 // Should always exist and never hit 400
         constrainContaierView(toHeight: superviewHeight)
         // Do the animiate:
-        performAnimation(type: .expand) { thing in } // Unused in this case.
+        performAnimation(type: .expand) { thing in
+            self.isExpanded = true
+        }
     }
 
     private enum AnimationType {
@@ -353,7 +365,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
             // because the view is displaying modally for the
             // first time.
             self.contentView.superview?.layoutIfNeeded()
-            onComplete?(true) // Fake bool because of
+            onComplete?(true) // Fake bool because `.animate` completion type requires a bool.
         }
     }
 
