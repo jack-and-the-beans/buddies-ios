@@ -21,6 +21,9 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     var chosenLocation: CLLocationCoordinate2D!
     var locationText : String!
     var locationManager = CLLocationManager()
+
+    var minSliderValue : CGFloat!
+    var maxSliderValue : CGFloat!
     
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
@@ -75,8 +78,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                 location: GeoPoint(latitude: chosenLocation.latitude,
                                    longitude: chosenLocation.longitude),
                 location_text: locationText,
-                start_time: getSliderDate(sliderValue: dateSlider.minValue),
-                end_time: getSliderDate(sliderValue: dateSlider.maxValue),
+                start_time: getSliderDate(sliderValue: minSliderValue),
+                end_time: getSliderDate(sliderValue: maxSliderValue),
                 topicIDs: topicIDs
             )
             dismiss(animated: true, completion: _dismissHook)
@@ -284,13 +287,14 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     
     func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMinValue minValue: CGFloat) -> String? {
         
-    
+        minSliderValue = minValue
         return getSliderString(sliderValue: minValue)
         
     }
     
     func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMaxValue maxValue: CGFloat) -> String? {
 
+        maxSliderValue = maxValue
         return getSliderString(sliderValue: maxValue)
         
     }
