@@ -47,6 +47,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="contentArea" destination="gkP-p0-4aG" id="5oK-dY-hhu"/>
+                        <outlet property="reportButton" destination="ADq-rY-qWg" id="IgJ-wL-k6i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="74C-z0-LJt" userLabel="First Responder" sceneMemberID="firstResponder"/>

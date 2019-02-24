@@ -24,6 +24,7 @@ class ViewActivityController: UIViewController {
     private var chatController: ActivityChatController?
     private var descriptionView: UIView?
     @IBOutlet weak var contentArea: UIView! // We render EVERYTHING inside this.
+    @IBOutlet weak var reportButton: UIBarButtonItem!
 
     // MARK: Activity specific data which is refreshed by the updater:
     private var curActivity: Activity?
@@ -53,6 +54,7 @@ class ViewActivityController: UIViewController {
     }
     
     @IBAction func onReportTap(_ sender: Any) {
+        guard self.curMemberStatus != .owner else { return }
         showCancelableAlert(withMsg: "What's wrong with this activity?", withTitle: "Report Activity", withAction: "Report", showTextEntry: true) { (didConfirm, msg) in
             guard didConfirm, let reportMessage = msg else { return }
             print("Report with text: \(reportMessage)")
@@ -239,6 +241,15 @@ class ViewActivityController: UIViewController {
             }
             // Refresh the chat
             chatController?.render(with: activity, memberStatus: memberStatus)
+        }
+        
+        // Don't allow the owner to report an activity:
+        if (memberStatus == .owner) {
+            self.reportButton.isEnabled = false
+            self.reportButton.tintColor = UIColor.clear
+        } else {
+            self.reportButton.isEnabled = true
+            self.reportButton.tintColor = UIColor.red
         }
     }
 }
