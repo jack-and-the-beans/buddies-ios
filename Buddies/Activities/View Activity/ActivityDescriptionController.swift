@@ -38,6 +38,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     @IBOutlet weak var shrinkButton: UIButton!
     @IBOutlet weak var joinButton: UIButton!
     @IBOutlet weak var leaveButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     
     // Tap on the Join button to call this
     var joinActivity: (() -> Void)? // Set from the parent controller
@@ -61,6 +62,11 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         leaveActivity?()
     }
     
+    var deleteActivity: (() -> Void)? // Set from parent
+    @IBAction func onDeleteTap(_ sender: Any) {
+        deleteActivity?()
+    }
+
     var removeUser: ((_ uid: String) -> Void)?
 
     // MARK: Local data sources for rendering:
@@ -79,6 +85,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         onExpand: @escaping () -> Void,
         onLeave: @escaping () -> Void,
         onRemoveUser: @escaping (_ uid: String) -> Void,
+        onDeleteActivity: @escaping () -> Void,
         onJoin: @escaping () -> Void ) {
 
         // Handle first-time setup:
@@ -97,6 +104,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.toggleBigView = onExpand
         self.leaveActivity = onLeave
         self.removeUser = onRemoveUser
+        self.deleteActivity = onDeleteActivity
 
         // Set UI elements to new data:
         self.locationLabel.text = activity.locationText
@@ -116,15 +124,18 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
             self.leaveButton.isHidden = true
             self.joinButton.isHidden = true
             self.shrinkButton.isHidden = false
+            self.deleteButton.isHidden = false
         } else if (memberStatus == .member) {
             self.leaveButton.isHidden = false
             self.joinButton.isHidden = true
             self.shrinkButton.isHidden = false
+            self.deleteButton.isHidden = true
         } else {
             // Public case
             self.joinButton.isHidden = false
             self.shrinkButton.isHidden = true
             self.leaveButton.isHidden = true
+            self.deleteButton.isHidden = true
         }
         
         // Conditionally handle hiding/showing
@@ -162,13 +173,13 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
             miniUser3.image = users[2].image
             miniUser3.makeCircle()
         }
-        if (users.count < 2) {
+        if (users.count < 3) {
             miniUser3.isHidden = true
         }
-        if (users.count < 1) {
+        if (users.count < 2) {
             miniUser2.isHidden = true
         }
-        if (users.count == 0) {
+        if (users.count < 1) {
             miniUser1.isHidden = true
         }
     }

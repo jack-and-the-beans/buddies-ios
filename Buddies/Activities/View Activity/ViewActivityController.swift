@@ -96,6 +96,13 @@ class ViewActivityController: UIViewController {
         }
     }
 
+    func deleteActivity() -> Void {
+        guard let activity = self.curActivity, let status = self.curMemberStatus else { return }
+        if (status == .owner) {
+            // TODO: Delete
+            print("DELTE!")
+        }
+    }
     // Local state for toggling the expanded description
     var shouldExpand = false
     func expandDescription() -> Void {
@@ -190,6 +197,7 @@ class ViewActivityController: UIViewController {
             onExpand: self.expandDescription,
             onLeave: self.leaveActivity,
             onRemoveUser: self.removeUser,
+            onDeleteActivity: self.deleteActivity,
             onJoin: self.joinActivity )
 
         // If (and only if) the user is a member, display the
