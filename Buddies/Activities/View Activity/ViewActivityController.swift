@@ -24,13 +24,19 @@ class ViewActivityController: UIViewController {
     private var chatController: ActivityChatController?
     private var descriptionView: UIView?
     @IBOutlet weak var contentArea: UIView! // We render EVERYTHING inside this.
-    @IBOutlet weak var reportButton: UIBarButtonItem!
 
     // MARK: Activity specific data which is refreshed by the updater:
     private var curActivity: Activity?
     private var curMemberStatus: MemberStatus?
     private var activityTopics: [Topic]?
     private var activityUsers: [User]?
+
+    // Programmatically setup nav bar:
+    override func viewDidLoad() {
+        self.title = "View Activity"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+    }
 
     // Need to wait to render until here
     // so that the layout is ready to go.
@@ -47,13 +53,8 @@ class ViewActivityController: UIViewController {
         self.stopListeningToActivity?()
         self.stopListeningToUsers?()
     }
-
-    // MARK: Actions the user can do in the subviews:
-    @IBAction func onBackPress(_ sender: Any) {
-        self.dismiss(animated: true)
-    }
     
-    @IBAction func onReportTap(_ sender: Any) {
+    @objc func onReportTap(_ sender: Any) {
         guard self.curMemberStatus != .owner else { return }
         showCancelableAlert(withMsg: "What's wrong with this activity?", withTitle: "Report Activity", withAction: "Report", showTextEntry: true) { (didConfirm, msg) in
             guard didConfirm, let reportMessage = msg else { return }
@@ -77,7 +78,7 @@ class ViewActivityController: UIViewController {
                 let activity = self.curActivity,
                 status == .member else { return }
             activity.removeMember(with: uid)
-            self.dismiss(animated: true)
+            self.navigationController?.popViewController(animated: true)
         }
     }
 
@@ -190,7 +191,7 @@ class ViewActivityController: UIViewController {
             let memberStatus = self.curMemberStatus,
             let topics = self.activityTopics,
             let users = self.activityUsers else { return }
-        
+
         // We always load the description view because it is for all member statuses:
         // Instantiate description view if it does not exist:
         if (descriptionController == nil) {
@@ -245,11 +246,11 @@ class ViewActivityController: UIViewController {
         
         // Don't allow the owner to report an activity:
         if (memberStatus == .owner) {
-            self.reportButton.isEnabled = false
-            self.reportButton.tintColor = UIColor.clear
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
         } else {
-            self.reportButton.isEnabled = true
-            self.reportButton.tintColor = UIColor.red
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
         }
     }
 }

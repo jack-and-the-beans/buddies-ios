@@ -175,9 +175,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let selectedIndex = self.tableView.indexPath(for: sender as! UITableViewCell)
-        if let nav = segue.destination as? UINavigationController,
-            let path = selectedIndex,
-            let activityController = nav.viewControllers[0] as? ViewActivityController{
+        if let activityController = segue.destination as? ViewActivityController,
+            let path = selectedIndex {
             let tappedActivity = getActivity(at: path)
             activityController.loadWith(tappedActivity?.activityId)
         }
