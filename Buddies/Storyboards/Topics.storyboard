@@ -133,14 +133,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="341" height="109.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Activity Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgD-aX-zsY">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgD-aX-zsY">
                                             <rect key="frame" x="20" y="5" width="95" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Next Week" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qQ-bJ-6FM">
-                                            <rect key="frame" x="222" y="10" width="119" height="16"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Week" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qQ-bJ-6FM">
+                                            <rect key="frame" x="222" y="11.5" width="119" height="14.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="119" id="5T5-CO-txg"/>
                                             </constraints>
@@ -148,7 +148,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQP-6N-2Y4">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQP-6N-2Y4">
                                             <rect key="frame" x="20" y="31" width="321" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="h7S-nt-A9g"/>
@@ -159,14 +159,14 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nR-gN-5El">
-                                            <rect key="frame" x="287.5" y="75" width="48.5" height="25.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nR-gN-5El">
+                                            <rect key="frame" x="287.5" y="75" width="48.5" height="24.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKW-B9-aQY">
-                                            <rect key="frame" x="119" y="79.5" width="14" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKW-B9-aQY">
+                                            <rect key="frame" x="119" y="79.5" width="14" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -227,7 +227,6 @@
                                         <constraint firstAttribute="trailing" secondItem="dQP-6N-2Y4" secondAttribute="trailing" id="EaI-HS-mBc"/>
                                         <constraint firstItem="rgD-aX-zsY" firstAttribute="leading" secondItem="oCq-dl-qhy" secondAttribute="leading" constant="20" id="Vzy-el-aob"/>
                                         <constraint firstAttribute="bottom" secondItem="KuL-7h-pqY" secondAttribute="bottom" constant="10" id="WSM-By-bDp"/>
-                                        <constraint firstItem="4qQ-bJ-6FM" firstAttribute="top" secondItem="oCq-dl-qhy" secondAttribute="top" constant="10" id="XYM-D6-o93"/>
                                         <constraint firstAttribute="bottom" secondItem="Qve-HN-jk6" secondAttribute="bottom" constant="10" id="bvN-Dm-9V4"/>
                                         <constraint firstItem="dQP-6N-2Y4" firstAttribute="top" secondItem="rgD-aX-zsY" secondAttribute="bottom" constant="5" id="cee-D2-djz"/>
                                         <constraint firstAttribute="trailing" secondItem="4qQ-bJ-6FM" secondAttribute="trailing" id="eE7-x7-DaG"/>
@@ -258,8 +257,33 @@
                             <outlet property="delegate" destination="k11-m3-OhU" id="3hL-a0-pAU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Example Topic" id="hxX-za-jYO"/>
+                    <navigationItem key="navigationItem" title="Example Topic" id="hxX-za-jYO">
+                        <barButtonItem key="rightBarButtonItem" title="Item" style="done" id="SG1-qq-buQ">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cO4-DD-aXy" customClass="ToggleButton" customModule="Buddies" customModuleProvider="target">
+                                <rect key="frame" x="313" y="0.0" width="46" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <inset key="imageEdgeInsets" minX="-5" minY="-5" maxX="-5" maxY="-5"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="unselectedColor">
+                                        <color key="value" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="selectedImg" value="favorite_star"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="unselectedImg" value="favorite_outline"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="favoriteTopic:" destination="k11-m3-OhU" eventType="touchUpInside" id="ly5-qx-8mt"/>
+                                    <action selector="toggleSelected:" destination="Zc6-W6-bDA" eventType="touchUpInside" id="tRK-b4-BR7"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="favoriteButton" destination="cO4-DD-aXy" id="O3z-TN-NUc"/>
                         <outlet property="searchBar" destination="a1x-bw-EDq" id="tB3-fr-AwJ"/>
                     </connections>
                 </tableViewController>
@@ -293,6 +317,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="favorite_star" width="100" height="100"/>
+        <image name="favorite_outline" width="25.5" height="25"/>
+        <image name="favorite_star" width="25" height="25"/>
     </resources>
 </document>

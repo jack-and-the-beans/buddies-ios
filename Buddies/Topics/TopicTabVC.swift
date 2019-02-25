@@ -28,10 +28,20 @@ class TopicTabVC: TopicsVC {
         stopListeningToUser?()
     }
     
-    @IBAction override func toggleSelected(_ sender: ToggleButton) {
-        super.toggleSelected(sender)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? TopicActivityTableVC,
+            let indexPath = collectionView.indexPathsForSelectedItems {
+            let topic = topicCollection.topics[indexPath[0].row]
+            dest.topic = topic
+            dest.userId = user?.uid
+        }
+    }
+    
+    override func changeSelectedState(for topic: Topic, isSelected: Bool){
+        super.changeSelectedState(for: topic, isSelected: isSelected)
         user?.favoriteTopics = selectedTopics.map { $0.id }
     }
+    
 
     func loadProfileData(uid: String = Auth.auth().currentUser!.uid,
                          dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
