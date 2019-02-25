@@ -12,53 +12,26 @@ import CoreGraphics
 class DateRangeSliderDelegate : RangeSeekSliderDelegate {
     static let instance = DateRangeSliderDelegate()
 
-    func getSliderString(sliderValue: CGFloat) -> String {
-        switch sliderValue {
-        case 1:
-            return "Today"
-        case 2:
-            return "Tomorrow"
-        case 3:
-            return "Next 3 Days"
-        case 4:
-            return "Next Week"
-        case 5:
-            return "Next 2 Weeks"
-        case 6:
-            return "Next Month"
-        default:
-            return "Today"
-        }
+    func getName(sliderIndex: CGFloat) -> String {
+        let values = ["", "Today", "Tomorrow", "Next 3 Days", "Next Week", "Next 2 Weeks", "Next Month"]
+        
+        return values[Int(sliderIndex)]
     }
     
-    func getSliderDate(sliderValue: CGFloat) -> Date {
+    static func getDate(sliderIndex: Int) -> Date {
         var dateComponent = DateComponents()
         
-        switch sliderValue {
-        case 1:
-            dateComponent.day = 0
-        case 2:
-            dateComponent.day = 1
-        case 3:
-            dateComponent.day = 3
-        case 4:
-            dateComponent.day = 7
-        case 5:
-            dateComponent.day = 14
-        case 6:
-            dateComponent.day = 30
-        default:
-            dateComponent.day = 0
-        }
+        let indexedValues = [ 0, 0, 1, 3, 7, 14, 30, 0 ]
+        dateComponent.day = indexedValues[sliderIndex]
         
-        return Calendar.current.date(byAdding: dateComponent, to: Date())!
+        return Calendar.current.date(byAdding: dateComponent, to: Date()) ?? Date()
     }
     
     func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMinValue minValue: CGFloat) -> String? {
-        return getSliderString(sliderValue: minValue)
+        return getName(sliderIndex: minValue)
     }
     
     func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMaxValue maxValue: CGFloat) -> String? {
-        return getSliderString(sliderValue: maxValue)
+        return getName(sliderIndex: maxValue)
     }
 }

@@ -282,8 +282,8 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         // Store request params #NoRaceConditions
         self.lastSearchParams = myParams
         
-        let start = DateRangeSliderDelegate.instance.getSliderDate(sliderValue: CGFloat(myParams.dateMin))
-        let end = DateRangeSliderDelegate.instance.getSliderDate(sliderValue: CGFloat(myParams.dateMax))
+        let start = DateRangeSliderDelegate.getDate(sliderIndex: myParams.dateMin)
+        let end = DateRangeSliderDelegate.getDate(sliderIndex: myParams.dateMax)
         let distance = Int(FilterSearchBar.metersPerMile * myParams.maxMilesAway)
         
         // Load data from algolia!

@@ -83,8 +83,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                 location: GeoPoint(latitude: chosenLocation.latitude,
                                    longitude: chosenLocation.longitude),
                 location_text: locationText,
-                start_time: DateRangeSliderDelegate.instance.getSliderDate(sliderValue: dateSlider.selectedMinValue),
-                end_time: DateRangeSliderDelegate.instance.getSliderDate(sliderValue: dateSlider.selectedMaxValue),
+                start_time: DateRangeSliderDelegate.getDate(sliderIndex: Int(dateSlider.selectedMinValue)),
+                end_time: DateRangeSliderDelegate.getDate(sliderIndex: Int(dateSlider.selectedMaxValue)),
                 topicIDs: topicIDs
             )
             dismiss(animated: true, completion: _dismissHook)
