@@ -28,6 +28,8 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
     var searchTimer: Timer?
     var filterMenu: UIView?
     
+    var cachedActivityIds: [String] = []
+
     override init(frame: CGRect) {
         self.api = AlgoliaSearch()
         super.init(frame: frame)
@@ -146,8 +148,13 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
     func fetchAndLoadActivities() {
         let myParams = getSearchParams()
         
-        //Cancel if nothing has changed
-        if lastSearchParams == myParams { return }
+        if lastSearchParams == myParams {
+            // We still want the UI to update whenever it calls
+            // this method, so make sure it gets the cached info:
+            self.displayDelegate?.display(activities: cachedActivityIds)
+            // Then, cancel the request if nothing has changed
+            return
+        }
         
         // Store request params #NoRaceConditions
         self.lastSearchParams = myParams
@@ -167,6 +174,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
             if let error = err { print(error) }
             
             // Load new data
+            self.cachedActivityIds = activities
             self.displayDelegate?.display(activities: activities)
         }
     }
