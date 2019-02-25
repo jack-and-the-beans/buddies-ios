@@ -129,13 +129,6 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         }
         
         locationField.filterItems(displayResults)
-        
-        //default to using location from top result
-        if(!displayResults.isEmpty){
-            setChosenLocation(location: displayResults.first!)
-        }
-        
-        
     }
     
     //MARK: -
@@ -199,13 +192,24 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     func isValidActivityData() -> String?{
     
         
+        titleField.layer.borderColor = UIColor.clear.cgColor
+        locationField.layer.borderColor = UIColor.clear.cgColor
+        descriptionTextView.layer.borderColor = UIColor.clear.cgColor
+        
+    
         if (titleField.text?.isEmpty)! {
+            titleField.layer.borderWidth = 1.0
+            titleField.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
             return "title"
         } else if chosenLocation == nil {
+            locationField.layer.borderWidth = 1.0
+            locationField.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
             return "location"
         } else if selectedTopics.count == 0 {
             return "topic"
         }else if descriptionTextView.text == "Description"{
+            descriptionTextView.layer.borderWidth = 1.0
+            descriptionTextView.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
             return "description"
         }
         
@@ -352,7 +356,7 @@ extension CreateActivityVC : CLLocationManagerDelegate {
     
     
     private func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print("error:: (error)")
+        print("error:: \(error)")
     }
 }
 
