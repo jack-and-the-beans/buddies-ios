@@ -30,16 +30,19 @@ class FilterSearchBarTests: XCTestCase {
         
         parent = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
         
+        let container = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        parent.addSubview(container)
+        
         bar = FilterSearchBar(frame: parent.frame)
         bar.api = search
         
         deli = TestFilterSearchBarDelegate()
         bar.displayDelegate = deli
         
-        parent.addSubview(bar)
+        container.addSubview(bar)
     }
 
-    func testExample() {
+    func testFilterMenuToggling() {
         XCTAssert(parent.subviews.count == 1)
         
         // Toggle the menu ON
@@ -48,7 +51,7 @@ class FilterSearchBarTests: XCTestCase {
         XCTAssert(parent.subviews.count == 2)
         
         // Toggle the menu OFF
-        bar.onFilterTapped()
+        bar.closeFilterMenu()
         
         XCTAssert(parent.subviews.count == 1)
     }
@@ -59,16 +62,6 @@ class FilterSearchBarTests: XCTestCase {
         deli.onDisplay = { exp.fulfill() }
         
         bar.searchBarSearchButtonClicked(bar)
-        
-        self.waitForExpectations(timeout: 1)
-    }
-    
-    func testSearchBarCancelButtonClicked() {
-        let exp = self.expectation(description: "search triggered")
-        
-        deli.onDisplay = { exp.fulfill() }
-        
-        bar.searchBarCancelButtonClicked(bar)
         
         self.waitForExpectations(timeout: 1)
     }
@@ -85,5 +78,33 @@ class FilterSearchBarTests: XCTestCase {
         XCTAssertNotNil(bar.searchTimer)
         
         self.waitForExpectations(timeout: 2)
+    }
+    
+    func testSaveFilterMenu() {
+        let exp = self.expectation(description: "search triggered")
+        deli.onDisplay = { exp.fulfill() }
+        
+        XCTAssertNil(bar.filterMenu)
+
+        // Open the filter menu
+        bar.onFilterTapped()
+        
+        XCTAssertNotNil(bar.filterMenu)
+        
+        // Setup values to save
+        bar.filterMenu?.dateSlider.selectedMinValue = 1
+        bar.filterMenu?.dateSlider.selectedMaxValue = 3
+        bar.filterMenu?.locationRangeSlider.selectedMaxValue = 20
+        
+        // Save it!
+        bar.saveFilterMenu()
+        
+        XCTAssertNil(bar.filterMenu)
+        
+        self.waitForExpectations(timeout: 2)
+        
+        XCTAssert(bar.lastSearchParams.dateMin == 1)
+        XCTAssert(bar.lastSearchParams.dateMax == 3)
+        XCTAssert(bar.lastSearchParams.maxMilesAway == 20)
     }
 }
