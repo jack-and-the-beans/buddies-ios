@@ -222,9 +222,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="dateSlider" destination="5dM-55-XRr" id="TpH-pU-JzL"/>
+                        <outlet property="descriptionCell" destination="m42-4f-AuW" id="F4l-X9-fIt"/>
                         <outlet property="descriptionTextView" destination="yEs-Fb-whx" id="WKK-k1-kLq"/>
+                        <outlet property="locationCell" destination="6FR-O1-uRu" id="O5E-bg-uKv"/>
                         <outlet property="locationField" destination="R3p-kv-sml" id="siw-HH-jRs"/>
+                        <outlet property="titleCell" destination="69z-E5-0Cc" id="ub3-t7-jck"/>
                         <outlet property="titleField" destination="a3a-rU-EbY" id="t3p-sQ-FTr"/>
+                        <outlet property="topicCell" destination="geF-gv-HQi" id="uFp-Yy-3EJ"/>
                         <outlet property="topicDetails" destination="Hxy-1F-P9y" id="8JY-lk-cbQ"/>
                     </connections>
                 </tableViewController>

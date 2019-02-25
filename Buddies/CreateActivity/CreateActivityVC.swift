@@ -22,6 +22,11 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     var locationText : String!
     var locationManager = CLLocationManager()
 
+    @IBOutlet weak var titleCell: UITableViewCell!
+    @IBOutlet weak var locationCell: UITableViewCell!
+    @IBOutlet weak var topicCell: UITableViewCell!
+    @IBOutlet weak var descriptionCell: UITableViewCell!
+    
     var minSliderValue : CGFloat!
     var maxSliderValue : CGFloat!
     
@@ -191,25 +196,27 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     
     func isValidActivityData() -> String?{
     
-        
-        titleField.layer.borderColor = UIColor.clear.cgColor
-        locationField.layer.borderColor = UIColor.clear.cgColor
-        descriptionTextView.layer.borderColor = UIColor.clear.cgColor
+        titleCell.layer.borderColor = UIColor.clear.cgColor
+        locationCell.layer.borderColor = UIColor.clear.cgColor
+        topicCell.layer.borderColor = UIColor.clear.cgColor
+        descriptionCell.layer.borderColor = UIColor.clear.cgColor
         
     
         if (titleField.text?.isEmpty)! {
-            titleField.layer.borderWidth = 1.0
-            titleField.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
+            titleCell.layer.borderWidth = 1.0
+            titleCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
             return "title"
         } else if chosenLocation == nil {
-            locationField.layer.borderWidth = 1.0
-            locationField.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
+            locationCell.layer.borderWidth = 1.0
+            locationCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
             return "location"
         } else if selectedTopics.count == 0 {
+            topicCell.layer.borderWidth = 1.0
+            topicCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
             return "topic"
         }else if descriptionTextView.text == "Description"{
-            descriptionTextView.layer.borderWidth = 1.0
-            descriptionTextView.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
+            descriptionCell.layer.borderWidth = 1.0
+            descriptionCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
             return "description"
         }
         
