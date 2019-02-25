@@ -106,6 +106,9 @@ class ViewActivityController: UIViewController {
     
     func showCancelableAlert(withMsg msg: String, withTitle title: String, withAction actionMsg: String, showTextEntry: Bool = false, onComplete: @escaping (_: Bool, _ msg: String?) -> Void) {
         let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default) { action in
+            onComplete(false, nil)
+        })
         alert.addAction(UIAlertAction(title: actionMsg, style: .destructive) { action in
             if let textFields = alert.textFields, textFields.count > 0 {
                 let msg = textFields[0].text
@@ -113,9 +116,6 @@ class ViewActivityController: UIViewController {
             } else {
                 onComplete(true, nil)
             }
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default) { action in
-            onComplete(false, nil)
         })
         if (showTextEntry) {
             alert.addTextField { textField in
