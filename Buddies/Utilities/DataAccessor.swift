@@ -73,8 +73,8 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
             }
         }
         let cancelers = userIds.map { useUser(id: $0) { user in
-            if let usr = user {
-                users[usr.uid] = usr
+            if let user = user {
+                users[user.uid] = user
                 cb()
             }
         } }

@@ -60,8 +60,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
                   dataAccessor: DataAccessor = DataAccessor.instance,
                   onLoaded: (()->Void)?) {
         
-        let canceler = dataAccessor.useUser(id: uid) { usr in
-            if let user = usr {
+        let canceler = dataAccessor.useUser(id: uid) { user in
+            if let user = user {
                 self.users[user.uid] = user
             } else if self.users[uid] != nil {
                 self.users.removeValue(forKey: uid)
@@ -77,16 +77,16 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
                       dataAccessor: DataAccessor = DataAccessor.instance,
                       onLoaded: (()->Void)?){
         
-        let canceler = dataAccessor.useActivity(id: id) { actvty in
+        let canceler = dataAccessor.useActivity(id: id) { activity in
             self.userCancelers[id]?.forEach() { $0() }
 
-            if let activity = actvty {
+            if let activity = activity {
                 activity.members.forEach() { uid in
                     self.loadUser(uid: uid, onLoaded: onLoaded)
                 }
             }
 
-            self.activities[indexPath.section][indexPath.row] = actvty
+            self.activities[indexPath.section][indexPath.row] = activity
             
             onLoaded?()
         }

@@ -145,8 +145,8 @@ class ViewActivityController: UIViewController {
         ) {
         guard let id = activityId else { return }
 
-        self.stopListeningToActivity = dataAccess.useActivity(id: id) { actvty in
-            if let activity = actvty {
+        self.stopListeningToActivity = dataAccess.useActivity(id: id) { activity in
+            if let activity = activity {
                 self.curActivity = activity
                 self.getUsers(from: activity.members)
                 self.activityTopics = self.getTopics(from: activity.topicIds)
