@@ -61,7 +61,11 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
                   onLoaded: (()->Void)?) {
         
         let canceler = dataAccessor.useUser(id: uid) { user in
-            self.users[user.uid] = user
+            if let user = user {
+                self.users[user.uid] = user
+            } else if self.users[uid] != nil {
+                self.users.removeValue(forKey: uid)
+            }
             onLoaded?()
         }
         if userCancelers[uid] == nil { userCancelers[uid] = [] }
@@ -74,13 +78,16 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
                       onLoaded: (()->Void)?){
         
         let canceler = dataAccessor.useActivity(id: id) { activity in
-            self.userCancelers[activity.activityId]?.forEach() { $0() }
-            
-            activity.members.forEach() { uid in
-                self.loadUser(uid: uid, onLoaded: onLoaded)
+            self.userCancelers[id]?.forEach() { $0() }
+
+            if let activity = activity {
+                activity.members.forEach() { uid in
+                    self.loadUser(uid: uid, onLoaded: onLoaded)
+                }
             }
-            
+
             self.activities[indexPath.section][indexPath.row] = activity
+            
             onLoaded?()
         }
         activityCancelers.append(canceler)
@@ -175,9 +182,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let selectedIndex = self.tableView.indexPath(for: sender as! UITableViewCell)
-        if let nav = segue.destination as? UINavigationController,
-            let path = selectedIndex,
-            let activityController = nav.viewControllers[0] as? ViewActivityController{
+        if let activityController = segue.destination as? ViewActivityController,
+            let path = selectedIndex {
             let tappedActivity = getActivity(at: path)
             activityController.loadWith(tappedActivity?.activityId)
         }

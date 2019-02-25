@@ -31,6 +31,13 @@ class ViewActivityController: UIViewController {
     private var activityTopics: [Topic]?
     private var activityUsers: [User]?
 
+    // Programmatically setup nav bar:
+    override func viewDidLoad() {
+        self.title = "View Activity"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+    }
+
     // Need to wait to render until here
     // so that the layout is ready to go.
     // Note: viewDidLoad did work for this,
@@ -46,38 +53,76 @@ class ViewActivityController: UIViewController {
         self.stopListeningToActivity?()
         self.stopListeningToUsers?()
     }
-
-    // MARK: Actions the user can do in the subviews:
-    @IBAction func onBackPress(_ sender: Any) {
-        self.dismiss(animated: true)
-    }
     
-    @IBAction func onReportTap(_ sender: Any) {
-        let alert = UIAlertController(title: "Report", message: "Why do you want to report this?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-            switch action.style{
-            case .default:
-                print("default")
-                
-            case .cancel:
-                print("cancel")
-                
-            case .destructive:
-                print("destructive")
-                
-                
-            }}))
-        self.present(alert, animated: true, completion: nil)
+    func goBack () {
+        self.navigationController?.popViewController(animated: true)
+    }
+
+    @objc func onReportTap(_ sender: Any) {
+        guard self.curMemberStatus != .owner else { return }
+        showCancelableAlert(withMsg: "What's wrong with this activity?", withTitle: "Report Activity", withAction: "Report", showTextEntry: true) { (didConfirm, msg) in
+            guard didConfirm, let activity = self.curActivity else { return }
+            FirestoreManager.reportActivity(activity.activityId, reportMessage: msg ?? "")
+        }
     }
     
     // Adds the current user to the activity
     // if they are not yet in it.
     func joinActivity() -> Void {
         let uid = Auth.auth().currentUser!.uid
-        guard let activity = self.curActivity, let status = self.curMemberStatus else { return }
-        if (status == .none) {
-            activity.members.append(uid)
+        guard let activity = self.curActivity else { return }
+        activity.addMember(with: uid)
+    }
+
+    func leaveActivity() -> Void {
+        showCancelableAlert(withMsg: "Are you sure you want to leave this activity?", withTitle: "Leave Activity", withAction: "Leave") { didConfirm, msg in
+            guard didConfirm,
+                let uid = Auth.auth().currentUser?.uid,
+                let status = self.curMemberStatus,
+                let activity = self.curActivity,
+                status == .member else { return }
+            activity.removeMember(with: uid)
+            self.goBack()
         }
+    }
+
+    func removeUser(uid: String) -> Void {
+        showCancelableAlert(withMsg: "Are you sure you want to remove this user?", withTitle: "Remove User", withAction: "Remove") { didConfirm, msg in
+            guard didConfirm,
+                let activity = self.curActivity else { return }
+            activity.removeMember(with: uid)
+        }
+    }
+
+    func deleteActivity() -> Void {
+        showCancelableAlert(withMsg: "Are you sure you want to delete this activity?", withTitle: "Delete Activity", withAction: "Delete") { didConfirm, msg in
+            guard didConfirm,
+                let activity = self.curActivity,
+                let status = self.curMemberStatus,
+                status == .owner else { return }
+            FirestoreManager.deleteActivity(activity)
+        }
+    }
+    
+    func showCancelableAlert(withMsg msg: String, withTitle title: String, withAction actionMsg: String, showTextEntry: Bool = false, onComplete: @escaping (_: Bool, _ msg: String?) -> Void) {
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default) { action in
+            onComplete(false, nil)
+        })
+        alert.addAction(UIAlertAction(title: actionMsg, style: .destructive) { action in
+            if let textFields = alert.textFields, textFields.count > 0 {
+                let msg = textFields[0].text
+                onComplete(true, msg)
+            } else {
+                onComplete(true, nil)
+            }
+        })
+        if (showTextEntry) {
+            alert.addTextField { textField in
+                textField.placeholder = "Report details"
+            }
+        }
+        self.present(alert, animated: true, completion: nil)
     }
 
     // Local state for toggling the expanded description
@@ -101,11 +146,17 @@ class ViewActivityController: UIViewController {
         guard let id = activityId else { return }
 
         self.stopListeningToActivity = dataAccess.useActivity(id: id) { activity in
-            self.curActivity = activity
-            self.getUsers(from: activity.members)
-            self.activityTopics = self.getTopics(from: activity.topicIds)
-            self.curMemberStatus = activity.getMemberStatus(of: uid)
-            self.render()
+            if let activity = activity {
+                self.curActivity = activity
+                self.getUsers(from: activity.members)
+                self.activityTopics = self.getTopics(from: activity.topicIds)
+                self.curMemberStatus = activity.getMemberStatus(of: uid)
+                self.render()
+            } else {
+                // It has been deleted
+                self.stopListeningToActivity?()
+                self.goBack()
+            }
         }
     }
 
@@ -149,7 +200,7 @@ class ViewActivityController: UIViewController {
             let memberStatus = self.curMemberStatus,
             let topics = self.activityTopics,
             let users = self.activityUsers else { return }
-        
+
         // We always load the description view because it is for all member statuses:
         // Instantiate description view if it does not exist:
         if (descriptionController == nil) {
@@ -172,6 +223,9 @@ class ViewActivityController: UIViewController {
             withTopics: topics,
             shouldExpand: shouldExpand,
             onExpand: self.expandDescription,
+            onLeave: self.leaveActivity,
+            onRemoveUser: self.removeUser,
+            onDeleteActivity: self.deleteActivity,
             onJoin: self.joinActivity )
 
         // If (and only if) the user is a member, display the
@@ -197,6 +251,15 @@ class ViewActivityController: UIViewController {
             }
             // Refresh the chat
             chatController?.render(with: activity, memberStatus: memberStatus)
+        }
+        
+        // Don't allow the owner to report an activity:
+        if (memberStatus == .owner) {
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
+        } else {
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
         }
     }
 }

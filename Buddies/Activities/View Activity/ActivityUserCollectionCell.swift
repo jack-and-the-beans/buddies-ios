@@ -14,17 +14,30 @@ class ActivityUserCollectionCell: UICollectionViewCell {
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var removeButton: UIButton!
     
+    private var removeUser: ((_ uid: String) -> Void)?
     @IBAction func onRemoveUser(_ sender: UIButton) {
-        print("CLICKED REMOVE USER")
+        guard let uid = curUid else { return }
+        removeUser?(uid)
     }
 
-    func render(withUser user: User, isCurUserOwner: Bool, isIndividualOwner: Bool) {
+    private var curUid: String?
+
+    func render(withUser user: User, isCurUserOwner: Bool, isIndividualOwner: Bool, removeUser: ((_ uid: String)->Void)?) {
         userName.text = user.name
+        curUid = user.uid
+
+        self.removeUser = removeUser
         if (isIndividualOwner) {
             userName.text?.append(" (owner)")
         }
-        if (!isCurUserOwner) {
-            removeButton?.removeFromSuperview()
+        if (isCurUserOwner) {
+            removeButton?.isHidden = false
+        } else {
+            removeButton?.isHidden = true
+        }
+        if (isIndividualOwner && isCurUserOwner) {
+            // handle the case where the cur item is the cur user
+            removeButton?.isHidden = true
         }
         userImage.image = user.image
         userImage.makeCircle()

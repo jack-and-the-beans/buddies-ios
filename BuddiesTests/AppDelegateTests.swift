@@ -9,6 +9,7 @@
 import XCTest
 @testable import Buddies
 import Firebase
+import FirebaseFirestore
 
 class AppDelegateTests: XCTestCase {
     func testDelType() {

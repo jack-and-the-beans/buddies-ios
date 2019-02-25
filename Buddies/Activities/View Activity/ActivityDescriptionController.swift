@@ -37,6 +37,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     @IBOutlet weak var shrinkButton: UIButton!
     @IBOutlet weak var joinButton: UIButton!
+    @IBOutlet weak var leaveButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     
     // Tap on the Join button to call this
     var joinActivity: (() -> Void)? // Set from the parent controller
@@ -55,6 +57,18 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         toggleBigView?()
     }
 
+    var leaveActivity: (() -> Void)? // Set from the parent controller
+    @IBAction func onLeaveTap(_ sender: Any) {
+        leaveActivity?()
+    }
+    
+    var deleteActivity: (() -> Void)? // Set from parent
+    @IBAction func onDeleteTap(_ sender: Any) {
+        deleteActivity?()
+    }
+
+    var removeUser: ((_ uid: String) -> Void)?
+
     // MARK: Local data sources for rendering:
     var topics: [Topic] = []
     var users: [User] = []
@@ -69,6 +83,9 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         withTopics topics: [Topic],
         shouldExpand: Bool,
         onExpand: @escaping () -> Void,
+        onLeave: @escaping () -> Void,
+        onRemoveUser: @escaping (_ uid: String) -> Void,
+        onDeleteActivity: @escaping () -> Void,
         onJoin: @escaping () -> Void ) {
 
         // Handle first-time setup:
@@ -85,7 +102,10 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.joinActivity = onJoin
         self.memberStatus = status
         self.toggleBigView = onExpand
-        
+        self.leaveActivity = onLeave
+        self.removeUser = onRemoveUser
+        self.deleteActivity = onDeleteActivity
+
         // Set UI elements to new data:
         self.locationLabel.text = activity.locationText
         self.miniLocationLabel.text = activity.locationText
@@ -97,15 +117,25 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.topicsArea.reloadData()
         self.usersArea.reloadData()
         self.configureMiniImages()
-        
+
         // Conditionally show stuff based on
         // the current user's member status:
-        if (memberStatus != .none) {
+        if (memberStatus == .owner) {
+            self.leaveButton.isHidden = true
             self.joinButton.isHidden = true
             self.shrinkButton.isHidden = false
+            self.deleteButton.isHidden = false
+        } else if (memberStatus == .member) {
+            self.leaveButton.isHidden = false
+            self.joinButton.isHidden = true
+            self.shrinkButton.isHidden = false
+            self.deleteButton.isHidden = true
         } else {
+            // Public case
             self.joinButton.isHidden = false
             self.shrinkButton.isHidden = true
+            self.leaveButton.isHidden = true
+            self.deleteButton.isHidden = true
         }
         
         // Conditionally handle hiding/showing
@@ -129,16 +159,28 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     private func configureMiniImages () {
         if (users.count > 0) {
+            miniUser1.isHidden = false
             miniUser1.image = users[0].image
             miniUser1.makeCircle()
         }
         if (users.count > 1) {
+            miniUser2.isHidden = false
             miniUser2.image = users[1].image
             miniUser2.makeCircle()
         }
         if (users.count > 2) {
+            miniUser3.isHidden = false
             miniUser3.image = users[2].image
             miniUser3.makeCircle()
+        }
+        if (users.count < 3) {
+            miniUser3.isHidden = true
+        }
+        if (users.count < 2) {
+            miniUser2.isHidden = true
+        }
+        if (users.count < 1) {
+            miniUser1.isHidden = true
         }
     }
 
@@ -167,7 +209,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
             let user = users[indexPath.row]
             let isIndividualOwner = self.curActivity?.getMemberStatus(of: user.uid) == .owner
             let isCurUserOwner = self.memberStatus == .owner
-            cell.render(withUser: users[indexPath.row], isCurUserOwner: isCurUserOwner, isIndividualOwner: isIndividualOwner)
+            cell.render(withUser: users[indexPath.row], isCurUserOwner: isCurUserOwner, isIndividualOwner: isIndividualOwner, removeUser: self.removeUser)
             return cell
         } else {
             return UICollectionViewCell()
@@ -176,10 +218,10 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     
     // Dynamically sizes the topic cells based on the screen size:
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let margin = 20
+        let collectionWidth = self.contentView.frame.width - CGFloat(margin * 2)
         if (collectionView == self.topicsArea) {
-            let margin = 20
             let height = CGFloat(40)
-            let collectionWidth = self.contentView.frame.width - CGFloat(margin * 2)
             if (self.topics.count > 4) {
                 let base = collectionWidth / 2
                 return CGSize(width: base, height: height)
@@ -187,6 +229,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
                 let cellWidth = collectionWidth / 2 - 10
                 return CGSize(width: cellWidth, height: height)
             }
+        } else if (collectionView == self.usersArea) {
+            return CGSize(width: collectionWidth, height: 50)
         } else {
             // Dummy - should never be called.
             return CGSize(width: 270, height: 50)
@@ -198,6 +242,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.topicsArea.dataSource = self
         self.topicsArea.delegate = self
         self.usersArea.dataSource = self
+        self.usersArea.delegate = self
         self.topicsArea.register(UINib.init(nibName: "ActivityTopicCollectionCell", bundle: nil), forCellWithReuseIdentifier: "topic_cell")
         self.usersArea.register(UINib.init(nibName: "ActivityUserCollectionCell", bundle: nil), forCellWithReuseIdentifier: "user_cell")
     }
@@ -239,7 +284,12 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     }
 
     // Minimizes the big description and shows the small one:
+    private var isExpanded: Bool?
     func shrinkMe() {
+        // Only allow user to shrink if it's already expanded:
+        if (hasRendered) {
+            guard isExpanded == true else { return }
+        }
         let smallHeight = CGFloat(80)
         // Display the miniView at the top of the view hierarchy
         self.contentView.insertSubview(miniView, at: 0)
@@ -248,6 +298,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         constrainMiniView(toHeight: smallHeight)
         // Do the animate:
         performAnimation(type: .shrink) { thing in
+            self.isExpanded = false
             // After it closes, hide the big description view.
             // Note, its opacity will already be 0, so this should
             // not be a jaring change.
@@ -262,6 +313,10 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     // Maximizes the big description and hides the small one:
     func expandMe() {
+        // Only allow user to expand if it's currently shrunken:
+        if (hasRendered) {
+            guard isExpanded == false else { return }
+        }
         // Remove the miniview and show the big view:
         self.miniView.removeFromSuperview()
         self.bigBoyView.isHidden = false
@@ -271,7 +326,9 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         let superviewHeight = superview?.frame.height ?? 400 // Should always exist and never hit 400
         constrainContaierView(toHeight: superviewHeight)
         // Do the animiate:
-        performAnimation(type: .expand) { thing in } // Unused in this case.
+        performAnimation(type: .expand) { thing in
+            self.isExpanded = true
+        }
     }
 
     private enum AnimationType {
@@ -308,7 +365,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
             // because the view is displaying modally for the
             // first time.
             self.contentView.superview?.layoutIfNeeded()
-            onComplete?(true) // Fake bool because of
+            onComplete?(true) // Fake bool because `.animate` completion type requires a bool.
         }
     }
 

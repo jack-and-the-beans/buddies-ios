@@ -8,6 +8,7 @@
 
 import XCTest
 import Firebase
+import FirebaseFirestore
 @testable import Buddies
 
 class DataAccessorTests: XCTestCase {
@@ -71,6 +72,7 @@ class DataAccessorTests: XCTestCase {
         // call
         var calls1 = 0
         let cancel1 = instance.useUser(id: me.uid) { user in
+            guard let user = user else { return }
             // Check some props were loaded
             XCTAssert(user.uid == self.me.uid)
             XCTAssert(user.imageUrl == self.me.imageUrl)
@@ -222,6 +224,7 @@ class DataAccessorTests: XCTestCase {
         // call
         var calls1 = 0
         let cancel1 = instance.useActivity(id: myActivity.activityId) { activity in
+            guard let activity = activity else { return }
             // Check some props were loaded
             XCTAssert(activity.activityId == self.myActivity.activityId)
             XCTAssert(activity.ownerId == self.myActivity.ownerId)
@@ -298,7 +301,7 @@ class DataAccessorTests: XCTestCase {
         cancels.append(cancel2)
         
         // invalidate, to call again
-        instance.onInvalidateActivity(activity: myActivity)
+        instance.onInvalidateActivity(activity: myActivity, id: myActivity.activityId)
 
         self.waitForExpectations(timeout: 2.0)
         
@@ -360,7 +363,7 @@ class DataAccessorTests: XCTestCase {
         self.waitForExpectations(timeout: 2.0)
         
         // invalidate, call again
-        instance.onInvalidateActivity(activity: myActivity)
+        instance.onInvalidateActivity(activity: myActivity, id: myActivity.activityId)
         
         XCTAssert(calls1 == 2, "expected first callback to be called twice")
         XCTAssert(calls2 == 2, "expected second callback to be called twice")

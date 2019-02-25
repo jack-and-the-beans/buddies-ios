@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,12 +20,12 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5a4-ao-Pel">
-                        <rect key="frame" x="55" y="14.5" width="37" height="21"/>
+                        <rect key="frame" x="55" y="14.5" width="143" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HIW-6c-6EV">
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="760" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HIW-6c-6EV">
                         <rect key="frame" x="203" y="10" width="55" height="30"/>
                         <state key="normal" title="Remove">
                             <color key="titleColor" red="1" green="0.0" blue="0.034920876080000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -45,9 +49,9 @@
                 <constraint firstItem="9A9-N2-27N" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="0Go-AH-4Cj"/>
                 <constraint firstItem="5a4-ao-Pel" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="E72-Qv-JwS"/>
                 <constraint firstItem="9A9-N2-27N" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="EV8-r4-gba"/>
-                <constraint firstItem="5a4-ao-Pel" firstAttribute="leading" secondItem="9A9-N2-27N" secondAttribute="trailing" constant="10" id="J0n-Vh-hJW"/>
                 <constraint firstAttribute="bottom" secondItem="9A9-N2-27N" secondAttribute="bottom" constant="5" id="O6S-VA-yyF"/>
                 <constraint firstItem="HIW-6c-6EV" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="QeS-Xg-05N"/>
+                <constraint firstItem="HIW-6c-6EV" firstAttribute="leading" secondItem="5a4-ao-Pel" secondAttribute="trailing" constant="5" id="izB-5c-7IM"/>
                 <constraint firstItem="5a4-ao-Pel" firstAttribute="leading" secondItem="9A9-N2-27N" secondAttribute="trailing" constant="10" id="wb3-t4-npi"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>

@@ -12,8 +12,8 @@ import Firebase
 // Helpers...
 typealias Canceler = () -> Void
 class Listener<T> {
-    let fn: (T) -> Void
-    init(fn: @escaping (T) -> Void) {
+    let fn: (T?) -> Void
+    init(fn: @escaping (T?) -> Void) {
         self.fn = fn
     }
 }
@@ -73,13 +73,15 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
             }
         }
         let cancelers = userIds.map { useUser(id: $0) { user in
-            users[user.uid] = user
-            cb()
+            if let user = user {
+                users[user.uid] = user
+                cb()
+            }
         } }
         return { for c in cancelers { c() } }
     }
 
-    func useUser(id: UserId, fn: @escaping (User) -> Void) -> Canceler {
+    func useUser(id: UserId, fn: @escaping (User?) -> Void) -> Canceler {
         // Wrap the callback for comparison later
         let callback = Listener(fn: fn)
         
@@ -143,7 +145,7 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
         }
     }
     
-    func useActivity(id: ActivityId, fn: @escaping (Activity) -> Void) -> (() -> Void) {
+    func useActivity(id: ActivityId, fn: @escaping (Activity?) -> Void) -> (() -> Void) {
         // Wrap the callback for comparison later
         let callback = Listener(fn: fn)
         
@@ -191,14 +193,11 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
                 return
             }
             
-            guard let activity = Activity.from(snap: snap, with: self) else {
-                print("invalid activity :( \(id)")
-                return
-            }
+            let activity = Activity.from(snap: snap, with: self)
             
             self._activitiesLoading.removeAll(where: { $0 == id })
             
-            self.onInvalidateActivity(activity: activity)
+            self.onInvalidateActivity(activity: activity, id: id)
         }
     }
     
@@ -219,10 +218,14 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
     }
     
     // MARK: ActivityInvalidationDelegate
-    func onInvalidateActivity(activity: Activity) {
-        _activityCache.setObject(activity, forKey: activity.activityId as AnyObject)
-        
-        _activityListeners[activity.activityId]?.forEach { $0.fn(activity) }
+    func onInvalidateActivity(activity: Activity?, id: String) {
+        if let updatedActivity = activity {
+            _activityCache.setObject(updatedActivity, forKey: updatedActivity.activityId as AnyObject)
+        } else {
+            // Activity was deleted, or is invalid:
+            _activityCache.removeObject(forKey: id as AnyObject)
+        }
+        _activityListeners[id]?.forEach { $0.fn(activity) }
     }
     
     func triggerServerUpdate(activityId: ActivityId, key: String, value: Any?) {

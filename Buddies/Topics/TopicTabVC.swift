@@ -48,7 +48,11 @@ class TopicTabVC: TopicsVC {
         
         return dataAccess.useUser(id: uid) { user in
             self.user = user
-            self.selectedTopics = (self.topicCollection.topics).filter { user.favoriteTopics.contains($0.id) }
+            if let user = user {
+                self.selectedTopics = (self.topicCollection.topics).filter { user.favoriteTopics.contains($0.id) }
+            } else {
+                self.selectedTopics = []
+            }
             self.collectionView.reloadData()
         }
     }

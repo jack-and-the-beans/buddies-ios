@@ -8,13 +8,14 @@
 
 import XCTest
 import Firebase
+import FirebaseFirestore
 @testable import Buddies
 
 class ActivityTests: XCTestCase {
     class TestDeli : ActivityInvalidationDelegate {
         var invalidations = 0
         var triggers = 0
-        func onInvalidateActivity(activity: Activity) {
+        func onInvalidateActivity(activity: Activity?, id: String) {
             invalidations += 1
         }
         

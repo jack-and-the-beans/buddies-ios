@@ -86,16 +86,4 @@ class FilterSearchBarTests: XCTestCase {
         
         self.waitForExpectations(timeout: 2)
     }
-    
-    func testIgnoredIfNoChange() {
-        let exp = self.expectation(description: "search triggered")
-
-        deli.onDisplay = { exp.fulfill() }
-        bar.searchBar(bar, textDidChange: "new text")
-        
-        self.waitForExpectations(timeout: 1)
-
-        deli.onDisplay = { XCTAssertTrue(false) } // Fail if data is reloaded!
-        bar.searchBar(bar, textDidChange: "new text")
-    }
 }

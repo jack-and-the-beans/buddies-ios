@@ -39,6 +39,7 @@ class ProfileVC: UIViewController {
         var lastImageUrl: String? = nil
         
         return dataAccess.useUser(id: uid) { user in
+            guard let user = user else { return }
             self.bioLabel.text = user.bio
             self.nameLabel.text = user.name
             
