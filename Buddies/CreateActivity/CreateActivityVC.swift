@@ -109,7 +109,6 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             
             self.searchCompleter.queryFragment = query
             
-            // Show the loading indicator
             self.completerDidUpdateResults(completer: self.searchCompleter)
             
         }
@@ -130,7 +129,12 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         }
         
         locationField.filterItems(displayResults)
-        locationField.stopLoadingIndicator()
+        
+        //default to using location from top result
+        if(!displayResults.isEmpty){
+            setChosenLocation(location: displayResults.first!)
+        }
+        
         
     }
     
@@ -299,7 +303,17 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         
     }
     
-    
+    func setChosenLocation(location:MapItemSearchResult)
+    {
+        let searchRequest = MKLocalSearch.Request(completion: location.mapData!)
+        let search = MKLocalSearch(request: searchRequest)
+        
+        search.start { (response, error) in
+            self.chosenLocation = response?.mapItems[0].placemark.coordinate ?? CLLocationCoordinate2D()
+        }
+        
+         self.locationText = location.title
+    }
     
     //MARK: - Location field
     func configureSearchTextField()
@@ -318,16 +332,9 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             
             let temp = filteredResults[itemPosition] as! MapItemSearchResult
             
-            
-            let searchRequest = MKLocalSearch.Request(completion: temp.mapData!)
-            let search = MKLocalSearch(request: searchRequest)
-            
-            search.start { (response, error) in
-                self.chosenLocation = response?.mapItems[0].placemark.coordinate ?? CLLocationCoordinate2D()
-            }
+            self.setChosenLocation(location: temp)
             
             self.locationField.text = temp.title
-            self.locationText = temp.title
             
         }
         
