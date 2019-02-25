@@ -150,8 +150,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         let dateRange = DateInterval(start: activity.startTime.dateValue(),
                                      end: activity.endTime.dateValue())
         
-        cell.dateLabel.text = dateRange.rangePhrase(relativeTo: Date())
-        
+        cell.dateLabel.text = dateRange.rangePhrase(relativeTo: Date()).capitalized
+
         let activityUserImages = activity.members.compactMap { users[$0]?.image }
         
         zip(cell.memberPics, activityUserImages).forEach() { (btn, img) in btn.setImage(img, for: .normal)

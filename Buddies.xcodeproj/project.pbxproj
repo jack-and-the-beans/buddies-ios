@@ -331,8 +331,8 @@
 				58EF8D902208A25F00872770 /* TopicCell.swift */,
 				58EF8D8F2208A25E00872770 /* TopicCollection.swift */,
 				58EF8D922208A25F00872770 /* TopicLayout.swift */,
-				58EF8D932208A25F00872770 /* TopicsVC.swift */,
 				58B42610221CE7EE000ACB28 /* TopicActivityTableVC.swift */,
+				58EF8D932208A25F00872770 /* TopicsVC.swift */,
 				5868DEE6221F0564008B86FE /* TopicTabVC.swift */,
 			);
 			path = Topics;
