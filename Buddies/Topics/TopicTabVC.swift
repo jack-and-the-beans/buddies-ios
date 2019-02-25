@@ -32,10 +32,8 @@ class TopicTabVC: TopicsVC {
         if let dest = segue.destination as? TopicActivityTableVC,
             let indexPath = collectionView.indexPathsForSelectedItems {
             let topic = topicCollection.topics[indexPath[0].row]
-            dest.title = topic.name
             dest.topic = topic
-            dest.favoriteButton.isSelected = selectedTopics.contains { $0.id == topic.id }
-            dest.mainTopicVC = self
+            dest.userId = user?.uid
         }
     }
     
