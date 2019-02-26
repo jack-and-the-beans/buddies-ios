@@ -130,6 +130,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         container.translatesAutoresizingMaskIntoConstraints = false
         container.clipsToBounds = true
         container.layer.cornerRadius = 10
+        container.layer.zPosition = 2000
         
         let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         blurView.translatesAutoresizingMaskIntoConstraints = false
@@ -160,8 +161,6 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
             ])
         let cancelButton = makeButton(saying: "Cancel", doing: #selector(self.closeFilterMenu))
         
-        
-        
         // put things together
         let containerChildren = [
             dateSliderLabel,
@@ -174,43 +173,29 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         container.addSubview(blurView)
         containerChildren.forEach { container.addSubview($0) }
         
-        let parent = superview!.superview! // Get the window in an ugly way
+        let parent = superview! // Get the window in an ugly way
         
         parent.addSubview(container)
         
-        // Size/Position
-        let containerConstraints = [
-            container.leftAnchor.constraint(equalTo: parent.leftAnchor),
-            container.rightAnchor.constraint(equalTo: parent.rightAnchor),
-            container.topAnchor.constraint(equalTo: parent.topAnchor, constant: frame.size.height),
-            container.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: frame.size.height),
-            
-            // Blur view
-            blurView.heightAnchor.constraint(equalTo: container.heightAnchor),
-            blurView.widthAnchor.constraint(equalTo: container.widthAnchor),
-            
-            // Children to container
-            containerChildren.first!.topAnchor.constraint(equalTo: container.topAnchor, constant: 30),
-        ]
+        container.bindFrameToSuperviewBounds()
+        blurView.bindFrameToSuperviewBounds()
         
-        let constraintsBetweenChildren = [
+        // Size/Position
+        let childToContainerConstraints = [
+            dateSliderLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 20),
             dateSliderLabel.bottomAnchor.constraint(equalTo: dateSlider.topAnchor),
             dateSlider.bottomAnchor.constraint(equalTo: locationSliderLabel.topAnchor, constant: -20),
             locationSliderLabel.bottomAnchor.constraint(equalTo: locationRangeSlider.topAnchor),
-            locationRangeSlider.bottomAnchor.constraint(equalTo: innerFilterButton.topAnchor, constant: -20),
+            locationRangeSlider.bottomAnchor.constraint(equalTo: innerFilterButton.topAnchor, constant: -10),
             innerFilterButton.bottomAnchor.constraint(equalTo: cancelButton.topAnchor, constant: -20)
         ]
         
         let sideConstraints = containerChildren.flatMap({ [
-            $0.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 15),
-            $0.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -15),
+            $0.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 25),
+            $0.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -25),
         ] })
         
-        NSLayoutConstraint.activate(
-            containerConstraints
-            + sideConstraints
-            + constraintsBetweenChildren
-        )
+        NSLayoutConstraint.activate(sideConstraints + childToContainerConstraints)
         
         // Return useful components
         return (container: container, locationRangeSlider: locationRangeSlider, dateSlider: dateSlider)
