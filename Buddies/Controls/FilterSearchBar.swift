@@ -191,8 +191,8 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         ]
         
         let sideConstraints = containerChildren.flatMap({ [
-            $0.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 25),
-            $0.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -25),
+            $0.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 35),
+            $0.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -35),
         ] })
         
         NSLayoutConstraint.activate(sideConstraints + childToContainerConstraints)
