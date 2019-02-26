@@ -30,16 +30,13 @@ class FilterSearchBarTests: XCTestCase {
         
         parent = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
         
-        let container = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-        parent.addSubview(container)
-        
         bar = FilterSearchBar(frame: parent.frame)
         bar.api = search
         
         deli = TestFilterSearchBarDelegate()
         bar.displayDelegate = deli
         
-        container.addSubview(bar)
+        parent.addSubview(bar)
     }
 
     func testFilterMenuToggling() {
