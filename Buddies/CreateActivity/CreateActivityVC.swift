@@ -21,6 +21,14 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     var chosenLocation: CLLocationCoordinate2D!
     var locationText : String!
     var locationManager = CLLocationManager()
+
+    @IBOutlet weak var titleCell: UITableViewCell!
+    @IBOutlet weak var locationCell: UITableViewCell!
+    @IBOutlet weak var topicCell: UITableViewCell!
+    @IBOutlet weak var descriptionCell: UITableViewCell!
+    
+    var minSliderValue : CGFloat!
+    var maxSliderValue : CGFloat!
     
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
@@ -58,26 +66,28 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         guard let title = titleField.text,
             let description = descriptionTextView.text else { return }
         
-        if isValidActivityData(){
+        //display pop up corresponding to missing field
+        if let errorText = isValidActivityData(){
+            
+            let alert = UIAlertController(title: "Finish Suggesting Activity", message: "Please enter information for the " + errorText + " field.", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                
+                self.present(alert, animated: true)
+        
+        }else
+        {
             saveActivityToFirestore(
                 title: title,
                 description: description,
                 location: GeoPoint(latitude: chosenLocation.latitude,
                                    longitude: chosenLocation.longitude),
                 location_text: locationText,
-                start_time: getSliderDate(sliderValue: dateSlider.minValue),
-                end_time: getSliderDate(sliderValue: dateSlider.maxValue),
+                start_time: getSliderDate(sliderValue: minSliderValue),
+                end_time: getSliderDate(sliderValue: maxSliderValue),
                 topicIDs: topicIDs
             )
-            
             dismiss(animated: true, completion: _dismissHook)
-        }else
-        {
-            let alert = UIAlertController(title: "Finish Suggesting Activity", message: "Please enter information for every field.", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            
-            self.present(alert, animated: true)
         }
         
         
@@ -104,7 +114,6 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             
             self.searchCompleter.queryFragment = query
             
-            // Show the loading indicator
             self.completerDidUpdateResults(completer: self.searchCompleter)
             
         }
@@ -125,8 +134,6 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         }
         
         locationField.filterItems(displayResults)
-        locationField.stopLoadingIndicator()
-        
     }
     
     //MARK: -
@@ -187,16 +194,33 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         
     }
     
-    func isValidActivityData() -> Bool{
+    func isValidActivityData() -> String?{
+    
+        titleCell.layer.borderColor = UIColor.clear.cgColor
+        locationCell.layer.borderColor = UIColor.clear.cgColor
+        topicCell.layer.borderColor = UIColor.clear.cgColor
+        descriptionCell.layer.borderColor = UIColor.clear.cgColor
         
-        if titleField.text == nil ||
-            chosenLocation == nil ||
-            topicDetails.text == "None" ||
-            descriptionTextView.text == "Description"{
-            return false
-        }else{
-            return true
+    
+        if (titleField.text?.isEmpty)! {
+            titleCell.layer.borderWidth = 1.0
+            titleCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
+            return "title"
+        } else if chosenLocation == nil {
+            locationCell.layer.borderWidth = 1.0
+            locationCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
+            return "location"
+        } else if selectedTopics.count == 0 {
+            topicCell.layer.borderWidth = 1.0
+            topicCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
+            return "topic"
+        }else if descriptionTextView.text == "Description"{
+            descriptionCell.layer.borderWidth = 1.0
+            descriptionCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
+            return "description"
         }
+        
+        return nil
     }
     
     //MARK: - Firestore
@@ -278,18 +302,29 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     
     func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMinValue minValue: CGFloat) -> String? {
         
-    
+        minSliderValue = minValue
         return getSliderString(sliderValue: minValue)
         
     }
     
     func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMaxValue maxValue: CGFloat) -> String? {
 
+        maxSliderValue = maxValue
         return getSliderString(sliderValue: maxValue)
         
     }
     
-    
+    func setChosenLocation(location:MapItemSearchResult)
+    {
+        let searchRequest = MKLocalSearch.Request(completion: location.mapData!)
+        let search = MKLocalSearch(request: searchRequest)
+        
+        search.start { (response, error) in
+            self.chosenLocation = response?.mapItems[0].placemark.coordinate ?? CLLocationCoordinate2D()
+        }
+        
+         self.locationText = location.title
+    }
     
     //MARK: - Location field
     func configureSearchTextField()
@@ -308,16 +343,9 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             
             let temp = filteredResults[itemPosition] as! MapItemSearchResult
             
-            
-            let searchRequest = MKLocalSearch.Request(completion: temp.mapData!)
-            let search = MKLocalSearch(request: searchRequest)
-            
-            search.start { (response, error) in
-                self.chosenLocation = response?.mapItems[0].placemark.coordinate ?? CLLocationCoordinate2D()
-            }
+            self.setChosenLocation(location: temp)
             
             self.locationField.text = temp.title
-            self.locationText = temp.title
             
         }
         
@@ -335,7 +363,7 @@ extension CreateActivityVC : CLLocationManagerDelegate {
     
     
     private func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print("error:: (error)")
+        print("error:: \(error)")
     }
 }
 
