@@ -128,8 +128,6 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         let container = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         container.backgroundColor = .clear
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.clipsToBounds = true
-        container.layer.cornerRadius = 10
         container.layer.zPosition = 2000
         
         let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
