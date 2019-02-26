@@ -1,5 +1,5 @@
 //
-//  ExlporeVC.swift
+//  DiscoverVC.swift
 //  Buddies
 //
 //  Created by Jake Thurman on 2/2/19.
@@ -7,30 +7,36 @@
 //
 
 import UIKit
+import Firebase
 
-class DiscoverVC: UITableViewController {
+class DiscoverVC : ActivityTableVC {
+    @IBOutlet weak var searchBar: FilterSearchBar!
     
-    var fab: FAB!
+    var user: User? { didSet { self.searchBar.fetchAndLoadActivities() } }
+    var cancelUserListener: Canceler?
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        self.setupHideKeyboardOnTap()
         
-        // We need to store a local so that the
-        //  instance isn't deallocated along with
-        //  the event handler!
-        fab = FAB(for: self)
-        fab.renderCreateActivityFab()
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        cancelUserListener = DataAccessor.instance.useUser(id: userId) { user in
+            self.user = user
+        }
+        
+        searchBar.displayDelegate = self
+        
+        super.viewDidLoad()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    deinit {
+        cancelUserListener?()
     }
-    */
-
+    
+    override func getTopics() -> [String] {
+        return user?.favoriteTopics ?? []
+    }
+    
+    override func fetchAndLoadActivities() {
+        searchBar.fetchAndLoadActivities()
+    }
 }

@@ -19,12 +19,14 @@ extension UIView {
             return
         }
         
+        let guide = superview.safeAreaLayoutGuide
+        
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.topAnchor.constraint(equalTo: superview.topAnchor, constant: 0).isActive = true
-        self.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: 0).isActive = true
-        self.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: 0).isActive = true
+        self.topAnchor.constraint(equalTo: guide.topAnchor, constant: 0).isActive = true
+        self.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 0).isActive = true
+        self.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: 0).isActive = true
         if (shouldConstraintBottom) {
-            self.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
+            self.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: 0).isActive = true
         }
     }
     
