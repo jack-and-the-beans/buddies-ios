@@ -1,5 +1,5 @@
 //
-//  DiscoverVC.swift
+//  DiscoverTableVC.swift
 //  Buddies
 //
 //  Created by Jake Thurman on 2/2/19.
@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class DiscoverVC : ActivityTableVC {
+class DiscoverTableVC : ActivityTableVC {
     @IBOutlet weak var searchBar: FilterSearchBar!
     
     var user: User? { didSet { self.searchBar.fetchAndLoadActivities() } }
