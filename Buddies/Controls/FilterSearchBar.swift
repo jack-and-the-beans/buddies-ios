@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-typealias SearchParams = (filterText: String?, startDate: Date, endDate: Date, maxMilesAway: Int)
-typealias FilterState = (filterText: String?, dateMin: Int, dateMax: Int, maxMetersAway: CGFloat)
+typealias SearchParams = (filterText: String?, startDate: Date, endDate: Date, maxMetersAway: Int)
+typealias FilterState = (filterText: String?, dateMin: Int, dateMax: Int, maxMilesAway: CGFloat)
 typealias FilterMenuElements = (container: UIView, locationRangeSlider: RangeSeekSlider, dateSlider: RangeSeekSlider)
 
 protocol FilterSearchBarDelegate {
@@ -138,7 +138,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         dateSlider.selectedMaxValue = CGFloat(lastFilterState.dateMax)
         
         let locationRangeSlider = makeSlider(from: 1, to: 200)
-        locationRangeSlider.selectedMaxValue = lastFilterState.maxMetersAway
+        locationRangeSlider.selectedMaxValue = lastFilterState.maxMilesAway
         locationRangeSlider.disableRange = true
         
         // Make labels
@@ -240,7 +240,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         let text = self.text == "" ? nil : self.text
         
         let date = nextDateRange ?? (lastFilterState.dateMin, lastFilterState.dateMax)
-        let location = nextLocationRange ?? lastFilterState.maxMetersAway
+        let location = nextLocationRange ?? lastFilterState.maxMilesAway
         
         return (text, date.0, date.1, location)
     }
@@ -250,7 +250,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         
         let start = DateRangeSliderDelegate.getDate(sliderIndex: myState.dateMin)
         let end = DateRangeSliderDelegate.getDate(sliderIndex: myState.dateMax)
-        let distance = Int(FilterSearchBar.metersPerMile * myState.maxMetersAway)
+        let distance = Int(FilterSearchBar.metersPerMile * myState.maxMilesAway)
         
         return (myState.filterText, start, end, distance)
     }

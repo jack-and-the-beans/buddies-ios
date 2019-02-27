@@ -65,7 +65,8 @@ class TopicActivityTableVC : ActivityTableVC {
                              matchingAnyTopicOf: getTopics(),
                              startingAt: params.startDate,
                              endingAt: params.endDate,
-                             upToDistance: params.maxMilesAway) {
+                             atLocation: user?.locationCoords,
+                             upToDistance: params.maxMetersAway) {
                                 (activities: [ActivityId], err: Error?) in
                                 
                                 self.loadAlgoliaResults(activities: activities, from: params, err: err)
