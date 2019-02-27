@@ -42,7 +42,7 @@
 		58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EA1EF622041436003F6A3A /* StorageManagerTests.swift */; };
 		58EF8D852208A1DF00872770 /* FAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D832208A1DF00872770 /* FAB.swift */; };
 		58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D872208A20500872770 /* SignUpInfoVC.swift */; };
-		58EF8D8D2208A24700872770 /* DiscoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D8A2208A24700872770 /* DiscoverVC.swift */; };
+		58EF8D8D2208A24700872770 /* DiscoverTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D8A2208A24700872770 /* DiscoverTableVC.swift */; };
 		58EF8D8E2208A24700872770 /* MyActivitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D8B2208A24700872770 /* MyActivitiesVC.swift */; };
 		58EF8D952208A25F00872770 /* TopicCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D8F2208A25E00872770 /* TopicCollection.swift */; };
 		58EF8D962208A25F00872770 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D902208A25F00872770 /* TopicCell.swift */; };
@@ -160,7 +160,7 @@
 		58EA1EF622041436003F6A3A /* StorageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerTests.swift; sourceTree = "<group>"; };
 		58EF8D832208A1DF00872770 /* FAB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAB.swift; sourceTree = "<group>"; };
 		58EF8D872208A20500872770 /* SignUpInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpInfoVC.swift; sourceTree = "<group>"; };
-		58EF8D8A2208A24700872770 /* DiscoverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverVC.swift; sourceTree = "<group>"; };
+		58EF8D8A2208A24700872770 /* DiscoverTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverTableVC.swift; sourceTree = "<group>"; };
 		58EF8D8B2208A24700872770 /* MyActivitiesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyActivitiesVC.swift; sourceTree = "<group>"; };
 		58EF8D8F2208A25E00872770 /* TopicCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCollection.swift; sourceTree = "<group>"; };
 		58EF8D902208A25F00872770 /* TopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
@@ -407,7 +407,7 @@
 		58F2E9032208C02C00D15214 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
-				58EF8D8A2208A24700872770 /* DiscoverVC.swift */,
+				58EF8D8A2208A24700872770 /* DiscoverTableVC.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -860,7 +860,7 @@
 				58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */,
 				4544D3052214E93F007CB73D /* ActivityCell.swift in Sources */,
 				B688B47B221CCB6D0031A364 /* ActivityDescriptionController.swift in Sources */,
-				58EF8D8D2208A24700872770 /* DiscoverVC.swift in Sources */,
+				58EF8D8D2208A24700872770 /* DiscoverTableVC.swift in Sources */,
 				B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */,
 				58EF8D8E2208A24700872770 /* MyActivitiesVC.swift in Sources */,
 				B6428EFC221DEB720052E469 /* ActivityTopicCollectionCell.swift in Sources */,
