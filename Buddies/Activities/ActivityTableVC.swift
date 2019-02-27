@@ -16,6 +16,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     var users      = [UserId: User]()
     var userCancelers = [ActivityId: [Canceler]]()
     
+    var api = AlgoliaSearch() //Should only be changed by unit tests
+    
     //Doubly nested array of Activity Ids.
     //Each array is a section of the table view
     var displayIds = [[ActivityId]]()
@@ -35,7 +37,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchAndLoadActivities()
+        fetchAndLoadActivities(params: [:])
     }
     
     
@@ -45,7 +47,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     }
     
     // "abstract"
-    func fetchAndLoadActivities(){} // Must call loadData() once displayIds is set
+    func fetchAndLoadActivities(params: [String: Any]){} // Must call loadData() once displayIds is set
     func getTopics() -> [String] {return []} // Must get a list of the appropiate topics for the view
     
     func endEditing() {
