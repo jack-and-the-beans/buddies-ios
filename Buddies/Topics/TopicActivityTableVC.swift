@@ -57,12 +57,13 @@ class TopicActivityTableVC : ActivityTableVC {
         return [topic.id]
     }
     
-    override func fetchAndLoadActivities(params: [String:Any]) {
-        api.searchActivities(withText: params["filterText"] as? String,
+    override func fetchAndLoadActivities(params: SearchParams? = nil) {
+        super.fetchAndLoadActivities(params: params)
+        api.searchActivities(withText: params?.filterText,
                              matchingAnyTopicOf: getTopics(),
-                             startingAt: params["start"] as? Date,
-                             endingAt: params["end"] as? Date,
-                             upToDisatnce: params["distance"] as? Int ?? Int.max) {
+                             startingAt: params?.startDate,
+                             endingAt: params?.endDate,
+                             upToDistance: params?.maxMilesAway ?? Int.max) {
                                 (activities: [ActivityId], err: Error?) in
                                 
                                 // Cancel if we've made a new request #NoRaceConditions

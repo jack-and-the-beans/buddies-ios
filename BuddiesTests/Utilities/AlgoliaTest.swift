@@ -37,7 +37,7 @@ class AlgoliaTest: XCTestCase {
             XCTAssert(ids.count > 0, "The query completed.")
             if let query = index.query {
                 let filterText = query.filters
-                checker = filterText == "(topic_ids:a OR topic_ids:b)"
+                checker = filterText == "(topic_ids:a<score=1> OR topic_ids:b<score=1>)"
             }
             XCTAssert(checker, "Constructs topic query correctly.")
         }
@@ -58,8 +58,7 @@ class AlgoliaTest: XCTestCase {
                 let filterText = query.filters
                 let s = Int((start?.timeIntervalSince1970 ?? 20) * 1000)
                 let e = Int((end?.timeIntervalSince1970 ?? 20) * 1000)
-
-                checker = filterText == "(end_time_num >= \(s) AND start_time_num <= \(e)) AND (topic_ids:a OR topic_ids:b)"
+                checker = filterText == "(end_time_num >= \(s) AND start_time_num <= \(e)) AND (topic_ids:a<score=1> OR topic_ids:b<score=1>)"
             }
             XCTAssert(checker, "Constructs topic AND date query correctly.")
         }
@@ -92,7 +91,7 @@ class AlgoliaTest: XCTestCase {
         let index = TestIndex()
         let location = (1.0, 2.0)
         let distance = 10000
-        search.searchActivities(atLocation: location, upToDisatnce: distance, usingIndex: index) { (ids, err) in
+        search.searchActivities(atLocation: location, upToDistance: distance, usingIndex: index) { (ids, err) in
             var checker = false
             XCTAssert(ids.count > 0, "The query completed.")
             if let query = index.query, let loc = query.aroundLatLng {

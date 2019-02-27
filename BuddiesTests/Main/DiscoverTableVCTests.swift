@@ -9,8 +9,8 @@
 import XCTest
 @testable import Buddies
 
-class DiscoverVCTests: XCTestCase {
-    var vc: DiscoverVC!
+class DiscoverTableVCTests: XCTestCase {
+    var vc: DiscoverTableVC!
     
     override func setUp() {
         vc = BuddiesStoryboard.Main.viewController(withID: "explore")
