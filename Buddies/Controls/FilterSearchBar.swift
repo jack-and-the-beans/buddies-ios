@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-typealias FilterParams = (filterText: String?, dateMin: Int, dateMax: Int, maxMilesAway: CGFloat)
+typealias SearchParams = (filterText: String?, startDate: Date, endDate: Date, maxMilesAway: Int)
+typealias FilterState = (filterText: String?, dateMin: Int, dateMax: Int, maxMilesAway: CGFloat)
 typealias FilterMenuElements = (container: UIView, locationRangeSlider: RangeSeekSlider, dateSlider: RangeSeekSlider)
 
 protocol FilterSearchBarDelegate {
     func endEditing()
-    func fetchAndLoadActivities(params: [String: Any])
-    func getTopics() -> [String]
+    func fetchAndLoadActivities(params: SearchParams?)
 }
 
 class FilterSearchBar : UISearchBar, UISearchBarDelegate {
@@ -26,7 +26,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
     // This just uses default values for now
     //  these probably need to be stored in
     //  firestore for BUD-41 🤔
-    var lastSearchParams: FilterParams = ("", 1, 6, 200)
+    var lastFilterState: FilterState = ("", 1, 6, 200)
     var nextLocationRange: CGFloat?
     var nextDateRange: (Int, Int)?
     
@@ -134,11 +134,11 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         let dateSlider = makeSlider(from: 1, to: 6)
         dateSlider.delegate = DateRangeSliderDelegate.instance
         dateSlider.minDistance = 1
-        dateSlider.selectedMinValue = CGFloat(lastSearchParams.dateMin)
-        dateSlider.selectedMaxValue = CGFloat(lastSearchParams.dateMax)
+        dateSlider.selectedMinValue = CGFloat(lastFilterState.dateMin)
+        dateSlider.selectedMaxValue = CGFloat(lastFilterState.dateMax)
         
         let locationRangeSlider = makeSlider(from: 1, to: 200)
-        locationRangeSlider.selectedMaxValue = lastSearchParams.maxMilesAway
+        locationRangeSlider.selectedMaxValue = lastFilterState.maxMilesAway
         locationRangeSlider.disableRange = true
         
         // Make labels
@@ -236,30 +236,23 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         }
     }
     
-    func getFilterParams() -> FilterParams {
+    func getFilterState() -> FilterState {
         let text = self.text == "" ? nil : self.text
         
-        let date = nextDateRange ?? (lastSearchParams.dateMin, lastSearchParams.dateMax)
-        let location = nextLocationRange ?? lastSearchParams.maxMilesAway
+        let date = nextDateRange ?? (lastFilterState.dateMin, lastFilterState.dateMax)
+        let location = nextLocationRange ?? lastFilterState.maxMilesAway
         
         return (text, date.0, date.1, location)
     }
     
-    func getGeneralParams(filterParams: FilterParams? = nil) -> [String: Any] {
-        let myParams = filterParams ?? getFilterParams()
+    func getSearchParams(from state: FilterState? = nil) -> SearchParams {
+        let myState = state ?? getFilterState()
         
+        let start = DateRangeSliderDelegate.getDate(sliderIndex: myState.dateMin)
+        let end = DateRangeSliderDelegate.getDate(sliderIndex: myState.dateMax)
+        let distance = Int(FilterSearchBar.metersPerMile * myState.maxMilesAway)
         
-        let start = DateRangeSliderDelegate.getDate(sliderIndex: myParams.dateMin)
-        let end = DateRangeSliderDelegate.getDate(sliderIndex: myParams.dateMax)
-        let distance = Int(FilterSearchBar.metersPerMile * myParams.maxMilesAway)
-        
-        return [
-            "start": start,
-            "end": end,
-            "distance": distance,
-            "filterText": myParams.filterText as Any
-            
-        ]
+        return (myState.filterText, start, end, distance)
     }
     
     func sendParams(to target: FilterSearchBarDelegate?) {
@@ -267,14 +260,14 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         // If there is a timer, invalidate it! We're searching now.
         searchTimer?.invalidate()
 
-        let myParams = getFilterParams()
+        let myState = getFilterState()
         
-        if lastSearchParams == myParams { return }
+        if lastFilterState == myState { return }
         
         // Store request params #NoRaceConditions
-        self.lastSearchParams = myParams
+        self.lastFilterState = myState
         
-        let params = getGeneralParams(filterParams: myParams)
+        let params = getSearchParams(from: myState)
         
         // pass params to FilterSearchBarDelegate
         target?.fetchAndLoadActivities(params: params)

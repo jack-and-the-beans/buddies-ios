@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
 
 class DiscoverTableVC : ActivityTableVC {
     @IBOutlet weak var searchBar: FilterSearchBar!
@@ -37,30 +37,17 @@ class DiscoverTableVC : ActivityTableVC {
         return user?.favoriteTopics ?? []
     }
     
-    override func fetchAndLoadActivities(params: [String:Any]) {
-        
-        print(params["filterText"] as? String)
-        print(params["start"] as? Date)
-        print(params["end"] as? Date)
-        print(params["distance"] as? Int ?? Int.max)
-
-        
-        api.searchActivities(withText: params["filterText"] as? String,
+    override func fetchAndLoadActivities(params: SearchParams? = nil) {
+        super.fetchAndLoadActivities(params: params)
+        api.searchActivities(withText: params?.filterText,
                              matchingAnyTopicOf: getTopics(),
-                             startingAt: params["start"] as? Date,
-                             endingAt: params["end"] as? Date,
-                             upToDisatnce: params["distance"] as? Int ?? Int.max) {
+                             startingAt: params?.startDate,
+                             endingAt: params?.endDate,
+                             upToDistance: params?.maxMilesAway ?? Int.max) {
                                 (activities: [ActivityId], err: Error?) in
                                 
-                                // Cancel if we've made a new request #NoRaceConditions
-                                //if self.lastSearchParams != myParams { return }
+                                self.loadAlgoliaResults(activities: activities, from: params, err: err)
                                 
-                                // Handle errors
-                                if let error = err { print(error) }
-                                
-                                // Load new data
-                                self.loadData(for: [activities])
         }
     }
-    
 }
