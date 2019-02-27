@@ -36,6 +36,14 @@ class User {
     var favoriteTopics : [String] { didSet { onChange("favorite_topics", favoriteTopics) } }
     var location : GeoPoint? { didSet { onChange("location", location) } }
     
+    var locationCoords: (Double, Double)? {
+        get {
+            if let loc = location {
+                return (loc.latitude, loc.longitude)
+            } else { return nil }
+        }
+    }
+    
     // MARK: User Settings
     var shouldSendJoinedActivityNotification : Bool {
         didSet {

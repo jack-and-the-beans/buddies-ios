@@ -101,6 +101,6 @@ class FilterSearchBarTests: XCTestCase {
         
         XCTAssert(bar.lastFilterState.dateMin == 1)
         XCTAssert(bar.lastFilterState.dateMax == 3)
-        XCTAssert(bar.lastFilterState.maxMetersAway == 20)
+        XCTAssert(bar.lastFilterState.maxMilesAway == 20)
     }
 }
