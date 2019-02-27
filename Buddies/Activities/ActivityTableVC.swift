@@ -25,7 +25,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     //Should only be changed by unit tests
     var api = AlgoliaSearch()
     
-    var lastSearchParam: SearchParams? = nil
+    var lastSearchParam: SearchParams!
     
     var fab: FAB!
 
@@ -44,7 +44,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchAndLoadActivities()
+        fetchAndLoadActivities(for: lastSearchParam)
     }
     
     
@@ -60,13 +60,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         self.view.endEditing(false)
     }
     
-    func display(activities: [ActivityId]) {
-        self.loadData(for: [activities])
-    }
-    
-    
     //MARK:- Manage queries and query changes
-    func fetchAndLoadActivities(params: SearchParams? = nil){
+    func fetchAndLoadActivities(for params: SearchParams){
         lastSearchParam = params
         // Must call loadData() with activity ids in order to render anything
     }

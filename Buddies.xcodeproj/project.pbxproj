@@ -51,7 +51,7 @@
 		58EF8D992208A25F00872770 /* TopicsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D932208A25F00872770 /* TopicsVC.swift */; };
 		58EF8DA32208A2BC00872770 /* CreateActivityVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA22208A2BC00872770 /* CreateActivityVCTests.swift */; };
 		58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */; };
-		58EF8DA82208A2C600872770 /* DiscoverVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA62208A2C600872770 /* DiscoverVCTests.swift */; };
+		58EF8DA82208A2C600872770 /* DiscoverTableVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA62208A2C600872770 /* DiscoverTableVCTests.swift */; };
 		58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DB72208BE5E00872770 /* CreateActivity.storyboard */; };
 		58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DB82208BE5E00872770 /* BuddiesStoryboard.swift */; };
 		58EF8DC02208BE5E00872770 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DB92208BE5E00872770 /* LaunchScreen.storyboard */; };
@@ -170,7 +170,7 @@
 		58EF8D9F2208A2B300872770 /* FABTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FABTests.swift; sourceTree = "<group>"; };
 		58EF8DA22208A2BC00872770 /* CreateActivityVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateActivityVCTests.swift; sourceTree = "<group>"; };
 		58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyActivitiesVCTests.swift; sourceTree = "<group>"; };
-		58EF8DA62208A2C600872770 /* DiscoverVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverVCTests.swift; sourceTree = "<group>"; };
+		58EF8DA62208A2C600872770 /* DiscoverTableVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverTableVCTests.swift; sourceTree = "<group>"; };
 		58EF8DAE2208A2E900872770 /* TopicCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCollectionTests.swift; sourceTree = "<group>"; };
 		58EF8DAF2208A2E900872770 /* TopicModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicModelTests.swift; sourceTree = "<group>"; };
 		58EF8DB12208A2E900872770 /* TopicCellTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCellTest.swift; sourceTree = "<group>"; };
@@ -372,7 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */,
-				58EF8DA62208A2C600872770 /* DiscoverVCTests.swift */,
+				58EF8DA62208A2C600872770 /* DiscoverTableVCTests.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -915,7 +915,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58A5A40722025C2B00E0BF38 /* TopicCellTest.swift in Sources */,
-				58EF8DA82208A2C600872770 /* DiscoverVCTests.swift in Sources */,
+				58EF8DA82208A2C600872770 /* DiscoverTableVCTests.swift in Sources */,
 				58EF8DA32208A2BC00872770 /* CreateActivityVCTests.swift in Sources */,
 				5868DEE3221DEEC3008B86FE /* AlgoliaMock.swift in Sources */,
 				A9C98530221FB1E5003462AC /* TopicActivityTableVCTests.swift in Sources */,

@@ -11,10 +11,13 @@ import UIKit
 @testable import Buddies
 
 class TestFilterSearchBarDelegate : FilterSearchBarDelegate {
-    var onDisplay: (()->Void)?
-    
+    var paramsReceived = [SearchParams?]()
+    var onFetchAndLoad: (()->Void)?
+    func fetchAndLoadActivities(for params: SearchParams){
+        onFetchAndLoad?()
+        paramsReceived.append(params)
+    }
     func endEditing() { /*Do nothing*/ }
-    func display(activities: [ActivityId]) { onDisplay?() }
     func getTopics() -> [String] { return [ "j0FFY5VI4Ti6SZ5jUsDJ" ] }
 }
 
@@ -25,13 +28,9 @@ class FilterSearchBarTests: XCTestCase {
     var deli: TestFilterSearchBarDelegate!
     
     override func setUp() {
-        let client = TestClient(appID: "foo", apiKey: "bar")
-        let search = AlgoliaSearch(algoliaClient: client)
-        
         parent = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
         
         bar = FilterSearchBar(frame: parent.frame)
-        bar.api = search
         
         deli = TestFilterSearchBarDelegate()
         bar.displayDelegate = deli
@@ -56,7 +55,7 @@ class FilterSearchBarTests: XCTestCase {
     func testSearchBarSearchButtonClicked() {
         let exp = self.expectation(description: "search triggered")
         
-        deli.onDisplay = { exp.fulfill() }
+        deli.onFetchAndLoad = { exp.fulfill() }
         
         bar.searchBarSearchButtonClicked(bar)
         
@@ -66,7 +65,7 @@ class FilterSearchBarTests: XCTestCase {
     func testTextDidChange() {
         let exp = self.expectation(description: "search triggered")
         
-        deli.onDisplay = { exp.fulfill() }
+        deli.onFetchAndLoad = { exp.fulfill() }
         
         XCTAssertNil(bar.searchTimer)
         
@@ -79,7 +78,7 @@ class FilterSearchBarTests: XCTestCase {
     
     func testSaveFilterMenu() {
         let exp = self.expectation(description: "search triggered")
-        deli.onDisplay = { exp.fulfill() }
+        deli.onFetchAndLoad = { exp.fulfill() }
         
         XCTAssertNil(bar.filterMenu)
 
@@ -100,8 +99,8 @@ class FilterSearchBarTests: XCTestCase {
         
         self.waitForExpectations(timeout: 2)
         
-        XCTAssert(bar.lastSearchParams.dateMin == 1)
-        XCTAssert(bar.lastSearchParams.dateMax == 3)
-        XCTAssert(bar.lastSearchParams.maxMilesAway == 20)
+        XCTAssert(bar.lastFilterState.dateMin == 1)
+        XCTAssert(bar.lastFilterState.dateMax == 3)
+        XCTAssert(bar.lastFilterState.maxMetersAway == 20)
     }
 }

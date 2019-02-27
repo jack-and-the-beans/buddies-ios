@@ -42,6 +42,8 @@ class TopicActivityTableVC : ActivityTableVC {
         }
         
         searchBar.displayDelegate = self
+        
+        lastSearchParam = searchBar.getSearchParams()
 
         super.viewDidLoad()
     }
@@ -57,23 +59,17 @@ class TopicActivityTableVC : ActivityTableVC {
         return [topic.id]
     }
     
-    override func fetchAndLoadActivities(params: SearchParams? = nil) {
-        super.fetchAndLoadActivities(params: params)
-        api.searchActivities(withText: params?.filterText,
+    override func fetchAndLoadActivities(for params: SearchParams) {
+        super.fetchAndLoadActivities(for: params)
+        api.searchActivities(withText: params.filterText,
                              matchingAnyTopicOf: getTopics(),
-                             startingAt: params?.startDate,
-                             endingAt: params?.endDate,
-                             upToDistance: params?.maxMilesAway ?? Int.max) {
+                             startingAt: params.startDate,
+                             endingAt: params.endDate,
+                             upToDistance: params.maxMilesAway) {
                                 (activities: [ActivityId], err: Error?) in
                                 
-                                // Cancel if we've made a new request #NoRaceConditions
-                                //if self.lastSearchParams != myParams { return }
+                                self.loadAlgoliaResults(activities: activities, from: params, err: err)
                                 
-                                // Handle errors
-                                if let error = err { print(error) }
-                                
-                                // Load new data
-                                self.loadData(for: [activities])
         }
     }
 }
