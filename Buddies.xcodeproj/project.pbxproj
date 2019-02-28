@@ -276,6 +276,14 @@
 			path = CreateActivity;
 			sourceTree = "<group>";
 		};
+		581BF80522288D7D007D3B4D /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				58EF8DA62208A2C600872770 /* DiscoverTableVCTests.swift */,
+			);
+			path = Discover;
+			sourceTree = "<group>";
+		};
 		582D0FA422035C21004F71E3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,7 +382,6 @@
 			isa = PBXGroup;
 			children = (
 				58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */,
-				58EF8DA62208A2C600872770 /* DiscoverTableVCTests.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -625,6 +632,7 @@
 		B6AC54B221F8DB8500B075B8 /* BuddiesTests */ = {
 			isa = PBXGroup;
 			children = (
+				581BF80522288D7D007D3B4D /* Discover */,
 				584C350A221BC17B000442B2 /* Activities */,
 				A95B958D2214FA2F00453AEA /* Models */,
 				A9203534220CCB2E00D115F2 /* Profile */,
