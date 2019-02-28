@@ -62,9 +62,10 @@ class ActivityTableVCTests: XCTestCase {
         
         // Create the instance to test
         instance = DataAccessor(usersCollection: usersCollection,
+                                accountCollection: usersCollection,
                                 activitiesCollection: activitiesCollection)
         
-        thisUser = User.from(snap: MockDocumentSnapshot(data: meDoc.exposedData, docId: uid), with: instance)
+        thisUser = LoggedInUser.from(snap: MockDocumentSnapshot(data: meDoc.exposedData, docId: uid), with: instance)
         thisActivity = Activity.from(snap: MockDocumentSnapshot(data: activityDoc.exposedData, docId: activityId), with: instance)
         
     }

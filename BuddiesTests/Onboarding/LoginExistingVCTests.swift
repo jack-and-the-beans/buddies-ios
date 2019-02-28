@@ -104,30 +104,16 @@ class LoginExistingVCTests: XCTestCase {
     
     func testHandleOnLogIn_HasDoc() {
         let uid = MockExistingUser().uid
-        let doc = MockDocumentReference()
-        let ref = MockCollectionReference()
-        
-        ref.documents[uid] = doc
-        doc.exposedData["bio"] = "blah blah"
-        doc.exposedData["image_url"] = "my_image_url"
-        
         let app = MockAD(hasDoc: true)
         
-        vc.handleOnLogIn(uid: uid, app: app, users: ref)
+        vc.handleOnLogIn(uid: uid, app: app)
     }
     
     func testHandleOnLogIn_NoDoc() {
         let uid = MockExistingUser().uid
-        let doc = MockDocumentReference()
-        let ref = MockCollectionReference()
-        
-        ref.documents[uid] = doc
-        doc.exposedData["bio"] = "blah blah"
-        doc.exposedData["image_url"] = "my_image_url"
-        
         let app = MockAD(hasDoc: false)
         
-        vc.handleOnLogIn(uid: uid, app: app, users: ref)
+        vc.handleOnLogIn(uid: uid, app: app)
     }
     
     func testHandleOnLogIn_nilApp() {

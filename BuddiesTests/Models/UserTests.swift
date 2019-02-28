@@ -13,10 +13,10 @@ import FirebaseFirestore
 @testable import Buddies
 
 class UserTests: XCTestCase {
-    class TestDeli : UserInvalidationDelegate {
+    class TestDeli : LoggedInUserInvalidationDelegate {
         var invalidations = 0
         var triggers = 0
-        func onInvalidateUser(user: Buddies.User) {
+        func onInvalidateLoggedInUser(user: Buddies.LoggedInUser?) {
             invalidations += 1
         }
         
@@ -26,21 +26,29 @@ class UserTests: XCTestCase {
     }
     
     var deli: TestDeli!
-    var user: Buddies.User!
+    var user: Buddies.LoggedInUser!
+    var otherUser: Buddies.OtherUser!
     
     override func setUp() {
         deli = TestDeli()
         
-        user = Buddies.User.from(snap: MockDocumentSnapshot(data: [
+        user = Buddies.LoggedInUser.from(snap: MockDocumentSnapshot(data: [
             "image_url" : "image_url",
             "name" : "Test User",
             "bio" : "This is my bio\nDo you like it?",
             "email" : "fake@example.com",
             "date_joined" : Timestamp(date: Date())
         ], docId: "my_uid"), with: deli)
+        
+        otherUser = Buddies.OtherUser.from(snap: MockDocumentSnapshot(data: [
+            "image_url" : "image_url",
+            "name" : "Test User",
+            "bio" : "This is my bio",
+            "date_joined" : Timestamp(date: Date())
+        ], docId: "their_uid"))
     }
     
-    func testMutations() {
+    func testLoggdInUserMutations() {
         user.imageUrl = "blah.com"
         user.name = "jared"
         user.bio = "This is my bio\nDo you like it?" //The same as before, expected to recall
@@ -58,28 +66,18 @@ class UserTests: XCTestCase {
         XCTAssert(deli.invalidations == 10, "one per line here. no de-dup expected")
     }
     
-    func testInit(){
-        let u = Buddies.User(delegate: deli,
-                                      imageUrl: "testURL",
-                                      isAdmin: false,
-                                      uid: "testUID",
-                                      name: "name",
-                                      bio: "bio",
-                                      email: "testEmail",
-                                      facebookId: nil,
-                                      favoriteTopics: [],
-                                      blockedUsers: [],
-                                      blockedBy: [],
-                                      blockedActivities: [],
-                                      dateJoined: Timestamp(date: Date()),
-                                      location: nil,
-                                      shouldSendJoinedActivityNotification: false,
-                                      shouldSendActivitySuggestionNotification: false,
-                                      notificationToken: nil,
-                                      chatReadAt: [:])
-        XCTAssert(u.imageUrl == "testURL")
-        XCTAssert(u.isAdmin == false)
-        XCTAssert(u.uid == "testUID")
-        XCTAssert(u.email == "testEmail")
+    func testLoggedInUserInit(){
+        XCTAssert(user.imageUrl == "image_url")
+        XCTAssert(user.isAdmin == false)
+        XCTAssert(user.uid == "my_uid")
+        XCTAssert(user.email == "fake@example.com")
+        XCTAssert(user.name == "Test User")
+    }
+    
+    func testOtherUserInit(){
+        XCTAssert(otherUser.imageUrl == "image_url")
+        XCTAssert(otherUser.name == "Test User")
+        XCTAssert(otherUser.uid == "their_uid")
+        XCTAssert(otherUser.bio == "This is my bio")
     }
 }

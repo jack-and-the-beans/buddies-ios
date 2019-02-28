@@ -25,7 +25,6 @@ class TopicActivityTableVCTests: XCTestCase {
         
         vc = BuddiesStoryboard.Topics.viewController(withID: "topicActivitiesTable")
         vc.topic = topic
-        vc.userId = "fakeUserId"
         
         UIApplication.setRootView(vc, animated: false)
         
