@@ -59,17 +59,19 @@ class TopicActivityTableVC : ActivityTableVC {
         return [topic.id]
     }
     
-    override func fetchAndLoadActivities(for params: SearchParams) {
+    override func fetchAndLoadActivities(for params: SearchParams? = nil) {
         super.fetchAndLoadActivities(for: params)
-        api.searchActivities(withText: params.filterText,
+        guard let searchParams = params else { return }
+        
+        api.searchActivities(withText: params!.filterText,
                              matchingAnyTopicOf: getTopics(),
-                             startingAt: params.startDate,
-                             endingAt: params.endDate,
+                             startingAt: searchParams.startDate,
+                             endingAt: searchParams.endDate,
                              atLocation: user?.locationCoords,
-                             upToDistance: params.maxMetersAway) {
+                             upToDistance: searchParams.maxMetersAway) {
                                 (activities: [ActivityId], err: Error?) in
                                 
-                                self.loadAlgoliaResults(activities: activities, from: params, err: err)
+                                self.loadAlgoliaResults(activities: activities, from: searchParams, err: err)
                                 
         }
     }
