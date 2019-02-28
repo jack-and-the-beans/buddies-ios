@@ -15,6 +15,7 @@ enum BuddiesStoryboard : String {
     case CreateActivity = "CreateActivity"
     case LaunchScreen = "LaunchScreen"
     case Profile = "Profile"
+    case Discover = "Discover"
         
     var instance: UIStoryboard {
         return UIStoryboard(name: self.rawValue, bundle: Bundle.main)

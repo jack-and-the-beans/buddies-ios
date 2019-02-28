@@ -29,6 +29,7 @@
 		5868DEE2221DEEAE008B86FE /* AlgoliaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */; };
 		5868DEE3221DEEC3008B86FE /* AlgoliaMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D990221748F100CDD081 /* AlgoliaMock.swift */; };
 		5868DEE7221F0564008B86FE /* TopicTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5868DEE6221F0564008B86FE /* TopicTabVC.swift */; };
+		58705ECB22285CB700EFE9F2 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58705ECA22285CB700EFE9F2 /* Discover.storyboard */; };
 		589AD64122092F950090A96C /* FirebaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589AD64022092F950090A96C /* FirebaseMock.swift */; };
 		589AD644220948270090A96C /* UtilitiesMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589AD643220948270090A96C /* UtilitiesMock.swift */; };
 		58A5A404220258E000E0BF38 /* bean.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58A5A403220258E000E0BF38 /* bean.jpg */; };
@@ -147,6 +148,7 @@
 		583FD2DD220244F8005B2C75 /* TopicModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicModelTests.swift; sourceTree = "<group>"; };
 		584C350B221BC192000442B2 /* ActivityTableVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableVCTests.swift; sourceTree = "<group>"; };
 		5868DEE6221F0564008B86FE /* TopicTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicTabVC.swift; sourceTree = "<group>"; };
+		58705ECA22285CB700EFE9F2 /* Discover.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		589AD64022092F950090A96C /* FirebaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMock.swift; sourceTree = "<group>"; };
 		589AD643220948270090A96C /* UtilitiesMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilitiesMock.swift; sourceTree = "<group>"; };
 		58A5A403220258E000E0BF38 /* bean.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bean.jpg; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 				58EF8DBD2208BE5E00872770 /* Topics.storyboard */,
 				45FED0AC220A5F0300B90C3B /* Profile.storyboard */,
 				58A915B8220E2A5F008C325F /* PickTopics.storyboard */,
+				58705ECA22285CB700EFE9F2 /* Discover.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -749,6 +752,7 @@
 				B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */,
 				58A5A40522025B6400E0BF38 /* bean.jpg in Resources */,
 				A809B9DE221F598C0071067B /* Keys.plist in Resources */,
+				58705ECB22285CB700EFE9F2 /* Discover.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

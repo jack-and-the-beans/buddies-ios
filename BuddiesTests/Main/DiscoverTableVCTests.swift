@@ -13,7 +13,7 @@ class DiscoverTableVCTests: XCTestCase {
     var vc: DiscoverTableVC!
     
     override func setUp() {
-        vc = BuddiesStoryboard.Main.viewController(withID: "explore")
+        vc = BuddiesStoryboard.Discover.viewController(withID: "viewDiscover")
         UIApplication.setRootView(vc, animated: false)
         _ = vc.view // Make sure view is loaded
     }
