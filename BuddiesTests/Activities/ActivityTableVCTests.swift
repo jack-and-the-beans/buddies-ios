@@ -355,5 +355,72 @@ class ActivityTableVCTests: XCTestCase {
         XCTAssert(mockVC.loadActivityCallIds == data.flatMap() { $0 }, "loadUser called for all IDs")
         
     }
+    
+    
+    func testLoadAlgoliaResults(){
+        let mockVC = MockActivityTableVC()
+        
+        let searchParams: SearchParams = (nil, Date(), Date(), 0)
+        mockVC.lastSearchParam = searchParams
+        
+        let activities = ["id1", "id2"]
+        
+        mockVC.loadAlgoliaResults(activities: activities, from: searchParams, err: nil)
+        
+        XCTAssert(mockVC.loadActivityCallIds == activities, "Load ids returned from Algolia")
+    }
+    
+    func testLoadAlgoliaResultsNoNewParams(){
+        let mockVC = MockActivityTableVC()
+        let vcSearchParams: SearchParams = ("last params", Date(), Date(), 0)
+        mockVC.lastSearchParam = vcSearchParams
+        
+        let searchParams: SearchParams = (nil, Date(), Date(), 0)
+        
+        let activities = ["id1", "id2"]
+        
+        mockVC.loadAlgoliaResults(activities: activities, from: searchParams, err: nil)
+        
+        XCTAssert(mockVC.loadActivityCallIds == [], "No data should be loaded from outdated Algolia query")
+    }
+
+    
+    func testParamsChanged_NoLastParamSet(){
+        activityTableVC.lastSearchParam = nil
+        
+        let params: SearchParams = (nil, Date(), Date(), 0)
+        let nilToParams = activityTableVC.searchParamsChanged(from: params)
+        
+        XCTAssert(nilToParams, "Params changed when no previous params existed")
+    }
+    
+    func testParamsChanged_DiffParams(){
+        
+        let params1: SearchParams = (nil, Date(), Date(), 0)
+        let params2: SearchParams = (nil, Date(), Date(), 1)
+        
+        activityTableVC.lastSearchParam = params1
+        
+        let diffParams = activityTableVC.searchParamsChanged(from: params2)
+        
+        XCTAssert(diffParams, "Params changed when previous param was different")
+    }
+    
+    func testParamsChanged_SameParam(){
+        
+        let params1: SearchParams = (nil, Date(), Date(), 0)
+        
+        let params2: SearchParams = (nil, Date(), Date(), 0)
+        
+        activityTableVC.lastSearchParam = params1
+        
+        let sameParamChanged = activityTableVC.searchParamsChanged(from: params1)
+        
+        XCTAssert(!sameParamChanged, "Params have not changed when previous param are same")
+        
+        let sameParamDiffTuplesChanged = activityTableVC.searchParamsChanged(from: params2)
+        
+        XCTAssert(!sameParamDiffTuplesChanged, "When params have not changed, but stored in new tuple")
+    }
 
 }
