@@ -33,24 +33,18 @@ class ProfileVC: UIViewController {
         profilePic.clipsToBounds = true
     }
     
-    func loadProfileData(uid: String = Auth.auth().currentUser!.uid,
-                        storageManger: StorageManager = StorageManager.shared,
-                        dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
-        var lastImageUrl: String? = nil
-        
-        return dataAccess.useUser(id: uid) { user in
+    func loadProfileData(storageManger: StorageManager = StorageManager.shared,
+                          dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
+        return dataAccess.useLoggedInUser { user in
             guard let user = user else { return }
+            
             self.bioLabel.text = user.bio
             self.nameLabel.text = user.name
             
             // If something else changes, don't reload the image.
-            if user.imageUrl != lastImageUrl {
-                storageManger.getImage(imageUrl: user.imageUrl, localFileName: uid) {
-                    image in self.onImageLoaded(image: image)
-                }
+            if let image = user.image {
+                self.onImageLoaded(image: image)
             }
-            
-            lastImageUrl = user.imageUrl
         }
     }
     

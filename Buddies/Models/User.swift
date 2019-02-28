@@ -11,22 +11,76 @@ import Firebase
 
 typealias UserId = String
 
-protocol UserInvalidationDelegate {
-    func onInvalidateUser(user: User)
+protocol LoggedInUserInvalidationDelegate {
+    func onInvalidateLoggedInUser(user: LoggedInUser?)
     func triggerServerUpdate(userId: UserId, key: String, value: Any?)
 }
 
-class User {
-    let delegate: UserInvalidationDelegate?
+protocol User {
+    var uid: UserId { get }
+    var image: UIImage? { get set }
+    var imageUrl: String { get }
+    var dateJoined: Date { get }
+    var name: String { get }
+    var bio: String { get }
+    var favoriteTopics: [String] { get }
+}
+
+class OtherUser : User {
+    let uid: UserId
+    var image: UIImage?
+    let imageUrl: String
+    let dateJoined: Date
+    let name: String
+    let bio: String
+    let favoriteTopics: [String]
     
-    var image : UIImage?
+    init(uid: UserId,
+         imageUrl: String,
+         dateJoined: Date,
+         name: String,
+         bio: String,
+         favoriteTopics: [String]) {
+        self.uid = uid
+        self.imageUrl = imageUrl
+        self.dateJoined = dateJoined
+        self.name = name
+        self.bio = bio
+        self.favoriteTopics = favoriteTopics
+    }
+    
+    static func from(snap: DocumentSnapshot) -> OtherUser? {
+        guard let data = snap.data(),
+            let imageUrl = data["image_url"] as? String,
+            let name = data["name"] as? String,
+            let bio = data["bio"] as? String,
+            let dateJoined = data["date_joined"] as? Timestamp
+            else { return nil }
+        
+        let uid = snap.documentID
+        let favoriteTopics = data["favorite_topics"] as? [String] ?? []
+        
+        return OtherUser(uid: uid,
+                         imageUrl: imageUrl,
+                         dateJoined: dateJoined.dateValue(),
+                         name: name,
+                         bio: bio,
+                         favoriteTopics: favoriteTopics)
+    }
+}
+
+class LoggedInUser : User {
+    
+    let delegate: LoggedInUserInvalidationDelegate?
+    
+    var image : UIImage? { didSet { delegate?.onInvalidateLoggedInUser(user: self) } }
 
     // MARK: Immutable Properties
     let uid : UserId
     let email : String?
     let isAdmin : Bool
     let facebookId : String?
-    let dateJoined : Timestamp
+    let dateJoined : Date
     let notificationToken : String?
     
     // MARK: Mutable Properties
@@ -59,11 +113,11 @@ class User {
     var chatReadAt: [ ActivityId: Timestamp ] { didSet { onChange("chat_read_at", chatReadAt) } }
     
     private func onChange(_ key: String, _ value: Any?) {
-        delegate?.onInvalidateUser(user: self)
+        delegate?.onInvalidateLoggedInUser(user: self)
         delegate?.triggerServerUpdate(userId: uid, key: key, value: value)
     }
     
-    init(delegate: UserInvalidationDelegate?,
+    init(delegate: LoggedInUserInvalidationDelegate?,
          imageUrl: String,
          isAdmin: Bool,
          uid: String,
@@ -74,7 +128,7 @@ class User {
          blockedUsers: [UserId],
          blockedBy: [UserId],
          blockedActivities: [ActivityId],
-         dateJoined: Timestamp,
+         dateJoined: Date,
          location: GeoPoint?,
          shouldSendJoinedActivityNotification: Bool,
          shouldSendActivitySuggestionNotification: Bool,
@@ -99,6 +153,8 @@ class User {
         self.notificationToken = notificationToken
         self.chatReadAt = chatReadAt
     }
+    
+    // For testing... (ew)
     init(name: String) {
         self.delegate = nil
         self.imageUrl = ""
@@ -112,15 +168,15 @@ class User {
         self.blockedUsers = []
         self.blockedBy = []
         self.blockedActivities = []
-        self.dateJoined = Timestamp()
+        self.dateJoined = Date()
         self.location = nil
         self.shouldSendJoinedActivityNotification = false
         self.shouldSendActivitySuggestionNotification = false
         self.notificationToken = name
-        self.chatReadAt = ["no": Timestamp()]
-
+        self.chatReadAt = ["no":Timestamp()]
     }
-    static func from(snap: DocumentSnapshot, with delegate: UserInvalidationDelegate?) -> User? {
+    
+    static func from(snap: DocumentSnapshot, with delegate: LoggedInUserInvalidationDelegate?) -> LoggedInUser? {
         guard let data = snap.data(),
               let imageUrl = data["image_url"] as? String,
               let name = data["name"] as? String,
@@ -143,7 +199,7 @@ class User {
         let shouldSendActivitySuggestionNotification =
             data["should_send_activity_suggestion_notification"] as? Bool ?? true
         
-        return User(delegate: delegate,
+        return LoggedInUser(delegate: delegate,
                     imageUrl: imageUrl,
                     isAdmin: isAdmin,
                     uid: uid,
@@ -155,7 +211,7 @@ class User {
                     blockedUsers: blockedUsers,
                     blockedBy: blockedBy,
                     blockedActivities: blockedActivities,
-                    dateJoined: dateJoined,
+                    dateJoined: dateJoined.dateValue(),
                     location: data["location"] as? GeoPoint,
                     shouldSendJoinedActivityNotification: shouldSendJoinedActivityNotification,
                     shouldSendActivitySuggestionNotification: shouldSendActivitySuggestionNotification,

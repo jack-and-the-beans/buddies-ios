@@ -180,7 +180,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     }
     
     func fillDataModel(user: UserInfo? = Auth.auth().currentUser,
-                       collection: CollectionReference = Firestore.firestore().collection("users")){
+                       collection: CollectionReference = Firestore.firestore().collection("accounts")){
         
         if let UID = user?.uid {
             let favTopics: [String] = []
@@ -218,7 +218,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     func saveProfilePicURLToFirestore(
         url: String,
         user: UserInfo? = Auth.auth().currentUser,
-        collection: CollectionReference = Firestore.firestore().collection("users")){
+        collection: CollectionReference = Firestore.firestore().collection("accounts")){
         
         if let UID = user?.uid {
             collection.document(UID).setData([
@@ -234,7 +234,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     func saveBioToFirestore(
         bio: String,
         user: UserInfo? = Auth.auth().currentUser,
-        collection: CollectionReference = Firestore.firestore().collection("users")){
+        collection: CollectionReference = Firestore.firestore().collection("accounts")){
      
         if let UID = user?.uid
         {

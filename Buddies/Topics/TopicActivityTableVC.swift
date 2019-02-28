@@ -13,8 +13,7 @@ class TopicActivityTableVC : ActivityTableVC {
     @IBOutlet weak var searchBar: FilterSearchBar!
     
     var topic: Topic!
-    var userId: UserId!
-    var user: User? = nil
+    var user: LoggedInUser?
     var cancelUserListener: Canceler?
     
     @IBOutlet weak var favoriteButton: ToggleButton!
@@ -34,7 +33,7 @@ class TopicActivityTableVC : ActivityTableVC {
         
         self.title = topic.name
         
-        cancelUserListener = DataAccessor.instance.useUser(id: userId) { user in
+        cancelUserListener = DataAccessor.instance.useLoggedInUser { user in
             self.user = user
             if let user = user {
                 self.favoriteButton.isSelected = user.favoriteTopics.contains(self.topic.id)

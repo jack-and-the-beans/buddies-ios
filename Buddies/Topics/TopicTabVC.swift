@@ -12,7 +12,7 @@ import FirebaseAuth
 class TopicTabVC: TopicsVC {
     
     var stopListeningToUser: Canceler?
-    var user: User?
+    var user: LoggedInUser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +33,6 @@ class TopicTabVC: TopicsVC {
             let indexPath = collectionView.indexPathsForSelectedItems {
             let topic = topicCollection.topics[indexPath[0].row]
             dest.topic = topic
-            dest.userId = user?.uid
         }
     }
     
@@ -46,8 +45,9 @@ class TopicTabVC: TopicsVC {
     func loadProfileData(uid: String = Auth.auth().currentUser!.uid,
                          dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
         
-        return dataAccess.useUser(id: uid) { user in
+        return dataAccess.useLoggedInUser { user in
             self.user = user
+            
             if let user = user {
                 self.selectedTopics = (self.topicCollection.topics).filter { user.favoriteTopics.contains($0.id) }
             } else {

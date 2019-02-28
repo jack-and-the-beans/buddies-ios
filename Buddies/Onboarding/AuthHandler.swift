@@ -30,7 +30,7 @@ class AuthHandler {
     func saveFacebookAccessTokenToFirestore(
         facebookAccessToken: String,
         user: UserInfo? = Auth.auth().currentUser,
-        collection: CollectionReference = Firestore.firestore().collection("users")){
+        collection: CollectionReference = Firestore.firestore().collection("accounts")){
         
         if let UID = user?.uid
         {
