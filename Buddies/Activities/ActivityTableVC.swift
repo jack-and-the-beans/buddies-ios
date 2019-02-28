@@ -25,7 +25,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     //Should only be changed by unit tests
     var api = AlgoliaSearch()
     
-    var lastSearchParam: SearchParams!
+    var lastSearchParam: SearchParams! = (nil, Date(), Date(), 0)
     
     var fab: FAB!
 
