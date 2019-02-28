@@ -65,7 +65,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate, Messaging
     func saveTokenToFirestore(
         fcmToken: String,
         user: UserInfo? = Auth.auth().currentUser,
-        collection: CollectionReference = Firestore.firestore().collection("users")) {
+        collection: CollectionReference = Firestore.firestore().collection("accounts")) {
         
         guard let uid = user?.uid else { return }
 

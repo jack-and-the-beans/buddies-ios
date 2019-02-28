@@ -48,8 +48,8 @@ class NotificationServiceTest: XCTestCase {
     
     class TokenTester: NotificationService {
         var token: String? = nil
-        override func saveTokenToFirestore(fcmToken: String, user: UserInfo? = Auth.auth().currentUser,
-            collection: CollectionReference = Firestore.firestore().collection("users")) {
+        override func saveTokenToFirestore(fcmToken: String, user: UserInfo? = nil,
+            collection: CollectionReference = MockCollectionReference()) {
             self.token = fcmToken
         }
     }

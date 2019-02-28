@@ -54,8 +54,7 @@ class LoginExistingVC: LoginBase {
     }
     
     func handleOnLogIn(uid: String,
-                       app: AppDelegate? = UIApplication.shared.delegate as? AppDelegate,
-                       users: CollectionReference = Firestore.firestore().collection("users")) {
+                       app: AppDelegate? = UIApplication.shared.delegate as? AppDelegate) {
         guard let app = app else {
             print("no app given :(")
             return

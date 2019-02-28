@@ -18,30 +18,68 @@ class Listener<T> {
     }
 }
 
+typealias RegisterAuthStateListener = (@escaping AuthStateDidChangeListenerBlock)->AuthStateDidChangeListenerHandle
+
 // !----------------------------------------------!
 // ! See example usage in Profile/ProfileVC.swift !
 // !----------------------------------------------!
-class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
+class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDelegate {
     static let instance = DataAccessor(
         usersCollection: Firestore.firestore().collection("users"),
+        accountCollection: Firestore.firestore().collection("accounts"),
         activitiesCollection: Firestore.firestore().collection("activities"))
     
     let usersCollection: CollectionReference
+    let accountCollection: CollectionReference
     let activitiesCollection: CollectionReference
     
-    init(usersCollection: CollectionReference, activitiesCollection: CollectionReference) {
+    var cancelAuthStateListener: Canceler?
+    let storageManager: StorageManager
+    
+    init(usersCollection: CollectionReference,
+         accountCollection: CollectionReference,
+         activitiesCollection: CollectionReference,
+         storageManager: StorageManager = StorageManager.shared,
+         addChangeListener: RegisterAuthStateListener = Auth.auth().addStateDidChangeListener,
+         removeChangeListener: @escaping (AuthStateDidChangeListenerHandle) -> Void = Auth.auth().removeStateDidChangeListener) {
         self.usersCollection = usersCollection
+        self.accountCollection = accountCollection
         self.activitiesCollection = activitiesCollection
+        self.storageManager = storageManager
+        
+        // Register to interally listen to the logged in user.
+        initLoggedInUserListener(addChangeListener, removeChangeListener)
     }
     
+    func initLoggedInUserListener(_ addChangeListener: RegisterAuthStateListener, _ removeChangeListener: @escaping (AuthStateDidChangeListenerHandle) -> Void) {
+        var lastCanceler: Canceler?
+
+        let handle = addChangeListener { _, user in
+            lastCanceler?()
+            self._loggedInUserRegistration?.remove()
+            self._cachedLoggedInUser = nil
+            self._loggedInUID = user?.uid
+            lastCanceler = self.useLoggedInUser { self._cachedLoggedInUser = $0 }
+        }
+        
+        self.cancelAuthStateListener = {
+            removeChangeListener(handle)
+        }
+    }
+    
+    var _loggedInUserListeners: [Listener<LoggedInUser>] = []
     var _userListeners: [UserId : [Listener<User>]] = [:]
     var _activityListeners: [ActivityId : [Listener<Activity>]] = [:]
     
+    var _loggedInUserRegistration: ListenerRegistration?
     var _userRegistration: [UserId : ListenerRegistration] = [:]
     var _activityRegistration: [ActivityId : ListenerRegistration] = [:]
     
-    let _userCache = NSCache<AnyObject/*UserId*/, User>()
+    let _userCache = NSCache<AnyObject/*UserId*/, OtherUser>()
     let _activityCache = NSCache<AnyObject/*ActivityId*/, Activity>()
+    
+    var _loggedInUID: String?
+    var _cachedLoggedInUser: LoggedInUser?
     
     // To deduplicate requests!
     var _usersLoading: [UserId] = []
@@ -50,10 +88,63 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
     deinit {
         _userRegistration.values.forEach { $0.remove() }
         _activityRegistration.values.forEach { $0.remove() }
+        _loggedInUserRegistration?.remove()
+        
+        self.cancelAuthStateListener?()
     }
     
     func isUserCached(id: UserId) -> Bool {
+        if id == _loggedInUID {
+            return _loggedInUID != nil
+        }
         return _userCache.object(forKey: id as AnyObject) != nil
+    }
+    
+    
+    func useLoggedInUser(fn: @escaping (LoggedInUser?) -> Void) -> Canceler {
+        let callback = Listener(fn: fn)
+        
+        // Insert it into the set of listeners
+        _loggedInUserListeners.append(callback)
+        
+        // Handle calling the callback
+        if let user = _cachedLoggedInUser {
+            callback.fn(user)
+        }
+        else if _loggedInUID == nil {
+            callback.fn(nil)
+        }
+        else {
+            self._loadLoggedInUser()
+        }
+        
+        // Return a cancel callback
+        return {
+            self._loggedInUserListeners = self._loggedInUserListeners.filter {$0 !== callback}
+        }
+    }
+    
+    func _loadLoggedInUser() {
+        guard let uid = self._loggedInUID else { return }
+        
+        _loggedInUserRegistration = usersCollection.document(uid).addSnapshotListener {
+            guard let snap = $0 else {
+                print($1!)
+                return
+            }
+            guard let user = LoggedInUser.from(snap: snap, with: self) else {
+                print("VERY BAD: invalid account ID=\"\(uid)\"")
+                return
+            }
+            
+            self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
+                user.image = img
+            }
+            
+            self._usersLoading.removeAll(where: { $0 == uid })
+            
+            self.onInvalidateLoggedInUser(user: user)
+        }
     }
     
     func useUsers(from userIds: [String], fn: @escaping ([User]) -> Void) -> Canceler {
@@ -69,8 +160,13 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
         } }
         return { for c in cancelers { c() } }
     }
-
+    
     func useUser(id: UserId, fn: @escaping (User?) -> Void) -> Canceler {
+        // If this is for the logged in user, translate.
+        if id == _loggedInUID {
+            return useLoggedInUser(fn: fn)
+        }
+        
         // Wrap the callback for comparison later
         let callback = Listener(fn: fn)
         
@@ -107,7 +203,7 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
         }
     }
     
-    func _loadUser(id: UserId, storageManager: StorageManager = StorageManager.shared) {
+    func _loadUser(id: UserId) {
         if let oldReg = _userRegistration[id] {
             oldReg.remove()
         }
@@ -118,12 +214,12 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
                 return
             }
             
-            guard let user = User.from(snap: snap, with: self) else {
+            guard let user = OtherUser.from(snap: snap) else {
                 print("invalid user :( \(id)")
                 return
             }
             
-            storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
+            self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
                 user.image = img
                 self.onInvalidateUser(user: user)
             }
@@ -191,11 +287,16 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
     }
     
     
-    // MARK: UserInvalidationDelegate
-    func onInvalidateUser(user: User) {
+    func onInvalidateUser(user: OtherUser) {
         _userCache.setObject(user, forKey: user.uid as AnyObject)
         
         _userListeners[user.uid]?.forEach { $0.fn(user) }
+    }
+    
+    // MARK: LoggedInUserInvalidationDelegate
+    func onInvalidateLoggedInUser(user: LoggedInUser?) {
+        _cachedLoggedInUser = user
+        _loggedInUserListeners.forEach { $0.fn(user) }
     }
     
     func triggerServerUpdate(userId: UserId, key: String, value: Any?) {

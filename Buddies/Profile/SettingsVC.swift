@@ -14,7 +14,7 @@ class SettingsVC: UITableViewController {
     @IBOutlet weak var topicNotificationToggle: UISwitch!
 
     var stopListeningToUser: Canceler?
-    var userRef: User?
+    var userRef: LoggedInUser?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ class SettingsVC: UITableViewController {
                     dataAccess: DataAccessor = DataAccessor.instance) {
         var isFirstRender = true
         
-        self.stopListeningToUser = dataAccess.useUser(id: uid) { user in
+        self.stopListeningToUser = dataAccess.useLoggedInUser { user in
             guard let user = user else { return }
             self.joinedActivityNotificationToggle.setOn(
                 user.shouldSendJoinedActivityNotification,
@@ -73,9 +73,7 @@ class SettingsVC: UITableViewController {
         }
     }
     
-    func usedFacebook(
-        user: UserInfo? = Auth.auth().currentUser,
-        collection: CollectionReference = Firestore.firestore().collection("users")) -> Bool{
+    func usedFacebook(user: UserInfo? = Auth.auth().currentUser) -> Bool{
         
         if let providerData = Auth.auth().currentUser?.providerData {
             for userInfo in providerData {

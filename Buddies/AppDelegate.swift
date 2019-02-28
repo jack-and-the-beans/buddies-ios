@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func getHasUserDoc(callback: @escaping (Bool) -> Void,
                      uid: String? = Auth.auth().currentUser?.uid,
                      dataAccess: DataAccessor? = DataAccessor.instance,
-                     src: CollectionReference = Firestore.firestore().collection("users")) {
+                     src: CollectionReference = Firestore.firestore().collection("accounts")) {
         // If we're not logged in, there is no doc
         guard let uid = uid else {
             callback(false)
@@ -64,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Otherwise reload it and make sure it parses correctly
         src.document(uid).getDocument { (snap, err) in
-            if let snap = snap, let _ = User.from(snap: snap, with: nil) {
+            if let snap = snap, let _ = OtherUser.from(snap: snap) {
                 callback(true)
             }
             else {
