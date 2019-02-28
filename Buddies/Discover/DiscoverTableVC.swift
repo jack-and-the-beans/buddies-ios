@@ -42,24 +42,26 @@ class DiscoverTableVC : ActivityTableVC {
         return user?.favoriteTopics ?? []
     }
     
-    override func fetchAndLoadActivities(for params: SearchParams) {
+    override func fetchAndLoadActivities(for params: SearchParams? = nil) {
         super.fetchAndLoadActivities(for: params)
+        guard let searchParams = params else { return }
+        
         //Sort into `geoPrecisionGroups` number of groups
         //  i.e. for search range of 1000 meters and 4 groups,
         //   the group are [0, 250), [250, 500), [500, 750), [750, 1000+)
-        let geoPrecision = Int(Double(params.maxMetersAway)/geoPrecisionGroups)
+        let geoPrecision = Int(Double(searchParams.maxMetersAway)/geoPrecisionGroups)
         
-        api.searchActivities(withText: params.filterText,
+        api.searchActivities(withText: searchParams.filterText,
                              matchingAnyTopicOf: getTopics(),
-                             startingAt: params.startDate,
-                             endingAt: params.endDate,
+                             startingAt: searchParams.startDate,
+                             endingAt: searchParams.endDate,
                              atLocation: user?.locationCoords,
-                             upToDistance: params.maxMetersAway,
+                             upToDistance: searchParams.maxMetersAway,
                              aroundPrecision: geoPrecision,
                              sumOrFiltersScores: true) {
                                 (activities: [ActivityId], err: Error?) in
                                 
-                                self.loadAlgoliaResults(activities: activities, from: params, err: err)
+                                self.loadAlgoliaResults(activities: activities, from: searchParams, err: err)
                                 
         }
     }

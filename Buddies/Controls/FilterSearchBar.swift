@@ -15,7 +15,7 @@ typealias FilterMenuElements = (container: UIView, locationRangeSlider: RangeSee
 
 protocol FilterSearchBarDelegate {
     func endEditing()
-    func fetchAndLoadActivities(for params: SearchParams)
+    func fetchAndLoadActivities(for params: SearchParams?)
 }
 
 class FilterSearchBar : UISearchBar, UISearchBarDelegate {

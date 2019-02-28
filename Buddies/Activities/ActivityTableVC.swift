@@ -61,7 +61,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     }
     
     //MARK:- Manage queries and query changes
-    func fetchAndLoadActivities(for params: SearchParams){
+    func fetchAndLoadActivities(for params: SearchParams? = nil){
         lastSearchParam = params
         // Must call loadData() with activity ids in order to render anything
     }

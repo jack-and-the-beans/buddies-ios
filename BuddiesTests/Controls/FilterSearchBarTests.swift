@@ -13,7 +13,7 @@ import UIKit
 class TestFilterSearchBarDelegate : FilterSearchBarDelegate {
     var paramsReceived = [SearchParams?]()
     var onFetchAndLoad: (()->Void)?
-    func fetchAndLoadActivities(for params: SearchParams){
+    func fetchAndLoadActivities(for params: SearchParams? = nil){
         onFetchAndLoad?()
         paramsReceived.append(params)
     }
