@@ -73,8 +73,10 @@ class AlgoliaSearch {
               upToDistance: Int = 20000, // In meters, defaults to 20km
               aroundPrecision: Int? = nil, // In meters, default to Algolia default
               usingIndex: SearchIndex? = nil,
+              sumOrFiltersScores: Bool = true,
               settings: [String: Any]? = nil,
               requestOptions: RequestOptions? = nil,
+              
               completionHandler: @escaping ([String], Error?) -> Void) {
 
         // Initialize activity index if no index is given:
@@ -111,6 +113,8 @@ class AlgoliaSearch {
             query.filters = topics
         }
 
+        query.sumOrFiltersScores = sumOrFiltersScores
+        
         let _ = index.search(query, requestOptions: requestOptions, completionHandler: { (content, error) -> Void in
             if let err = error {
                 // Return the error:
@@ -130,7 +134,7 @@ class AlgoliaSearch {
     // match the filter as soon as one of the values in the
     // array match. (source: https://www.algolia.com/doc/api-reference/api-parameters/filters/#examples)
     private func getTopicFilterFrom(_ topicIds: [String]?, rank score: Int = 1) -> String? {
-        guard let topics = topicIds else { return nil }
+        guard let topics = topicIds, topics.count > 0 else { return nil }
         let withQueryKey = topics.map { "topic_ids:\($0)<score=\(score)>" }
         return "(\(withQueryKey.joined(separator: " OR ")))"
     }
