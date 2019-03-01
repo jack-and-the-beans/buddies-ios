@@ -166,6 +166,9 @@
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKW-B9-aQY">
                                             <rect key="frame" x="119" y="79.5" width="14" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="14" id="L5l-xK-deB"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -224,6 +227,7 @@
                                         <constraint firstItem="6nR-gN-5El" firstAttribute="top" secondItem="dQP-6N-2Y4" secondAttribute="bottom" constant="4" id="BHQ-IG-2Xl"/>
                                         <constraint firstItem="Qve-HN-jk6" firstAttribute="leading" secondItem="KuL-7h-pqY" secondAttribute="trailing" constant="8" id="Dyw-Gq-5o4"/>
                                         <constraint firstAttribute="trailing" secondItem="dQP-6N-2Y4" secondAttribute="trailing" id="EaI-HS-mBc"/>
+                                        <constraint firstItem="6nR-gN-5El" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rKW-B9-aQY" secondAttribute="trailing" constant="10" id="LCv-I1-5XI"/>
                                         <constraint firstItem="rgD-aX-zsY" firstAttribute="leading" secondItem="oCq-dl-qhy" secondAttribute="leading" constant="20" id="Vzy-el-aob"/>
                                         <constraint firstAttribute="bottom" secondItem="KuL-7h-pqY" secondAttribute="bottom" constant="10" id="WSM-By-bDp"/>
                                         <constraint firstItem="4qQ-bJ-6FM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rgD-aX-zsY" secondAttribute="trailing" constant="5" id="ZQf-UI-Fa6"/>
