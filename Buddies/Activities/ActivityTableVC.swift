@@ -149,8 +149,17 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         cell.locationLabel.text = activity.locationText
         let dateRange = DateInterval(start: activity.startTime.dateValue(),
                                      end: activity.endTime.dateValue())
+    
         
-        cell.dateLabel.text = dateRange.rangePhrase(relativeTo: Date()).capitalized
+        let pixelsPerChar: CGFloat = 10.0
+        
+        let charsFitInCell = Int(cell.frame.width/pixelsPerChar)
+        
+        let locStrLength = max(15, charsFitInCell - activity.title.count)
+        
+        let locStr = dateRange.rangePhrase(relativeTo: Date(), tryShorteningIfLongerThan: locStrLength)
+        
+        cell.dateLabel.text = locStr.capitalized
 
         let activityUserImages = activity.members.compactMap { users[$0]?.image }
         
