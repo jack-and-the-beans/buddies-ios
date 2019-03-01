@@ -171,6 +171,14 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         }
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let _ = getActivity(at: indexPath) {
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        } else {
+            return 0
+        }
+    }
+    
     func format(cell: ActivityCell, using activity: Activity, at indexPath: IndexPath) -> ActivityCell{
         
         cell.titleLabel.text = activity.title
