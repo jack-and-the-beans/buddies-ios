@@ -139,10 +139,10 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Week" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qQ-bJ-6FM">
-                                            <rect key="frame" x="222" y="11.5" width="119" height="14.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tmrw - Next Mon" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qQ-bJ-6FM">
+                                            <rect key="frame" x="236" y="11" width="105" height="15"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="119" id="5T5-CO-txg"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="GBr-z8-JPq"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -152,7 +152,6 @@
                                             <rect key="frame" x="20" y="31" width="321" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="h7S-nt-A9g"/>
-                                                <constraint firstAttribute="height" constant="40" id="paS-a8-G5q"/>
                                             </constraints>
                                             <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et massa eget augue malesuada ullamcorper. Duis suscipit lorem velit, et venenatis est vehicula id. Integer et venenatis dolor. Proin quam ante, posuere non viverra in, facilisis in tortor. </string>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -227,6 +226,7 @@
                                         <constraint firstAttribute="trailing" secondItem="dQP-6N-2Y4" secondAttribute="trailing" id="EaI-HS-mBc"/>
                                         <constraint firstItem="rgD-aX-zsY" firstAttribute="leading" secondItem="oCq-dl-qhy" secondAttribute="leading" constant="20" id="Vzy-el-aob"/>
                                         <constraint firstAttribute="bottom" secondItem="KuL-7h-pqY" secondAttribute="bottom" constant="10" id="WSM-By-bDp"/>
+                                        <constraint firstItem="4qQ-bJ-6FM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rgD-aX-zsY" secondAttribute="trailing" constant="5" id="ZQf-UI-Fa6"/>
                                         <constraint firstAttribute="bottom" secondItem="Qve-HN-jk6" secondAttribute="bottom" constant="10" id="bvN-Dm-9V4"/>
                                         <constraint firstItem="dQP-6N-2Y4" firstAttribute="top" secondItem="rgD-aX-zsY" secondAttribute="bottom" constant="5" id="cee-D2-djz"/>
                                         <constraint firstAttribute="trailing" secondItem="4qQ-bJ-6FM" secondAttribute="trailing" id="eE7-x7-DaG"/>

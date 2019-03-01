@@ -90,12 +90,22 @@ class DateIntervalTests: XCTestCase {
         let friThruSat = DateInterval(start: friday, end: friday + 1.days)
         
         XCTAssert(friThruSat.shortRangePhrase(relativeTo: wednesday)
-            == "Friday through Saturday")
+            == "Friday - Saturday")
         
         let monThruThurs = DateInterval(start: monday, end: monday.dateAt(.nextWeekday(.thursday)))
         
         XCTAssert(monThruThurs.shortRangePhrase(relativeTo: saturday)
-            == "Monday through Thursday")
+            == "Monday - Thursday")
+        
+        let friThruSatShort = DateInterval(start: friday, end: friday + 1.days)
+        
+        XCTAssert(friThruSatShort.shortRangePhrase(relativeTo: wednesday, dayFormat: .short)
+            == "Fri - Sat")
+        
+        let monThruThursShort = DateInterval(start: monday, end: monday.dateAt(.nextWeekday(.thursday)))
+        
+        XCTAssert(monThruThursShort.shortRangePhrase(relativeTo: saturday, dayFormat: .short)
+            == "Mon - Thu")
     }
     
     func testShortRangeString_toRelative(){
@@ -103,11 +113,14 @@ class DateIntervalTests: XCTestCase {
         - 10.days)
         
         XCTAssert(tenDaysAgo.shortRangePhrase(relativeTo: now) == "a week ago")
+        XCTAssert(tenDaysAgo.shortRangePhrase(relativeTo: now, dayFormat: .short) == "a week ago")
         
         let tenDaysAhead = DateInterval(start: now + 10.days, end: now
             + 20.days)
 
         XCTAssert(tenDaysAhead.shortRangePhrase(relativeTo: now) == "in a week")
+        XCTAssert(tenDaysAhead.shortRangePhrase(relativeTo: now, dayFormat: .short) == "in a week")
+
     }
     
     func testWeekRangeString_Past(){
@@ -171,6 +184,10 @@ class DateIntervalTests: XCTestCase {
         XCTAssert(lastDec.monthRangePhrase(relativeTo: monday) == "last December")
 
         XCTAssert(nextOct.monthRangePhrase(relativeTo: monday) == "next October")
+        
+        XCTAssert(lastDec.monthRangePhrase(relativeTo: monday, monthFormat: .short) == "last Dec")
+        
+        XCTAssert(nextOct.monthRangePhrase(relativeTo: monday, monthFormat: .short) == "next Oct")
     }
     
     func testMonthRangeString_toRelative(){
@@ -190,36 +207,70 @@ class DateIntervalTests: XCTestCase {
         }
     }
     
-    func testGeneralRangeString_Short(){
+    func testGeneralRangeString_ShortDate_LongStr(){
         let shortGap = DateInterval(start: monday, duration: 3.days.timeInterval)
-        XCTAssert(shortGap.rangePhrase(relativeTo: monday) == shortGap.shortRangePhrase(relativeTo: monday))
+        XCTAssert(shortGap.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: Int.max) == shortGap.shortRangePhrase(relativeTo: monday, dayFormat: .default))
     }
 
-    func testGeneralRangeString_Weeks(){
+    func testGeneralRangeString_Weeks_LongStr(){
         let oneWeek = DateInterval(start: monday, duration: 1.weeks.timeInterval)
-        XCTAssert(oneWeek.rangePhrase(relativeTo: monday) == oneWeek.shortRangePhrase(relativeTo: monday))
+
+        XCTAssert(oneWeek.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: Int.max) == oneWeek.shortRangePhrase(relativeTo: monday, dayFormat: .default))
         
         let threeWeek = DateInterval(start: monday, duration: 3.weeks.timeInterval)
-        XCTAssert(threeWeek.rangePhrase(relativeTo: monday) == threeWeek.weekRangePhrase(relativeTo: monday))
+        XCTAssert(threeWeek.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: Int.max) == threeWeek.weekRangePhrase(relativeTo: monday))
 
         let fourWeek = DateInterval(start: monday, duration: 4.weeks.timeInterval)
-        XCTAssert(fourWeek.rangePhrase(relativeTo: monday) == fourWeek.monthRangePhrase(relativeTo: monday))
+        XCTAssert(fourWeek.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: Int.max) == fourWeek.monthRangePhrase(relativeTo: monday, monthFormat: .default))
     }
 
-    func testGeneralRangeString_Months(){
+    func testGeneralRangeString_Months_LongStr(){
         
         let oneMonth = DateInterval(start: monday, duration: 1.months.timeInterval)
-        XCTAssert(oneMonth.rangePhrase(relativeTo: monday) == oneMonth.monthRangePhrase(relativeTo: monday))
+        XCTAssert(oneMonth.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: Int.max) == oneMonth.monthRangePhrase(relativeTo: monday, monthFormat: .default))
 
         let twoMonth = DateInterval(start: monday, duration: 2.months.timeInterval)
-        XCTAssert(twoMonth.rangePhrase(relativeTo: monday) == twoMonth.monthRangePhrase(relativeTo: monday))
+        XCTAssert(twoMonth.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: Int.max) == twoMonth.monthRangePhrase(relativeTo: monday, monthFormat: .default))
         
         let threeMonth = DateInterval(start: monday, duration: 3.months.timeInterval)
-        XCTAssert(threeMonth.rangePhrase(relativeTo: monday) == threeMonth.monthRangePhrase(relativeTo: monday))
+        XCTAssert(threeMonth.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: Int.max) == threeMonth.monthRangePhrase(relativeTo: monday, monthFormat: .default))
     }
-    func testGeneralRangeString_Years(){
+    func testGeneralRangeString_Years_LongStr(){
         let huge = DateInterval(start: monday, duration: 3.years.timeInterval)
-        XCTAssert(huge.rangePhrase(relativeTo: monday) == "today through \(huge.end.calendarString(relativeTo: monday))")
+        XCTAssert(huge.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: Int.max) == "today - \(huge.end.calendarString(relativeTo: monday, dayFormat: .default))")
+    }
+    
+    func testGeneralRangeString_ShortDate_ShortStr(){
+        let shortGap = DateInterval(start: monday, duration: 3.days.timeInterval)
+        XCTAssert(shortGap.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: 0) == shortGap.shortRangePhrase(relativeTo: monday, dayFormat: .short))
+    }
+    
+    func testGeneralRangeString_Weeks_ShortStr(){
+        let oneWeek = DateInterval(start: monday, duration: 1.weeks.timeInterval)
+        
+        XCTAssert(oneWeek.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: 0) == oneWeek.shortRangePhrase(relativeTo: monday, dayFormat: .short))
+        
+        let threeWeek = DateInterval(start: monday, duration: 3.weeks.timeInterval)
+        XCTAssert(threeWeek.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: 0) == threeWeek.weekRangePhrase(relativeTo: monday))
+        
+        let fourWeek = DateInterval(start: monday, duration: 4.weeks.timeInterval)
+        XCTAssert(fourWeek.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: 0) == fourWeek.monthRangePhrase(relativeTo: monday, monthFormat: .short))
+    }
+    
+    func testGeneralRangeString_Months_ShortStr(){
+        
+        let oneMonth = DateInterval(start: monday, duration: 1.months.timeInterval)
+        XCTAssert(oneMonth.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: 0) == oneMonth.monthRangePhrase(relativeTo: monday, monthFormat: .short))
+        
+        let twoMonth = DateInterval(start: monday, duration: 2.months.timeInterval)
+        XCTAssert(twoMonth.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: 0) == twoMonth.monthRangePhrase(relativeTo: monday, monthFormat: .short))
+        
+        let threeMonth = DateInterval(start: monday, duration: 3.months.timeInterval)
+        XCTAssert(threeMonth.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: 0) == threeMonth.monthRangePhrase(relativeTo: monday, monthFormat: .short))
+    }
+    func testGeneralRangeString_Years_ShortStr(){
+        let huge = DateInterval(start: monday, duration: 3.years.timeInterval)
+        XCTAssert(huge.rangePhrase(relativeTo: monday, tryShorteningIfLongerThan: 0) == "today - \(huge.end.calendarString(relativeTo: monday, dayFormat: .short))")
     }
 
 }
