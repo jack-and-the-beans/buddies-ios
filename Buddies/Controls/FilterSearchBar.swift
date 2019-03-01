@@ -33,8 +33,6 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
     var searchTimer: Timer?
     var filterMenu: FilterMenuElements?
 
-    var cachedActivityIds: [String] = []
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         
