@@ -105,7 +105,6 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Pick Topics" id="HAC-sO-DYs">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="TY4-1T-d5C">
-                            <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="goBack" destination="Z8X-gW-KBb" id="KoK-Fu-Sr2"/>
                                 <segue destination="IUw-Tu-rrw" kind="unwind" unwindAction="unwindCancelPickTopicsWithSender:" id="7Mp-MI-OIG"/>
