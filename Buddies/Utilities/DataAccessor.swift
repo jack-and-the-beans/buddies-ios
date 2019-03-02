@@ -57,26 +57,15 @@ class DataAccessor : UserInvalidationDelegate, ActivityInvalidationDelegate {
     }
     
     func useUsers(from userIds: [String], fn: @escaping ([User]) -> Void) -> Canceler {
-        let numUsersNeeded = userIds.count
         var users: [UserId: User] = [:]
-        let cb = {
-            var allUsers: [User] = []
-            for (_, user) in users {
-                allUsers.append(user)
-            }
-            // This avoids the case where we re-update the view again and again
-            // for each user ID in the initial array. We instead wait to update
-            // until all of the users have been initially populated, and then
-            // subsequently on any change to any user.
-            if (allUsers.count == numUsersNeeded) {
-                fn(allUsers)
-            }
-        }
-        let cancelers = userIds.map { useUser(id: $0) { user in
+        let cancelers = userIds.map { uid in useUser(id: uid) { user in
             if let user = user {
                 users[user.uid] = user
-                cb()
+            } else {
+                // Note: this fn only removes the key if it exists
+                users.removeValue(forKey: uid)
             }
+            fn(Array(users.values))
         } }
         return { for c in cancelers { c() } }
     }
