@@ -40,6 +40,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         //  the event handler!
         fab = FAB(for: self)
         fab.renderCreateActivityFab()
+        
+        tableView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellReuseIdentifier: "ActivityCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -161,7 +163,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "activityCell", for: indexPath) as! ActivityCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
     
         if let activity = getActivity(at: indexPath) {
             return format(cell: cell, using: activity, at: indexPath)
@@ -226,7 +228,12 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayIds[section].count
     }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? ActivityCell
+        self.performSegue(withIdentifier: "showActivityDetails", sender: cell)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let selectedIndex = self.tableView.indexPath(for: sender as! UITableViewCell)
         if let activityController = segue.destination as? ViewActivityController,

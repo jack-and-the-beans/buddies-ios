@@ -408,9 +408,11 @@ class ActivityTableVCTests: XCTestCase {
     
     func testParamsChanged_SameParam(){
         
-        let params1: SearchParams = (nil, Date(), Date(), 0)
+        let date = Date()
         
-        let params2: SearchParams = (nil, Date(), Date(), 0)
+        let params1: SearchParams = (nil, date, date, 0)
+        
+        let params2: SearchParams = (nil, date, date, 0)
         
         activityTableVC.lastSearchParam = params1
         
