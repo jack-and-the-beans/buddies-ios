@@ -92,7 +92,7 @@ class AlgoliaSearch {
         if let loc = atLocation {
             query.aroundLatLng = LatLng(lat: loc.0, lng: loc.1)
             query.aroundRadius = .explicit(UInt(upToDistance))
-            if aroundPrecision != nil { query.aroundPrecision = UInt(aroundPrecision!) }
+            if let aroundPrecision = aroundPrecision { query.aroundPrecision = UInt(aroundPrecision) }
         }
         
         // Get date filter if there are dates:
