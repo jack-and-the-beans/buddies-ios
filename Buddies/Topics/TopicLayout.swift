@@ -32,24 +32,21 @@ import UIKit
 
 class TopicLayout: UICollectionViewLayout {
 
-    let topicWidth = CGFloat(150);
-    let heightToWidthRatio = 1
+    let topicWidth: CGFloat = 150
+    let heightToWidthRatio: CGFloat = 1
     var cellPadding: CGFloat = 6
     
-    var topicElementWidth: CGFloat {
-        get {
-            return topicWidth + cellPadding;
-        }
+    func xOffsets(for cols: Int, ofSize width: CGFloat) -> [CGFloat] {
+        return (0 ..< cols).map { width * CGFloat($0) }
     }
     
-    var xOffset : [CGFloat] {
-        get {
-            var offsets = [CGFloat]()
-            for column in 0 ..< Int(numberOfColumns) {
-                offsets.append(CGFloat(column) * columnWidth)
-            }
-            return offsets
-        }
+    func yOffsets(for rows: Int, ofSize height: CGFloat) -> [CGFloat] {
+        return (0 ..< rows).map { height * CGFloat($0) }
+    }
+    
+    func cellHeight(relativeTo width: CGFloat, ratio: CGFloat = 1.0, padding: CGFloat = 0.0) -> CGFloat {
+        let photoHeight = width*CGFloat(ratio)
+        return padding * 2 + photoHeight
     }
     
     var columnWidth: CGFloat {
@@ -60,7 +57,7 @@ class TopicLayout: UICollectionViewLayout {
     
     var numberOfColumns: Int {
         get {
-            return Int(floor(contentWidth / topicElementWidth))
+            return Int(floor(contentWidth / (topicWidth + 2*cellPadding)))
         }
     }
 
@@ -74,8 +71,23 @@ class TopicLayout: UICollectionViewLayout {
         return newBounds.width != collectionView.bounds.width
     }
     
-    fileprivate var cache = [UICollectionViewLayoutAttributes]()
+    var cache = [UICollectionViewLayoutAttributes]()
+    
+    func cacheCell(at indexPath: IndexPath, frame: CGRect){
+        let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+        attributes.frame = frame
+        cache.append(attributes)
+    }
 
+    func frameFor(xOffset: CGFloat, yOffset: CGFloat, width: CGFloat, height: CGFloat, padding: CGFloat) -> CGRect {
+        let frame = CGRect(
+            x: xOffset, y: yOffset,
+            width: width, height: height
+        )
+        
+        return frame.insetBy(dx: padding, dy: padding)
+    }
+    
     //Content height and size
     var contentHeight: CGFloat = 0
 
@@ -90,54 +102,38 @@ class TopicLayout: UICollectionViewLayout {
     override var collectionViewContentSize: CGSize {
         return CGSize(width: contentWidth, height: contentHeight)
     }
+    
+    func getCoords(item: Int) -> (row: Int, col: Int){
+        return (item/numberOfColumns, item%numberOfColumns)
+    }
 
     override func prepare() {
         guard cache.isEmpty == true, let collectionView = collectionView else {
             return
         }
+        let height = cellHeight(relativeTo: topicWidth, ratio: heightToWidthRatio, padding: cellPadding)
+        
+        let (maxRow, _) = getCoords(item: collectionView.numberOfItems(inSection: 0))
 
-        var column = 0
-        var yOffset = [CGFloat](repeating: 0, count: Int(numberOfColumns))
+        let yOffset = yOffsets(for: Int(maxRow + 1), ofSize: height)
+        let xOffset = xOffsets(for: numberOfColumns, ofSize: columnWidth)
 
         // 3. Iterates through the list of items in the first section
         for item in 0 ..< collectionView.numberOfItems(inSection: 0) {
-          
+            let (row, col) = getCoords(item: item)
+            
+            let frame = frameFor(xOffset: xOffset[col], yOffset: yOffset[row], width: columnWidth, height: height, padding: cellPadding)
+            
             let indexPath = IndexPath(item: item, section: 0)
 
-            let photoHeight = topicWidth*CGFloat(heightToWidthRatio)
-            let height = cellPadding * 2 + photoHeight
-            
-            let frame = CGRect(
-                x: xOffset[column], y: yOffset[column],
-                width: columnWidth, height: height
-            )
-            
-            let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
+            cacheCell(at: indexPath, frame: frame)
 
-            // 5. Creates an UICollectionViewLayoutItem with the frame and add it to the cache
-            let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-            attributes.frame = insetFrame
-            cache.append(attributes)
-
-            // 6. Updates the collection view content height
             contentHeight = max(contentHeight, frame.maxY)
-            yOffset[column] = yOffset[column] + height
-
-            column = column < (Int(numberOfColumns) - 1) ? (column + 1) : 0
         }
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-
-        var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
-
-        // Loop through the cache and look for items in the rect
-        for attributes in cache {
-            if attributes.frame.intersects(rect) {
-                visibleLayoutAttributes.append(attributes)
-            }
-        }
-        return visibleLayoutAttributes
+        return cache.filter { $0.frame.intersects(rect) }
     }
 
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {

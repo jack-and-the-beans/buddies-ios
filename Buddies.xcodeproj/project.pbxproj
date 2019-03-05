@@ -32,6 +32,7 @@
 		588289F8222C2A02009FEFC8 /* ActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 588289F7222C2A02009FEFC8 /* ActivityCell.xib */; };
 		589AD64122092F950090A96C /* FirebaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589AD64022092F950090A96C /* FirebaseMock.swift */; };
 		589AD644220948270090A96C /* UtilitiesMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589AD643220948270090A96C /* UtilitiesMock.swift */; };
+		58A0032E222DEAA0002522C0 /* TopicLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A0032D222DEAA0002522C0 /* TopicLayoutTests.swift */; };
 		58A5A404220258E000E0BF38 /* bean.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58A5A403220258E000E0BF38 /* bean.jpg */; };
 		58A5A40522025B6400E0BF38 /* bean.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58A5A403220258E000E0BF38 /* bean.jpg */; };
 		58A5A40722025C2B00E0BF38 /* TopicCellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A5A40622025C2B00E0BF38 /* TopicCellTest.swift */; };
@@ -151,6 +152,7 @@
 		588289F7222C2A02009FEFC8 /* ActivityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityCell.xib; sourceTree = "<group>"; };
 		589AD64022092F950090A96C /* FirebaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMock.swift; sourceTree = "<group>"; };
 		589AD643220948270090A96C /* UtilitiesMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilitiesMock.swift; sourceTree = "<group>"; };
+		58A0032D222DEAA0002522C0 /* TopicLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicLayoutTests.swift; sourceTree = "<group>"; };
 		58A5A403220258E000E0BF38 /* bean.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bean.jpg; sourceTree = "<group>"; };
 		58A5A40622025C2B00E0BF38 /* TopicCellTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCellTest.swift; sourceTree = "<group>"; };
 		58A915B8220E2A5F008C325F /* PickTopics.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PickTopics.storyboard; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 				58EF8DAF2208A2E900872770 /* TopicModelTests.swift */,
 				58EF8DB12208A2E900872770 /* TopicCellTest.swift */,
 				A9C9852F221FB1E5003462AC /* TopicActivityTableVCTests.swift */,
+				58A0032D222DEAA0002522C0 /* TopicLayoutTests.swift */,
 			);
 			path = Topics;
 			sourceTree = "<group>";
@@ -934,6 +937,7 @@
 				A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */,
 				A95B958C2214B6A800453AEA /* DataAccessorTests.swift in Sources */,
 				58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */,
+				58A0032E222DEAA0002522C0 /* TopicLayoutTests.swift in Sources */,
 				450CC0F5220964F000282BAB /* SignUpInfoVCTests.swift in Sources */,
 				5868DEE2221DEEAE008B86FE /* AlgoliaTest.swift in Sources */,
 				5802266F220CC1210068E08E /* ToggleButtonTests.swift in Sources */,
