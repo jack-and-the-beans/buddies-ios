@@ -46,18 +46,17 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: "TopicCell",
-                for: indexPath
-            )
-            if let topicCell = cell as? TopicCell {
-                let topic = topicCollection.topics[indexPath.item]
-                topicCell.topic = topic
-                topicCell.toggleButton.isSelected = selectedTopics.contains { $0.id == topic.id }
-            }
-        
-            return cell
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "TopicCell",
+            for: indexPath
+        )
+        if let topicCell = cell as? TopicCell {
+            let topic = topicCollection.topics[indexPath.item]
+            topicCell.topic = topic
+            topicCell.toggleButton.isSelected = selectedTopics.contains { $0.id == topic.id }
         }
     
+        return cell
+    }
 }
 
