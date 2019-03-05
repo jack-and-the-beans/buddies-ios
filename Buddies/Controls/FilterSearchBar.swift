@@ -9,42 +9,37 @@
 import Foundation
 import UIKit
 
-typealias SearchParams = (filterText: String?, dateMin: Int, dateMax: Int, maxMilesAway: CGFloat)
+typealias SearchParams = (filterText: String?, startDate: Date, endDate: Date, maxMetersAway: Int)
+typealias FilterState = (filterText: String?, dateMin: Int, dateMax: Int, maxMilesAway: CGFloat)
 typealias FilterMenuElements = (container: UIView, locationRangeSlider: RangeSeekSlider, dateSlider: RangeSeekSlider)
 
 protocol FilterSearchBarDelegate {
     func endEditing()
-    func display(activities: [ActivityId])
-    func getTopics() -> [String]
+    func fetchAndLoadActivities(for params: SearchParams?)
 }
 
 class FilterSearchBar : UISearchBar, UISearchBarDelegate {
     private static let metersPerMile: CGFloat = 1609.344
-
-    var api: AlgoliaSearch //Should only be changed by unit tests
+    
     var displayDelegate: FilterSearchBarDelegate?
     
     // This just uses default values for now
     //  these probably need to be stored in
     //  firestore for BUD-41 🤔
-    var lastSearchParams: SearchParams = ("", 1, 6, 200)
+    var lastFilterState: FilterState = ("", 1, 6, 200)
     var nextLocationRange: CGFloat?
     var nextDateRange: (Int, Int)?
     
     var searchTimer: Timer?
     var filterMenu: FilterMenuElements?
 
-    var cachedActivityIds: [String] = []
-
     override init(frame: CGRect) {
-        self.api = AlgoliaSearch()
         super.init(frame: frame)
         
         setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.api = AlgoliaSearch()
         super.init(coder: aDecoder)
         
         setupView()
@@ -137,11 +132,11 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         let dateSlider = makeSlider(from: 1, to: 6)
         dateSlider.delegate = DateRangeSliderDelegate.instance
         dateSlider.minDistance = 1
-        dateSlider.selectedMinValue = CGFloat(lastSearchParams.dateMin)
-        dateSlider.selectedMaxValue = CGFloat(lastSearchParams.dateMax)
+        dateSlider.selectedMinValue = CGFloat(lastFilterState.dateMin)
+        dateSlider.selectedMaxValue = CGFloat(lastFilterState.dateMax)
         
         let locationRangeSlider = makeSlider(from: 1, to: 200)
-        locationRangeSlider.selectedMaxValue = lastSearchParams.maxMilesAway
+        locationRangeSlider.selectedMaxValue = lastFilterState.maxMilesAway
         locationRangeSlider.disableRange = true
         
         // Make labels
@@ -211,8 +206,8 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
             self.nextLocationRange = filterMenu.locationRangeSlider.selectedMaxValue
             self.nextDateRange = (Int(filterMenu.dateSlider.selectedMinValue), Int(filterMenu.dateSlider.selectedMaxValue))
             
-            fetchAndLoadActivities()
-            
+            self.sendParams(to: displayDelegate)
+
             // Now go ahead and close
             closeFilterMenu()
         }
@@ -228,64 +223,51 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         displayDelegate?.endEditing()
-        fetchAndLoadActivities()
+        self.sendParams(to: displayDelegate)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // Create a timer to reload stuff so that we don't just call algolia for every time a letter is pressed in the search bar
         searchTimer?.invalidate()
         searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-            self.fetchAndLoadActivities()
+            self.sendParams(to: self.displayDelegate)
         }
     }
     
-    func getSearchParams() -> SearchParams {
+    func getFilterState() -> FilterState {
         let text = self.text == "" ? nil : self.text
         
-        let date = nextDateRange ?? (lastSearchParams.dateMin, lastSearchParams.dateMax)
-        let location = nextLocationRange ?? lastSearchParams.maxMilesAway
+        let date = nextDateRange ?? (lastFilterState.dateMin, lastFilterState.dateMax)
+        let location = nextLocationRange ?? lastFilterState.maxMilesAway
         
         return (text, date.0, date.1, location)
     }
     
-    func fetchAndLoadActivities() {
+    func getSearchParams(from state: FilterState? = nil) -> SearchParams {
+        let myState = state ?? getFilterState()
+        
+        let start = DateRangeSliderDelegate.getDate(sliderIndex: myState.dateMin)
+        let end = DateRangeSliderDelegate.getDate(sliderIndex: myState.dateMax)
+        let distance = Int(FilterSearchBar.metersPerMile * myState.maxMilesAway)
+        
+        return (myState.filterText, start, end, distance)
+    }
+    
+    func sendParams(to target: FilterSearchBarDelegate?) {
+        
         // If there is a timer, invalidate it! We're searching now.
         searchTimer?.invalidate()
 
-        let myParams = getSearchParams()
+        let myState = getFilterState()
         
-        if lastSearchParams == myParams {
-            // We still want the UI to update whenever it calls
-            // this method, so make sure it gets the cached info:
-            self.displayDelegate?.display(activities: cachedActivityIds)
-            // Then, cancel the request if nothing has changed
-            return
-        }
+        if lastFilterState == myState { return }
         
         // Store request params #NoRaceConditions
-        self.lastSearchParams = myParams
+        self.lastFilterState = myState
         
-        let start = DateRangeSliderDelegate.getDate(sliderIndex: myParams.dateMin)
-        let end = DateRangeSliderDelegate.getDate(sliderIndex: myParams.dateMax)
-        let distance = Int(FilterSearchBar.metersPerMile * myParams.maxMilesAway)
+        let params = getSearchParams(from: myState)
         
-        // Load data from algolia!
-        api.searchActivities(withText: myParams.filterText,
-                             matchingAnyTopicOf: displayDelegate?.getTopics(),
-                             startingAt: start,
-                             endingAt: end,
-                             upToDisatnce: distance) {
-            (activities: [ActivityId], err: Error?) in
-            
-            // Cancel if we've made a new request #NoRaceConditions
-            if self.lastSearchParams != myParams { return }
-            
-            // Handle errors
-            if let error = err { print(error) }
-            
-            // Load new data
-            self.cachedActivityIds = activities
-            self.displayDelegate?.display(activities: activities)
-        }
+        // pass params to FilterSearchBarDelegate
+        target?.fetchAndLoadActivities(for: params)
     }
 }

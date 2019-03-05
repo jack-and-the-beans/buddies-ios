@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 
 class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
+    //MARK:- User and activity data and data management
     var activities = [[Activity?]]()
     var activityCancelers = [Canceler]()
     
@@ -20,8 +21,16 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     //Each array is a section of the table view
     var displayIds = [[ActivityId]]()
     
+    //MARK:- Search API
+    //Should only be changed by unit tests
+    var api = AlgoliaSearch()
+    
+    var lastSearchParam: SearchParams! = (nil, Date(), Date(), 0)
+    
     var fab: FAB!
 
+    
+    //MARK:- Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 110
@@ -31,11 +40,13 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         //  the event handler!
         fab = FAB(for: self)
         fab.renderCreateActivityFab()
+        
+        tableView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellReuseIdentifier: "ActivityCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchAndLoadActivities()
+        fetchAndLoadActivities(for: lastSearchParam)
     }
     
     
@@ -43,19 +54,37 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         super.viewDidDisappear(animated)
         cleanup()
     }
-    
-    // "abstract"
-    func fetchAndLoadActivities(){} // Must call loadData() once displayIds is set
-    func getTopics() -> [String] {return []} // Must get a list of the appropiate topics for the view
+
+    // Must get a list of the appropiate topics for the view
+    func getTopics() -> [String] {return []}
     
     func endEditing() {
         self.view.endEditing(false)
     }
     
-    func display(activities: [ActivityId]) {
+    //MARK:- Manage queries and query changes
+    func fetchAndLoadActivities(for params: SearchParams? = nil){
+        lastSearchParam = params
+        // Must call loadData() with activity ids in order to render anything
+    }
+    
+    func loadAlgoliaResults(activities: [ActivityId], from params: SearchParams?, err: Error?){
+        // Cancel if we've made a new request #NoRaceConditions
+        if params == nil || self.searchParamsChanged(from: params!) { return }
+        
+        // Handle errors
+        if let error = err { print(error) }
+    
+        // Load new data
         self.loadData(for: [activities])
     }
     
+    func searchParamsChanged(from params: SearchParams) -> Bool {
+        return lastSearchParam == nil || lastSearchParam! != params
+    }
+    
+    
+    //MARK: - Load user from DataAccessor
     func loadUser(uid: UserId,
                   dataAccessor: DataAccessor = DataAccessor.instance,
                   onLoaded: (()->Void)?) {
@@ -130,15 +159,25 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     }
     
    
+    //MARK:- Table view rendering
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "activityCell", for: indexPath) as! ActivityCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
     
         if let activity = getActivity(at: indexPath) {
             return format(cell: cell, using: activity, at: indexPath)
         } else {
             cell.isHidden = true
             return cell
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let _ = getActivity(at: indexPath) {
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        } else {
+            return 0
         }
     }
     
@@ -165,6 +204,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         
         zip(cell.memberPics, activityUserImages).forEach() { (btn, img) in btn.setImage(img, for: .normal)
         }
+        
 
         // hide "..." as needed
         if activity.members.count <= 3{
@@ -188,7 +228,12 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayIds[section].count
     }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? ActivityCell
+        self.performSegue(withIdentifier: "showActivityDetails", sender: cell)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let selectedIndex = self.tableView.indexPath(for: sender as! UITableViewCell)
         if let activityController = segue.destination as? ViewActivityController,

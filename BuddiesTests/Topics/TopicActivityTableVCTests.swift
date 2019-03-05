@@ -10,9 +10,9 @@ import XCTest
 @testable import Buddies
 
 class MockSearchBar : FilterSearchBar {
-    var fetchCount = 0
-    override func fetchAndLoadActivities() {
-        self.fetchCount += 1
+    var sendCount = 0
+    override func sendParams(to target: FilterSearchBarDelegate?) {
+        self.sendCount += 1
     }
 }
 
@@ -45,10 +45,5 @@ class TopicActivityTableVCTests: XCTestCase {
     
     func testHasTopics() {
         XCTAssert(vc.getTopics().count == 1, "1 topic should be returned!")
-    }
-    
-    func testFetchData() {
-        vc.fetchAndLoadActivities()
-        XCTAssert(mockSearchBar.fetchCount == 1, "expected to fetch once")
     }
 }

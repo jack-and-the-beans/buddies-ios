@@ -23,6 +23,7 @@ import InstantSearchClient
 protocol SearchIndex {
     func search(_ query: Query, requestOptions: RequestOptions?, completionHandler: @escaping CompletionHandler) -> Operation
 }
+    
 extension Index: SearchIndex {}
 
 protocol SearchClient {
@@ -69,13 +70,18 @@ class AlgoliaSearch {
               startingAt: Date? = nil,
               endingAt: Date? = nil,
               atLocation: (Double, Double)? = nil, // Tuple: (lat, lng)
-              upToDisatnce: Int = 20000, // In meters, defaults to 20km
+              upToDistance: Int = 20000, // In meters, defaults to 20km
+              aroundPrecision: Int? = nil, // In meters, default to Algolia default
               usingIndex: SearchIndex? = nil,
+              sumOrFiltersScores: Bool = true,
+              settings: [String: Any]? = nil,
+              requestOptions: RequestOptions? = nil,
+              
               completionHandler: @escaping ([String], Error?) -> Void) {
 
         // Initialize activity index if no index is given:
         let index = usingIndex ?? self.client.getIndex(withName: AlgoliaSearch.ACTIVITY_INDEX)
-        
+    
         // Use text search if text is given:
         let query = withText != nil ? Query(query: withText) : Query()
         
@@ -85,7 +91,8 @@ class AlgoliaSearch {
         // Set location filter if there is a location:
         if let loc = atLocation {
             query.aroundLatLng = LatLng(lat: loc.0, lng: loc.1)
-            query.aroundRadius = .explicit(UInt(upToDisatnce))
+            query.aroundRadius = .explicit(UInt(upToDistance))
+            if let aroundPrecision = aroundPrecision { query.aroundPrecision = UInt(aroundPrecision) }
         }
         
         // Get date filter if there are dates:
@@ -106,7 +113,9 @@ class AlgoliaSearch {
             query.filters = topics
         }
 
-        let _ = index.search(query, requestOptions: nil, completionHandler: { (content, error) -> Void in
+        query.sumOrFiltersScores = sumOrFiltersScores
+        
+        let _ = index.search(query, requestOptions: requestOptions, completionHandler: { (content, error) -> Void in
             if let err = error {
                 // Return the error:
                 completionHandler([], err); return;
@@ -124,9 +133,9 @@ class AlgoliaSearch {
     // Note: Any Algolia attribute set up as an array will
     // match the filter as soon as one of the values in the
     // array match. (source: https://www.algolia.com/doc/api-reference/api-parameters/filters/#examples)
-    private func getTopicFilterFrom(_ topicIds: [String]?) -> String? {
-        guard let topics = topicIds else { return nil }
-        let withQueryKey = topics.map { "topic_ids:\($0)" }
+    private func getTopicFilterFrom(_ topicIds: [String]?, rank score: Int = 1) -> String? {
+        guard let topics = topicIds, topics.count > 0 else { return nil }
+        let withQueryKey = topics.map { "topic_ids:\($0)<score=\(score)>" }
         return "(\(withQueryKey.joined(separator: " OR ")))"
     }
     
