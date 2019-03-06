@@ -16,6 +16,7 @@
 		457F576B2218C54C00F27BFE /* ActivityTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F576A2218C54C00F27BFE /* ActivityTableVC.swift */; };
 		458CE72C220D36DC00012637 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CE72B220D36DC00012637 /* SearchTextField.swift */; };
 		458CE72E220D472200012637 /* MapItemSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CE72D220D472200012637 /* MapItemSearchResult.swift */; };
+		45C582B32230470C00C03646 /* MyActivities.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45C582B22230470C00C03646 /* MyActivities.storyboard */; };
 		45DA93A8220957CE0064CBEF /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DA93A7220957CE0064CBEF /* Testing.swift */; };
 		45DA93A9220957CE0064CBEF /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DA93A7220957CE0064CBEF /* Testing.swift */; };
 		45FED0AD220A5F0300B90C3B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45FED0AC220A5F0300B90C3B /* Profile.storyboard */; };
@@ -136,6 +137,7 @@
 		458CE72B220D36DC00012637 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		458CE72D220D472200012637 /* MapItemSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemSearchResult.swift; sourceTree = "<group>"; };
 		4594D96B221D0A540082E8DA /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		45C582B22230470C00C03646 /* MyActivities.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyActivities.storyboard; sourceTree = "<group>"; };
 		45DA93A7220957CE0064CBEF /* Testing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		45FED0AC220A5F0300B90C3B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		45FED0AE220A657100B90C3B /* DeleteAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVC.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 				45FED0AC220A5F0300B90C3B /* Profile.storyboard */,
 				58A915B8220E2A5F008C325F /* PickTopics.storyboard */,
 				58705ECA22285CB700EFE9F2 /* Discover.storyboard */,
+				45C582B22230470C00C03646 /* MyActivities.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -744,6 +747,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A81722BD221F254E00DF6935 /* ActivityTopicCollectionCell.xib in Resources */,
+				45C582B32230470C00C03646 /* MyActivities.storyboard in Resources */,
 				58EF8DC22208BE5E00872770 /* Login.storyboard in Resources */,
 				B6428EF1221DB51D0052E469 /* ActivityChat.xib in Resources */,
 				B6428EEF221DB5130052E469 /* ActivityDescription.xib in Resources */,

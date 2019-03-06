@@ -7,18 +7,28 @@
 //
 
 import UIKit
+import FirebaseAuth
+class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
 
-class MyActivitiesVC: UITableViewController {
-    var fab: FAB!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    var user: User?
+    var cancelUserListener: Canceler?
     
     override func viewDidLoad() {
+        
+        
+        self.setupHideKeyboardOnTap()
+        
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        cancelUserListener = DataAccessor.instance.useUser(id: userId) { user in
+            self.user = user
+        }
+        
+        searchBar.delegate = self
+        
         super.viewDidLoad()
 
-        // We need to store a local so that the
-        //  instance isn't deallocated along with
-        //  the event handler!
-        fab = FAB(for: self)
-        fab.renderCreateActivityFab()
     }
     
 
