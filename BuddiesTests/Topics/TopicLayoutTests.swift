@@ -24,16 +24,36 @@ class TopicLayoutTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testVCDimensions(){
-        let vc: TopicsVC = BuddiesStoryboard.Topics.viewController(withID: "viewTopics")
-        UIApplication.setRootView(vc, animated: false)
-        _ = vc.view // Make sure view is loaded
+    func setupCollectionView() -> UICollectionView {
+        let frame = CGRect(x: 0, y: 0, width: 828, height: 1700)
         
-        layout = (vc.collectionViewLayout as! TopicLayout)
+        let collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
+        
+        return collectionView
+    }
+    
+    func getDataSource() -> TopicsVC {
+        let vc = TopicsVC()
+        vc.topicCollection = TopicCollection()
+        return vc
+    }
+    
+    func testVCDimensions (){
+        let numTopics = 100
+        
+        let collectionView = setupCollectionView()
+        
+        let vc = getDataSource()
+        
+        collectionView.dataSource = vc
+            
+        vc.topicCollection.topics = [Topic](repeating:  Topic(id: "test", name: "hey", image: nil), count: numTopics)
+        
+        collectionView.reloadData()
         
         layout.prepare()
         
-        UIApplication.shared.keyWindow?.rootViewController = nil
+        XCTAssert(layout.cache.count == vc.topicCollection.topics.count, "Cache atttribute created for each Topic")
     }
     
 

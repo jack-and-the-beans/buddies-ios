@@ -111,6 +111,7 @@ class TopicLayout: UICollectionViewLayout {
         guard cache.isEmpty == true, let collectionView = collectionView else {
             return
         }
+        
         let height = cellHeight(relativeTo: topicWidth, ratio: heightToWidthRatio, padding: cellPadding)
         
         let (maxRow, _) = getCoords(item: collectionView.numberOfItems(inSection: 0))
