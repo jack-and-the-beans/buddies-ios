@@ -13,7 +13,7 @@ import InstantSearchClient
 class DiscoverTableVC : ActivityTableVC {
     @IBOutlet weak var searchBar: FilterSearchBar!
     
-    var user: User? { didSet { self.searchBar.sendParams(to: self) } }
+    var user: LoggedInUser? { didSet { self.searchBar.sendParams(to: self) } }
     var cancelUserListener: Canceler?
     
     var geoPrecisionGroups = 3.0
@@ -21,8 +21,7 @@ class DiscoverTableVC : ActivityTableVC {
     override func viewDidLoad() {
         self.setupHideKeyboardOnTap()
         
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        cancelUserListener = DataAccessor.instance.useUser(id: userId) { user in
+        cancelUserListener = DataAccessor.instance.useLoggedInUser { user in
             self.user = user
         }
         
