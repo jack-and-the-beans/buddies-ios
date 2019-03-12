@@ -63,32 +63,43 @@
                                 <color key="textColor" red="0.36367782360000001" green="0.36367782360000001" blue="0.36367782360000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="91f-gN-Add">
-                                <rect key="frame" x="20" y="319" width="149" height="30"/>
-                                <state key="normal" title="Pretend this is a topic"/>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="------" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AlU-tN-0fB">
                                 <rect key="frame" x="197.5" y="84" width="157.5" height="21.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="X16-tz-Zcc">
+                                <rect key="frame" x="20" y="329" width="335" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="d8x-H7-DrY"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="xdW-zz-2bX">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Zq7-M8-aiS" firstAttribute="trailing" secondItem="X16-tz-Zcc" secondAttribute="trailing" constant="20" id="1Qp-X9-Q5E"/>
                             <constraint firstItem="Zq7-M8-aiS" firstAttribute="bottom" secondItem="SfH-O5-cFJ" secondAttribute="bottom" constant="60" id="1qw-4J-hXZ"/>
                             <constraint firstItem="6Mv-t1-IFJ" firstAttribute="top" secondItem="Zq7-M8-aiS" secondAttribute="top" constant="20" id="3bV-uV-ZzR"/>
-                            <constraint firstItem="91f-gN-Add" firstAttribute="top" secondItem="QB7-BW-dX7" secondAttribute="bottom" constant="10" id="3ec-e5-Ypt"/>
                             <constraint firstItem="AlU-tN-0fB" firstAttribute="width" secondItem="6Mv-t1-IFJ" secondAttribute="width" id="68O-fk-jtn"/>
                             <constraint firstItem="QB7-BW-dX7" firstAttribute="top" secondItem="6Mv-t1-IFJ" secondAttribute="bottom" constant="35" id="6Lt-y2-hMe"/>
                             <constraint firstItem="AlU-tN-0fB" firstAttribute="top" secondItem="6Mv-t1-IFJ" secondAttribute="top" id="6pm-iC-6UX"/>
                             <constraint firstItem="wsL-Mx-UtQ" firstAttribute="width" secondItem="6Mv-t1-IFJ" secondAttribute="width" id="8Mu-9x-1Qx"/>
+                            <constraint firstItem="X16-tz-Zcc" firstAttribute="leading" secondItem="Zq7-M8-aiS" secondAttribute="leading" constant="20" id="Fjy-ac-78D"/>
                             <constraint firstItem="QB7-BW-dX7" firstAttribute="leading" secondItem="Zq7-M8-aiS" secondAttribute="leading" constant="20" id="Gd4-IM-3is"/>
-                            <constraint firstItem="91f-gN-Add" firstAttribute="leading" secondItem="QB7-BW-dX7" secondAttribute="leading" id="HMt-zS-9X2"/>
                             <constraint firstItem="SfH-O5-cFJ" firstAttribute="leading" secondItem="Zq7-M8-aiS" secondAttribute="leading" constant="35" id="Ksk-Dl-NUw"/>
                             <constraint firstItem="6Mv-t1-IFJ" firstAttribute="leading" secondItem="Zq7-M8-aiS" secondAttribute="leading" constant="20" id="U5k-RN-yG0"/>
                             <constraint firstItem="wsL-Mx-UtQ" firstAttribute="leading" secondItem="6Mv-t1-IFJ" secondAttribute="trailing" constant="20" id="fZf-Y7-bXa"/>
                             <constraint firstAttribute="trailing" secondItem="SfH-O5-cFJ" secondAttribute="trailing" constant="35" id="h1u-8P-4dP"/>
+                            <constraint firstItem="X16-tz-Zcc" firstAttribute="top" secondItem="QB7-BW-dX7" secondAttribute="bottom" constant="20" id="hen-2K-Oy3"/>
                             <constraint firstItem="Zq7-M8-aiS" firstAttribute="trailing" secondItem="wsL-Mx-UtQ" secondAttribute="trailing" constant="20" id="tSI-GX-bCl"/>
                             <constraint firstItem="Zq7-M8-aiS" firstAttribute="trailing" secondItem="AlU-tN-0fB" secondAttribute="trailing" constant="20" id="wgO-La-Q9y"/>
                             <constraint firstItem="wsL-Mx-UtQ" firstAttribute="top" secondItem="AlU-tN-0fB" secondAttribute="bottom" constant="15" id="wpj-Bm-Bwx"/>
@@ -105,6 +116,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="bioLabel" destination="wsL-Mx-UtQ" id="7DW-wH-QO3"/>
+                        <outlet property="favoriteTopicsCollection" destination="X16-tz-Zcc" id="IOq-7l-ryS"/>
                         <outlet property="nameLabel" destination="AlU-tN-0fB" id="g6i-HW-pDH"/>
                         <outlet property="profilePic" destination="6Mv-t1-IFJ" id="0Wo-XB-8f2"/>
                     </connections>
@@ -310,7 +322,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zBw-Xq-rSw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1220" y="977"/>
+            <point key="canvasLocation" x="1209" y="611"/>
         </scene>
     </scenes>
     <resources>

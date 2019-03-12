@@ -14,20 +14,20 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     // Tracks the initial render of the view:
     private var hasRendered = false
 
-    // MARK UIViews which we use for things:
+    // MARK: UIViews which we use for things:
     @IBOutlet var contentView: UIView!
     @IBOutlet var miniView: UIView!
     @IBOutlet weak var miniContentView: UIView!
     @IBOutlet weak var bigBoyView: UIView!
     
-    // MARK Mini description view outlets:
+    // MARK: Mini description view outlets:
     @IBOutlet weak var miniLocationLabel: UILabel!
     @IBOutlet weak var miniTimeLabel: UILabel!
     @IBOutlet weak var miniUser3: UIImageView!
     @IBOutlet weak var miniUser2: UIImageView!
     @IBOutlet weak var miniUser1: UIImageView!
 
-    // MARK Big description view outlets:
+    // MARK: Big description view outlets:
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
@@ -74,6 +74,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     var users: [User] = []
     var memberStatus: MemberStatus = .none
     var curActivity: Activity?
+    
+    let topicDataSource = TopicStubDataSource()
 
     // MARK: Render: Refreshes the UI elements with new data.
     func render(
@@ -97,7 +99,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         
         // Set local data sources & functions to new data:
         self.curActivity = activity
-        self.topics = topics
+        self.topicDataSource.topics = topics
         self.users = users
         self.joinActivity = onJoin
         self.memberStatus = status
@@ -186,25 +188,18 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     /* ---- MARK: COLLECTION VIEW STUFF ---- */
 
-    // Returns the number of topics or users for their collections
+    // Returns the number of  users for their collections
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if (collectionView === self.topicsArea) {
-            return topics.count
-        } else if (collectionView === self.usersArea){
+        if (collectionView === self.usersArea){
             return users.count
         } else {
             return 0
         }
     }
     
-    // Returns the correct cell for users and topics
+    // Returns the correct cell for users
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if (collectionView === self.topicsArea) {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "topic_cell", for: indexPath) as! ActivityTopicCollectionCell
-            let topic = topics[indexPath.row]
-            cell.render(withTopic: topic)
-            return cell
-        } else if (collectionView === self.usersArea){
+        if (collectionView === self.usersArea){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "user_cell", for: indexPath) as! ActivityUserCollectionCell
             let user = users[indexPath.row]
             let isIndividualOwner = self.curActivity?.getMemberStatus(of: user.uid) == .owner
@@ -239,7 +234,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
 
     // Registers the nibs and data sources for the users and topics
     private func registerCollectionViews () {
-        self.topicsArea.dataSource = self
+        self.topicsArea.dataSource = topicDataSource
         self.topicsArea.delegate = self
         self.usersArea.dataSource = self
         self.usersArea.delegate = self

@@ -25,6 +25,7 @@
 		582D0FA622035C3D004F71E3 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA522035C3D004F71E3 /* FirestoreManager.swift */; };
 		582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA722036C93004F71E3 /* StorageManager.swift */; };
 		584C350C221BC192000442B2 /* ActivityTableVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C350B221BC192000442B2 /* ActivityTableVCTests.swift */; };
+		5854E62222371AEC007E7E8D /* TopicStubDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5854E62122371AEC007E7E8D /* TopicStubDataSource.swift */; };
 		5868DEE2221DEEAE008B86FE /* AlgoliaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */; };
 		5868DEE3221DEEC3008B86FE /* AlgoliaMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D990221748F100CDD081 /* AlgoliaMock.swift */; };
 		5868DEE7221F0564008B86FE /* TopicTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5868DEE6221F0564008B86FE /* TopicTabVC.swift */; };
@@ -148,6 +149,7 @@
 		583FD2DA220238F7005B2C75 /* LayoutMeasurementsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutMeasurementsTests.swift; sourceTree = "<group>"; };
 		583FD2DD220244F8005B2C75 /* TopicModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicModelTests.swift; sourceTree = "<group>"; };
 		584C350B221BC192000442B2 /* ActivityTableVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableVCTests.swift; sourceTree = "<group>"; };
+		5854E62122371AEC007E7E8D /* TopicStubDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicStubDataSource.swift; sourceTree = "<group>"; };
 		5868DEE6221F0564008B86FE /* TopicTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicTabVC.swift; sourceTree = "<group>"; };
 		58705ECA22285CB700EFE9F2 /* Discover.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		588289F7222C2A02009FEFC8 /* ActivityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityCell.xib; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				58B42610221CE7EE000ACB28 /* TopicActivityTableVC.swift */,
 				58EF8D932208A25F00872770 /* TopicsVC.swift */,
 				5868DEE6221F0564008B86FE /* TopicTabVC.swift */,
+				5854E62122371AEC007E7E8D /* TopicStubDataSource.swift */,
 			);
 			path = Topics;
 			sourceTree = "<group>";
@@ -922,6 +925,7 @@
 				A81722B9221F1AA700DF6935 /* UIImageView.swift in Sources */,
 				A9E8BF4C2201FB9C00C05F2C /* ControlColors.swift in Sources */,
 				4515BC24220BA95F0027B415 /* CreateActivityVC.swift in Sources */,
+				5854E62222371AEC007E7E8D /* TopicStubDataSource.swift in Sources */,
 				5868DEE7221F0564008B86FE /* TopicTabVC.swift in Sources */,
 				A95B958822133FA500453AEA /* User.swift in Sources */,
 				B688B479221C789B0031A364 /* ViewActivityController.swift in Sources */,
