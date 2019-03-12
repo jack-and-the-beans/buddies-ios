@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 
 class ProfileVC: UIViewController, UICollectionViewDelegateFlowLayout {
+    
     @IBOutlet weak var profilePic: UIButton!
     @IBOutlet weak var bioLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -24,23 +25,25 @@ class ProfileVC: UIViewController, UICollectionViewDelegateFlowLayout {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         favoriteTopicsCollection.register(
             UINib.init(nibName: "ActivityTopicCollectionCell", bundle: nil),
             forCellWithReuseIdentifier: "topic_cell"
         )
         
-        dataSource = TopicStubDataSource()
-        
-        favoriteTopicsCollection.dataSource = dataSource
-        favoriteTopicsCollection.delegate = self
+        setupDataSource()
         
         stopListeningToUser = stopListeningToUser ?? loadProfileData()
     }
     
     deinit {
         stopListeningToUser?()
+    }
+    
+    func setupDataSource(){
+        dataSource = TopicStubDataSource()
+        
+        favoriteTopicsCollection.dataSource = dataSource
+        favoriteTopicsCollection.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -54,19 +57,21 @@ class ProfileVC: UIViewController, UICollectionViewDelegateFlowLayout {
                           dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
         return dataAccess.useLoggedInUser { user in
             guard let user = user else { return }
-            
             self.user = user
-            
-            self.bioLabel.text = user.bio
-            self.nameLabel.text = user.name
-            
-            self.dataSource.topics = self.getTopics(from: user.favoriteTopics)
-            self.favoriteTopicsCollection.reloadData()
-            
-            // If something else changes, don't reload the image.
-            if let image = user.image {
-                self.onImageLoaded(image: image)
-            }
+            self.render(with: user)
+        }
+    }
+    
+    func render(with user: User){
+        self.bioLabel.text = user.bio
+        self.nameLabel.text = user.name
+        
+        self.dataSource.topics = self.getTopics(from: user.favoriteTopics)
+        self.favoriteTopicsCollection.reloadData()
+        
+        // If something else changes, don't reload the image.
+        if let image = user.image {
+            self.onImageLoaded(image: image)
         }
     }
     
@@ -76,9 +81,8 @@ class ProfileVC: UIViewController, UICollectionViewDelegateFlowLayout {
     
     // Dynamically sizes the topic cells based on the screen size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return dataSource.getTopicSize(frameWidth: view.frame.width)
+        return self.dataSource.getTopicSize(frameWidth: view.frame.width)
     }
-    
     
     func onImageLoaded(image: UIImage) {
         profilePic.tintColor = UIColor.clear
@@ -91,5 +95,4 @@ class ProfileVC: UIViewController, UICollectionViewDelegateFlowLayout {
         let topics = appDelegate.topicCollection.topics
         return topics.filter { topicIds.contains($0.id) }
     }
-
 }

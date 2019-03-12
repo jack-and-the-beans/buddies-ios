@@ -10,7 +10,7 @@ import UIKit
 
 class TopicStubDataSource: NSObject, UICollectionViewDataSource {
 
-    var topics: [Topic]!
+    var topics = [Topic]()
 
     //MARK: - UICollectionViewDataSource
     func numberOfSections(in collectionView: UICollectionView) -> Int {
