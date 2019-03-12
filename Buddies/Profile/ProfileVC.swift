@@ -37,7 +37,6 @@ class ProfileVC: UIViewController, UICollectionViewDelegateFlowLayout {
         favoriteTopicsCollection.delegate = self
         
         stopListeningToUser = stopListeningToUser ?? loadProfileData()
-        
     }
     
     deinit {
@@ -77,19 +76,9 @@ class ProfileVC: UIViewController, UICollectionViewDelegateFlowLayout {
     
     // Dynamically sizes the topic cells based on the screen size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let margin = 20
-        let collectionWidth = self.view.frame.width - CGFloat(margin * 2)
-        
-        let height = CGFloat(40)
-        if (self.dataSource.topics.count > 4) {
-            let base = collectionWidth / 2
-            return CGSize(width: base, height: height)
-        } else {
-            let cellWidth = collectionWidth / 2 - 10
-            return CGSize(width: cellWidth, height: height)
-        }
-        
+        return dataSource.getTopicSize(frameWidth: view.frame.width)
     }
+    
     
     func onImageLoaded(image: UIImage) {
         profilePic.tintColor = UIColor.clear

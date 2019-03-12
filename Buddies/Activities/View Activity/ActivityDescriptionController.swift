@@ -216,14 +216,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         let margin = 20
         let collectionWidth = self.contentView.frame.width - CGFloat(margin * 2)
         if (collectionView == self.topicsArea) {
-            let height = CGFloat(40)
-            if (self.topics.count > 4) {
-                let base = collectionWidth / 2
-                return CGSize(width: base, height: height)
-            } else {
-                let cellWidth = collectionWidth / 2 - 10
-                return CGSize(width: cellWidth, height: height)
-            }
+            return topicDataSource.getTopicSize(frameWidth: contentView.frame.width)
         } else if (collectionView == self.usersArea) {
             return CGSize(width: collectionWidth, height: 50)
         } else {
