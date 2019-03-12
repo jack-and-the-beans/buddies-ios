@@ -42,8 +42,7 @@ class TopicTabVC: TopicsVC {
     }
     
 
-    func loadProfileData(uid: String = Auth.auth().currentUser!.uid,
-                         dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
+    func loadProfileData(dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
         
         return dataAccess.useLoggedInUser { user in
             self.user = user

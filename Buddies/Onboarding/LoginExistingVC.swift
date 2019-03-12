@@ -49,25 +49,17 @@ class LoginExistingVC: LoginBase {
             email: email,
             password: password,
             onError: { msg in self.showMessagePrompt(msg) },
-            onSuccess: { user in self.handleOnLogIn(uid: user.uid) }
+            onSuccess: { _ in /* Navigation to main page is
+                                 handled by AppDelegate */ }
         )
-    }
-    
-    func handleOnLogIn(uid: String,
-                       app: AppDelegate? = UIApplication.shared.delegate as? AppDelegate) {
-        guard let app = app else {
-            print("no app given :(")
-            return
-        }
-        
-        app.tryLoadMainPage { callback in app.getHasUserDoc(callback: callback) }
     }
     
     @IBAction func facebookLogin() {
         getAuthHandler().logInWithFacebook(
             ref: self,
             onError: { msg in self.showMessagePrompt(msg) },
-            onSuccess: { user in self.handleOnLogIn(uid: user.uid) }
+            onSuccess: { _ in /* Navigation to main page is
+                                 handled by AppDelegate */ }
         )
     }
     

@@ -108,7 +108,7 @@ class AppDelegateTests: XCTestCase {
             return
         }
         
-        app.setupInitialView(isLoggedIn: true) {
+        app.setupView(isLoggedOut: false, isInitial: true) {
             callback in callback(true)
         }
     }
@@ -119,7 +119,7 @@ class AppDelegateTests: XCTestCase {
             return
         }
         
-        app.setupInitialView(isLoggedIn: false) {
+        app.setupView(isLoggedOut: true, isInitial: true) {
             callback in callback(true)
         }
     }
@@ -130,7 +130,7 @@ class AppDelegateTests: XCTestCase {
             return
         }
         
-        app.setupInitialView(isLoggedIn: true) {
+        app.setupView(isLoggedOut: false, isInitial: true) {
             callback in callback(false)
         }
     }
@@ -141,7 +141,7 @@ class AppDelegateTests: XCTestCase {
             return
         }
         
-        app.setupInitialView(isLoggedIn: false) {
+        app.setupView(isLoggedOut: true, isInitial: true) {
             callback in callback(false)
         }
     }

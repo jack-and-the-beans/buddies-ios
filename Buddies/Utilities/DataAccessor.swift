@@ -57,9 +57,15 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         let handle = addChangeListener { _, user in
             lastCanceler?()
             self._loggedInUserRegistration?.remove()
-            self._cachedLoggedInUser = nil
+            
+            // Trigger an invalidation if we're logged out.
+            //  this is due to the messy way that this works.
+            if let _ = user { self._cachedLoggedInUser = nil }
+            else { self.onInvalidateLoggedInUser(user: nil) }
+            
             self._loggedInUID = user?.uid
             lastCanceler = self.useLoggedInUser { self._cachedLoggedInUser = $0 }
+            
         }
         
         self.cancelAuthStateListener = {
@@ -127,7 +133,9 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
     func _loadLoggedInUser() {
         guard let uid = self._loggedInUID else { return }
         
-        _loggedInUserRegistration = usersCollection.document(uid).addSnapshotListener {
+        _loggedInUserRegistration?.remove()
+        
+        _loggedInUserRegistration = accountCollection.document(uid).addSnapshotListener {
             guard let snap = $0 else {
                 print($1!)
                 return
@@ -300,7 +308,7 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
     }
     
     func triggerServerUpdate(userId: UserId, key: String, value: Any?) {
-        let doc = usersCollection.document(userId)
+        let doc = accountCollection.document(userId)
         
         if let value = value {
             doc.setData([ key: value ], merge: true)

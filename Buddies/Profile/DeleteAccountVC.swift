@@ -63,9 +63,7 @@ class DeleteAccountVC: LoginBase {
                         
                         //sign out user after deleting their account
                         let auth = AuthHandler(auth: Auth.auth())
-                        auth.signOut(onError: self.showMessagePrompt) {
-                            BuddiesStoryboard.Login.goTo()
-                        }
+                        auth.signOut(onError: self.showMessagePrompt) {/*success*/}
                     }
                 }
             }

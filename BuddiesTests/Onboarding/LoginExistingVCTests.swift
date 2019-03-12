@@ -101,33 +101,4 @@ class LoginExistingVCTests: XCTestCase {
         
         XCTAssert(handler.nCallsLogInWithFacebook == 1, "Sign up with email should call logInWithFacebook")
     }
-    
-    func testHandleOnLogIn_HasDoc() {
-        let uid = MockExistingUser().uid
-        let app = MockAD(hasDoc: true)
-        
-        vc.handleOnLogIn(uid: uid, app: app)
-    }
-    
-    func testHandleOnLogIn_NoDoc() {
-        let uid = MockExistingUser().uid
-        let app = MockAD(hasDoc: false)
-        
-        vc.handleOnLogIn(uid: uid, app: app)
-    }
-    
-    func testHandleOnLogIn_nilApp() {
-        vc.handleOnLogIn(uid: "hello", app: nil)
-    }
-    
-    class MockAD : AppDelegate {
-        let hasDoc: Bool
-        init(hasDoc: Bool) { self.hasDoc = hasDoc }
-        override func getHasUserDoc(callback: @escaping (Bool) -> Void,
-                                    uid: String?,
-                                    dataAccess: DataAccessor?,
-                                    src: CollectionReference) {
-            callback(self.hasDoc)
-        }
-    }
 }

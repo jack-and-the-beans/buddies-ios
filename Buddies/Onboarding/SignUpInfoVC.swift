@@ -180,7 +180,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     }
     
     func fillDataModel(user: UserInfo? = Auth.auth().currentUser,
-                       collection: CollectionReference = Firestore.firestore().collection("accounts")){
+                       collection: CollectionReference = DataAccessor.instance.accountCollection){
         
         if let UID = user?.uid {
             let favTopics: [String] = []
@@ -262,7 +262,9 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         else {
             saveBioToFirestore(bio: bioText.text)
             fillDataModel()
-            BuddiesStoryboard.Main.goTo()
+            
+            /* navigation to main storyboard
+               is handled by AppDelegate */
         }
     }
 }
