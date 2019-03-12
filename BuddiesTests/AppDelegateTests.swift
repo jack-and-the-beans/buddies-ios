@@ -15,92 +15,6 @@ class AppDelegateTests: XCTestCase {
     func testDelType() {
         XCTAssertNotNil(UIApplication.shared.delegate as? AppDelegate)
     }
-
-    func testGetHasUserDoc_UserNil() {
-        guard let app = UIApplication.shared.delegate as? AppDelegate else {
-            XCTAssertTrue(false, "No app delegate :(")
-            return
-        }
-
-        let expectation = self.expectation(description: "User doc confirmed bad")
-        
-        let ref = MockCollectionReference()
-        app.getHasUserDoc(callback: { result in
-            if !result { expectation.fulfill() }
-        }, uid: nil, dataAccess: nil, src: ref)
-        
-        waitForExpectations(timeout: 2)
-    }
-    
-    func testGetHasUserDoc_NoImage() {
-        guard let app = UIApplication.shared.delegate as? AppDelegate else {
-            XCTAssertTrue(false, "No app delegate :(")
-            return
-        }
-        
-        let expectation = self.expectation(description: "User doc confirmed bad")
-
-        let uid = MockExistingUser().uid
-        let doc = MockDocumentReference()
-        let ref = MockCollectionReference()
-        
-        ref.documents[uid] = doc
-        doc.exposedData["bio"] = "blah blah"
-        
-        app.getHasUserDoc(callback: { result in
-            if !result { expectation.fulfill() }
-        }, uid: uid, dataAccess: nil, src: ref)
-        
-        waitForExpectations(timeout: 2)
-    }
-    
-    func testGetHasUserDoc_NoBio() {
-        guard let app = UIApplication.shared.delegate as? AppDelegate else {
-            XCTAssertTrue(false, "No app delegate :(")
-            return
-        }
-        
-        let expectation = self.expectation(description: "User doc confirmed bad")
-        
-        let uid = MockExistingUser().uid
-        let doc = MockDocumentReference()
-        let ref = MockCollectionReference()
-        
-        ref.documents[uid] = doc
-        doc.exposedData["image_url"] = "my_image_url"
-        
-        app.getHasUserDoc(callback: { result in
-            if !result { expectation.fulfill() }
-        }, uid: uid, dataAccess: nil, src: ref)
-        
-        waitForExpectations(timeout: 2)
-    }
-    
-    func testGetHasUserDoc_Valid() {
-        guard let app = UIApplication.shared.delegate as? AppDelegate else {
-            XCTAssertTrue(false, "No app delegate :(")
-            return
-        }
-        
-        let expectation = self.expectation(description: "User doc confirmed good")
-        
-        let uid = MockExistingUser().uid
-        let doc = MockDocumentReference()
-        let ref = MockCollectionReference()
-        
-        ref.documents[uid] = doc
-        doc.exposedData["bio"] = "blah blah"
-        doc.exposedData["image_url"] = "my_image_url"
-        doc.exposedData["name"] = "george"
-        doc.exposedData["date_joined"] = Timestamp(date: Date())
-        
-        app.getHasUserDoc(callback: { result in
-            if result { expectation.fulfill() }
-            else { print("uh whoops") }
-        }, uid: uid, dataAccess: nil, src: ref)
-        
-        waitForExpectations(timeout: 2)
-    }
     
     func testSetupApp_LoggedInWithDoc() {
         guard let app = UIApplication.shared.delegate as? AppDelegate else {
@@ -108,9 +22,9 @@ class AppDelegateTests: XCTestCase {
             return
         }
         
-        app.setupView(isLoggedOut: false, isInitial: true) {
-            callback in callback(true)
-        }
+        app.setupView(isLoggedOut: true,
+                      isInitial: true,
+                      needsAccountInfo: false)
     }
     
     func testSetupApp_LoggedOutWithDoc() {
@@ -119,9 +33,7 @@ class AppDelegateTests: XCTestCase {
             return
         }
         
-        app.setupView(isLoggedOut: true, isInitial: true) {
-            callback in callback(true)
-        }
+        app.setupView(isLoggedOut: true, isInitial: true, needsAccountInfo: false)
     }
     
     func testSetupApp_LoggedInNoDoc() {
@@ -130,9 +42,7 @@ class AppDelegateTests: XCTestCase {
             return
         }
         
-        app.setupView(isLoggedOut: false, isInitial: true) {
-            callback in callback(false)
-        }
+        app.setupView(isLoggedOut: false, isInitial: true, needsAccountInfo: true)
     }
     
     func testSetupApp_LoggedOutNoDoc() {
@@ -141,8 +51,6 @@ class AppDelegateTests: XCTestCase {
             return
         }
         
-        app.setupView(isLoggedOut: true, isInitial: true) {
-            callback in callback(false)
-        }
+        app.setupView(isLoggedOut: true, isInitial: true, needsAccountInfo: true)
     }
 }
