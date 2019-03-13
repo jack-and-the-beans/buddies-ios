@@ -16,41 +16,13 @@ class MyActivitiesVC: ActivityTableVC {
     
     func loadCurUserActivities(userID: String){
         
-        var created = [ActivityId]()
-        var joined = [ActivityId]()
-        var previous = [ActivityId]()
-        
+    
         //Get activities current user is associated with
-        FirestoreManager.shared.db.collection("activities").whereField("members", arrayContains: userID).getDocuments(){(querySnapshot, err) in
-            
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    
-                    let endTime  = document.get("end_time") as! Timestamp
-                    
-                    if(endTime.dateValue() < Date())
-                    {
-                        previous.append(document.documentID)
-                    }
-                    else if(document.get("owner_id") as! String == userID)
-                    {
-                        created.append(document.documentID)
-                    }
-                    else
-                    {
-                        joined.append(document.documentID)
-                    }
-                    
-                    
-                }
-            }
-            
-            self.displayIds = [created, joined, previous]
-            
+        //2D array of activity IDs
+        // [created, joined, previous]
+        FirestoreManager.getUserAssociatedActivities(userID: userID){ result in
+            self.displayIds = result
             self.loadData(for: self.displayIds)
-            
         }
         
     }
