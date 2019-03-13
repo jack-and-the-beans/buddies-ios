@@ -181,14 +181,8 @@ class ViewActivityController: UIViewController {
     // Gets topics from the root topic store:
     func getTopics(from topicIds: [String]) -> [Topic] {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        var neededTopics: [Topic] = []
         let topicsArr = appDelegate.topicCollection.topics
-        for topic in topicsArr {
-            if (topicIds.contains(topic.id)) {
-                neededTopics.append(topic)
-            }
-        }
-        return neededTopics
+        return topicsArr.filter { topicIds.contains($0.id) }
     }
 
     func render() {
