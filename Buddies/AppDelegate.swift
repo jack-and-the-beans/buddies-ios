@@ -16,7 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var notifications: NotificationService = NotificationService()
     var window: UIWindow?
     var topicCollection: TopicCollection!
-
+    
+    var loginListenerCancel: Canceler!
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // This will get us a token, even if we don't save
         // it until we have notification permission.
@@ -32,66 +34,78 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        let authHandler = AuthHandler(auth: Auth.auth())
-        
-        Auth.auth().addStateDidChangeListener { (auth, user) in
-            if let _ = user { AppContent.setup() }
-        }
-
-        setupInitialView(isLoggedIn: authHandler.isLoggedIn()) { callback in
-            getHasUserDoc(callback: callback)
-        }
+        initLoginListener()
         
         self.window?.makeKeyAndVisible()
         return true
     }
     
-    func getHasUserDoc(callback: @escaping (Bool) -> Void,
-                     uid: String? = Auth.auth().currentUser?.uid,
-                     dataAccess: DataAccessor? = DataAccessor.instance,
-                     src: CollectionReference = Firestore.firestore().collection("accounts")) {
-        // If we're not logged in, there is no doc
-        guard let uid = uid else {
-            callback(false)
-            return
-        }
+    func initLoginListener(data: DataAccessor = DataAccessor.instance) {
         
-        // If the user is cached, it's already fine
-        if dataAccess?.isUserCached(id: uid) ?? false {
-            callback(true)
-            return
-        }
+        // Last login state -> initially none.
+        var wasLoggedIn: Bool? = nil
+        var wasAUserDoc: Bool? = nil
         
-        // Otherwise reload it and make sure it parses correctly
-        src.document(uid).getDocument { (snap, err) in
-            if let snap = snap, let _ = OtherUser.from(snap: snap) {
-                callback(true)
-            }
-            else {
-                callback(false)
+        loginListenerCancel = data.useLoggedInUser { user in
+            // Current login state.
+            let isLoggedIn = Auth.auth().currentUser != nil
+            let isAUserDoc = user != nil
+            let isInitial = wasLoggedIn == nil
+            
+            // Find if there is a diff
+            let authHasChanged = wasLoggedIn != isLoggedIn
+                || isAUserDoc != wasAUserDoc
+            
+            // Store as last state
+            wasLoggedIn = isLoggedIn
+            wasAUserDoc = isAUserDoc
+            
+            
+            if authHasChanged {
+                // Navigates to the appropriate view of:
+                //  - Login
+                //  - Account Setup
+                //  - Main
+                self.setupView(isLoggedOut: !isLoggedIn,
+                               isInitial: isInitial,
+                               needsAccountInfo: isLoggedIn && !isAUserDoc)
+                
+                // If we are logged in, setup other app content.
+                if isLoggedIn {
+                    AppContent.setup()
+                }
             }
         }
     }
     
-    func tryLoadMainPage(getUserIsFilledOut: (@escaping (Bool) -> Void) -> Void) {
-        getUserIsFilledOut { userIsFilledOut in
-            if userIsFilledOut {
-                self.window?.rootViewController = BuddiesStoryboard.Main.viewController()
-            }
-            else {
-                self.window?.rootViewController = BuddiesStoryboard.Login.viewController(withID: "SignUpInfo")
-            }
+    private func setWindow(_ isInitial: Bool, vc: UIViewController) {
+        if isInitial {
+            self.window?.rootViewController = vc
+        }
+        else {
+            UIApplication.setRootView(vc)
         }
     }
+    
+    func setupView(isLoggedOut: Bool,
+                   isInitial: Bool,
+                   needsAccountInfo: Bool) {
+        if isLoggedOut {
+            setWindow(isInitial, vc: BuddiesStoryboard.Login.viewController())
+            return
+        }
         
-    func setupInitialView(isLoggedIn: Bool, getUserIsFilledOut: (@escaping (Bool) -> Void) -> Void) {
-        if isLoggedIn {
-            // set the view to the launch screen intil we're ready for more
-            self.window?.rootViewController = BuddiesStoryboard.LaunchScreen.viewController()
-            tryLoadMainPage(getUserIsFilledOut: getUserIsFilledOut)
-        } else {
-            // Show login page
-            self.window?.rootViewController = BuddiesStoryboard.Login.viewController()
+        if isInitial {
+            // set the view to the launch screen
+            //  until we're ready for more
+            setWindow(isInitial, vc: BuddiesStoryboard.LaunchScreen.viewController())
+        }
+        
+        if needsAccountInfo {
+            self.setWindow(isInitial, vc: BuddiesStoryboard.Login.viewController(withID: "SignUpInfo"))
+        }
+        else {
+            self.setWindow(isInitial, vc: BuddiesStoryboard.Main.viewController())
         }
     }
     
@@ -114,10 +128,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
+    */
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        loginListenerCancel()
     }
-    */
 }
-

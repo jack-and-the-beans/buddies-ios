@@ -28,8 +28,7 @@ class SettingsVC: UITableViewController {
         stopListeningToUser?()
     }
     
-    func renderView(uid: String = Auth.auth().currentUser!.uid,
-                    dataAccess: DataAccessor = DataAccessor.instance) {
+    func renderView(dataAccess: DataAccessor = DataAccessor.instance) {
         var isFirstRender = true
         
         self.stopListeningToUser = dataAccess.useLoggedInUser { user in
@@ -98,9 +97,7 @@ class SettingsVC: UITableViewController {
     
     @IBAction func signOut(_ sender: Any) {
         let auth = AuthHandler(auth: Auth.auth())
-        auth.signOut(onError: showMessagePrompt) {
-            BuddiesStoryboard.Login.goTo()
-        }
+        auth.signOut(onError: showMessagePrompt) {/*success*/}
     }
     
     func deleteAccountFacebook() {

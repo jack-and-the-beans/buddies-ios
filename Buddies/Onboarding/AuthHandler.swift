@@ -21,12 +21,6 @@ class AuthHandler {
         self.notifications = NotificationService()
     }
     
-    func isLoggedIn() -> Bool {
-        return auth.currentUser != nil
-    }
-    
-
-    
     func saveFacebookAccessTokenToFirestore(
         facebookAccessToken: String,
         user: UserInfo? = Auth.auth().currentUser,
