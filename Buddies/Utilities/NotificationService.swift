@@ -30,6 +30,10 @@ protocol NotificationProtocol {
 }
 extension UNUserNotificationCenter: NotificationProtocol {}
 
+struct ActivityNotificationInfo {
+    let activityId: String
+    let navigationDestination: String
+}
 
 class NotificationService: NSObject, UNUserNotificationCenterDelegate, MessagingDelegate {
     
@@ -76,5 +80,22 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate, Messaging
                 print("Error updating document: \(err)")
             }
         }
+    }
+    
+    // Gets an activity ID from a notification in the UI app launch options:
+    static func getNotificationInfo(from launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> ActivityNotificationInfo? {
+        let notification = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification]
+        if let notification = notification as? [String: Any], let info = notification["userInfo"] as? [AnyHashable: Any] {
+            return getNotificationInfo(from: info)
+        }
+        return nil
+    }
+    
+    // Gets an activity ID from a dictionary. This is the type for dictionaries
+    // that we get in notification responses.
+    static func getNotificationInfo(from notificationData: [AnyHashable: Any]) -> ActivityNotificationInfo? {
+        guard let activityId = notificationData["activity_id"] as? String else { return nil }
+        let destination = notificationData["nav_dest"] as? String ?? "discover"
+        return ActivityNotificationInfo(activityId: activityId, navigationDestination: destination)
     }
 }

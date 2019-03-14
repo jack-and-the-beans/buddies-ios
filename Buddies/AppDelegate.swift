@@ -34,13 +34,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        initLoginListener()
+        initLoginListener(launchOptions: launchOptions)
         
         self.window?.makeKeyAndVisible()
         return true
     }
     
-    func initLoginListener(data: DataAccessor = DataAccessor.instance) {
+    func initLoginListener(data: DataAccessor = DataAccessor.instance, launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         
         // Last login state -> initially none.
         var wasLoggedIn: Bool? = nil
@@ -60,6 +60,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             wasLoggedIn = isLoggedIn
             wasAUserDoc = isAUserDoc
             
+            // Nil if there is no activity ID from launch.
+            // Otherwise, we need to load view Activity.
+            let notificationInfo = NotificationService.getNotificationInfo(from: launchOptions)
             
             if authHasChanged {
                 // Navigates to the appropriate view of:
@@ -68,7 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 //  - Main
                 self.setupView(isLoggedOut: !isLoggedIn,
                                isInitial: isInitial,
-                               needsAccountInfo: isLoggedIn && !isAUserDoc)
+                               needsAccountInfo: isLoggedIn && !isAUserDoc,
+                               notificationInfo: notificationInfo)
                 
                 // If we are logged in, setup other app content.
                 if isLoggedIn {
@@ -89,7 +93,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupView(isLoggedOut: Bool,
                    isInitial: Bool,
-                   needsAccountInfo: Bool) {
+                   needsAccountInfo: Bool,
+                   notificationInfo: ActivityNotificationInfo? = nil) {
         if isLoggedOut {
             setWindow(isInitial, vc: BuddiesStoryboard.Login.viewController())
             return
@@ -106,13 +111,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         else {
             self.setWindow(isInitial, vc: BuddiesStoryboard.Main.viewController())
+            self.handleLaunch(from: notificationInfo)
         }
     }
 
+    // Called if receiving a notification while the app is running but in the background:
     func application(_ application: UIApplication, didReceiveRemoteNotification notification: [AnyHashable: Any]) {
+        // Do NOT navigate to the activities screen while the
+        // user is already using the app!
+        guard application.applicationState != .active else { return }
+        self.handleLaunch(from: NotificationService.getNotificationInfo(from: notification))
+    }
+
+    // Handles launch if we have an activity ID from a notification.
+    // Called with nil if there is no activityID on launch.
+    func handleLaunch(from notificationInfo: ActivityNotificationInfo?) {
+        guard let activityId = notificationInfo?.activityId,
+              let destination = notificationInfo?.navigationDestination,
+              let tabController = window?.rootViewController as? UITabBarController,
+              let controllers = tabController.viewControllers else { return }
         
-        if let activityId = notification["activity_id"] as? String {
-            print("message1: \(activityId)")
+        // Find the table from which we want to show the activity
+        // Only runs on the nav controlers under the tab bar
+        for case let controller as UINavigationController in controllers {
+            for subView in controller.viewControllers {
+                var activityTable: ActivityTableVC?
+                if (destination == "discover") {
+                    activityTable = subView as? DiscoverTableVC
+                }
+                if (destination == "my_activities") {
+                    // @TODO: Uncomment this once my activities is merged:
+                    // activityTable = subView as? MyActivitiesVC
+                }
+                activityTable?.showActivity(with: activityId)
+                return
+            }
         }
     }
 

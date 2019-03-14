@@ -236,10 +236,18 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let selectedIndex = self.tableView.indexPath(for: sender as! UITableViewCell)
-        if let activityController = segue.destination as? ViewActivityController,
-            let path = selectedIndex {
-            let tappedActivity = getActivity(at: path)
-            activityController.loadWith(tappedActivity?.activityId)
+        if let path = selectedIndex, let activityId = getActivity(at: path)?.activityId {
+            self.showActivity(with: activityId, for: segue)
+        }
+    }
+
+    func showActivity(with id: String, for segue: UIStoryboardSegue? = nil) {
+        if let segue = segue, let destination = segue.destination as? ViewActivityController {
+            destination.loadWith(id)
+        } else if let viewActivity = BuddiesStoryboard.ViewActivity.viewController(withID: "viewActivity") as? ViewActivityController {
+            viewActivity.loadWith(id)
+            // Now we need to put the controller somewhere...
+            self.navigationController?.pushViewController(viewActivity, animated: true)
         }
     }
 }
