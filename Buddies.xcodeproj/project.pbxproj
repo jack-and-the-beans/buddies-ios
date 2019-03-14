@@ -84,6 +84,7 @@
 		A91BA33A22024A8900DED6B3 /* LoginExistingVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */; };
 		A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */; };
 		A9203538220CD4E500D115F2 /* DeleteAccountVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */; };
+		A939B98B2239C7DB0054D57F /* LocationPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A939B98A2239C7DB0054D57F /* LocationPersistence.swift */; };
 		A95B958522133DDB00453AEA /* DataAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958422133DDB00453AEA /* DataAccessor.swift */; };
 		A95B958822133FA500453AEA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958722133FA500453AEA /* User.swift */; };
 		A95B958A22133FB100453AEA /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958922133FB100453AEA /* Activity.swift */; };
@@ -224,6 +225,7 @@
 		A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVCTests.swift; sourceTree = "<group>"; };
 		A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthHandler.swift; sourceTree = "<group>"; };
 		A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVCTests.swift; sourceTree = "<group>"; };
+		A939B98A2239C7DB0054D57F /* LocationPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPersistence.swift; sourceTree = "<group>"; };
 		A95B958422133DDB00453AEA /* DataAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAccessor.swift; sourceTree = "<group>"; };
 		A95B958722133FA500453AEA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A95B958922133FB100453AEA /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				58AAA6742203F52E00AA538A /* Initialization.swift */,
 				A95B958422133DDB00453AEA /* DataAccessor.swift */,
 				A850ED5C2203934200DBF1A6 /* NotificationService.swift */,
+				A939B98A2239C7DB0054D57F /* LocationPersistence.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1011,6 +1014,7 @@
 				5854E62222371AEC007E7E8D /* TopicStubDataSource.swift in Sources */,
 				5868DEE7221F0564008B86FE /* TopicTabVC.swift in Sources */,
 				A95B958822133FA500453AEA /* User.swift in Sources */,
+				A939B98B2239C7DB0054D57F /* LocationPersistence.swift in Sources */,
 				B688B479221C789B0031A364 /* ViewActivityController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

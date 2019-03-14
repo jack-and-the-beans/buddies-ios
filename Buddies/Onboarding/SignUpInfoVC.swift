@@ -72,6 +72,8 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         bioText.layer.borderColor = Theme.fieldBorderFocused.cgColor
         bioText.layer.borderWidth = 2
         buttonPicture.layer.cornerRadius = buttonPicture.frame.size.width / 2
+        
+        LocationPersistence.instance.makeSureWeHaveLocationAccess(from: self)
       
          // If the user authenticated with Facebook, set
         // their profile picture to be from facebook.
@@ -192,7 +194,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
             let blockedActivities: [String] = []
             let blockedBy: [String] = []
             let dateJoined = Timestamp(date: Date())
-            let loc = GeoPoint.init(latitude: 10, longitude: 10)
+            let loc = GeoPoint(latitude: 0, longitude: 0)//this should get replaced momentatily
             let email = user?.email
             let name = myFirstName
                 ?? stringUntil(user?.displayName, " ")

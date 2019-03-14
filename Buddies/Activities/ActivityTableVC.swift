@@ -40,6 +40,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         fab = FAB(for: self)
         fab.renderCreateActivityFab()
         
+        LocationPersistence.instance.makeSureWeHaveLocationAccess(from: self)
+        
         tableView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellReuseIdentifier: "ActivityCell")
     }
     
