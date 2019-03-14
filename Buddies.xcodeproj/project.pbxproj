@@ -301,6 +301,7 @@
 				582D0FA722036C93004F71E3 /* StorageManager.swift */,
 				58AAA6742203F52E00AA538A /* Initialization.swift */,
 				A95B958422133DDB00453AEA /* DataAccessor.swift */,
+				A850ED5C2203934200DBF1A6 /* NotificationService.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -366,6 +367,7 @@
 				58EA1EF622041436003F6A3A /* StorageManagerTests.swift */,
 				B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */,
 				A95B958B2214B6A800453AEA /* DataAccessorTests.swift */,
+				A8B2F37B22040710006B91D1 /* NotificationServiceTest.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -471,14 +473,6 @@
 				22663AE425AE50AC65D6EE5D /* Pods_BuddiesUITests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A850ED5E2203942800DBF1A6 /* Notifications */ = {
-			isa = PBXGroup;
-			children = (
-				A850ED5C2203934200DBF1A6 /* NotificationService.swift */,
-			);
-			path = Notifications;
 			sourceTree = "<group>";
 		};
 		A9203534220CCB2E00D115F2 /* Profile */ = {
@@ -629,7 +623,6 @@
 				58D2A9FF220201A1009ABCBC /* Topics */,
 				A9E8BF532202015A00C05F2C /* Extensions */,
 				A9E8BF4F2201FFA800C05F2C /* Onboarding */,
-				A850ED5E2203942800DBF1A6 /* Notifications */,
 				A9E8BF482201F7DB00C05F2C /* Controls */,
 				58F2E9032208C02C00D15214 /* Discover */,
 				58F2E9052208C05100D15214 /* Profile */,
@@ -660,7 +653,6 @@
 				A9E8BF6122023CF100C05F2C /* Extensions */,
 				B6AC54B521F8DB8500B075B8 /* Info.plist */,
 				A9B144B0220C82A0004C614E /* AppDelegateTests.swift */,
-				A8B2F37B22040710006B91D1 /* NotificationServiceTest.swift */,
 				45DA93A7220957CE0064CBEF /* Testing.swift */,
 				589AD642220934FD0090A96C /* CommonMock */,
 			);
