@@ -57,7 +57,6 @@
 		58EF8D982208A25F00872770 /* TopicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D922208A25F00872770 /* TopicLayout.swift */; };
 		58EF8D992208A25F00872770 /* TopicsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D932208A25F00872770 /* TopicsVC.swift */; };
 		58EF8DA32208A2BC00872770 /* CreateActivityVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA22208A2BC00872770 /* CreateActivityVCTests.swift */; };
-		58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */; };
 		58EF8DA82208A2C600872770 /* DiscoverTableVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA62208A2C600872770 /* DiscoverTableVCTests.swift */; };
 		58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DB72208BE5E00872770 /* CreateActivity.storyboard */; };
 		58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DB82208BE5E00872770 /* BuddiesStoryboard.swift */; };
@@ -182,7 +181,6 @@
 		58EF8D932208A25F00872770 /* TopicsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsVC.swift; sourceTree = "<group>"; };
 		58EF8D9F2208A2B300872770 /* FABTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FABTests.swift; sourceTree = "<group>"; };
 		58EF8DA22208A2BC00872770 /* CreateActivityVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateActivityVCTests.swift; sourceTree = "<group>"; };
-		58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyActivitiesVCTests.swift; sourceTree = "<group>"; };
 		58EF8DA62208A2C600872770 /* DiscoverTableVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverTableVCTests.swift; sourceTree = "<group>"; };
 		58EF8DAE2208A2E900872770 /* TopicCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCollectionTests.swift; sourceTree = "<group>"; };
 		58EF8DAF2208A2E900872770 /* TopicModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicModelTests.swift; sourceTree = "<group>"; };
@@ -393,7 +391,6 @@
 		58EF8DA42208A2C600872770 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -973,7 +970,6 @@
 				A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */,
 				A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */,
 				58DBF760221CB7B3008512B3 /* ActivityTests.swift in Sources */,
-				58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */,
 				A9203538220CD4E500D115F2 /* DeleteAccountVCTests.swift in Sources */,
 				58FC665422188D3B00D13723 /* TopicCollectionTests.swift in Sources */,
 			);
