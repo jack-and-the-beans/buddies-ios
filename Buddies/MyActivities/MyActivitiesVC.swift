@@ -14,6 +14,7 @@ class MyActivitiesVC: ActivityTableVC {
     var user: LoggedInUser?
     var cancelUserListener: Canceler?
     
+    @IBOutlet weak var searchBar: UISearchBar!
     func loadCurUserActivities(userID: String){
         //Get activities current user is associated with
         //2D array of activity IDs
