@@ -36,40 +36,42 @@ class FirestoreManager {
     }
     
     static func getUserAssociatedActivities( userID: String,
-                                             _ callback: @escaping ([[ActivityId]]) -> ()) {
+                                             _ callback: @escaping ([[Activity]]) -> ()) {
         Firestore.firestore().collection("activities").whereField("members", arrayContains: userID).getDocuments { result, error in
             guard let result = result,
                 error == nil else {
                     print("Error loading \(userID) from Firestore: \n \(String(describing: error))")
-                    callback([])
+                    callback([[],[],[]])
                     return
             }
             
-            var created = [ActivityId]()
-            var joined = [ActivityId]()
-            var previous = [ActivityId]()
+            var created = [Activity]()
+            var joined = [Activity]()
+            var previous = [Activity]()
             
             for document in result.documents{
+                
+                guard let activity = Activity.from(snap: document, with: nil) else { continue }
                 
                 let endTime  = document.get("end_time") as! Timestamp
                 
                 if(endTime.dateValue() < Date())
                 {
-                    previous.append(document.documentID)
+                    previous.append(activity)
                 }
                 else if(document.get("owner_id") as! String == userID)
                 {
-                    created.append(document.documentID)
+                    created.append(activity)
                 }
                 else
                 {
-                    joined.append(document.documentID)
+                    joined.append(activity)
                 }
                 
                 
             }
             
-            callback([created,joined,previous])
+            callback([created, joined, previous])
         }
     }
     
