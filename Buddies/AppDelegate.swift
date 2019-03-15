@@ -133,19 +133,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Find the table from which we want to show the activity
         // Only runs on the nav controlers under the tab bar
+        var activityTable: ActivityTableVC?
         for case let controller as UINavigationController in controllers {
-            for subView in controller.viewControllers {
-                var activityTable: ActivityTableVC?
-                if (destination == "discover") {
-                    activityTable = subView as? DiscoverTableVC
+            if (destination == "discover") {
+                for case let subView as DiscoverTableVC in controller.viewControllers {
+                    tabController.selectedIndex = 0;
+                    activityTable = subView
+                    break
                 }
-                if (destination == "my_activities") {
-                     activityTable = subView as? MyActivitiesVC
+            } else if destination == "my_activities" {
+                for case let subView as MyActivitiesVC in controller.viewControllers {
+                    tabController.selectedIndex = 2;
+                    activityTable = subView
+                    break
                 }
-                activityTable?.showActivity(with: activityId)
-                return
+            }
+            if (activityTable != nil) {
+                break
             }
         }
+        activityTable?.showActivity(with: activityId)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
