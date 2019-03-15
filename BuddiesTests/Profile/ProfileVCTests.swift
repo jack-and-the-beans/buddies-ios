@@ -45,24 +45,6 @@ class ProfileVCTests: XCTestCase {
         XCTAssert(vc?.profilePic.image(for: .normal) == nil, "No image should be loaded, since no valid url given")
     }
 
-    func testDeinit() {
-        let expectation = self.expectation(description: "Stop listening to user on deinit")
-        vc?.stopListeningToUser = {
-            expectation.fulfill()
-        }
-        
-        vc = nil
-        
-        waitForExpectations(timeout: 1)
-    }
-    
-    func testCollectionItemSize() {
-        let size = vc!.collectionView(favoriteTopicsCollection, layout: favoriteTopicsCollection.collectionViewLayout, sizeForItemAt: IndexPath())
-        let expectedSize = vc!.dataSource.getTopicSize(frameWidth: vc!.view.frame.width)
-        
-        XCTAssert(size == expectedSize, "ProfileVC uses dataSource's getTopicSize function")
-    }
-    
     func testOnImageLoad(){
         let img = UIImage()
         vc?.profilePic.setImage(nil, for: .normal)
