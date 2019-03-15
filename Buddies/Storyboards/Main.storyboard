@@ -21,8 +21,8 @@
                     <connections>
                         <segue destination="qOp-NG-d1D" kind="relationship" relationship="viewControllers" id="eEi-rA-knW"/>
                         <segue destination="b1W-0B-UGl" kind="relationship" relationship="viewControllers" id="5Rv-xB-Boj"/>
+                        <segue destination="AWj-jp-FVK" kind="relationship" relationship="viewControllers" id="xzG-KL-HtR"/>
                         <segue destination="1D8-rx-tRj" kind="relationship" relationship="viewControllers" id="Vl3-pw-uaf"/>
-                        <segue destination="gRJ-5v-O3W" kind="relationship" relationship="viewControllers" id="Gs4-oD-Ueq"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0gu-pJ-Tei" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -30,33 +30,31 @@
             <point key="canvasLocation" x="-364" y="106"/>
         </scene>
         <!--My Activities-->
-        <scene sceneID="OTF-GQ-g8j">
+        <scene sceneID="FpY-mY-My4">
             <objects>
-                <tableViewController storyboardIdentifier="my-activities" title="My Activities" id="gRJ-5v-O3W" customClass="MyActivitiesVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="9mb-Z8-dCc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="foo" id="nFo-DB-LBz">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nFo-DB-LBz" id="7s0-vZ-5qX">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="gRJ-5v-O3W" id="AgT-fA-JB6"/>
-                            <outlet property="delegate" destination="gRJ-5v-O3W" id="kwh-GD-UJ0"/>
-                        </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" title="My Activities" image="My-Activities" id="iRr-Jg-rcf"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MPz-hH-xNv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="AWj-jp-FVK" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Activities" image="My-Activities" id="hzr-GB-bBm"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CV5-eU-3vx">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="U7r-fx-FNi" kind="relationship" relationship="rootViewController" id="fPR-Wu-8U0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fKS-zw-LmV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="564" y="408"/>
+            <point key="canvasLocation" x="564" y="404"/>
+        </scene>
+        <!--viewMyActivities-->
+        <scene sceneID="Iw0-JI-MLc">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MyActivities" referencedIdentifier="viewMyActivities" id="U7r-fx-FNi" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ayH-PC-Fnf"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dxi-q4-hXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1504" y="393"/>
         </scene>
         <!--Profile-->
         <scene sceneID="nwe-fG-SLO">

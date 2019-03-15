@@ -13,6 +13,7 @@
 		450CC0F5220964F000282BAB /* SignUpInfoVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */; };
 		4515BC24220BA95F0027B415 /* CreateActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515BC23220BA95F0027B415 /* CreateActivityVC.swift */; };
 		4544D3052214E93F007CB73D /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4544D3042214E93F007CB73D /* ActivityCell.swift */; };
+		4568210C223AD89A008368A4 /* MyActivities.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4568210B223AD89A008368A4 /* MyActivities.storyboard */; };
 		457F576B2218C54C00F27BFE /* ActivityTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F576A2218C54C00F27BFE /* ActivityTableVC.swift */; };
 		458CE72C220D36DC00012637 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CE72B220D36DC00012637 /* SearchTextField.swift */; };
 		458CE72E220D472200012637 /* MapItemSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CE72D220D472200012637 /* MapItemSearchResult.swift */; };
@@ -56,7 +57,6 @@
 		58EF8D982208A25F00872770 /* TopicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D922208A25F00872770 /* TopicLayout.swift */; };
 		58EF8D992208A25F00872770 /* TopicsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D932208A25F00872770 /* TopicsVC.swift */; };
 		58EF8DA32208A2BC00872770 /* CreateActivityVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA22208A2BC00872770 /* CreateActivityVCTests.swift */; };
-		58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */; };
 		58EF8DA82208A2C600872770 /* DiscoverTableVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DA62208A2C600872770 /* DiscoverTableVCTests.swift */; };
 		58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58EF8DB72208BE5E00872770 /* CreateActivity.storyboard */; };
 		58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8DB82208BE5E00872770 /* BuddiesStoryboard.swift */; };
@@ -136,6 +136,7 @@
 		450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInfoVCTests.swift; sourceTree = "<group>"; };
 		4515BC23220BA95F0027B415 /* CreateActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityVC.swift; sourceTree = "<group>"; };
 		4544D3042214E93F007CB73D /* ActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
+		4568210B223AD89A008368A4 /* MyActivities.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyActivities.storyboard; sourceTree = "<group>"; };
 		4574D3A9221F4E0800DDFD0F /* Keys.plist.enc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Keys.plist.enc; sourceTree = "<group>"; };
 		457F576A2218C54C00F27BFE /* ActivityTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableVC.swift; sourceTree = "<group>"; };
 		458CE72B220D36DC00012637 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
@@ -180,7 +181,6 @@
 		58EF8D932208A25F00872770 /* TopicsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsVC.swift; sourceTree = "<group>"; };
 		58EF8D9F2208A2B300872770 /* FABTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FABTests.swift; sourceTree = "<group>"; };
 		58EF8DA22208A2BC00872770 /* CreateActivityVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateActivityVCTests.swift; sourceTree = "<group>"; };
-		58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyActivitiesVCTests.swift; sourceTree = "<group>"; };
 		58EF8DA62208A2C600872770 /* DiscoverTableVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverTableVCTests.swift; sourceTree = "<group>"; };
 		58EF8DAE2208A2E900872770 /* TopicCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCollectionTests.swift; sourceTree = "<group>"; };
 		58EF8DAF2208A2E900872770 /* TopicModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicModelTests.swift; sourceTree = "<group>"; };
@@ -391,7 +391,6 @@
 		58EF8DA42208A2C600872770 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				58EF8DA52208A2C600872770 /* MyActivitiesVCTests.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -422,6 +421,7 @@
 				45FED0AC220A5F0300B90C3B /* Profile.storyboard */,
 				58A915B8220E2A5F008C325F /* PickTopics.storyboard */,
 				58705ECA22285CB700EFE9F2 /* Discover.storyboard */,
+				4568210B223AD89A008368A4 /* MyActivities.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -757,6 +757,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A81722BD221F254E00DF6935 /* ActivityTopicCollectionCell.xib in Resources */,
+				4568210C223AD89A008368A4 /* MyActivities.storyboard in Resources */,
 				58EF8DC22208BE5E00872770 /* Login.storyboard in Resources */,
 				B6428EF1221DB51D0052E469 /* ActivityChat.xib in Resources */,
 				B6428EEF221DB5130052E469 /* ActivityDescription.xib in Resources */,
@@ -969,7 +970,6 @@
 				A9B144B1220C82A0004C614E /* AppDelegateTests.swift in Sources */,
 				A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */,
 				58DBF760221CB7B3008512B3 /* ActivityTests.swift in Sources */,
-				58EF8DA72208A2C600872770 /* MyActivitiesVCTests.swift in Sources */,
 				A9203538220CD4E500D115F2 /* DeleteAccountVCTests.swift in Sources */,
 				58FC665422188D3B00D13723 /* TopicCollectionTests.swift in Sources */,
 			);
