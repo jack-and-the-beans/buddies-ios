@@ -57,12 +57,12 @@
                     <navigationItem key="navigationItem" title="My Activites" id="BdK-FO-HHO"/>
                     <connections>
                         <outlet property="searchBar" destination="CIu-8t-ZWm" id="aCV-h0-UNA"/>
-                        <segue destination="pUE-Sx-vG3" kind="show" id="6UC-za-FeP"/>
+                        <segue destination="pUE-Sx-vG3" kind="show" identifier="showActivityDetails" id="c4S-39-bnL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Scl-xM-3SJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="433" y="-924"/>
+            <point key="canvasLocation" x="316" y="-924"/>
         </scene>
     </scenes>
     <resources>
