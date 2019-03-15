@@ -140,8 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     activityTable = subView as? DiscoverTableVC
                 }
                 if (destination == "my_activities") {
-                    // @TODO: Uncomment this once my activities is merged:
-                    // activityTable = subView as? MyActivitiesVC
+                     activityTable = subView as? MyActivitiesVC
                 }
                 activityTable?.showActivity(with: activityId)
                 return
