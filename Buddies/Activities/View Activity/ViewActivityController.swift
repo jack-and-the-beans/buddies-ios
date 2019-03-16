@@ -180,9 +180,10 @@ class ViewActivityController: UIViewController {
 
     // Gets topics from the root topic store:
     func getTopics(from topicIds: [String]) -> [Topic] {
+        let ids = Array(Set(topicIds))
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let topicsArr = appDelegate.topicCollection.topics
-        return topicsArr.filter { topicIds.contains($0.id) }
+        let topics = appDelegate.topicCollection.topics
+        return ids.map { id in topics.first { $0.id == id } }.compactMap { $0 }
     }
 
     func render() {
