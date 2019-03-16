@@ -425,5 +425,4 @@ class ActivityTableVCTests: XCTestCase {
         
         XCTAssert(!sameParamDiffTuplesChanged, "When params have not changed, but stored in new tuple")
     }
-
 }

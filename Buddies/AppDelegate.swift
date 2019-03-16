@@ -34,13 +34,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        initLoginListener()
+        initLoginListener(launchOptions: launchOptions)
         
         self.window?.makeKeyAndVisible()
         return true
     }
     
-    func initLoginListener(data: DataAccessor = DataAccessor.instance) {
+    func initLoginListener(data: DataAccessor = DataAccessor.instance, launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         
         // Last login state -> initially none.
         var wasLoggedIn: Bool? = nil
@@ -60,6 +60,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             wasLoggedIn = isLoggedIn
             wasAUserDoc = isAUserDoc
             
+            // Nil if there is no activity ID from launch.
+            // Otherwise, we need to load view Activity.
+            let notificationInfo = NotificationService.getNotificationInfo(from: launchOptions)
             
             if authHasChanged {
                 // Navigates to the appropriate view of:
@@ -68,7 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 //  - Main
                 self.setupView(isLoggedOut: !isLoggedIn,
                                isInitial: isInitial,
-                               needsAccountInfo: isLoggedIn && !isAUserDoc)
+                               needsAccountInfo: isLoggedIn && !isAUserDoc,
+                               notificationInfo: notificationInfo)
                 
                 // If we are logged in, setup other app content.
                 if isLoggedIn {
@@ -89,7 +93,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupView(isLoggedOut: Bool,
                    isInitial: Bool,
-                   needsAccountInfo: Bool) {
+                   needsAccountInfo: Bool,
+                   notificationInfo: ActivityNotificationInfo? = nil) {
         if isLoggedOut {
             setWindow(isInitial, vc: BuddiesStoryboard.Login.viewController())
             return
@@ -106,29 +111,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         else {
             self.setWindow(isInitial, vc: BuddiesStoryboard.Main.viewController())
+            self.handleLaunch(from: notificationInfo)
         }
     }
-    
-    /*
 
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    // Called if receiving a notification while the app is running but in the background:
+    func application(_ application: UIApplication, didReceiveRemoteNotification notification: [AnyHashable: Any]) {
+        // Do NOT navigate to the activities screen while the
+        // user is already using the app!
+        guard application.applicationState != .active else { return }
+        self.handleLaunch(from: NotificationService.getNotificationInfo(from: notification))
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    // Handles launch if we have an activity ID from a notification.
+    // Called with nil if there is no activityID on launch.
+    func handleLaunch(from notificationInfo: ActivityNotificationInfo?) {
+        guard let activityId = notificationInfo?.activityId,
+              let destination = notificationInfo?.navigationDestination,
+              let tabController = window?.rootViewController as? UITabBarController,
+              let controllers = tabController.viewControllers else { return }
+        
+        // Find the table from which we want to show the activity
+        // Only runs on the nav controlers under the tab bar
+        var activityTable: ActivityTableVC?
+        for case let controller as UINavigationController in controllers {
+            if (destination == "discover") {
+                for case let subView as DiscoverTableVC in controller.viewControllers {
+                    tabController.selectedIndex = 0;
+                    activityTable = subView
+                    break
+                }
+            } else if destination == "my_activities" {
+                for case let subView as MyActivitiesVC in controller.viewControllers {
+                    tabController.selectedIndex = 2;
+                    activityTable = subView
+                    break
+                }
+            }
+            if (activityTable != nil) {
+                break
+            }
+        }
+        activityTable?.showActivity(with: activityId)
     }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-    */
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
