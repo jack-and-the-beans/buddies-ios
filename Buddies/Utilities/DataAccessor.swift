@@ -155,6 +155,7 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         }
     }
     
+    // Callback will not include users who DNE
     func useUsers(from userIds: [String], fn: @escaping ([User]) -> Void) -> Canceler {
         var users: [UserId: User] = [:]
         let cancelers = userIds.map { uid in useUser(id: uid) { user in
@@ -217,24 +218,25 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         }
 
         _userRegistration[id] = usersCollection.document(id).addSnapshotListener {
-            guard let snap = $0 else {
-                print($1!)
-                return
-            }
+            var user: OtherUser?
             
-            guard let user = OtherUser.from(snap: snap) else {
-                print("invalid user :( \(id)")
-                return
-            }
-            
-            self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
-                user.image = img
-                self.onInvalidateUser(user: user)
+            if let snap = $0 {
+                user = OtherUser.from(snap: snap)
+                if let user = user {
+                    self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
+                        user.image = img
+                        self.onInvalidateUser(user: user)
+                    }
+                }
+            } else if let err = $1 {
+                print(err)
             }
 
+            // We want to remove and invalidate, even
+            // if getting the user failed:
             self._usersLoading.removeAll(where: { $0 == id })
             
-            self.onInvalidateUser(user: user)
+            self.onInvalidateUser(user: user, id: id)
         }
     }
     
@@ -294,11 +296,15 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         }
     }
     
-    
-    func onInvalidateUser(user: OtherUser) {
-        _userCache.setObject(user, forKey: user.uid as AnyObject)
-        
-        _userListeners[user.uid]?.forEach { $0.fn(user) }
+    // If user is nil, we can use the given id
+    // to call the listeners
+    func onInvalidateUser(user: OtherUser?, id: UserId? = nil) {
+        if let user = user {
+            _userCache.setObject(user, forKey: user.uid as AnyObject)
+            _userListeners[user.uid]?.forEach { $0.fn(user) }
+        } else if let uid = id {
+            _userListeners[uid]?.forEach { $0.fn(user) }
+        }
     }
     
     // MARK: LoggedInUserInvalidationDelegate
