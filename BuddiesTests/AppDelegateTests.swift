@@ -53,4 +53,14 @@ class AppDelegateTests: XCTestCase {
         
         app.setupView(isLoggedOut: true, isInitial: true, needsAccountInfo: true)
     }
+    
+    func testHandleLaunch() {
+        guard let app = UIApplication.shared.delegate as? AppDelegate else {
+            XCTAssertTrue(false, "No app delegate :(")
+            return
+        }
+
+        let info = ActivityNotificationInfo(activityId: "abcd", navigationDestination: "discover")
+        app.handleLaunch(from: info)
+    }
 }

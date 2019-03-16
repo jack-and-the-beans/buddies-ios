@@ -115,5 +115,51 @@ class NotificationServiceTest: XCTestCase {
         )
         XCTAssert(true, "Does not crash on error throw")
     }
+    
+    func testGetNotificationInfoLaunchOptions () {
+        let userInfo: [AnyHashable: Any] = [
+            "activity_id": "abc",
+            "nav_dest": "123"
+        ]
+        let notification: [String: Any] = [
+            "userInfo": userInfo
+        ]
+        let launchOptions = [
+            UIApplication.LaunchOptionsKey.remoteNotification: notification
+        ]
+        
+        let res = NotificationService.getNotificationInfo(from: launchOptions)
+        XCTAssert(res?.activityId == "abc")
+        XCTAssert(res?.navigationDestination == "123")
+    }
+    
+    // Returns nil when the info can't be found:
+    func testGetNotificationInfoLaunchOptionsNil () {
+        let launchOptions: [UIApplication.LaunchOptionsKey: Any] = [:]
+        
+        let res = NotificationService.getNotificationInfo(from: launchOptions)
+        XCTAssert(res == nil)
+    }
+    
+    func testGetNotificationInfoNotificationData () {
+        let userInfo: [AnyHashable: Any] = [
+            "activity_id": "abc",
+            "nav_dest": "123"
+        ]
+        
+        let res = NotificationService.getNotificationInfo(from: userInfo)
+        XCTAssert(res?.activityId == "abc")
+        XCTAssert(res?.navigationDestination == "123")
+    }
+    
+    // Returns nil when the activity ID can't be found:
+    func testGetNotificationInfoDataNil () {
+        let userInfo: [AnyHashable: Any] = [
+            "nav_dest": "123"
+        ]
+        
+        let res = NotificationService.getNotificationInfo(from: userInfo)
+        XCTAssert(res == nil)
+    }
 }
 
