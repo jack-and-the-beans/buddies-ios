@@ -30,11 +30,17 @@ class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
     
     
     override func viewWillAppear(_ animated: Bool) {
+        //Super calls fetchAndLoadActivities
         super.viewWillAppear(animated)
         cancelUserListener = DataAccessor.instance.useLoggedInUser{ user in
+            guard let user = user else { return }
+            let oldUser = self.user
+            // If user changed
             self.user = user
+            if user.uid != oldUser?.uid {
+                self.fetchAndLoadActivities()
+            }
         }
-        fetchAndLoadActivities()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -43,13 +49,9 @@ class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
     }
     
     override func viewDidLoad() {
-        searchBar.delegate = self
-        
-        self.setupHideKeyboardOnTap()
-        cancelUserListener = DataAccessor.instance.useLoggedInUser{ user in
-            self.user = user
-        }
         super.viewDidLoad()
+        searchBar.delegate = self
+        self.setupHideKeyboardOnTap()
     }
 
     func filterActivities(_ activities: [[Activity]], query: String?) -> [[Activity]] {
