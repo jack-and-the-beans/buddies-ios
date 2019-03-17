@@ -71,6 +71,7 @@ class TopicCollection: NSObject {
     
     func loadTopics(){
         FirestoreManager.shared.loadAllDocuments(ofType: "topics"){ snapshots in
+            self.topics = []
             for snap in snapshots {
                 self.addTopic(snapshot: snap)
             }
