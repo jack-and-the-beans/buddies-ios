@@ -189,6 +189,7 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             
             // If we removed the listener, add it back
             if _userRegistration[id] == nil {
+                _usersLoading.append(id)
                 self._loadUser(id: id)
             }
         }
