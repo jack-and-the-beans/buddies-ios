@@ -37,6 +37,10 @@ class FilterSearchBarTests: XCTestCase {
         
         parent.addSubview(bar)
     }
+    
+    func testProvideUser() {
+        bar.provideLoggedInUser(nil)
+    }
 
     func testFilterMenuToggling() {
         XCTAssert(parent.subviews.count == 1)

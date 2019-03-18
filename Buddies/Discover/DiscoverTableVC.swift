@@ -23,6 +23,7 @@ class DiscoverTableVC : ActivityTableVC {
         
         cancelUserListener = DataAccessor.instance.useLoggedInUser { user in
             self.user = user
+            self.searchBar.provideLoggedInUser(user)
         }
         
         searchBar.displayDelegate = self

@@ -20,15 +20,16 @@ protocol FilterSearchBarDelegate {
 
 class FilterSearchBar : UISearchBar, UISearchBarDelegate {
     private static let metersPerMile: CGFloat = 1609.344
+    static var defaultSettings = [1, 6, 200]
     
     var displayDelegate: FilterSearchBarDelegate?
     
-    // This just uses default values for now
-    //  these probably need to be stored in
-    //  firestore for BUD-41 🤔
-    var lastFilterState: FilterState = ("", 1, 6, 200)
+    var lastFilterState: FilterState = ("", defaultSettings[0], defaultSettings[1], CGFloat(defaultSettings[2])) {
+        didSet { updateSliderValues() }
+    }
     var nextLocationRange: CGFloat?
     var nextDateRange: (Int, Int)?
+    var user: LoggedInUser?
     
     var searchTimer: Timer?
     var filterMenu: FilterMenuElements?
@@ -51,6 +52,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         
         // Create the filter button
         let bttn = makeFilterButton(
+            saying: "Filter",
             doing: #selector(self.onFilterTapped),
             rounding: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner])
         
@@ -65,8 +67,24 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         ])
     }
     
-    private func makeFilterButton(doing action: Selector, rounding corners: CACornerMask) -> UIButton {
-        let bttn = makeButton(saying: "Filter", doing: action)
+    func provideLoggedInUser(_ user: LoggedInUser?) {
+        self.user = user
+        
+        var filterSettings = user?.filterSettings ?? FilterSearchBar.defaultSettings
+        
+        // Convert to a filter state tuple
+        self.lastFilterState = (
+            self.lastFilterState.filterText,
+            filterSettings[0],
+            filterSettings[1],
+            CGFloat(filterSettings[2])
+        )
+        
+        
+    }
+    
+    private func makeFilterButton(saying: String, doing action: Selector, rounding corners: CACornerMask) -> UIButton {
+        let bttn = makeButton(saying: saying, doing: action)
         
         // Design
         bttn.backgroundColor = Theme.theme
@@ -119,6 +137,13 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         return bttn
     }
     
+    func updateSliderValues() {
+        filterMenu?.dateSlider.selectedMinValue = CGFloat(lastFilterState.dateMin)
+        filterMenu?.dateSlider.selectedMaxValue = CGFloat(lastFilterState.dateMax)
+
+        filterMenu?.locationRangeSlider.selectedMaxValue = lastFilterState.maxMilesAway
+    }
+    
     func renderNewFilterMenu() -> FilterMenuElements {
         let container = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         container.backgroundColor = .clear
@@ -132,11 +157,8 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         let dateSlider = makeSlider(from: 1, to: 6)
         dateSlider.delegate = DateRangeSliderDelegate.instance
         dateSlider.minDistance = 1
-        dateSlider.selectedMinValue = CGFloat(lastFilterState.dateMin)
-        dateSlider.selectedMaxValue = CGFloat(lastFilterState.dateMax)
         
         let locationRangeSlider = makeSlider(from: 1, to: 200)
-        locationRangeSlider.selectedMaxValue = lastFilterState.maxMilesAway
         locationRangeSlider.disableRange = true
         
         // Make labels
@@ -144,7 +166,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         let locationSliderLabel = makeLabel(saying: "Distance (miles):")
         
         // Make buttons
-        let innerFilterButton = BuddyButton.makeButton(saying: "Filter", doing: #selector(self.saveFilterMenu), from: self)
+        let innerFilterButton = BuddyButton.makeButton(saying: "Save Filter", doing: #selector(self.saveFilterMenu), from: self)
         let cancelButton = makeButton(saying: "Cancel", doing: #selector(self.closeFilterMenu))
         cancelButton.setTitleColor(Theme.themeAlt, for: .normal)
 
@@ -185,7 +207,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         NSLayoutConstraint.activate(sideConstraints + childToContainerConstraints)
         
         // Return useful components
-        return (container: container, locationRangeSlider: locationRangeSlider, dateSlider: dateSlider)
+        return (container, locationRangeSlider, dateSlider)
     }
     
     @objc func closeFilterMenu() {
@@ -213,6 +235,8 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         
         // Show the filter menu...
         self.filterMenu = renderNewFilterMenu()
+        updateSliderValues()
+        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -258,6 +282,9 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         
         // Store request params #NoRaceConditions
         self.lastFilterState = myState
+        
+        // Write these settings away
+        user?.filterSettings = [ lastFilterState.dateMin, lastFilterState.dateMax, Int(lastFilterState.maxMilesAway) ]
         
         let params = getSearchParams(from: myState)
         
