@@ -20,11 +20,11 @@ protocol FilterSearchBarDelegate {
 
 class FilterSearchBar : UISearchBar, UISearchBarDelegate {
     private static let metersPerMile: CGFloat = 1609.344
-    static var defaultSettings = [1, 6, 200]
+    static var defaultSettings = ["dateMin": 1, "dateMax": 6, "maxMilesAway": 200]
     
     var displayDelegate: FilterSearchBarDelegate?
     
-    var lastFilterState: FilterState = ("", defaultSettings[0], defaultSettings[1], CGFloat(defaultSettings[2])) {
+    var lastFilterState: FilterState = ("", defaultSettings["dateMin"]!, defaultSettings["dateMax"]!, CGFloat(defaultSettings["maxMilesAway"]!)) {
         didSet { updateSliderValues() }
     }
     var nextLocationRange: CGFloat?
@@ -75,9 +75,9 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         // Convert to a filter state tuple
         self.lastFilterState = (
             self.lastFilterState.filterText,
-            filterSettings[0],
-            filterSettings[1],
-            CGFloat(filterSettings[2])
+            filterSettings["dateMin"]!,
+            filterSettings["dateMax"]!,
+            CGFloat(filterSettings["maxMilesAway"]!)
         )
         
         
@@ -284,7 +284,9 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         self.lastFilterState = myState
         
         // Write these settings away
-        user?.filterSettings = [ lastFilterState.dateMin, lastFilterState.dateMax, Int(lastFilterState.maxMilesAway) ]
+        user?.filterSettings = [ "dateMin": lastFilterState.dateMin,
+                                 "dateMax": lastFilterState.dateMax,
+                                 "maxMilesAway": Int(lastFilterState.maxMilesAway) ]
         
         let params = getSearchParams(from: myState)
         

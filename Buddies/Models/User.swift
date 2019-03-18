@@ -89,7 +89,7 @@ class LoggedInUser : User {
     var bio : String { didSet { onChange("bio", oldValue, bio) } }
     var favoriteTopics : [String] { didSet { onChange("favorite_topics", oldValue, favoriteTopics) } }
     var location : GeoPoint? { didSet { onChange("location", oldValue, location) } }
-    var filterSettings : [Int] { didSet { onChange("filter_settings", oldValue, filterSettings) } }
+    var filterSettings : [String:Int] { didSet { onChange("filter_settings", oldValue, filterSettings) } }
     
     var locationCoords: (Double, Double)? {
         get {
@@ -143,7 +143,7 @@ class LoggedInUser : User {
          location: GeoPoint?,
          shouldSendJoinedActivityNotification: Bool,
          shouldSendActivitySuggestionNotification: Bool,
-         filterSettings: [Int],
+         filterSettings: [String:Int],
          notificationToken: String?,
          chatReadAt: [ ActivityId: Timestamp ]) {
         self.delegate = delegate
@@ -229,7 +229,7 @@ class LoggedInUser : User {
                     location: data["location"] as? GeoPoint,
                     shouldSendJoinedActivityNotification: shouldSendJoinedActivityNotification,
                     shouldSendActivitySuggestionNotification: shouldSendActivitySuggestionNotification,
-                    filterSettings: data["filter_settings"] as? [Int] ?? FilterSearchBar.defaultSettings,
+                    filterSettings: data["filter_settings"] as? [String:Int] ?? FilterSearchBar.defaultSettings,
                     notificationToken: data["notification_token"] as? String,
                     chatReadAt: chatReadAt)
     }
