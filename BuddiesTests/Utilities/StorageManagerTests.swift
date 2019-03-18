@@ -98,20 +98,22 @@ class StorageManagerTests: XCTestCase {
     }
     
     func testGetImage_nocache() {
-        let exp = expectation(description: "image loaded")
+        var exp: XCTestExpectation? = expectation(description: "image loaded")
         let manager = StorageManualSaved()
         let session = MockURLSession()
-        
+
         let path = Bundle.main.path(forResource: "bean", ofType: "jpg")
         let url = URL(fileURLWithPath: path!)
-        
+
         manager.getImage(imageUrl: url.absoluteString,
                          localFileName: "hello",
-                         session: session,
-                         callback: { _ in exp.fulfill() })
-        
-        self.waitForExpectations(timeout: 2.0)
-        
+                         session: session) { _ in
+            exp?.fulfill()
+            exp = nil
+        }
+
+        self.waitForExpectations(timeout: 2)
+
         // Should only write once!
         XCTAssert(manager.persistDownloadInvocations.count == 1)
     }

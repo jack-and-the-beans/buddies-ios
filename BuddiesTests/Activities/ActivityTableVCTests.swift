@@ -299,10 +299,11 @@ class ActivityTableVCTests: XCTestCase {
     
     func testLoadUser(){
         
-        let expectation = self.expectation(description: "image loaded callback")
+        var expectation: XCTestExpectation? = self.expectation(description: "Load user callback")
 
         activityTableVC.loadUser(uid: "my_uid", dataAccessor: instance) {
-            expectation.fulfill()
+            expectation?.fulfill()
+            expectation = nil
         }
         
         waitForExpectations(timeout: 0.2)
@@ -314,17 +315,15 @@ class ActivityTableVCTests: XCTestCase {
     // It clearly works in the UI, so ignoring this
     //   since getting the DataAccesser to work is causing issues
     func testLoadActivity(){
-        let expectation = self.expectation(description: "image loaded callback")
-        
-        //Called inside inside of loadActivity and loadUser and loadUserImage
-        expectation.expectedFulfillmentCount = 1
-        
+        var expectation: XCTestExpectation? = self.expectation(description: "Load activity callback")
+
         let path = IndexPath(row: 0, section: 0)
         
         activityTableVC.activities = [[nil]]
         
         activityTableVC.loadActivity(thisActivity.activityId, at: path, dataAccessor: instance){
-            expectation.fulfill()
+            expectation?.fulfill()
+            expectation = nil
         }
         
         waitForExpectations(timeout: 2)
