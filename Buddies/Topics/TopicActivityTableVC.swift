@@ -35,6 +35,8 @@ class TopicActivityTableVC : ActivityTableVC {
         
         cancelUserListener = DataAccessor.instance.useLoggedInUser { user in
             self.user = user
+            self.searchBar.provideLoggedInUser(user)
+            
             if let user = user {
                 self.favoriteButton.isSelected = user.favoriteTopics.contains(self.topic.id)
             }

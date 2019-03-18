@@ -84,11 +84,12 @@ class LoggedInUser : User {
     let notificationToken : String?
     
     // MARK: Mutable Properties
-    var imageUrl : String { didSet { onChange("image_url", imageUrl) } }
-    var name : String { didSet { onChange("name", name) } }
-    var bio : String { didSet { onChange("bio", bio) } }
-    var favoriteTopics : [String] { didSet { onChange("favorite_topics", favoriteTopics) } }
-    var location : GeoPoint? { didSet { onChange("location", location) } }
+    var imageUrl : String { didSet { onChange("image_url", oldValue, imageUrl) } }
+    var name : String { didSet { onChange("name", oldValue, name) } }
+    var bio : String { didSet { onChange("bio", oldValue, bio) } }
+    var favoriteTopics : [String] { didSet { onChange("favorite_topics", oldValue, favoriteTopics) } }
+    var location : GeoPoint? { didSet { onChange("location", oldValue, location) } }
+    var filterSettings : [Int] { didSet { onChange("filter_settings", oldValue, filterSettings) } }
     
     var locationCoords: (Double, Double)? {
         get {
@@ -101,28 +102,30 @@ class LoggedInUser : User {
     // MARK: User Settings
     var shouldSendJoinedActivityNotification : Bool {
         didSet {
-            onChange("should_send_joined_activity_notification",
+            onChange("should_send_joined_activity_notification", oldValue,
                      shouldSendJoinedActivityNotification)
         }
     }
     var shouldSendActivitySuggestionNotification : Bool {
         didSet {
-            onChange("should_send_activity_suggestion_notification",
+            onChange("should_send_activity_suggestion_notification", oldValue,
                      shouldSendActivitySuggestionNotification)
         }
     }
     
     // MARK: Blocking
-    var blockedUsers : [UserId] { didSet { onChange("blocked_users", blockedUsers) } }
-    var blockedActivities : [ActivityId] { didSet { onChange("blocked_activities", blockedActivities) } }
+    var blockedUsers : [UserId] { didSet { onChange("blocked_users", oldValue, blockedUsers) } }
+    var blockedActivities : [ActivityId] { didSet { onChange("blocked_activities", oldValue, blockedActivities) } }
     let blockedBy : [UserId] // Shouldn't be updated directly! Automatic inverse of blocked_users.
     
     // map of activity ID to timestamp - when the user last read the chat.
-    var chatReadAt: [ ActivityId: Timestamp ] { didSet { onChange("chat_read_at", chatReadAt) } }
+    var chatReadAt: [ ActivityId: Timestamp ] { didSet { onChange("chat_read_at", oldValue, chatReadAt) } }
     
-    private func onChange(_ key: String, _ value: Any?) {
-        delegate?.onInvalidateLoggedInUser(user: self)
-        delegate?.triggerServerUpdate(userId: uid, key: key, value: value)
+    private func onChange<T : Equatable>(_ key: String, _ oldValue: T?, _ newValue: T?) {
+        if oldValue != newValue {
+            delegate?.onInvalidateLoggedInUser(user: self)
+            delegate?.triggerServerUpdate(userId: uid, key: key, value: newValue)
+        }
     }
     
     init(delegate: LoggedInUserInvalidationDelegate?,
@@ -140,6 +143,7 @@ class LoggedInUser : User {
          location: GeoPoint?,
          shouldSendJoinedActivityNotification: Bool,
          shouldSendActivitySuggestionNotification: Bool,
+         filterSettings: [Int],
          notificationToken: String?,
          chatReadAt: [ ActivityId: Timestamp ]) {
         self.delegate = delegate
@@ -158,6 +162,7 @@ class LoggedInUser : User {
         self.location = location
         self.shouldSendJoinedActivityNotification = shouldSendJoinedActivityNotification
         self.shouldSendActivitySuggestionNotification = shouldSendActivitySuggestionNotification
+        self.filterSettings = filterSettings
         self.notificationToken = notificationToken
         self.chatReadAt = chatReadAt
     }
@@ -180,6 +185,7 @@ class LoggedInUser : User {
         self.location = nil
         self.shouldSendJoinedActivityNotification = false
         self.shouldSendActivitySuggestionNotification = false
+        self.filterSettings = FilterSearchBar.defaultSettings
         self.notificationToken = name
         self.chatReadAt = ["no":Timestamp()]
     }
@@ -223,6 +229,7 @@ class LoggedInUser : User {
                     location: data["location"] as? GeoPoint,
                     shouldSendJoinedActivityNotification: shouldSendJoinedActivityNotification,
                     shouldSendActivitySuggestionNotification: shouldSendActivitySuggestionNotification,
+                    filterSettings: data["filter_settings"] as? [Int] ?? FilterSearchBar.defaultSettings,
                     notificationToken: data["notification_token"] as? String,
                     chatReadAt: chatReadAt)
     }

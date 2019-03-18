@@ -36,19 +36,21 @@ class Activity {
     }
 
     // MARK: Mutable properties
-    var members : [UserId] { didSet { onChange("members", members) } }
-    var location : GeoPoint { didSet { onChange("location", location) } }
-    var ownerId : UserId { didSet { onChange("owner_id", ownerId) } }
-    var title : String { didSet { onChange("title", title) } }
-    var description : String { didSet { onChange("description", description) } }
-    var startTime : Timestamp { didSet { onChange("start_time", startTime) } }
-    var endTime : Timestamp { didSet { onChange("end_time", endTime) } }
-    var topicIds : [String] { didSet { onChange("topic_ids", topicIds) } }
-    var locationText: String { didSet { onChange("location_text", locationText) }}
+    var members : [UserId] { didSet { onChange("members", oldValue, members) } }
+    var location : GeoPoint { didSet { onChange("location", oldValue, location) } }
+    var ownerId : UserId { didSet { onChange("owner_id", oldValue, ownerId) } }
+    var title : String { didSet { onChange("title", oldValue, title) } }
+    var description : String { didSet { onChange("description", oldValue, description) } }
+    var startTime : Timestamp { didSet { onChange("start_time", oldValue, startTime) } }
+    var endTime : Timestamp { didSet { onChange("end_time", oldValue, endTime) } }
+    var topicIds : [String] { didSet { onChange("topic_ids", oldValue, topicIds) } }
+    var locationText: String { didSet { onChange("location_text", oldValue, locationText) }}
 
-    private func onChange(_ key: String, _ value: Any?) {
-        delegate?.onInvalidateActivity(activity: self, id: activityId)
-        delegate?.triggerServerUpdate(activityId: activityId, key: key, value: value)
+    private func onChange<T : Equatable>(_ key: String, _ oldValue: T?, _ newValue: T?) {
+        if oldValue != newValue {
+            delegate?.onInvalidateActivity(activity: self, id: activityId)
+            delegate?.triggerServerUpdate(activityId: activityId, key: key, value: newValue)
+        }
     }
     
     init(delegate: ActivityInvalidationDelegate?,
