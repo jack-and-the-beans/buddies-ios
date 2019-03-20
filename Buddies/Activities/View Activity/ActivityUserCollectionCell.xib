@@ -27,8 +27,9 @@
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="760" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HIW-6c-6EV">
                         <rect key="frame" x="203" y="10" width="55" height="30"/>
+                        <color key="tintColor" red="0.63921568630000003" green="0.086274509799999996" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <state key="normal" title="Remove">
-                            <color key="titleColor" red="1" green="0.0" blue="0.034920876080000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="titleColor" red="0.63921568630000003" green="0.086274509799999996" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </state>
                         <connections>
                             <action selector="onRemoveUser:" destination="gTV-IL-0wX" eventType="touchUpInside" id="PXg-I9-7e6"/>
