@@ -218,10 +218,10 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             oldReg.remove()
         }
 
-        _userRegistration[id] = usersCollection.document(id).addSnapshotListener {
+        _userRegistration[id] = usersCollection.document(id).addSnapshotListener { snap, err in
             var user: OtherUser?
             
-            if let snap = $0 {
+            if let snap = snap {
                 user = OtherUser.from(snap: snap)
                 if let user = user {
                     self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
@@ -229,7 +229,7 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
                         self.onInvalidateUser(user: user)
                     }
                 }
-            } else if let err = $1 {
+            } else if let err = err {
                 print(err)
             }
 
