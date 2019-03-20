@@ -94,7 +94,6 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         if (!hasRendered) {
             self.registerCollectionViews()
             self.initMiniArea()
-            self.joinButton?.layer.cornerRadius = 5
         }
         
         // Set local data sources & functions to new data:

@@ -106,11 +106,11 @@
                                 <outlet property="dataSource" destination="-1" id="FeM-CU-G5K"/>
                             </connections>
                         </collectionView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPS-y9-NQ4">
-                            <rect key="frame" x="20" y="602" width="335" height="45"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPS-y9-NQ4" customClass="BuddyButton" customModule="Buddies" customModuleProvider="target">
+                            <rect key="frame" x="20" y="607" width="335" height="40"/>
                             <color key="backgroundColor" red="0.0" green="0.43204674529999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="45" id="frQ-bO-IP2"/>
+                                <constraint firstAttribute="height" constant="40" id="frQ-bO-IP2"/>
                             </constraints>
                             <state key="normal" title="Join">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -131,14 +131,20 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rc6-SZ-CsE">
                             <rect key="frame" x="172.5" y="621" width="30" height="36"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                            <state key="normal" title="^"/>
+                            <color key="tintColor" red="0.4941176471" green="0.36078431370000003" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="^">
+                                <color key="titleColor" red="0.4941176471" green="0.36078431370000003" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
                             <connections>
                                 <action selector="onShrinkTap:" destination="-1" eventType="touchUpInside" id="Rfn-c4-K4G"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Khl-NW-sKH">
                             <rect key="frame" x="140" y="586" width="95" height="30"/>
-                            <state key="normal" title="Leave Activity"/>
+                            <color key="tintColor" red="0.4941176471" green="0.36078431370000003" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="Leave Activity">
+                                <color key="titleColor" red="0.4941176471" green="0.36078431370000003" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
                             <connections>
                                 <action selector="onLeaveTap:" destination="-1" eventType="touchUpInside" id="zbG-2F-IdJ"/>
                             </connections>
@@ -146,7 +152,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DbE-YH-bXB">
                             <rect key="frame" x="137.5" y="586" width="100" height="30"/>
                             <state key="normal" title="Delete Activity">
-                                <color key="titleColor" red="1" green="0.0" blue="0.034920876080000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="titleColor" red="0.63921568627450975" green="0.086274509803921567" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </state>
                             <connections>
                                 <action selector="onDeleteTap:" destination="-1" eventType="touchUpInside" id="oNo-gB-eMW"/>

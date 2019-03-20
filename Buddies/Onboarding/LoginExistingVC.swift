@@ -12,7 +12,7 @@ import Firebase
 class LoginExistingVC: LoginBase {
     @IBOutlet weak var emailField: UnderlinedTextbox!
     @IBOutlet weak var passwordField: UnderlinedTextbox!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.accessibilityIdentifier = "loginExistingVC"

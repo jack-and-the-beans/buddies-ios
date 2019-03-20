@@ -52,7 +52,9 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
 
     var imagePicker = UIImagePickerController()
     var myFirstName: String?
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
     override func getTopField() -> UIView {
         return bioText
     }
@@ -63,6 +65,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         // Do any additional setup after loading the view.
         bioText.delegate = self
         bioText.textColor = UIColor.lightGray
+        bioText.layer.cornerRadius = 5
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         bioText.layer.borderColor = ControlColors.fieldBorderFocused.cgColor

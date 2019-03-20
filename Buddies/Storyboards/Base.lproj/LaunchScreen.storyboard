@@ -18,18 +18,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="JackAndTheBeans" translatesAutoresizingMaskIntoConstraints="NO" id="1Za-Th-lrh">
-                                <rect key="frame" x="50" y="196" width="275" height="275"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Smiley" translatesAutoresizingMaskIntoConstraints="NO" id="xje-IU-L5j">
+                                <rect key="frame" x="-4" y="283.5" width="383" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="1Za-Th-lrh" secondAttribute="height" multiplier="1:1" id="8Gs-3P-Pgi"/>
+                                    <constraint firstAttribute="height" constant="100" id="sRD-go-mBu"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.27058823529411763" green="0.26666666666666666" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="1Za-Th-lrh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="ILe-t7-fxn"/>
-                            <constraint firstItem="1Za-Th-lrh" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Ikt-pK-HOA"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1Za-Th-lrh" secondAttribute="trailing" constant="50" id="TXu-Pm-KoD"/>
+                            <constraint firstItem="xje-IU-L5j" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="8IP-7D-VA9"/>
+                            <constraint firstItem="xje-IU-L5j" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Bgt-d7-11p"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -40,6 +39,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="JackAndTheBeans" width="640" height="640"/>
+        <image name="Smiley" width="383" height="260.5"/>
     </resources>
 </document>
