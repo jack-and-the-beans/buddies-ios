@@ -101,6 +101,7 @@
 		A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5F220239EE00C05F2C /* UIApplicationTests.swift */; };
 		A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */; };
 		B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
+		B63D444A22417DC600612239 /* BuddiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63D444922417DC600612239 /* BuddiesUITests.swift */; };
 		B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */; };
 		B6428EEF221DB5130052E469 /* ActivityDescription.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6428EEE221DB5130052E469 /* ActivityDescription.xib */; };
 		B6428EF1221DB51D0052E469 /* ActivityChat.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6428EF0221DB51D0052E469 /* ActivityChat.xib */; };
@@ -117,6 +118,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B63D444C22417DC600612239 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B6AC549321F8DB8300B075B8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B6AC549A21F8DB8300B075B8;
+			remoteInfo = Buddies;
+		};
 		B6AC54B021F8DB8500B075B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B6AC549321F8DB8300B075B8 /* Project object */;
@@ -227,6 +235,9 @@
 		A9E8BF5D22022F3400C05F2C /* UIVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVIewController.swift; sourceTree = "<group>"; };
 		A9E8BF5F220239EE00C05F2C /* UIApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationTests.swift; sourceTree = "<group>"; };
 		A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControlTests.swift; sourceTree = "<group>"; };
+		B63D444722417DC600612239 /* BuddiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BuddiesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B63D444922417DC600612239 /* BuddiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddiesUITests.swift; sourceTree = "<group>"; };
+		B63D444B22417DC600612239 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaSearch.swift; sourceTree = "<group>"; };
 		B6428EEE221DB5130052E469 /* ActivityDescription.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityDescription.xib; sourceTree = "<group>"; };
 		B6428EF0221DB51D0052E469 /* ActivityChat.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityChat.xib; sourceTree = "<group>"; };
@@ -250,6 +261,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B63D444422417DC600612239 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B6AC549821F8DB8300B075B8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -571,6 +589,15 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		B63D444822417DC600612239 /* BuddiesUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B63D444922417DC600612239 /* BuddiesUITests.swift */,
+				B63D444B22417DC600612239 /* Info.plist */,
+			);
+			path = BuddiesUITests;
+			sourceTree = "<group>";
+		};
 		B6A57B6F22209BAE00C26948 /* View Activity */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,6 +619,7 @@
 			children = (
 				B6AC549D21F8DB8300B075B8 /* Buddies */,
 				B6AC54B221F8DB8500B075B8 /* BuddiesTests */,
+				B63D444822417DC600612239 /* BuddiesUITests */,
 				B6AC549C21F8DB8300B075B8 /* Products */,
 				769FE6AA175095E2C7DD39A9 /* Pods */,
 				821E1FEC13FCAEDDDB13A1A6 /* Frameworks */,
@@ -604,6 +632,7 @@
 			children = (
 				B6AC549B21F8DB8300B075B8 /* Buddies.app */,
 				B6AC54AF21F8DB8500B075B8 /* BuddiesTests.xctest */,
+				B63D444722417DC600612239 /* BuddiesUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -662,6 +691,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B63D444622417DC600612239 /* BuddiesUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B63D445022417DC600612239 /* Build configuration list for PBXNativeTarget "BuddiesUITests" */;
+			buildPhases = (
+				B63D444322417DC600612239 /* Sources */,
+				B63D444422417DC600612239 /* Frameworks */,
+				B63D444522417DC600612239 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B63D444D22417DC600612239 /* PBXTargetDependency */,
+			);
+			name = BuddiesUITests;
+			productName = BuddiesUITests;
+			productReference = B63D444722417DC600612239 /* BuddiesUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		B6AC549A21F8DB8300B075B8 /* Buddies */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B6AC54C321F8DB8500B075B8 /* Build configuration list for PBXNativeTarget "Buddies" */;
@@ -710,6 +757,10 @@
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Jack and the Beans";
 				TargetAttributes = {
+					B63D444622417DC600612239 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = B6AC549A21F8DB8300B075B8;
+					};
 					B6AC549A21F8DB8300B075B8 = {
 						CreatedOnToolsVersion = 10.1;
 						SystemCapabilities = {
@@ -739,11 +790,19 @@
 			targets = (
 				B6AC549A21F8DB8300B075B8 /* Buddies */,
 				B6AC54AE21F8DB8500B075B8 /* BuddiesTests */,
+				B63D444622417DC600612239 /* BuddiesUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B63D444522417DC600612239 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B6AC549921F8DB8300B075B8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -869,6 +928,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B63D444322417DC600612239 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B63D444A22417DC600612239 /* BuddiesUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B6AC549721F8DB8300B075B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -970,6 +1037,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B63D444D22417DC600612239 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B6AC549A21F8DB8300B075B8 /* Buddies */;
+			targetProxy = B63D444C22417DC600612239 /* PBXContainerItemProxy */;
+		};
 		B6AC54B121F8DB8500B075B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B6AC549A21F8DB8300B075B8 /* Buddies */;
@@ -989,6 +1061,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B63D444E22417DC600612239 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 74YMV2J9D7;
+				INFOPLIST_FILE = BuddiesUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "jack-and-the-beans.BuddiesUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Buddies;
+			};
+			name = Debug;
+		};
+		B63D444F22417DC600612239 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 74YMV2J9D7;
+				INFOPLIST_FILE = BuddiesUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "jack-and-the-beans.BuddiesUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Buddies;
+			};
+			name = Release;
+		};
 		B6AC54C121F8DB8500B075B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1192,6 +1302,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B63D445022417DC600612239 /* Build configuration list for PBXNativeTarget "BuddiesUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B63D444E22417DC600612239 /* Debug */,
+				B63D444F22417DC600612239 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B6AC549621F8DB8300B075B8 /* Build configuration list for PBXProject "Buddies" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

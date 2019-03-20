@@ -53,6 +53,16 @@
                referenceType = "1">
             </LocationScenarioReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B63D444622417DC600612239"
+               BuildableName = "BuddiesUITests.xctest"
+               BlueprintName = "BuddiesUITests"
+               ReferencedContainer = "container:Buddies.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
