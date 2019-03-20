@@ -15,7 +15,7 @@ class LoginExistingVC: LoginBase {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.accessibilityIdentifier = "loginExistingVC"
         emailField.text = initEmailText
         passwordField.text = initPasswordText
     }
