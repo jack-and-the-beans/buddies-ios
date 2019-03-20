@@ -70,7 +70,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         
         // Design
         bttn.backgroundColor = ControlColors.theme
-        bttn.setTitleColor(UIColor.white, for: .normal)
+        bttn.setTitleColor(ControlColors.white, for: .normal)
         bttn.translatesAutoresizingMaskIntoConstraints = false
         
         // Rounded corners
@@ -144,16 +144,10 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         let locationSliderLabel = makeLabel(saying: "Distance (miles):")
         
         // Make buttons
-        let innerFilterButton = makeFilterButton(
-            doing: #selector(self.saveFilterMenu),
-            rounding: [
-                .layerMaxXMaxYCorner,
-                .layerMaxXMinYCorner,
-                .layerMinXMaxYCorner,
-                .layerMinXMinYCorner,
-            ])
+        let innerFilterButton = BuddyButton.makeButton(saying: "Filter", doing: #selector(self.saveFilterMenu), from: self)
         let cancelButton = makeButton(saying: "Cancel", doing: #selector(self.closeFilterMenu))
-        
+        cancelButton.setTitleColor(ControlColors.themeAlt, for: .normal)
+
         // put things together
         let containerChildren = [
             dateSliderLabel,
@@ -169,7 +163,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         let parent = superview! // Get the window in an ugly way
         
         parent.addSubview(container)
-        
+
         container.bindFrameToSuperviewBounds()
         blurView.bindFrameToSuperviewBounds()
         

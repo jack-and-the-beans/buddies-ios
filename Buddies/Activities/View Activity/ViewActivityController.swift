@@ -34,8 +34,9 @@ class ViewActivityController: UIViewController {
     // Programmatically setup nav bar:
     override func viewDidLoad() {
         self.title = "View Activity"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+        let button = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
+        button.tintColor = ControlColors.bad
+        self.navigationItem.rightBarButtonItem = button
     }
 
     // Need to wait to render until here
@@ -254,7 +255,7 @@ class ViewActivityController: UIViewController {
             self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
         } else {
             self.navigationItem.rightBarButtonItem?.isEnabled = true
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+            self.navigationItem.rightBarButtonItem?.tintColor = ControlColors.bad
         }
     }
 }

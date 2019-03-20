@@ -113,6 +113,7 @@
 		B688B47B221CCB6D0031A364 /* ActivityDescriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B47A221CCB6D0031A364 /* ActivityDescriptionController.swift */; };
 		B688B47D221CCBAE0031A364 /* ActivityChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B47C221CCBAE0031A364 /* ActivityChatController.swift */; };
 		B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A521F8DB8500B075B8 /* Assets.xcassets */; };
+		B6E66B1C2242B8E4009643D2 /* BuddyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E66B1B2242B8E4009643D2 /* BuddyButton.swift */; };
 		BC97CE98FE7521FEC111E8D8 /* Pods_Buddies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */; };
 		D224642A61925CB2F139C62A /* Pods_BuddiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A75D052FEF0993FE926DD6A9 /* Pods_BuddiesTests.framework */; };
 /* End PBXBuildFile section */
@@ -254,6 +255,7 @@
 		B6AC54AA21F8DB8500B075B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6AC54AF21F8DB8500B075B8 /* BuddiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BuddiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6AC54B521F8DB8500B075B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6E66B1B2242B8E4009643D2 /* BuddyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyButton.swift; sourceTree = "<group>"; };
 		B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaTest.swift; sourceTree = "<group>"; };
 		B6F8D990221748F100CDD081 /* AlgoliaMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaMock.swift; sourceTree = "<group>"; };
 		B99012110D81D232FCCCF814 /* Pods-BuddiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuddiesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BuddiesTests/Pods-BuddiesTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 			isa = PBXGroup;
 			children = (
 				58EF8D832208A1DF00872770 /* FAB.swift */,
+				B6E66B1B2242B8E4009643D2 /* BuddyButton.swift */,
 				A9C9852B221E658C003462AC /* FilterSearchBar.swift */,
 				A9E8BF492201F9D700C05F2C /* UnderlinedTextbox.swift */,
 				A9E8BF4B2201FB9C00C05F2C /* ControlColors.swift */,
@@ -640,12 +643,9 @@
 		B6AC549D21F8DB8300B075B8 /* Buddies */ = {
 			isa = PBXGroup;
 			children = (
-				4594D96B221D0A540082E8DA /* Keys.plist */,
-				4574D3A9221F4E0800DDFD0F /* Keys.plist.enc */,
 				A9BFA00F2215F36500A489A7 /* _ThirdParty */,
 				58A915BA220E30DA008C325F /* Activities */,
 				45FBF7A722095A030007DD6D /* CreateActivity */,
-				A850ED5F2203A0C100DBF1A6 /* Buddies.entitlements */,
 				A95B958622133F9100453AEA /* Models */,
 				58EF8DB62208BE5E00872770 /* Storyboards */,
 				582D0FA422035C21004F71E3 /* Utilities */,
@@ -657,6 +657,9 @@
 				58F2E9052208C05100D15214 /* Profile */,
 				58F2E9042208C03F00D15214 /* MyActivities */,
 				B6AC54A521F8DB8500B075B8 /* Assets.xcassets */,
+				A850ED5F2203A0C100DBF1A6 /* Buddies.entitlements */,
+				4594D96B221D0A540082E8DA /* Keys.plist */,
+				4574D3A9221F4E0800DDFD0F /* Keys.plist.enc */,
 				A850ED602203A12900DBF1A6 /* GoogleService-Info.plist */,
 				B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */,
 				B6AC54AA21F8DB8500B075B8 /* Info.plist */,
@@ -972,6 +975,7 @@
 				58EF8D982208A25F00872770 /* TopicLayout.swift in Sources */,
 				A9E8BF5A2202055B00C05F2C /* UIApplication.swift in Sources */,
 				450779DE2210D7B00008D0DF /* RangeSeekSliderDelegate.swift in Sources */,
+				B6E66B1C2242B8E4009643D2 /* BuddyButton.swift in Sources */,
 				A9E8BF5C22022D9400C05F2C /* LoginBase.swift in Sources */,
 				A9E8BF5E22022F3400C05F2C /* UIVIewController.swift in Sources */,
 				58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */,

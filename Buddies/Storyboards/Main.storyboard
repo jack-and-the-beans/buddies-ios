@@ -17,6 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="qOp-NG-d1D" kind="relationship" relationship="viewControllers" id="eEi-rA-knW"/>
@@ -146,4 +148,5 @@
         <image name="Profile" width="16" height="16"/>
         <image name="Topics" width="20" height="20"/>
     </resources>
+    <color key="tintColor" red="0.4941176471" green="0.36078431370000003" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

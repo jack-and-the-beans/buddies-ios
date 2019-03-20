@@ -12,7 +12,9 @@ import Firebase
 class LoginBase: UIViewController {
     var initEmailText: String?
     var initPasswordText: String?
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupHideKeyboardOnTap()

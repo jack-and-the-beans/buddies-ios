@@ -25,7 +25,7 @@ class FAB {
         // Design
         let plusImage = UIImage(named: "plus")
         button.setImage(plusImage, for: .normal)
-        button.setBackgroundColor(ControlColors.themeAlt)
+        button.setBackgroundColor(ControlColors.theme)
         button.setShadowColor(UIColor.black.withAlphaComponent(0.4), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.zPosition = 1000
@@ -37,8 +37,8 @@ class FAB {
         // Position it!
         let guide = vc.view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            guide.bottomAnchor.constraint(equalToSystemSpacingBelow: button.bottomAnchor, multiplier: 1),
-            guide.rightAnchor.constraint(equalToSystemSpacingAfter: button.rightAnchor, multiplier: 1)
+            guide.bottomAnchor.constraint(equalToSystemSpacingBelow: button.bottomAnchor, multiplier: 2),
+            guide.rightAnchor.constraint(equalToSystemSpacingAfter: button.rightAnchor, multiplier: 2)
         ])
     }
     
