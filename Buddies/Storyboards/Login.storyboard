@@ -42,6 +42,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwO-uY-FYC">
                                 <rect key="frame" x="99.5" y="587" width="176" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="haveAccount"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="KIN-L2-3af"/>
                                 </constraints>
@@ -141,6 +142,7 @@
                     <connections>
                         <outlet property="emailField" destination="02Z-AH-9si" id="7Lf-80-Pmh"/>
                         <outlet property="firstNameField" destination="58C-Ul-F4u" id="1CH-Dn-lOS"/>
+                        <outlet property="haveAcctButton" destination="uwO-uY-FYC" id="LjU-ao-AoK"/>
                         <outlet property="passwordField" destination="IaT-Yb-ken" id="Fqq-Pg-d5o"/>
                         <segue destination="s0Y-7Y-nAN" kind="show" identifier="GetSignUpInfo" id="9lV-Tx-R2h"/>
                     </connections>

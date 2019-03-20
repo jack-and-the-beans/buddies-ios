@@ -13,10 +13,11 @@ class LoginVC: LoginBase {
     @IBOutlet weak var firstNameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
-    
+    @IBOutlet weak var haveAcctButton: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.accessibilityIdentifier = "loginBase"
         emailField.text = initEmailText
         passwordField.text = initPasswordText
     }
