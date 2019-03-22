@@ -79,8 +79,6 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
             filterSettings["dateMax"]!,
             CGFloat(filterSettings["maxMilesAway"]!)
         )
-        
-        
     }
     
     private func makeFilterButton(saying: String, doing action: Selector, rounding corners: CACornerMask) -> UIButton {

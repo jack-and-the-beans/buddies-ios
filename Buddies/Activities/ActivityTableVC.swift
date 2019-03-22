@@ -46,7 +46,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchAndLoadActivities(for: lastSearchParam)
+        fetchAndLoadActivities(for: nil)
     }
     
     

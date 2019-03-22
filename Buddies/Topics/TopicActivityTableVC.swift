@@ -28,6 +28,11 @@ class TopicActivityTableVC : ActivityTableVC {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchBar.closeFilterMenu()
+    }
+    
     override func viewDidLoad() {
         self.setupHideKeyboardOnTap()
         
@@ -44,8 +49,6 @@ class TopicActivityTableVC : ActivityTableVC {
         
         searchBar.displayDelegate = self
         
-        lastSearchParam = searchBar.getSearchParams()
-
         super.viewDidLoad()
     }
     
@@ -61,10 +64,11 @@ class TopicActivityTableVC : ActivityTableVC {
     }
     
     override func fetchAndLoadActivities(for params: SearchParams? = nil) {
-        super.fetchAndLoadActivities(for: params)
-        guard let searchParams = params else { return }
+        let searchParams = params ?? searchBar.getSearchParams()
         
-        api.searchActivities(withText: params!.filterText,
+        super.fetchAndLoadActivities(for: params)
+        
+        api.searchActivities(withText: searchParams.filterText,
                              matchingAnyTopicOf: getTopics(),
                              startingAt: searchParams.startDate,
                              endingAt: searchParams.endDate,

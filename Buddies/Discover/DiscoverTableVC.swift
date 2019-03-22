@@ -34,6 +34,11 @@ class DiscoverTableVC : ActivityTableVC {
     }
     
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchBar.closeFilterMenu()
+    }
+    
     deinit {
         cancelUserListener?()
     }
@@ -43,8 +48,8 @@ class DiscoverTableVC : ActivityTableVC {
     }
     
     override func fetchAndLoadActivities(for params: SearchParams? = nil) {
+        let searchParams = params ?? searchBar.getSearchParams()
         super.fetchAndLoadActivities(for: params)
-        guard let searchParams = params else { return }
         
         //Sort into `geoPrecisionGroups` number of groups
         //  i.e. for search range of 1000 meters and 4 groups,
