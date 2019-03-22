@@ -11,7 +11,7 @@ import AVFoundation
 import FirebaseAuth
 
 
-class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
+class TopicsVC: UICollectionViewController {
 
     var topicCollection: TopicCollection!
     

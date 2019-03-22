@@ -11,37 +11,36 @@ import UIKit
 import FirebaseFirestore
 
 protocol TopicCollectionDelegate {
-    func updateTopicImages() -> Void
+    func updateTopicCollection() -> Void
 }
-
 
 class TopicCollection: NSObject {
     var topics = [Topic]()
     
     var delegate: TopicCollectionDelegate?
     
-    func addFromStorage(using data: [String: Any]?, for id: String, image: UIImage){
-        if let topic = Topic(id: id, data: data) {
-            topic.image = image
-            self.topics.append(topic)
-            self.delegate?.updateTopicImages()
+    func saveTopic(for id: String, named name: String, image: UIImage?){
+        let topic = Topic(id: id, name: name, image: image)
+        if let i = topics.firstIndex(where: { $0.id == topic.id } ) {
+            topics[i] = topic
+        } else {
+            //Insert in alphabetically sorted order 
+            let i = topics.firstIndex(where: { topic.name < $0.name }) ?? topics.endIndex
+            topics.insert(topic, at: i)
         }
+        delegate?.updateTopicCollection()
     }
     
-    func addWithoutImage(using data: [String: Any]?, for id: String){
-        if let topic = Topic(id: id, data: data){
-            self.topics.append(topic)
-            self.delegate?.updateTopicImages()
-        }
-    }
-    
-    func updateImage(with imageURL: URL, for id: String) {
+    func updateImage(with imageURL: URL, for id: String, uiThread: OperationQueue = OperationQueue.main) {
         do {
             let imageData = try Data(contentsOf: imageURL)
-            if let image = UIImage(data: imageData),
-                let idx = topics.firstIndex(where: {$0.id == id})  {
-                topics[idx].image = image
-                self.delegate?.updateTopicImages()
+            if let image = UIImage(data: imageData) {
+                if let idx = topics.firstIndex(where: {$0.id == id})  {
+                    topics[idx].image = image
+                    uiThread.addOperation {
+                        self.delegate?.updateTopicCollection()
+                    }
+                }
             } else {
                 print("Failed to load downloaded Topic image for \(id)")
             }
@@ -51,12 +50,15 @@ class TopicCollection: NSObject {
     }
     
     func addTopic(snapshot: DocumentSnapshot, storageManger: StorageManager = StorageManager.shared){
+        guard let data = snapshot.data(),
+            let name = data["name"] as? String else { return }
+        
         if let image = storageManger.getSavedImage(filename: snapshot.documentID) {
-            addFromStorage(using: snapshot.data(), for: snapshot.documentID, image: image)
+            saveTopic(for: snapshot.documentID, named: name, image: image)
         } else {
-            addWithoutImage(using: snapshot.data(), for: snapshot.documentID)
+            saveTopic(for: snapshot.documentID, named: name, image: nil)
             
-            guard let firebaseImageURL = snapshot.data()?["image_url"] as? String else {
+            guard let firebaseImageURL = data["image_url"] as? String else {
                 print("Cannot get Image URL for \(snapshot.documentID)")
                 return
             }
