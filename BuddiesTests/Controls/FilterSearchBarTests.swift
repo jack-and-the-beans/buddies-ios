@@ -22,7 +22,6 @@ class TestFilterSearchBarDelegate : FilterSearchBarDelegate {
 }
 
 class FilterSearchBarTests: XCTestCase {
-
     var parent: UIView!
     var bar: FilterSearchBar!
     var deli: TestFilterSearchBarDelegate!
