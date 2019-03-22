@@ -367,7 +367,6 @@
 		58D2A9FF220201A1009ABCBC /* Topics */ = {
 			isa = PBXGroup;
 			children = (
-				58EF8D912208A25F00872770 /* Topic.swift */,
 				58EF8D902208A25F00872770 /* TopicCell.swift */,
 				58EF8D8F2208A25E00872770 /* TopicCollection.swift */,
 				58EF8D922208A25F00872770 /* TopicLayout.swift */,
@@ -505,6 +504,7 @@
 		A95B958622133F9100453AEA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				58EF8D912208A25F00872770 /* Topic.swift */,
 				A95B958722133FA500453AEA /* User.swift */,
 				A95B958922133FB100453AEA /* Activity.swift */,
 			);

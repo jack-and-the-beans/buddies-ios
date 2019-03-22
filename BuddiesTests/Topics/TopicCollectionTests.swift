@@ -12,26 +12,33 @@ import FirebaseFirestore
 
 class TopicCollectionTests: XCTestCase {
     
+    
+    class MockOperationQueue: OperationQueue {
+        var numOperations = 0
+        override func addOperation(_ op: Operation) {
+            numOperations += 1
+        }
+    }
+
+    
     class MockCollectionDelegate: TopicCollectionDelegate {
         var fullUpdates = 0
-        func updateTopicImages() {
+        func updateTopicCollection() {
             fullUpdates += 1
         }
     }
     
     class MockTopicCollection: TopicCollection {
-        var addFromStorageCalls = 0
-        var addWithoutImageCalls = 0
+        var saveTopicCalls = 0
         var updateImageCalls = 0
         var loadTopicCalls = 0
         
-        override func addFromStorage(using data: [String : Any]?, for id: String, image: UIImage) {
-            addFromStorageCalls += 1
+        override func saveTopic(for id: String, named name: String, image: UIImage?) {
+            saveTopicCalls += 1
         }
-        override func addWithoutImage(using data: [String : Any]?, for id: String) {
-            addWithoutImageCalls += 1
-        }
-        override func updateImage(with imageURL: URL, for id: String) {
+    
+        
+        override func updateImage(with imageURL: URL, for id: String, uiThread: OperationQueue) {
             updateImageCalls += 1
         }
         
@@ -56,134 +63,24 @@ class TopicCollectionTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testAddFromStorage(){
-        let data: [[String: Any]?] = [
-            [
-                "name": "luke"
-            ],
-            nil,
-            [
-                "name": "jake"
-            ]
-        ]
-        for i in 0..<data.count {
-            collection.addFromStorage(using: data[i], for: i.description, image: UIImage())
+    func testSaveTopicsSorted(){
+        let names = ["x", "b", "e", "h", "u", "aa", "ab", "zz", "xz"]
+        let sortedNames = names.sorted { $0 < $1 }
+        
+        for i in 0..<names.count {
+            collection.saveTopic(for: i.description, named: names[i], image: nil)
         }
         
-            
-        XCTAssert(collection.topics.count == 2)
-        XCTAssert(collection.topics[0].id == "0")
-        XCTAssert(collection.topics[0].name == "luke")
-
-        XCTAssert(collection.topics[1].id == "2")
-        XCTAssert(collection.topics[1].name == "jake")
+        let collectionNames = collection.topics.map { $0.name }
         
-        XCTAssert(delegate.fullUpdates == 2)
-    }
-    
-    func testAddFromStorageInvalid(){
-        let data: [[String: Any]?] = [
-            [
-                "notName": "jake"
-            ]
-        ]
-        for i in 0..<data.count {
-            collection.addFromStorage(using: data[i], for: i.description, image: UIImage())
-        }
-        
-        XCTAssert(collection.topics.count == 0)
-        
-        XCTAssert(delegate.fullUpdates == 0)
-
-    }
-    
-    func testAddFromStorageMixed(){
-        let data: [[String: Any]?] = [
-            [
-                "notName": "luke"
-            ],
-            [
-                "name": "jake"
-            ]
-        ]
-        for i in 0..<data.count {
-            collection.addFromStorage(using: data[i], for: i.description, image: UIImage())
-        }
-        
-        XCTAssert(collection.topics.count == 1)
-        XCTAssert(collection.topics[0].id == "1")
-        XCTAssert(collection.topics[0].name == "jake")
-        
-        XCTAssert(delegate.fullUpdates == 1)
-    }
-    
-    
-    
-    
-    func testAddWithoutImage(){
-        let data: [[String: Any]?] = [
-            [
-                "name": "luke"
-            ],
-            nil,
-            [
-                "name": "jake"
-            ]
-        ]
-        for i in 0..<data.count {
-            collection.addWithoutImage(using: data[i], for: i.description)
-        }
-        
-        
-        XCTAssert(collection.topics.count == 2)
-        XCTAssert(collection.topics[0].id == "0")
-        XCTAssert(collection.topics[0].name == "luke")
-        
-        XCTAssert(collection.topics[1].id == "2")
-        XCTAssert(collection.topics[1].name == "jake")
-        
-        XCTAssert(delegate.fullUpdates == 2)
+        XCTAssert(collectionNames == sortedNames, "Topic colleciton sorts topics in alphabetical order")
         
     }
-    
-    func testAddWithoutImageInvalid(){
-        let data: [[String: Any]?] = [
-            [
-                "notName": "jake"
-            ]
-        ]
-        for i in 0..<data.count {
-            collection.addWithoutImage(using: data[i], for: i.description)
-        }
-        
-        XCTAssert(collection.topics.count == 0)
-        
-        XCTAssert(delegate.fullUpdates == 0)
-    }
-    
-    func testAddWithoutImageMixed(){
-        let data: [[String: Any]?] = [
-            [
-                "notName": "luke"
-            ],
-            [
-                "name": "jake"
-            ]
-        ]
-        for i in 0..<data.count {
-            collection.addWithoutImage(using: data[i], for: i.description)
-        }
-        
-        XCTAssert(collection.topics.count == 1)
-        XCTAssert(collection.topics[0].id == "1")
-        XCTAssert(collection.topics[0].name == "jake")
-        
-        XCTAssert(delegate.fullUpdates == 1)
-    }
-    
    
     
     func testUpdateImage(){
+        
+        let operationQueue = MockOperationQueue()
         
         collection.topics = [
             Topic(id: "0", name: "luke1", image: nil),
@@ -202,7 +99,7 @@ class TopicCollectionTests: XCTestCase {
         let elemsUpdated = stride(from: 0, to: 7, by: 2)
         
         for i in elemsUpdated{
-            collection.updateImage(with: url, for: i.description)
+            collection.updateImage(with: url, for: i.description, uiThread: operationQueue)
         }
         
         for i in 0..<7 {
@@ -212,8 +109,9 @@ class TopicCollectionTests: XCTestCase {
                 XCTAssert(collection.topics[i].image == nil)
             }
         }
+
         //the 0th, 2nd, and 6th item is updated
-        XCTAssert(delegate.fullUpdates == 4)
+        XCTAssert(operationQueue.numOperations == 4)
     }
     
     func testUpdateImageNoSuchTopic(){
@@ -260,8 +158,7 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(storageManager.downloadFileCalls == 0)
         XCTAssert(storageManager.getSavedImageCalls == 1)
         
-        XCTAssert(mockCollection.addFromStorageCalls == 1)
-        XCTAssert(mockCollection.addWithoutImageCalls == 0)
+        XCTAssert(mockCollection.saveTopicCalls == 1)
         XCTAssert(mockCollection.updateImageCalls == 0)
     }
     
@@ -283,8 +180,7 @@ class TopicCollectionTests: XCTestCase {
         XCTAssert(storageManager.getSavedImageCalls == 1)
 
         
-        XCTAssert(mockCollection.addFromStorageCalls == 0)
-        XCTAssert(mockCollection.addWithoutImageCalls == 1)
+        XCTAssert(mockCollection.saveTopicCalls == 1)
         XCTAssert(mockCollection.updateImageCalls == 1)
     }
     

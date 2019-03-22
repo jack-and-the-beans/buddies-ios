@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 import FirebaseAuth
 
-class TopicTabVC: TopicsVC {
+class TopicTabVC: TopicsVC, TopicCollectionDelegate {
+    
     
     var stopListeningToUser: Canceler?
     var user: LoggedInUser?
@@ -42,6 +43,10 @@ class TopicTabVC: TopicsVC {
     }
     
 
+    func updateTopicCollection() {
+        collectionView.reloadData()
+    }
+    
     func loadProfileData(dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
         
         return dataAccess.useLoggedInUser { user in
