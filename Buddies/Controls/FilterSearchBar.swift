@@ -75,7 +75,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         
         // Rounded corners
         bttn.clipsToBounds = true
-        bttn.layer.cornerRadius = 10
+        bttn.layer.cornerRadius = ControlColors.cornerRadius
         bttn.layer.maskedCorners = corners
         
         return bttn

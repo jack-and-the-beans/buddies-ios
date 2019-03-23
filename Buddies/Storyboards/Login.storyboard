@@ -103,7 +103,7 @@
                                         <rect key="frame" x="0.0" y="13" width="375" height="170"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Smiley" translatesAutoresizingMaskIntoConstraints="NO" id="qx6-qq-mXg">
-                                                <rect key="frame" x="-4" y="0.0" width="383" height="100"/>
+                                                <rect key="frame" x="33" y="0.0" width="309" height="100"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="PYp-g4-nky"/>
                                                 </constraints>
@@ -114,7 +114,7 @@
                                                     <constraint firstAttribute="height" constant="40" id="g2W-7A-TDL"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -246,7 +246,7 @@
                                         <rect key="frame" x="0.0" y="13" width="375" height="170"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Smiley" translatesAutoresizingMaskIntoConstraints="NO" id="iNu-yM-AVV">
-                                                <rect key="frame" x="-4" y="0.0" width="383" height="100"/>
+                                                <rect key="frame" x="33" y="0.0" width="309" height="100"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="8dk-W5-nDJ"/>
                                                 </constraints>
@@ -413,7 +413,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Smiley" width="383" height="260.5"/>
+        <image name="Smiley" width="309.5" height="221"/>
     </resources>
-    <color key="tintColor" red="0.4941176471" green="0.36078431370000003" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

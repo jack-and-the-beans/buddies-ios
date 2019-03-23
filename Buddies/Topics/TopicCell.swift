@@ -36,11 +36,17 @@ class TopicCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var toggleButton: ToggleButton!
+    @IBOutlet weak var bottomArea: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        containerView.layer.cornerRadius = 6
+        containerView.layer.cornerRadius = ControlColors.cornerRadius
         containerView.layer.masksToBounds = true
+        containerView.roundCorners(corners: [.topLeft, .topRight], radius: ControlColors.cornerRadius, color: ControlColors.theme.cgColor)
+        bottomArea.roundCorners(corners: [.bottomLeft, .bottomRight], radius: ControlColors.cornerRadius, color: ControlColors.theme.cgColor)
+        bottomArea.layer.borderWidth = 1
+        bottomArea.layer.borderColor = ControlColors.theme.cgColor
+        nameLabel.textColor = ControlColors.theme
     }
   
     var topic: Topic? {

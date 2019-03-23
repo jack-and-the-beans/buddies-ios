@@ -13,12 +13,18 @@ class SettingsVC: UITableViewController {
     @IBOutlet weak var joinedActivityNotificationToggle: UISwitch!
     @IBOutlet weak var topicNotificationToggle: UISwitch!
 
+    @IBOutlet weak var deleteAcctButton: UIButton!
+    @IBOutlet weak var signOutButton: UIButton!
+
     var stopListeningToUser: Canceler?
     var userRef: LoggedInUser?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        joinedActivityNotificationToggle.tintColor = ControlColors.theme
+        topicNotificationToggle.tintColor = ControlColors.theme
+        signOutButton.tintColor = ControlColors.themeAlt
+        deleteAcctButton.tintColor = ControlColors.bad
         renderView()
     }
     

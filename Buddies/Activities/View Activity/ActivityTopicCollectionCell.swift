@@ -10,8 +10,16 @@ import UIKit
 
 class ActivityTopicCollectionCell: UICollectionViewCell {
 
-    @IBOutlet var topicButton: UIButton!
+    @IBOutlet weak var topicText: UILabel!
+    @IBOutlet weak var topicArea: UIView!
     func render(withTopic topic: Topic) {
-        self.topicButton.setTitle(topic.name, for: .normal)
+        self.layoutIfNeeded()
+        self.topicArea.layer.cornerRadius = ControlColors.cornerRadius
+        self.topicArea.layer.masksToBounds = true
+        self.topicArea.layer.borderWidth = 1
+        self.topicArea.layer.borderColor = ControlColors.theme.cgColor
+
+        self.topicText.text = topic.name
+        self.topicText.textColor = ControlColors.theme
     }
 }
