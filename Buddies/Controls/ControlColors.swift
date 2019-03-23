@@ -14,5 +14,7 @@ class ControlColors {
     static let theme =  UIColor(red: 69/255, green: 68/255, blue: 184/255, alpha: 1.0)
     static let themeAlt =  UIColor(red: 126/255, green: 92/255, blue: 171/255, alpha: 1.0)
     static let white = UIColor(red: 1, green: 1, blue: 1, alpha: 0.8)
-    static let bad = UIColor(red: 152/255, green: 38/255, blue: 73/255, alpha: 1.0)
+    static let bad = UIColor.red
+    
+    static let cornerRadius: CGFloat = 10.0
 }

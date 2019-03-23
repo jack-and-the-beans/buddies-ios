@@ -19,25 +19,35 @@
                 <rect key="frame" x="0.0" y="0.0" width="207" height="50"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbB-Gk-A0d" customClass="BuddyButton" customModule="Buddies" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K49-Rt-yiy">
                         <rect key="frame" x="0.0" y="0.0" width="207" height="50"/>
-                        <color key="backgroundColor" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <state key="normal" title="concerts">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </state>
-                    </button>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYV-lk-Psw">
+                                <rect key="frame" x="82.5" y="14.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="IYV-lk-Psw" firstAttribute="centerY" secondItem="K49-Rt-yiy" secondAttribute="centerY" id="SkB-sD-kMh"/>
+                            <constraint firstItem="IYV-lk-Psw" firstAttribute="centerX" secondItem="K49-Rt-yiy" secondAttribute="centerX" id="VqE-1j-Vbj"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="nbB-Gk-A0d" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="BgI-E1-tzo"/>
-                <constraint firstAttribute="trailing" secondItem="nbB-Gk-A0d" secondAttribute="trailing" id="ql9-ob-cHn"/>
-                <constraint firstAttribute="bottom" secondItem="nbB-Gk-A0d" secondAttribute="bottom" id="sSo-a1-Fa0"/>
-                <constraint firstItem="nbB-Gk-A0d" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="yGu-Jo-qgN"/>
+                <constraint firstItem="K49-Rt-yiy" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="T2w-9E-IUg"/>
+                <constraint firstItem="K49-Rt-yiy" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="eBC-uB-Kdo"/>
+                <constraint firstAttribute="trailing" secondItem="K49-Rt-yiy" secondAttribute="trailing" id="mRq-lV-PQd"/>
+                <constraint firstAttribute="bottom" secondItem="K49-Rt-yiy" secondAttribute="bottom" id="vxQ-is-jyM"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="207" height="50"/>
             <connections>
-                <outlet property="topicButton" destination="nbB-Gk-A0d" id="vWd-Hq-cWn"/>
+                <outlet property="topicArea" destination="K49-Rt-yiy" id="dIv-vc-p8S"/>
+                <outlet property="topicText" destination="IYV-lk-Psw" id="KBF-Bw-EVL"/>
             </connections>
             <point key="canvasLocation" x="48.799999999999997" y="48.575712143928037"/>
         </collectionViewCell>

@@ -143,5 +143,4 @@
         <image name="check_circle" width="100" height="100"/>
         <image name="uncheck_circle" width="100" height="100"/>
     </resources>
-    <color key="tintColor" red="0.4941176471" green="0.36078431370000003" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
