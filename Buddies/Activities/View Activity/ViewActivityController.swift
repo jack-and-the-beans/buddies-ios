@@ -35,7 +35,7 @@ class ViewActivityController: UIViewController {
     override func viewDidLoad() {
         self.title = "View Activity"
         let button = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
-        button.tintColor = ControlColors.bad
+        button.tintColor = Theme.bad
         self.navigationItem.rightBarButtonItem = button
     }
 
@@ -254,7 +254,7 @@ class ViewActivityController: UIViewController {
             self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
         } else {
             self.navigationItem.rightBarButtonItem?.isEnabled = true
-            self.navigationItem.rightBarButtonItem?.tintColor = ControlColors.bad
+            self.navigationItem.rightBarButtonItem?.tintColor = Theme.bad
         }
     }
 }

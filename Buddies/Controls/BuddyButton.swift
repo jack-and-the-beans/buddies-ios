@@ -29,9 +29,9 @@ import UIKit
     }
 
     func styleMe() {
-        self.layer.cornerRadius = ControlColors.cornerRadius
-        self.backgroundColor = ControlColors.theme
-        self.titleLabel?.textColor = ControlColors.white
-        self.tintColor = ControlColors.white
+        self.layer.cornerRadius = Theme.cornerRadius
+        self.backgroundColor = Theme.theme
+        self.titleLabel?.textColor = Theme.white
+        self.tintColor = Theme.white
     }
 }

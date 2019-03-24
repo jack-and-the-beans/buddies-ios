@@ -43,7 +43,7 @@ extension UIView {
         
         let mask = CAShapeLayer()
         mask.path = path.cgPath
-        mask.fillColor = ControlColors.theme.cgColor
+        mask.fillColor = Theme.theme.cgColor
         mask.lineWidth = 2
         layer.addSublayer(mask)
     }

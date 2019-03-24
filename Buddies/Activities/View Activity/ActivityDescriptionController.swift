@@ -119,8 +119,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.usersArea.reloadData()
         self.configureMiniImages()
 
-        self.deleteButton.tintColor = ControlColors.bad
-        self.leaveButton.tintColor = ControlColors.bad
+        self.deleteButton.tintColor = Theme.bad
+        self.leaveButton.tintColor = Theme.bad
 
         // Conditionally show stuff based on
         // the current user's member status:
