@@ -27,74 +27,81 @@
                                     <rect key="frame" x="0.0" y="0.0" width="180" height="159"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="ODQ-Ea-1lb" userLabel="Container View">
+                                        <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="ol1-Rj-b9L" userLabel="Container View">
                                             <rect key="frame" x="0.0" y="0.0" width="180" height="159"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5ji-Mq-Kha">
-                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="120.5"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DNS-9c-yEp">
+                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="119"/>
                                                     <color key="backgroundColor" red="0.14901960780000001" green="0.59999999999999998" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Caption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DeK-oB-DWh">
-                                                    <rect key="frame" x="10" y="129" width="59" height="22"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SrS-2P-gga" customClass="ToggleButton" customModule="Buddies" customModuleProvider="target">
-                                                    <rect key="frame" x="130" y="112" width="56" height="56"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="08U-5Q-pJD">
+                                                    <rect key="frame" x="0.0" y="109" width="180" height="50"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Caption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shh-TG-IEz">
+                                                            <rect key="frame" x="8" y="19" width="59" height="22"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
+                                                            <color key="textColor" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SrS-2P-gga" customClass="ToggleButton" customModule="Buddies" customModuleProvider="target">
+                                                            <rect key="frame" x="130" y="1.5" width="56" height="56"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="56" id="T2S-QC-fsG"/>
+                                                                <constraint firstAttribute="height" constant="56" id="lku-GA-t96"/>
+                                                            </constraints>
+                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <inset key="contentEdgeInsets" minX="17" minY="17" maxX="17" maxY="17"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                                                    <color key="value" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="unselectedColor">
+                                                                    <color key="value" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="image" keyPath="selectedImg" value="check_circle"/>
+                                                                <userDefinedRuntimeAttribute type="image" keyPath="unselectedImg" value="uncheck_circle"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                            <connections>
+                                                                <action selector="toggleSelected:" destination="m8H-6g-PPe" eventType="touchUpInside" id="ALe-W4-6qr"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="56" id="T2S-QC-fsG"/>
-                                                        <constraint firstAttribute="height" constant="56" id="lku-GA-t96"/>
+                                                        <constraint firstItem="shh-TG-IEz" firstAttribute="centerY" secondItem="08U-5Q-pJD" secondAttribute="centerY" constant="5" id="0CF-D7-SDW"/>
+                                                        <constraint firstItem="shh-TG-IEz" firstAttribute="leading" secondItem="08U-5Q-pJD" secondAttribute="leading" constant="8" id="Abn-w6-a8e"/>
+                                                        <constraint firstItem="SrS-2P-gga" firstAttribute="centerY" secondItem="08U-5Q-pJD" secondAttribute="centerY" constant="4.5" id="Ei3-YD-qXo"/>
+                                                        <constraint firstAttribute="trailing" secondItem="SrS-2P-gga" secondAttribute="trailing" constant="-6" id="ROr-Lo-ctC"/>
+                                                        <constraint firstAttribute="height" constant="50" id="uBn-OJ-1Of"/>
                                                     </constraints>
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <inset key="contentEdgeInsets" minX="17" minY="17" maxX="17" maxY="17"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
-                                                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="unselectedColor">
-                                                            <color key="value" white="1" alpha="0.68688463184931503" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="image" keyPath="selectedImg" value="check_circle"/>
-                                                        <userDefinedRuntimeAttribute type="image" keyPath="unselectedImg" value="uncheck_circle"/>
-                                                    </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="toggleSelected:" destination="m8H-6g-PPe" eventType="touchUpInside" id="ALe-W4-6qr"/>
-                                                    </connections>
-                                                </button>
+                                                </view>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="DeK-oB-DWh" firstAttribute="leading" secondItem="ODQ-Ea-1lb" secondAttribute="leading" constant="10" id="37X-FP-E7C"/>
-                                                <constraint firstAttribute="bottom" secondItem="DeK-oB-DWh" secondAttribute="bottom" constant="8" id="Pj9-tQ-ceQ"/>
-                                                <constraint firstItem="5ji-Mq-Kha" firstAttribute="top" secondItem="ODQ-Ea-1lb" secondAttribute="top" id="aKl-rl-bTF"/>
-                                                <constraint firstItem="5ji-Mq-Kha" firstAttribute="leading" secondItem="ODQ-Ea-1lb" secondAttribute="leading" id="bYh-by-EmC"/>
-                                                <constraint firstAttribute="trailing" secondItem="5ji-Mq-Kha" secondAttribute="trailing" id="dQH-Nc-ai0"/>
-                                                <constraint firstAttribute="bottom" secondItem="SrS-2P-gga" secondAttribute="bottom" constant="-9" id="eTa-w4-Lf7"/>
-                                                <constraint firstAttribute="trailing" secondItem="SrS-2P-gga" secondAttribute="trailing" constant="-6" id="kt0-DI-xQy"/>
-                                                <constraint firstItem="DeK-oB-DWh" firstAttribute="top" secondItem="5ji-Mq-Kha" secondAttribute="bottom" constant="8.5" id="sCO-pv-UjZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="DNS-9c-yEp" secondAttribute="trailing" id="DaE-cL-l1L"/>
+                                                <constraint firstAttribute="trailing" secondItem="08U-5Q-pJD" secondAttribute="trailing" id="Mqm-yP-ept"/>
+                                                <constraint firstItem="08U-5Q-pJD" firstAttribute="leading" secondItem="ol1-Rj-b9L" secondAttribute="leading" id="TzT-RL-amk"/>
+                                                <constraint firstItem="08U-5Q-pJD" firstAttribute="top" secondItem="DNS-9c-yEp" secondAttribute="bottom" constant="-10" id="bHS-aE-Xos"/>
+                                                <constraint firstAttribute="bottom" secondItem="08U-5Q-pJD" secondAttribute="bottom" id="eyf-xE-fpt"/>
+                                                <constraint firstItem="DNS-9c-yEp" firstAttribute="leading" secondItem="ol1-Rj-b9L" secondAttribute="leading" id="tT4-ru-Qic"/>
+                                                <constraint firstItem="DNS-9c-yEp" firstAttribute="top" secondItem="ol1-Rj-b9L" secondAttribute="top" id="xZB-DF-kJN"/>
                                             </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="5"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="ODQ-Ea-1lb" firstAttribute="top" secondItem="4nf-yg-xOr" secondAttribute="top" id="7RX-Z3-prD"/>
-                                    <constraint firstItem="ODQ-Ea-1lb" firstAttribute="leading" secondItem="4nf-yg-xOr" secondAttribute="leading" id="LPb-yK-hcA"/>
-                                    <constraint firstAttribute="bottom" secondItem="ODQ-Ea-1lb" secondAttribute="bottom" id="e5l-so-BdN"/>
-                                    <constraint firstAttribute="trailing" secondItem="ODQ-Ea-1lb" secondAttribute="trailing" id="tkf-qU-SA3"/>
+                                    <constraint firstAttribute="bottom" secondItem="ol1-Rj-b9L" secondAttribute="bottom" id="L6O-Ah-h8W"/>
+                                    <constraint firstItem="ol1-Rj-b9L" firstAttribute="leading" secondItem="4nf-yg-xOr" secondAttribute="leading" id="P8u-j4-dED"/>
+                                    <constraint firstAttribute="trailing" secondItem="ol1-Rj-b9L" secondAttribute="trailing" id="SqJ-Bn-YEm"/>
+                                    <constraint firstItem="ol1-Rj-b9L" firstAttribute="top" secondItem="4nf-yg-xOr" secondAttribute="top" id="fZ4-4C-3O6"/>
                                 </constraints>
                                 <viewLayoutGuide key="safeArea" id="bzK-gA-kpV"/>
                                 <size key="customSize" width="180" height="159"/>
                                 <connections>
-                                    <outlet property="containerView" destination="ODQ-Ea-1lb" id="5eF-gC-fac"/>
-                                    <outlet property="imageView" destination="5ji-Mq-Kha" id="nwz-LY-nWh"/>
-                                    <outlet property="nameLabel" destination="DeK-oB-DWh" id="lob-OU-3Pj"/>
-                                    <outlet property="toggleButton" destination="SrS-2P-gga" id="1wm-MS-liW"/>
+                                    <outlet property="bottomArea" destination="08U-5Q-pJD" id="tQL-Kk-MU4"/>
+                                    <outlet property="containerView" destination="ol1-Rj-b9L" id="ALn-AN-WUE"/>
+                                    <outlet property="imageView" destination="DNS-9c-yEp" id="uBW-DH-APl"/>
+                                    <outlet property="nameLabel" destination="shh-TG-IEz" id="xSx-ok-S0k"/>
+                                    <outlet property="toggleButton" destination="SrS-2P-gga" id="hPY-5m-jPl"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

@@ -35,10 +35,10 @@
                                                     <color key="backgroundColor" red="0.14901960784313725" green="0.59999999999999998" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xh3-Aa-hsf">
-                                                    <rect key="frame" x="0.0" y="119" width="180" height="40"/>
+                                                    <rect key="frame" x="0.0" y="109" width="180" height="50"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNO-2G-fTv" customClass="ToggleButton" customModule="Buddies" customModuleProvider="target">
-                                                            <rect key="frame" x="132" y="-8" width="56" height="56"/>
+                                                            <rect key="frame" x="130" y="0.0" width="56" height="56"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="56" id="FFn-Ed-kuH"/>
                                                                 <constraint firstAttribute="width" constant="56" id="o9A-yo-LfT"/>
@@ -56,11 +56,11 @@
                                                                 <userDefinedRuntimeAttribute type="image" keyPath="unselectedImg" value="favorite_outline"/>
                                                             </userDefinedRuntimeAttributes>
                                                             <connections>
-                                                                <action selector="toggleSelected:" destination="Zc6-W6-bDA" eventType="touchUpInside" id="AHb-qA-3ab"/>
+                                                                <action selector="toggleSelected:" destination="Zc6-W6-bDA" eventType="touchUpInside" id="B4v-q2-J1J"/>
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Caption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9F7-fL-Jk5">
-                                                            <rect key="frame" x="8" y="9" width="59" height="22"/>
+                                                            <rect key="frame" x="8" y="19" width="59" height="22"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
                                                             <color key="textColor" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -69,27 +69,22 @@
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="9F7-fL-Jk5" firstAttribute="leading" secondItem="Xh3-Aa-hsf" secondAttribute="leading" constant="8" id="5G8-Ez-ui7"/>
-                                                        <constraint firstItem="9F7-fL-Jk5" firstAttribute="centerY" secondItem="Xh3-Aa-hsf" secondAttribute="centerY" id="Tme-Ls-r8H"/>
-                                                        <constraint firstItem="lNO-2G-fTv" firstAttribute="centerY" secondItem="Xh3-Aa-hsf" secondAttribute="centerY" id="ZWx-OX-3Mb"/>
-                                                        <constraint firstAttribute="height" constant="40" id="dcU-8U-2z0"/>
-                                                        <constraint firstAttribute="trailing" secondItem="lNO-2G-fTv" secondAttribute="trailing" constant="-8" id="j9j-ok-kKL"/>
+                                                        <constraint firstItem="9F7-fL-Jk5" firstAttribute="centerY" secondItem="Xh3-Aa-hsf" secondAttribute="centerY" constant="5" id="Tme-Ls-r8H"/>
+                                                        <constraint firstItem="lNO-2G-fTv" firstAttribute="centerY" secondItem="Xh3-Aa-hsf" secondAttribute="centerY" constant="3" id="ZWx-OX-3Mb"/>
+                                                        <constraint firstAttribute="height" constant="50" id="dcU-8U-2z0"/>
+                                                        <constraint firstAttribute="trailing" secondItem="lNO-2G-fTv" secondAttribute="trailing" constant="-6" id="j9j-ok-kKL"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="3xc-Id-cnY" secondAttribute="trailing" id="3mk-Km-Ogm"/>
                                                 <constraint firstItem="3xc-Id-cnY" firstAttribute="leading" secondItem="aBp-qJ-lVm" secondAttribute="leading" id="EQj-qh-gYs"/>
-                                                <constraint firstItem="Xh3-Aa-hsf" firstAttribute="top" secondItem="3xc-Id-cnY" secondAttribute="bottom" id="MKQ-UA-wDJ"/>
+                                                <constraint firstItem="Xh3-Aa-hsf" firstAttribute="top" secondItem="3xc-Id-cnY" secondAttribute="bottom" constant="-10" id="MKQ-UA-wDJ"/>
                                                 <constraint firstItem="3xc-Id-cnY" firstAttribute="top" secondItem="aBp-qJ-lVm" secondAttribute="top" id="aIo-xr-MlU"/>
                                                 <constraint firstAttribute="bottom" secondItem="Xh3-Aa-hsf" secondAttribute="bottom" id="dZc-cd-Qqm"/>
                                                 <constraint firstItem="Xh3-Aa-hsf" firstAttribute="leading" secondItem="aBp-qJ-lVm" secondAttribute="leading" id="oJ8-MV-2J4"/>
                                                 <constraint firstAttribute="trailing" secondItem="Xh3-Aa-hsf" secondAttribute="trailing" id="wlv-V8-x0U"/>
                                             </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="5"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
                                 </view>
@@ -118,6 +113,7 @@
                     <navigationItem key="navigationItem" title="Topics" id="koA-DB-2pN"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bch-6a-xd2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <collectionViewLayout id="RC3-QI-wKr" customClass="TopicLayout" customModule="Buddies" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="-1970.4000000000001" y="341.37931034482762"/>
         </scene>
