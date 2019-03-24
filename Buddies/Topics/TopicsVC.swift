@@ -19,7 +19,7 @@ class TopicsVC: UICollectionViewController, TopicCollectionDelegate {
 
       
     @IBAction func toggleSelected(_ sender: ToggleButton) {
-        guard let cell = sender.superview?.superview?.superview as? TopicCell,
+        guard let cell = sender.superview?.superview?.superview?.superview as? TopicCell,
             let topic = cell.topic else { return }
         changeSelectedState(for: topic, isSelected: sender.isSelected)
     }
