@@ -69,13 +69,13 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         let bttn = makeButton(saying: "Filter", doing: action)
         
         // Design
-        bttn.backgroundColor = ControlColors.theme
-        bttn.setTitleColor(ControlColors.white, for: .normal)
+        bttn.backgroundColor = Theme.theme
+        bttn.setTitleColor(Theme.white, for: .normal)
         bttn.translatesAutoresizingMaskIntoConstraints = false
         
         // Rounded corners
         bttn.clipsToBounds = true
-        bttn.layer.cornerRadius = ControlColors.cornerRadius
+        bttn.layer.cornerRadius = Theme.cornerRadius
         bttn.layer.maskedCorners = corners
         
         return bttn
@@ -91,9 +91,9 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         slider.step = 1
         
         slider.tintColor = UIColor.lightGray
-        slider.handleColor = ControlColors.theme
-        slider.handleBorderColor = ControlColors.theme
-        slider.colorBetweenHandles = ControlColors.theme
+        slider.handleColor = Theme.theme
+        slider.handleBorderColor = Theme.theme
+        slider.colorBetweenHandles = Theme.theme
         slider.lineHeight = 2
         slider.labelPadding = 2
         slider.handleBorderWidth = 2
@@ -146,7 +146,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         // Make buttons
         let innerFilterButton = BuddyButton.makeButton(saying: "Filter", doing: #selector(self.saveFilterMenu), from: self)
         let cancelButton = makeButton(saying: "Cancel", doing: #selector(self.closeFilterMenu))
-        cancelButton.setTitleColor(ControlColors.themeAlt, for: .normal)
+        cancelButton.setTitleColor(Theme.themeAlt, for: .normal)
 
         // put things together
         let containerChildren = [

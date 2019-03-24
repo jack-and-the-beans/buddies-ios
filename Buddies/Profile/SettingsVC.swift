@@ -21,10 +21,10 @@ class SettingsVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        joinedActivityNotificationToggle.tintColor = ControlColors.theme
-        topicNotificationToggle.tintColor = ControlColors.theme
-        signOutButton.tintColor = ControlColors.themeAlt
-        deleteAcctButton.tintColor = ControlColors.bad
+        joinedActivityNotificationToggle.tintColor = Theme.theme
+        topicNotificationToggle.tintColor = Theme.theme
+        signOutButton.tintColor = Theme.themeAlt
+        deleteAcctButton.tintColor = Theme.bad
         renderView()
     }
     

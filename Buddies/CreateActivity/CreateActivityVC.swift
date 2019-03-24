@@ -146,9 +146,9 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         
         dateSlider.delegate = DateRangeSliderDelegate.instance
         dateSlider.tintColor = UIColor.lightGray
-        dateSlider.handleColor = ControlColors.theme
-        dateSlider.handleBorderColor = ControlColors.theme
-        dateSlider.colorBetweenHandles = ControlColors.theme
+        dateSlider.handleColor = Theme.theme
+        dateSlider.handleBorderColor = Theme.theme
+        dateSlider.colorBetweenHandles = Theme.theme
 
         descriptionTextView.delegate = self
         descriptionTextView.textColor = UIColor.lightGray

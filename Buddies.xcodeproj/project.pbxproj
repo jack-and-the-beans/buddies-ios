@@ -94,7 +94,7 @@
 		A9E8BF45220143A300C05F2C /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF44220143A300C05F2C /* AuthHandler.swift */; };
 		A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */; };
 		A9E8BF4A2201F9D700C05F2C /* UnderlinedTextbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF492201F9D700C05F2C /* UnderlinedTextbox.swift */; };
-		A9E8BF4C2201FB9C00C05F2C /* ControlColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF4B2201FB9C00C05F2C /* ControlColors.swift */; };
+		A9E8BF4C2201FB9C00C05F2C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF4B2201FB9C00C05F2C /* Theme.swift */; };
 		A9E8BF5A2202055B00C05F2C /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF592202055B00C05F2C /* UIApplication.swift */; };
 		A9E8BF5C22022D9400C05F2C /* LoginBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5B22022D9400C05F2C /* LoginBase.swift */; };
 		A9E8BF5E22022F3400C05F2C /* UIVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5D22022F3400C05F2C /* UIVIewController.swift */; };
@@ -230,7 +230,7 @@
 		A9E8BF44220143A300C05F2C /* AuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandler.swift; sourceTree = "<group>"; };
 		A9E8BF462201534D00C05F2C /* LoginExistingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVC.swift; sourceTree = "<group>"; };
 		A9E8BF492201F9D700C05F2C /* UnderlinedTextbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextbox.swift; sourceTree = "<group>"; };
-		A9E8BF4B2201FB9C00C05F2C /* ControlColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlColors.swift; sourceTree = "<group>"; };
+		A9E8BF4B2201FB9C00C05F2C /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		A9E8BF592202055B00C05F2C /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		A9E8BF5B22022D9400C05F2C /* LoginBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBase.swift; sourceTree = "<group>"; };
 		A9E8BF5D22022F3400C05F2C /* UIVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVIewController.swift; sourceTree = "<group>"; };
@@ -540,7 +540,7 @@
 				B6E66B1B2242B8E4009643D2 /* BuddyButton.swift */,
 				A9C9852B221E658C003462AC /* FilterSearchBar.swift */,
 				A9E8BF492201F9D700C05F2C /* UnderlinedTextbox.swift */,
-				A9E8BF4B2201FB9C00C05F2C /* ControlColors.swift */,
+				A9E8BF4B2201FB9C00C05F2C /* Theme.swift */,
 				58022669220BE5E90068E08E /* ToggleButton.swift */,
 				A9ADCDCB2223383300D12EB4 /* DateRangeSliderDelegate.swift */,
 			);
@@ -991,7 +991,7 @@
 				58FC665722188E0E00D13723 /* DateInterval.swift in Sources */,
 				A9B144AF220B4165004C614E /* SettingsVC.swift in Sources */,
 				A81722B9221F1AA700DF6935 /* UIImageView.swift in Sources */,
-				A9E8BF4C2201FB9C00C05F2C /* ControlColors.swift in Sources */,
+				A9E8BF4C2201FB9C00C05F2C /* Theme.swift in Sources */,
 				4515BC24220BA95F0027B415 /* CreateActivityVC.swift in Sources */,
 				5854E62222371AEC007E7E8D /* TopicStubDataSource.swift in Sources */,
 				5868DEE7221F0564008B86FE /* TopicTabVC.swift in Sources */,

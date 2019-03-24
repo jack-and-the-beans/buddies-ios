@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Messaging.messaging().delegate = self.notifications
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.tintColor = ControlColors.theme
+        self.window?.tintColor = Theme.theme
         initLoginListener(launchOptions: launchOptions)
         
         self.window?.makeKeyAndVisible()

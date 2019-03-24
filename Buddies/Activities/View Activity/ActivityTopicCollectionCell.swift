@@ -14,12 +14,12 @@ class ActivityTopicCollectionCell: UICollectionViewCell {
     @IBOutlet weak var topicArea: UIView!
     func render(withTopic topic: Topic) {
         self.layoutIfNeeded()
-        self.topicArea.layer.cornerRadius = ControlColors.cornerRadius
+        self.topicArea.layer.cornerRadius = Theme.cornerRadius
         self.topicArea.layer.masksToBounds = true
         self.topicArea.layer.borderWidth = 1
-        self.topicArea.layer.borderColor = ControlColors.theme.cgColor
+        self.topicArea.layer.borderColor = Theme.theme.cgColor
 
         self.topicText.text = topic.name
-        self.topicText.textColor = ControlColors.theme
+        self.topicText.textColor = Theme.theme
     }
 }

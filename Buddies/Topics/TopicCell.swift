@@ -11,15 +11,15 @@ class TopicCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         containerView.layer.masksToBounds = true
-        containerView.layer.cornerRadius = ControlColors.cornerRadius
-        bottomArea.layer.cornerRadius = ControlColors.cornerRadius
+        containerView.layer.cornerRadius = Theme.cornerRadius
+        bottomArea.layer.cornerRadius = Theme.cornerRadius
         // Put the image on top of the bottom area:
         imageView.layer.zPosition = 2
         bottomArea.layer.zPosition = 1
         // Add the border to the bottom:
-        bottomArea.layer.borderColor = ControlColors.theme.cgColor
+        bottomArea.layer.borderColor = Theme.theme.cgColor
         bottomArea.layer.borderWidth = 1
-        nameLabel.textColor = ControlColors.theme
+        nameLabel.textColor = Theme.theme
     }
   
     var topic: Topic? {

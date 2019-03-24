@@ -65,11 +65,11 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         // Do any additional setup after loading the view.
         bioText.delegate = self
         bioText.textColor = UIColor.lightGray
-        bioText.layer.cornerRadius = ControlColors.cornerRadius
+        bioText.layer.cornerRadius = Theme.cornerRadius
         bioText.textContainerInset = UIEdgeInsets(top: 12 ,left: 7, bottom: 12, right: 7)
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
-        bioText.layer.borderColor = ControlColors.fieldBorderFocused.cgColor
+        bioText.layer.borderColor = Theme.fieldBorderFocused.cgColor
         bioText.layer.borderWidth = 2
         buttonPicture.layer.cornerRadius = buttonPicture.frame.size.width / 2
       
