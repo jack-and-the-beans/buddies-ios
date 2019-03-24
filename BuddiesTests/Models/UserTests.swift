@@ -63,7 +63,7 @@ class UserTests: XCTestCase {
         user.blockedActivities = ["a", "b", "c"]
         
         XCTAssert(deli.invalidations == deli.triggers, "should call both")
-        XCTAssert(deli.invalidations == 10, "one per line here. no de-dup expected")
+        XCTAssert(deli.invalidations == 6, "two per change. no de-dup expected")
     }
     
     func testLoggedInUserInit(){
