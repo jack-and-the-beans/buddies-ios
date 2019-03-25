@@ -41,5 +41,7 @@ class ActivityUserCollectionCell: UICollectionViewCell {
         }
         userImage.image = user.image
         userImage.makeCircle()
+        self.removeButton.tintColor = Theme.bad
+        self.removeButton.titleLabel?.textColor = Theme.bad
     }
 }
