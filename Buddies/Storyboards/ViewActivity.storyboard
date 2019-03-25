@@ -34,11 +34,20 @@
                     </view>
                     <connections>
                         <outlet property="contentArea" destination="gkP-p0-4aG" id="5oK-dY-hhu"/>
+                        <segue destination="DIj-N1-ehB" kind="show" identifier="showOtherUser" id="J0F-qZ-Ch5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="74C-z0-LJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="416.80000000000001" y="-2678.4107946026988"/>
+        </scene>
+        <!--OtherProfile-->
+        <scene sceneID="qwd-X8-GNI">
+            <objects>
+                <viewControllerPlaceholder storyboardName="OtherProfile" id="DIj-N1-ehB" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hwf-I0-GdP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1148" y="-2713"/>
         </scene>
     </scenes>
 </document>
