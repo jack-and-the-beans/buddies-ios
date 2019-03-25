@@ -15,12 +15,13 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var favoriteTopicsCollection: UICollectionView!
     @IBOutlet weak var activityTable: UITableView!
+    @IBOutlet weak var reportButton: UIBarButtonItem!
     
     
     var userActivities = [Activity]()
    
     var user: User?
-    var userId: UserId!
+    var userId: UserId! 
     
     var dataSource: TopicStubDataSource!
     

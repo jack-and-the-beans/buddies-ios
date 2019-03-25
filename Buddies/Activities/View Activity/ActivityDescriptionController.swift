@@ -68,6 +68,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     }
 
     var removeUser: ((_ uid: String) -> Void)?
+    var tapUser: ((_ uid: String) -> Void)?
 
     // MARK: Local data sources for rendering:
     var topics: [Topic] = []
@@ -87,6 +88,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         onExpand: @escaping () -> Void,
         onLeave: @escaping () -> Void,
         onRemoveUser: @escaping (_ uid: String) -> Void,
+        onTapUser: @escaping (_ uid: String) -> Void,
         onDeleteActivity: @escaping () -> Void,
         onJoin: @escaping () -> Void ) {
 
@@ -105,6 +107,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         self.toggleBigView = onExpand
         self.leaveActivity = onLeave
         self.removeUser = onRemoveUser
+        self.tapUser = onTapUser
         self.deleteActivity = onDeleteActivity
 
         // Set UI elements to new data:
@@ -206,7 +209,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
             let user = users[indexPath.row]
             let isIndividualOwner = self.curActivity?.getMemberStatus(of: user.uid) == .owner
             let isCurUserOwner = self.memberStatus == .owner
-            cell.render(withUser: users[indexPath.row], isCurUserOwner: isCurUserOwner, isIndividualOwner: isIndividualOwner, removeUser: self.removeUser)
+            cell.render(withUser: users[indexPath.row], isCurUserOwner: isCurUserOwner, isIndividualOwner: isIndividualOwner, tapUser: self.tapUser, removeUser: self.removeUser)
             return cell
         } else {
             return UICollectionViewCell()
