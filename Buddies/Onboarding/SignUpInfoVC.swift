@@ -56,7 +56,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         return .default
     }
     override func getTopField() -> UIView {
-        return bioText
+        return buttonPicture
     }
     
     override func viewDidLoad() {
