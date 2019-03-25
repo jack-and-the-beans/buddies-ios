@@ -166,11 +166,12 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
     
         if let activity = getActivity(at: indexPath) {
-            return format(cell: cell, using: activity, at: indexPath)
+            let activityUserImages = activity.members.compactMap { users[$0]?.image }
+            cell.format(using: activity, userImages: activityUserImages)
         } else {
             cell.isHidden = true
-            return cell
         }
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -180,41 +181,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
             return 0
         }
     }
-    
-    func format(cell: ActivityCell, using activity: Activity, at indexPath: IndexPath) -> ActivityCell{
-        
-        cell.titleLabel.text = activity.title
-        cell.descriptionLabel.text = activity.description
-        cell.locationLabel.text = activity.locationText
-        let dateRange = DateInterval(start: activity.startTime.dateValue(),
-                                     end: activity.endTime.dateValue())
-    
-        
-        let pixelsPerChar: CGFloat = 10.0
-        
-        let charsFitInCell = Int(cell.frame.width/pixelsPerChar)
-        
-        let locStrLength = max(15, charsFitInCell - activity.title.count)
-        
-        let locStr = dateRange.rangePhrase(relativeTo: Date(), tryShorteningIfLongerThan: locStrLength)
-        
-        cell.dateLabel.text = locStr.capitalized
 
-        let activityUserImages = activity.members.compactMap { users[$0]?.image }
-        
-        zip(cell.memberPics, activityUserImages).forEach() { (btn, img) in btn.setImage(img, for: .normal)
-        }
-        
-
-        // hide "..." as needed
-        if activity.members.count <= 3{
-            cell.extraPicturesLabel.isHidden = true
-        } else {
-            cell.extraPicturesLabel.isHidden = false
-        }
-        
-        return cell
-    }
     
     func getActivity(at indexPath: IndexPath) -> Activity? {
         return activities[indexPath.section][indexPath.row]

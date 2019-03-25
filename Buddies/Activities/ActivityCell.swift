@@ -34,4 +34,37 @@ class ActivityCell: UITableViewCell {
             memberPic.imageView?.clipsToBounds = true
         }
     }
+    
+    func format(using activity: Activity, userImages: [UIImage]) {
+        
+        titleLabel.text = activity.title
+        descriptionLabel.text = activity.description
+        locationLabel.text = activity.locationText
+        
+        let dateRange = DateInterval(start: activity.startTime.dateValue(),
+                                     end: activity.endTime.dateValue())
+        
+        
+        let pixelsPerChar: CGFloat = 10.0
+        
+        let charsFitInCell = Int(frame.width/pixelsPerChar)
+        
+        let locStrLength = max(15, charsFitInCell - activity.title.count)
+        
+        let locStr = dateRange.rangePhrase(relativeTo: Date(), tryShorteningIfLongerThan: locStrLength)
+        
+        dateLabel.text = locStr.capitalized
+        
+        zip(memberPics, userImages).forEach() { (btn, img) in
+            btn.setImage(img, for: .normal)
+        }
+        
+        
+        // hide "..." as needed
+        if activity.members.count <= 3{
+            extraPicturesLabel.isHidden = true
+        } else {
+            extraPicturesLabel.isHidden = false
+        }
+    }
 }
