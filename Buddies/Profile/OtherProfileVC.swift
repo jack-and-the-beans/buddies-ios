@@ -18,29 +18,9 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
     
     
     var userActivities = [Activity]()
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
-        
-        if let activity = getActivity(at: indexPath) {
-            cell.format(using: activity, userImages: [])
-        }
-        return cell
-        
-    }
-    
-    func getActivity(at indexPath: IndexPath) -> Activity? {
-        return userActivities[indexPath.row]
-    }
-
    
     var user: User?
+    var userId: UserId!
     
     var dataSource: TopicStubDataSource!
     
@@ -48,6 +28,10 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        reportButton.tintColor = Theme.bad
+        activityTable.allowsSelection = false
+        activityTable.rowHeight = 110
         
         activityTable.register(
             UINib(nibName: "ActivityCell", bundle: nil),
@@ -59,9 +43,20 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
             forCellWithReuseIdentifier: "topic_cell"
         )
         
+        
+        
         setupDataSource()
         
         stopListeningToUser = stopListeningToUser ?? loadProfileData()
+    }
+    
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        profilePic.layer.cornerRadius = profilePic.frame.size.width / 2
+        profilePic.clipsToBounds = true
     }
     
     deinit {
@@ -73,20 +68,25 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
         
         favoriteTopicsCollection.dataSource = dataSource
         favoriteTopicsCollection.delegate = self
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         
-        profilePic.layer.cornerRadius = profilePic.frame.size.width / 2
-        profilePic.clipsToBounds = true
+        activityTable.dataSource = self
     }
     
     func loadProfileData(storageManger: StorageManager = StorageManager.shared,
                          dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
-        return dataAccess.useLoggedInUser { user in
+        return dataAccess.useUser(id: userId) { user in
             guard let user = user else { return }
             self.user = user
+            self.loadActivities()
+            self.render(with: user)
+        }
+    }
+    
+    func loadActivities(){
+        guard let user = user else { return }
+        FirestoreManager.getUserAssociatedActivities(userID: user.uid){ activities in
+            let prev = activities[2].sorted { $0.endTime.seconds > $1.endTime.seconds }
+            self.userActivities = prev
             self.render(with: user)
         }
     }
@@ -96,7 +96,9 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
         self.nameLabel.text = user.name
         
         self.dataSource.topics = self.getTopics(from: user.favoriteTopics)
+        
         self.favoriteTopicsCollection.reloadData()
+        self.activityTable.reloadData()
         
         // If something else changes, don't reload the image.
         if let image = user.image {
@@ -124,4 +126,27 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
         let topics = appDelegate.topicCollection.topics.filter { topicIds.contains($0.id) }
         return topics
     }
+    
+    //MARK: - UITableViewDataSource
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return min(4, userActivities.count)
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
+        
+        if let activity = getActivity(at: indexPath) {
+            cell.format(using: activity, userImages: [])
+            cell.accessoryType = .none
+        }
+        return cell
+        
+    }
+    
+    func getActivity(at indexPath: IndexPath) -> Activity? {
+        return userActivities[indexPath.row]
+    }
+
 }
