@@ -58,6 +58,8 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             lastCanceler?()
             self._loggedInUserRegistration?.remove()
             
+            self._loginStateLoaded = true
+            
             // Trigger an invalidation if we're logged out.
             //  this is due to the messy way that this works.
             if let _ = user { self._cachedLoggedInUser = nil }
@@ -73,6 +75,7 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         }
     }
     
+    var _loginStateLoaded = false
     var _loggedInUserListeners: [Listener<LoggedInUser>] = []
     var _userListeners: [UserId : [Listener<User>]] = [:]
     var _activityListeners: [ActivityId : [Listener<Activity>]] = [:]
@@ -118,7 +121,9 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             callback.fn(user)
         }
         else if _loggedInUID == nil {
-            callback.fn(nil)
+            if _loginStateLoaded {
+                callback.fn(nil)
+            }
         }
         else {
             self._loadLoggedInUser()

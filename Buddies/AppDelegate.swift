@@ -46,6 +46,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var wasLoggedIn: Bool? = nil
         var wasAUserDoc: Bool? = nil
         
+        // set the view to the launch screen until we're ready for more
+        window?.rootViewController = BuddiesStoryboard.LaunchScreen.viewController()
+        
         loginListenerCancel = data.useLoggedInUser { user in
             // Current login state.
             let isLoggedIn = Auth.auth().currentUser != nil
@@ -97,16 +100,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    notificationInfo: ActivityNotificationInfo? = nil) {
         if isLoggedOut {
             setWindow(isInitial, vc: BuddiesStoryboard.Login.viewController())
-            return
         }
-        
-        if isInitial {
-            // set the view to the launch screen
-            //  until we're ready for more
-            setWindow(isInitial, vc: BuddiesStoryboard.LaunchScreen.viewController())
-        }
-        
-        if needsAccountInfo {
+        else if needsAccountInfo {
             self.setWindow(isInitial, vc: BuddiesStoryboard.Login.viewController(withID: "SignUpInfo"))
         }
         else {
