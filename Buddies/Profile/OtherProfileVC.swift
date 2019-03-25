@@ -1,21 +1,45 @@
 //
-//  ProfileVC.swift
+//  OtherProfileVC.swift
 //  Buddies
 //
-//  Created by Jake Thurman on 1/30/19.
+//  Created by Luke Meier on 3/25/19.
 //  Copyright © 2019 Jack and the Beans. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-class ProfileVC: UIViewController, UICollectionViewDelegateFlowLayout {
-    
+class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITableViewDataSource {
     @IBOutlet weak var profilePic: UIButton!
     @IBOutlet weak var bioLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var favoriteTopicsCollection: UICollectionView!
+    @IBOutlet weak var activityTable: UITableView!
     
+    
+    var userActivities = [Activity]()
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
+        
+        if let activity = getActivity(at: indexPath) {
+            cell.format(using: activity, userImages: [])
+        }
+        return cell
+        
+    }
+    
+    func getActivity(at indexPath: IndexPath) -> Activity? {
+        return userActivities[indexPath.row]
+    }
+
+   
     var user: User?
     
     var dataSource: TopicStubDataSource!
@@ -24,6 +48,11 @@ class ProfileVC: UIViewController, UICollectionViewDelegateFlowLayout {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityTable.register(
+            UINib(nibName: "ActivityCell", bundle: nil),
+            forCellReuseIdentifier: "ActivityCell"
+        )
         
         favoriteTopicsCollection.register(
             UINib.init(nibName: "ActivityTopicCollectionCell", bundle: nil),
@@ -54,7 +83,7 @@ class ProfileVC: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     func loadProfileData(storageManger: StorageManager = StorageManager.shared,
-                          dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
+                         dataAccess: DataAccessor = DataAccessor.instance) -> Canceler {
         return dataAccess.useLoggedInUser { user in
             guard let user = user else { return }
             self.user = user

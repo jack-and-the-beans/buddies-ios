@@ -43,6 +43,9 @@
 		58A5A40722025C2B00E0BF38 /* TopicCellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A5A40622025C2B00E0BF38 /* TopicCellTest.swift */; };
 		58A915B9220E2A5F008C325F /* PickTopics.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58A915B8220E2A5F008C325F /* PickTopics.storyboard */; };
 		58AAA6752203F52E00AA538A /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6742203F52E00AA538A /* Initialization.swift */; };
+		58B41FD922494758001A3CA7 /* LoggedInProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B41FD822494758001A3CA7 /* LoggedInProfileVC.swift */; };
+		58B41FDB2249476A001A3CA7 /* OtherProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B41FDA2249476A001A3CA7 /* OtherProfileVC.swift */; };
+		58B41FDD22495C15001A3CA7 /* OtherProfile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58B41FDC22495C15001A3CA7 /* OtherProfile.storyboard */; };
 		58B42611221CE7EE000ACB28 /* TopicActivityTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B42610221CE7EE000ACB28 /* TopicActivityTableVC.swift */; };
 		58DBF760221CB7B3008512B3 /* ActivityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DBF75E221CB7B3008512B3 /* ActivityTests.swift */; };
 		58DBF761221CB7B3008512B3 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DBF75F221CB7B3008512B3 /* UserTests.swift */; };
@@ -78,7 +81,6 @@
 		A91BA3372202404600DED6B3 /* LoginVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA3362202404600DED6B3 /* LoginVCTests.swift */; };
 		A91BA33A22024A8900DED6B3 /* LoginExistingVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */; };
 		A91BA33C22024D0E00DED6B3 /* MockAuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */; };
-		A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */; };
 		A9203538220CD4E500D115F2 /* DeleteAccountVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */; };
 		A95B958522133DDB00453AEA /* DataAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958422133DDB00453AEA /* DataAccessor.swift */; };
 		A95B958822133FA500453AEA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B958722133FA500453AEA /* User.swift */; };
@@ -175,6 +177,9 @@
 		58A915B8220E2A5F008C325F /* PickTopics.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PickTopics.storyboard; sourceTree = "<group>"; };
 		58AAA6742203F52E00AA538A /* Initialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initialization.swift; sourceTree = "<group>"; };
 		58AAA6762203FD3A00AA538A /* TopicCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionTests.swift; sourceTree = "<group>"; };
+		58B41FD822494758001A3CA7 /* LoggedInProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInProfileVC.swift; sourceTree = "<group>"; };
+		58B41FDA2249476A001A3CA7 /* OtherProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileVC.swift; sourceTree = "<group>"; };
+		58B41FDC22495C15001A3CA7 /* OtherProfile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OtherProfile.storyboard; sourceTree = "<group>"; };
 		58B42610221CE7EE000ACB28 /* TopicActivityTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicActivityTableVC.swift; sourceTree = "<group>"; };
 		58DBF75E221CB7B3008512B3 /* ActivityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTests.swift; sourceTree = "<group>"; };
 		58DBF75F221CB7B3008512B3 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
@@ -214,7 +219,6 @@
 		A91BA3362202404600DED6B3 /* LoginVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVCTests.swift; sourceTree = "<group>"; };
 		A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVCTests.swift; sourceTree = "<group>"; };
 		A91BA33B22024D0E00DED6B3 /* MockAuthHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthHandler.swift; sourceTree = "<group>"; };
-		A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		A9203537220CD4E400D115F2 /* DeleteAccountVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVCTests.swift; sourceTree = "<group>"; };
 		A95B958422133DDB00453AEA /* DataAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAccessor.swift; sourceTree = "<group>"; };
 		A95B958722133FA500453AEA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -443,6 +447,7 @@
 				58A915B8220E2A5F008C325F /* PickTopics.storyboard */,
 				58705ECA22285CB700EFE9F2 /* Discover.storyboard */,
 				4568210B223AD89A008368A4 /* MyActivities.storyboard */,
+				58B41FDC22495C15001A3CA7 /* OtherProfile.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -466,9 +471,10 @@
 		58F2E9052208C05100D15214 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				A91BA33D22027BFD00DED6B3 /* ProfileVC.swift */,
 				45FED0AE220A657100B90C3B /* DeleteAccountVC.swift */,
 				A9B144AE220B4165004C614E /* SettingsVC.swift */,
+				58B41FD822494758001A3CA7 /* LoggedInProfileVC.swift */,
+				58B41FDA2249476A001A3CA7 /* OtherProfileVC.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -823,6 +829,7 @@
 				58EF8DC02208BE5E00872770 /* LaunchScreen.storyboard in Resources */,
 				588289F8222C2A02009FEFC8 /* ActivityCell.xib in Resources */,
 				45FED0AD220A5F0300B90C3B /* Profile.storyboard in Resources */,
+				58B41FDD22495C15001A3CA7 /* OtherProfile.storyboard in Resources */,
 				58A915B9220E2A5F008C325F /* PickTopics.storyboard in Resources */,
 				B688B477221C74610031A364 /* ViewActivity.storyboard in Resources */,
 				B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */,
@@ -981,10 +988,11 @@
 				58EF8DBF2208BE5E00872770 /* BuddiesStoryboard.swift in Sources */,
 				458CE72C220D36DC00012637 /* SearchTextField.swift in Sources */,
 				457F576B2218C54C00F27BFE /* ActivityTableVC.swift in Sources */,
-				A91BA33E22027BFD00DED6B3 /* ProfileVC.swift in Sources */,
 				A95B958522133DDB00453AEA /* DataAccessor.swift in Sources */,
+				58B41FD922494758001A3CA7 /* LoggedInProfileVC.swift in Sources */,
 				458CE72E220D472200012637 /* MapItemSearchResult.swift in Sources */,
 				B688B47D221CCBAE0031A364 /* ActivityChatController.swift in Sources */,
+				58B41FDB2249476A001A3CA7 /* OtherProfileVC.swift in Sources */,
 				A9ADCDCC2223383300D12EB4 /* DateRangeSliderDelegate.swift in Sources */,
 				45FED0AF220A657100B90C3B /* DeleteAccountVC.swift in Sources */,
 				450779E02210D7B00008D0DF /* RangeSeekSlider.swift in Sources */,
