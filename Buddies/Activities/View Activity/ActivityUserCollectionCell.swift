@@ -15,18 +15,27 @@ class ActivityUserCollectionCell: UICollectionViewCell {
     @IBOutlet weak var removeButton: UIButton!
     
     private var removeUser: ((_ uid: String) -> Void)?
+    private var tapUser: ((_ uid: String) -> Void)?
+    
     @IBAction func onRemoveUser(_ sender: UIButton) {
         guard let uid = curUid else { return }
         removeUser?(uid)
     }
+    
+    @IBAction func onTapUser(_ sender: Any) {
+        guard let uid = curUid else { return }
+        tapUser?(uid)
+    }
 
+    
     private var curUid: String?
 
-    func render(withUser user: User, isCurUserOwner: Bool, isIndividualOwner: Bool, removeUser: ((_ uid: String)->Void)?) {
+    func render(withUser user: User, isCurUserOwner: Bool, isIndividualOwner: Bool, tapUser: ((_ uid: String)->Void)?, removeUser: ((_ uid: String)->Void)?) {
         userName.text = user.name
         curUid = user.uid
 
         self.removeUser = removeUser
+        self.tapUser = tapUser
         if (isIndividualOwner) {
             userName.text?.append(" (owner)")
         }

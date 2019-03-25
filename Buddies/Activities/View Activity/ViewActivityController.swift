@@ -69,13 +69,13 @@ class ViewActivityController: UIViewController {
     
     // Adds the current user to the activity
     // if they are not yet in it.
-    func joinActivity() -> Void {
+    func joinActivity() {
         let uid = Auth.auth().currentUser!.uid
         guard let activity = self.curActivity else { return }
         activity.addMember(with: uid)
     }
 
-    func leaveActivity() -> Void {
+    func leaveActivity() {
         showCancelableAlert(withMsg: "Are you sure you want to leave this activity?", withTitle: "Leave Activity", withAction: "Leave") { didConfirm, msg in
             guard didConfirm,
                 let uid = Auth.auth().currentUser?.uid,
@@ -87,15 +87,22 @@ class ViewActivityController: UIViewController {
         }
     }
 
-    func removeUser(uid: String) -> Void {
+    func removeUser(uid: String) {
         showCancelableAlert(withMsg: "Are you sure you want to remove this user?", withTitle: "Remove User", withAction: "Remove") { didConfirm, msg in
             guard didConfirm,
                 let activity = self.curActivity else { return }
             activity.removeMember(with: uid)
         }
     }
+    
+    func tapUser(_ uid: String) {
+        if let userProfile = BuddiesStoryboard.OtherProfile.viewController(withID: "otherProfile") as? OtherProfileVC {
+            userProfile.userId = uid
+            self.navigationController?.pushViewController(userProfile, animated: true)
+        }
+    }
 
-    func deleteActivity() -> Void {
+    func deleteActivity() {
         showCancelableAlert(withMsg: "Are you sure you want to delete this activity?", withTitle: "Delete Activity", withAction: "Delete") { didConfirm, msg in
             guard didConfirm,
                 let activity = self.curActivity,
@@ -128,7 +135,7 @@ class ViewActivityController: UIViewController {
 
     // Local state for toggling the expanded description
     var shouldExpand = false
-    func expandDescription() -> Void {
+    func expandDescription() {
         shouldExpand = !shouldExpand
         render()
     }
@@ -220,6 +227,7 @@ class ViewActivityController: UIViewController {
             onExpand: self.expandDescription,
             onLeave: self.leaveActivity,
             onRemoveUser: self.removeUser,
+            onTapUser: self.tapUser,
             onDeleteActivity: self.deleteActivity,
             onJoin: self.joinActivity )
 

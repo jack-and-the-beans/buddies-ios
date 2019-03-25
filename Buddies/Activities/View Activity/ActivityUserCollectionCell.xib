@@ -43,15 +43,25 @@
                             <constraint firstAttribute="height" constant="40" id="XVH-xj-pP3"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-eM-DHG" userLabel="onTapArea">
+                        <rect key="frame" x="0.0" y="0.0" width="203" height="50"/>
+                        <connections>
+                            <action selector="onTapUser:" destination="gTV-IL-0wX" eventType="touchUpInside" id="KMW-I2-dBh"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="HIW-6c-6EV" secondAttribute="trailing" constant="5" id="01r-8T-MLe"/>
                 <constraint firstItem="9A9-N2-27N" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="0Go-AH-4Cj"/>
+                <constraint firstItem="uyh-eM-DHG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7gR-Pt-bkH"/>
                 <constraint firstItem="5a4-ao-Pel" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="E72-Qv-JwS"/>
                 <constraint firstItem="9A9-N2-27N" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="EV8-r4-gba"/>
+                <constraint firstItem="uyh-eM-DHG" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Njg-k7-7Yy"/>
                 <constraint firstAttribute="bottom" secondItem="9A9-N2-27N" secondAttribute="bottom" constant="5" id="O6S-VA-yyF"/>
                 <constraint firstItem="HIW-6c-6EV" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="QeS-Xg-05N"/>
+                <constraint firstAttribute="bottom" secondItem="uyh-eM-DHG" secondAttribute="bottom" id="dDJ-P1-Dre"/>
+                <constraint firstItem="HIW-6c-6EV" firstAttribute="leading" secondItem="uyh-eM-DHG" secondAttribute="trailing" id="e14-Lq-anq"/>
                 <constraint firstItem="HIW-6c-6EV" firstAttribute="leading" secondItem="5a4-ao-Pel" secondAttribute="trailing" constant="5" id="izB-5c-7IM"/>
                 <constraint firstItem="5a4-ao-Pel" firstAttribute="leading" secondItem="9A9-N2-27N" secondAttribute="trailing" constant="10" id="wb3-t4-npi"/>
             </constraints>
