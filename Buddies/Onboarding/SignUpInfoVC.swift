@@ -194,7 +194,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
             let blockedActivities: [String] = []
             let blockedBy: [String] = []
             let dateJoined = Timestamp(date: Date())
-            let loc = GeoPoint(latitude: 0, longitude: 0)//this should get replaced momentatily
+            let loc = GeoPoint(latitude: 0, longitude: 0)//this should get replaced momentarily
             let email = user?.email
             let name = myFirstName
                 ?? stringUntil(user?.displayName, " ")
