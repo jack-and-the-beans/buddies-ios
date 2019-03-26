@@ -16,7 +16,9 @@ class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
     
-    override func fetchAndLoadActivities() {
+    // Force is ignored since we don't do the fun Race Condition blocking here
+    //  these are your activities and will be fine <3
+    override func fetchAndLoadActivities(force: Bool) {
         guard let user = user else { return }
         
         FirestoreManager.getUserAssociatedActivities(userID: user.uid){ activities in
@@ -31,13 +33,14 @@ class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
     override func viewWillAppear(_ animated: Bool) {
         //Super calls fetchAndLoadActivities
         super.viewWillAppear(animated)
+        
         cancelUserListener = DataAccessor.instance.useLoggedInUser{ user in
             guard let user = user else { return }
             let oldUser = self.user
             // If user changed
             self.user = user
             if user.uid != oldUser?.uid {
-                self.fetchAndLoadActivities()
+                self.fetchAndLoadActivities(force: true)
             }
         }
     }
@@ -70,7 +73,7 @@ class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
         // Create a timer to reload stuff so that we don't just reload for every time a letter is pressed in the search bar
         searchTimer?.invalidate()
         searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-            self.fetchAndLoadActivities()
+            self.fetchAndLoadActivities(force: false)
         }
     }
     

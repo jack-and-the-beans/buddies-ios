@@ -45,7 +45,7 @@ class DiscoverTableVC : ActivityTableVC {
         return user?.favoriteTopics ?? []
     }
     
-    override func fetchAndLoadActivities() {
+    override func fetchAndLoadActivities(force: Bool) {
         let state = searchBar.getFilterState()
         let searchParams = searchBar.getSearchParams(from: state)
                 
@@ -64,7 +64,7 @@ class DiscoverTableVC : ActivityTableVC {
                              sumOrFiltersScores: true) {
                                 (activities: [ActivityId], err: Error?) in
                                 
-                                self.loadAlgoliaResults(activities: activities, from: state, err: err)
+                                self.loadAlgoliaResults(activities: activities, from: state, err: err, force: force)
                                 
         }
     }

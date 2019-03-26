@@ -11,11 +11,9 @@ import UIKit
 @testable import Buddies
 
 class TestFilterSearchBarDelegate : FilterSearchBarDelegate {
-    var paramsReceived = [SearchParams?]()
     var onFetchAndLoad: (()->Void)?
-    func fetchAndLoadActivities(for params: SearchParams? = nil){
+    func fetchAndLoadActivities(force: Bool){
         onFetchAndLoad?()
-        paramsReceived.append(params)
     }
     func endEditing() { /*Do nothing*/ }
     func getTopics() -> [String] { return [ "j0FFY5VI4Ti6SZ5jUsDJ" ] }
