@@ -178,6 +178,9 @@ class TopicLayoutTests: XCTestCase {
         
         let sameBounds = layout.shouldInvalidateLayout(forBoundsChange: initRect)
         XCTAssert(!sameBounds, "When  collectionview, invalidate if bounds")
+        
+        //to get rid of compiler warning
+        collectionView.backgroundView = nil
     }
 
 }

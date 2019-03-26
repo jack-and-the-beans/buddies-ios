@@ -9,13 +9,14 @@
 import XCTest
 @testable import Buddies
 
-class ProfileVCTests: XCTestCase {
+class OtherProfileVCTests: XCTestCase {
     
-    var vc: ProfileVC? = ProfileVC()
+    var vc: OtherProfileVC? = OtherProfileVC()
     
     var profilePic = UIButton()
     var bioLabel = UILabel()
     var nameLabel = UILabel()
+    var activityTable = UITableView()
     var favoriteTopicsCollection = UICollectionView(frame: CGRect(x: 0, y: 0, width: 10, height: 10), collectionViewLayout: UICollectionViewLayout())
 
     override func setUp() {
@@ -26,7 +27,9 @@ class ProfileVCTests: XCTestCase {
         vc?.profilePic = profilePic
         vc?.bioLabel = bioLabel
         vc?.nameLabel = nameLabel
+        vc?.activityTable = activityTable
         vc?.favoriteTopicsCollection = favoriteTopicsCollection
+        
     }
     
     func testRender() {
@@ -60,7 +63,7 @@ class ProfileVCTests: XCTestCase {
         vc?.setupDataSource()
         
         XCTAssert(vc?.favoriteTopicsCollection.dataSource != nil, "DataSource for favorite collection is set")
-        XCTAssert(vc?.favoriteTopicsCollection.delegate as? ProfileVC == vc, "DataSource for favorite collection is set")
+        XCTAssert(vc?.favoriteTopicsCollection.delegate as? OtherProfileVC == vc, "DataSource for favorite collection is set")
         XCTAssert(vc?.dataSource != nil, "VC's datasource is set")
     }
 

@@ -151,6 +151,8 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
         return cell
         
     }
+
+
     
     func getActivity(at indexPath: IndexPath) -> Activity? {
         return userActivities[indexPath.row]
