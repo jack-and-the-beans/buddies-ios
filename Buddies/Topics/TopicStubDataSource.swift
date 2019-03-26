@@ -19,6 +19,12 @@ class TopicStubDataSource: NSObject, UICollectionViewDataSource {
     
     // Returns the number of topics
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if topics.count == 0 {
+            collectionView.setEmptyMessage("No topics")
+        } else {
+            collectionView.restore()
+        }
+    
         return topics.count
     }
 

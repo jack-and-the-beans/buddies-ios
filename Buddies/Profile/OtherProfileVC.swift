@@ -131,6 +131,12 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
     //MARK: - UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if userActivities.count == 0 {
+            activityTable.setEmptyMessage("No previous activities")
+        } else {
+            activityTable.restore()
+        }
+        
         return min(4, userActivities.count)
     }
     

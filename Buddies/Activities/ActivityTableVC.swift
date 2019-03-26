@@ -193,6 +193,11 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (displayIds.flatMap { $0 }).count == 0 {
+            tableView.setEmptyMessage("No results")
+        } else {
+            tableView.restore()
+        }
         return displayIds[section].count
     }
     
