@@ -113,17 +113,20 @@ class ActivityTableVCTests: XCTestCase {
                                 locationText: "What up buddy",
                                 topicIds: [])
         
-        let resCell = activityTableVC.format(cell: cell, using: activity, at: IndexPath(index: 0))
         
-        XCTAssert((resCell.memberPics.filter() { $0.currentImage != nil }).isEmpty, "No user images means no UIButtons have images")
+        cell.format(using: activity, userImages: [])
         
-        XCTAssert(resCell.descriptionLabel.text == "activityDescription", "Cell Description correctly set")
         
-        XCTAssert(resCell.titleLabel.text == "activityTitle", "Cell Description correctly set")
+        XCTAssert((cell.memberPics.filter() { $0.currentImage != nil }).isEmpty, "No user images means no UIButtons have images")
         
-        XCTAssert(resCell.locationLabel.text == "What up buddy", "Cell location correctly set")
+        XCTAssert(cell.descriptionLabel.text == "activityDescription", "Cell Description correctly set")
         
-        XCTAssert(resCell.extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
+        XCTAssert(cell.titleLabel.text == "activityTitle", "Cell Description correctly set")
+        
+        XCTAssert(cell.locationLabel.text == "What up buddy", "Cell location correctly set")
+        
+        XCTAssert(cell
+            .extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
     }
     
     func testCellFormat_SomeImages() {
@@ -165,17 +168,17 @@ class ActivityTableVCTests: XCTestCase {
                                 locationText: "What up buddy",
                                 topicIds: [])
         
-        let resCell = activityTableVC.format(cell: cell, using: activity, at: IndexPath(index: 0))
+        cell.format(using: activity, userImages: [UIImage(), UIImage()])
         
-        XCTAssert((resCell.memberPics.filter() { $0.currentImage != nil }).count == 2, "No user images means no UIButtons have images")
+        XCTAssert((cell.memberPics.filter() { $0.currentImage != nil }).count == 2, "No user images means no UIButtons have images")
         
-        XCTAssert(resCell.descriptionLabel.text == "activityDescription", "Cell Description correctly set")
+        XCTAssert(cell.descriptionLabel.text == "activityDescription", "Cell Description correctly set")
         
-        XCTAssert(resCell.titleLabel.text == "activityTitle", "Cell Description correctly set")
+        XCTAssert(cell.titleLabel.text == "activityTitle", "Cell Description correctly set")
         
-        XCTAssert(resCell.locationLabel.text == "What up buddy", "Cell location correctly set")
+        XCTAssert(cell.locationLabel.text == "What up buddy", "Cell location correctly set")
         
-        XCTAssert(resCell.extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
+        XCTAssert(cell.extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
     }
     
     func testCellFormat_TooManyImages() {
@@ -217,17 +220,17 @@ class ActivityTableVCTests: XCTestCase {
                                 locationText: "What up buddy",
                                 topicIds: [])
         
-        let resCell = activityTableVC.format(cell: cell, using: activity, at: IndexPath(index: 0))
+        cell.format(using: activity, userImages: [UIImage(), UIImage(), UIImage()])
         
-        XCTAssert((resCell.memberPics.filter() { $0.currentImage != nil }).count == 3, "No user images means no UIButtons have images")
+        XCTAssert((cell.memberPics.filter() { $0.currentImage != nil }).count == 3, "No user images means no UIButtons have images")
         
-        XCTAssert(resCell.descriptionLabel.text == "activityDescription", "Cell Description correctly set")
+        XCTAssert(cell.descriptionLabel.text == "activityDescription", "Cell Description correctly set")
         
-        XCTAssert(resCell.titleLabel.text == "activityTitle", "Cell Description correctly set")
+        XCTAssert(cell.titleLabel.text == "activityTitle", "Cell Description correctly set")
         
-        XCTAssert(resCell.locationLabel.text == "What up buddy", "Cell location correctly set")
+        XCTAssert(cell.locationLabel.text == "What up buddy", "Cell location correctly set")
         
-        XCTAssert(!resCell.extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
+        XCTAssert(!cell.extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
     }
     
     
