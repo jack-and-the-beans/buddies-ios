@@ -16,8 +16,7 @@ class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
     
-    override func fetchAndLoadActivities(for params: SearchParams? = nil) {
-        super.fetchAndLoadActivities(for: params)
+    override func fetchAndLoadActivities() {
         guard let user = user else { return }
         
         FirestoreManager.getUserAssociatedActivities(userID: user.uid){ activities in

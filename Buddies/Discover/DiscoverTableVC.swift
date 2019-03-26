@@ -27,9 +27,7 @@ class DiscoverTableVC : ActivityTableVC {
         }
         
         searchBar.displayDelegate = self
-        
-        lastSearchParam = searchBar.getSearchParams()
-        
+                
         super.viewDidLoad()
     }
     
@@ -47,10 +45,10 @@ class DiscoverTableVC : ActivityTableVC {
         return user?.favoriteTopics ?? []
     }
     
-    override func fetchAndLoadActivities(for params: SearchParams? = nil) {
-        let searchParams = params ?? searchBar.getSearchParams()
-        super.fetchAndLoadActivities(for: params)
-        
+    override func fetchAndLoadActivities() {
+        let state = searchBar.getFilterState()
+        let searchParams = searchBar.getSearchParams(from: state)
+                
         //Sort into `geoPrecisionGroups` number of groups
         //  i.e. for search range of 1000 meters and 4 groups,
         //   the group are [0, 250), [250, 500), [500, 750), [750, 1000+)
@@ -66,7 +64,7 @@ class DiscoverTableVC : ActivityTableVC {
                              sumOrFiltersScores: true) {
                                 (activities: [ActivityId], err: Error?) in
                                 
-                                self.loadAlgoliaResults(activities: activities, from: searchParams, err: err)
+                                self.loadAlgoliaResults(activities: activities, from: state, err: err)
                                 
         }
     }
