@@ -15,7 +15,7 @@ typealias FilterMenuElements = (container: UIView, locationRangeSlider: RangeSee
 
 protocol FilterSearchBarDelegate {
     func endEditing()
-    func fetchAndLoadActivities(for params: SearchParams?)
+    func fetchAndLoadActivities()
 }
 
 class FilterSearchBar : UISearchBar, UISearchBarDelegate {
@@ -259,9 +259,7 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         return (text, date.0, date.1, location)
     }
     
-    func getSearchParams(from state: FilterState? = nil) -> SearchParams {
-        let myState = state ?? getFilterState()
-        
+    func getSearchParams(from myState: FilterState) -> SearchParams {        
         let start = DateRangeSliderDelegate.getDate(sliderIndex: myState.dateMin)
         let end = DateRangeSliderDelegate.getDate(sliderIndex: myState.dateMax)
         let distance = Int(FilterSearchBar.metersPerMile * myState.maxMilesAway)
@@ -276,6 +274,10 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
 
         let myState = getFilterState()
         
+        // Clear the "next" variables used to store variables from the menu
+        nextDateRange = nil
+        nextLocationRange = nil
+        
         if lastFilterState == myState { return }
         
         // Store request params #NoRaceConditions
@@ -286,9 +288,6 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
                                  "dateMax": lastFilterState.dateMax,
                                  "maxMilesAway": Int(lastFilterState.maxMilesAway) ]
         
-        let params = getSearchParams(from: myState)
-        
-        // pass params to FilterSearchBarDelegate
-        target?.fetchAndLoadActivities(for: params)
+        target?.fetchAndLoadActivities()
     }
 }

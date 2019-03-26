@@ -25,8 +25,6 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     //Should only be changed by unit tests
     var api = AlgoliaSearch()
     
-    var lastSearchParam: SearchParams! = (nil, Date(), Date(), 0)
-    
     var fab: FAB!
 
     
@@ -46,7 +44,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchAndLoadActivities(for: nil)
+        fetchAndLoadActivities()
     }
     
     
@@ -63,14 +61,11 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     }
     
     //MARK:- Manage queries and query changes
-    func fetchAndLoadActivities(for params: SearchParams? = nil){
-        lastSearchParam = params
-        // Must call loadData() with activity ids in order to render anything
-    }
+    func fetchAndLoadActivities() {}
     
-    func loadAlgoliaResults(activities: [ActivityId], from params: SearchParams?, err: Error?){
+    func loadAlgoliaResults(activities: [ActivityId], from state: FilterState, err: Error?){
         // Cancel if we've made a new request #NoRaceConditions
-        if params == nil || self.searchParamsChanged(from: params!) { return }
+        if !searchParamsChanged(from: state) { return }
         
         // Handle errors
         if let error = err { print(error) }
@@ -79,10 +74,16 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         self.loadData(for: [activities])
     }
     
-    func searchParamsChanged(from params: SearchParams) -> Bool {
-        return lastSearchParam == nil || lastSearchParam! != params
+    var lastSearch: FilterState? = nil
+    func searchParamsChanged(from newSearch: FilterState?) -> Bool {
+        let oldSearch = lastSearch
+        lastSearch = newSearch
+        
+        return oldSearch?.dateMax != newSearch?.dateMax
+            || oldSearch?.dateMin != newSearch?.dateMin
+            || oldSearch?.filterText != newSearch?.filterText
+            || oldSearch?.maxMilesAway != newSearch?.maxMilesAway
     }
-    
     
     //MARK: - Load user from DataAccessor
     func loadUser(uid: UserId,
