@@ -28,12 +28,12 @@ class LocationPersistence : NSObject, CLLocationManagerDelegate {
         manager.delegate = self
         
         cancelUserListener = dataAccessor.useLoggedInUser { user in
-            self.user = user
-            
-            // On user change, record where we are imediately
-            if let loc = self.manager.location {
+            // On login, set the location
+            if self.user?.uid != user?.uid, let loc = self.manager.location {
                 user?.location = GeoPoint(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude)
             }
+            
+            self.user = user
         }
     }
     
