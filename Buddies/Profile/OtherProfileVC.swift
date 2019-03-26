@@ -17,6 +17,7 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
     @IBOutlet weak var activityTable: UITableView!
     @IBOutlet weak var reportButton: UIBarButtonItem!
     
+    let maxPrevActivities = 4
     
     var userActivities = [Activity]()
    
@@ -137,7 +138,7 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
             activityTable.restore()
         }
         
-        return min(4, userActivities.count)
+        return min(maxPrevActivities, userActivities.count)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -146,6 +147,7 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
         
         if let activity = getActivity(at: indexPath) {
             cell.format(using: activity, userImages: [])
+            cell.extraPicturesLabel.isHidden = true
             cell.accessoryType = .none
         }
         return cell
