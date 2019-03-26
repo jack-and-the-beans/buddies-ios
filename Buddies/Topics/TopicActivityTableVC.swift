@@ -63,7 +63,7 @@ class TopicActivityTableVC : ActivityTableVC {
         return [topic.id]
     }
     
-    override func fetchAndLoadActivities() {
+    override func fetchAndLoadActivities(force: Bool) {
         let state = searchBar.getFilterState()
         let searchParams = searchBar.getSearchParams(from: state)
         
@@ -75,7 +75,7 @@ class TopicActivityTableVC : ActivityTableVC {
                              upToDistance: searchParams.maxMetersAway) {
                                 (activities: [ActivityId], err: Error?) in
                                 
-                                self.loadAlgoliaResults(activities: activities, from: state, err: err)
+                                self.loadAlgoliaResults(activities: activities, from: state, err: err, force: force)
                                 
         }
     }

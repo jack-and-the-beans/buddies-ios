@@ -24,6 +24,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     //MARK:- Search API
     //Should only be changed by unit tests
     var api = AlgoliaSearch()
+    var lastSearch: FilterState? = nil
     
     var fab: FAB!
 
@@ -44,7 +45,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchAndLoadActivities()
+        fetchAndLoadActivities(force: true)
     }
     
     
@@ -61,11 +62,11 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     }
     
     //MARK:- Manage queries and query changes
-    func fetchAndLoadActivities() {}
+    func fetchAndLoadActivities(force: Bool) {}
     
-    func loadAlgoliaResults(activities: [ActivityId], from state: FilterState, err: Error?){
+    func loadAlgoliaResults(activities: [ActivityId], from state: FilterState, err: Error?, force: Bool){
         // Cancel if we've made a new request #NoRaceConditions
-        if !searchParamsChanged(from: state) { return }
+        if !force && !searchParamsChanged(from: state) { return }
         
         // Handle errors
         if let error = err { print(error) }
@@ -74,7 +75,6 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         self.loadData(for: [activities])
     }
     
-    var lastSearch: FilterState? = nil
     func searchParamsChanged(from newSearch: FilterState?) -> Bool {
         let oldSearch = lastSearch
         lastSearch = newSearch
