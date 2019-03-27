@@ -79,10 +79,6 @@ class ActivityTableVCTests: XCTestCase {
         setupDataAccessor()
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
     func testCellFormat_NoImages() {
         let cell = ActivityCell()
         
@@ -100,6 +96,8 @@ class ActivityTableVCTests: XCTestCase {
         cell.extraPicturesLabel = extraPicturesLabel
         cell.memberPics = memberPics
         
+        let locationText = "Beans on Broad"
+        
         let activity = Activity(delegate: nil,
                                 activityId: "test_id",
                                 dateCreated: Timestamp(date: "11/23/1998".toDate()!.date),
@@ -110,7 +108,7 @@ class ActivityTableVCTests: XCTestCase {
                                 description: "activityDescription",
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
-                                locationText: "What up buddy",
+                                locationText: locationText,
                                 topicIds: [])
         
         
@@ -123,7 +121,7 @@ class ActivityTableVCTests: XCTestCase {
         
         XCTAssert(cell.titleLabel.text == "activityTitle", "Cell Description correctly set")
         
-        XCTAssert(cell.locationLabel.text == "What up buddy", "Cell location correctly set")
+        XCTAssert(cell.locationLabel.text == locationText, "Cell location correctly set")
         
         XCTAssert(cell
             .extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
@@ -154,6 +152,7 @@ class ActivityTableVCTests: XCTestCase {
         activityTableVC.users["user2"] = thisUser
         activityTableVC.users["user3"] = thisUser
 
+        let locationText = "Beans on Broad"
         
         let activity = Activity(delegate: nil,
                                 activityId: "test_id",
@@ -165,7 +164,7 @@ class ActivityTableVCTests: XCTestCase {
                                 description: "activityDescription",
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
-                                locationText: "What up buddy",
+                                locationText: locationText,
                                 topicIds: [])
         
         cell.format(using: activity, userImages: [UIImage(), UIImage()])
@@ -176,7 +175,7 @@ class ActivityTableVCTests: XCTestCase {
         
         XCTAssert(cell.titleLabel.text == "activityTitle", "Cell Description correctly set")
         
-        XCTAssert(cell.locationLabel.text == "What up buddy", "Cell location correctly set")
+        XCTAssert(cell.locationLabel.text == locationText, "Cell location correctly set")
         
         XCTAssert(cell.extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
     }
@@ -206,6 +205,8 @@ class ActivityTableVCTests: XCTestCase {
         activityTableVC.users["user2"] = thisUser
         activityTableVC.users["user3"] = thisUser
         activityTableVC.users["user4"] = thisUser
+        
+        let locationText = "Beans on Broad"
 
         let activity = Activity(delegate: nil,
                                 activityId: "test_id",
@@ -217,7 +218,7 @@ class ActivityTableVCTests: XCTestCase {
                                 description: "activityDescription",
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
-                                locationText: "What up buddy",
+                                locationText: locationText,
                                 topicIds: [])
         
         cell.format(using: activity, userImages: [UIImage(), UIImage(), UIImage()])
@@ -228,13 +229,15 @@ class ActivityTableVCTests: XCTestCase {
         
         XCTAssert(cell.titleLabel.text == "activityTitle", "Cell Description correctly set")
         
-        XCTAssert(cell.locationLabel.text == "What up buddy", "Cell location correctly set")
+        XCTAssert(cell.locationLabel.text == locationText, "Cell location correctly set")
         
         XCTAssert(!cell.extraPicturesLabel.isHidden, "Cell doesn't show ellipses for extra profile images")
     }
     
     
     func testGetActivity(){
+        let locationText = "Beans on Broad"
+        
         let activity = Activity(delegate: nil,
                                 activityId: "test_id1",
                                 dateCreated: Timestamp(date: "11/23/1998".toDate()!.date),
@@ -245,7 +248,7 @@ class ActivityTableVCTests: XCTestCase {
                                 description: "activityDescription",
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
-                                locationText: "What up buddy",
+                                locationText: locationText,
                                 topicIds: [])
         
         let activity2 = Activity(delegate: nil,
@@ -258,7 +261,7 @@ class ActivityTableVCTests: XCTestCase {
                                 description: "activityDescription",
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
-                                locationText: "What up buddy",
+                                locationText: locationText,
                                 topicIds: [])
         
         activityTableVC.activities = [[activity, activity2]]

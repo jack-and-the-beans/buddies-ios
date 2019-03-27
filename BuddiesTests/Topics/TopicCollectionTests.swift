@@ -59,10 +59,6 @@ class TopicCollectionTests: XCTestCase {
         
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
     func testSaveTopicsSorted(){
         let names = ["x", "b", "e", "h", "u", "aa", "ab", "zz", "xz"]
         let sortedNames = names.sorted { $0 < $1 }
