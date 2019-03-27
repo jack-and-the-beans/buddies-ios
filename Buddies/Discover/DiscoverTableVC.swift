@@ -46,8 +46,7 @@ class DiscoverTableVC : ActivityTableVC {
     }
     
     override func fetchAndLoadActivities(force: Bool) {
-        let state = searchBar.getFilterState()
-        let searchParams = searchBar.getSearchParams(from: state)
+        let searchParams = searchBar.getSearchParams()
                 
         //Sort into `geoPrecisionGroups` number of groups
         //  i.e. for search range of 1000 meters and 4 groups,
@@ -64,7 +63,7 @@ class DiscoverTableVC : ActivityTableVC {
                              sumOrFiltersScores: true) {
                                 (activities: [ActivityId], err: Error?) in
                                 
-                                self.loadAlgoliaResults(activities: activities, from: state, err: err, force: force)
+                                self.loadAlgoliaResults(activities: activities, from: searchParams, err: err, force: force)
                                 
         }
     }

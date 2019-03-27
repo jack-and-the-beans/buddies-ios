@@ -24,7 +24,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     //MARK:- Search API
     //Should only be changed by unit tests
     var api = AlgoliaSearch()
-    var lastSearch: FilterState? = nil
+    var lastSearch: SearchParams? = nil
     
     var fab: FAB!
 
@@ -64,7 +64,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     //MARK:- Manage queries and query changes
     func fetchAndLoadActivities(force: Bool) {}
     
-    func loadAlgoliaResults(activities: [ActivityId], from state: FilterState, err: Error?, force: Bool){
+    func loadAlgoliaResults(activities: [ActivityId], from state: SearchParams, err: Error?, force: Bool){
         // Cancel if we've made a new request #NoRaceConditions
         if !force && !searchParamsChanged(from: state) { return }
         
@@ -75,14 +75,14 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         self.loadData(for: [activities])
     }
     
-    func searchParamsChanged(from newSearch: FilterState?) -> Bool {
+    func searchParamsChanged(from newSearch: SearchParams?) -> Bool {
         let oldSearch = lastSearch
         lastSearch = newSearch
         
-        return oldSearch?.dateMax != newSearch?.dateMax
-            || oldSearch?.dateMin != newSearch?.dateMin
+        return oldSearch?.startDate != newSearch?.startDate
+            || oldSearch?.endDate != newSearch?.endDate
             || oldSearch?.filterText != newSearch?.filterText
-            || oldSearch?.maxMilesAway != newSearch?.maxMilesAway
+            || oldSearch?.maxMetersAway != newSearch?.maxMetersAway
     }
     
     //MARK: - Load user from DataAccessor

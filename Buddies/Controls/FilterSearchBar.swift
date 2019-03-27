@@ -259,7 +259,9 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
         return (text, date.0, date.1, location)
     }
     
-    func getSearchParams(from myState: FilterState) -> SearchParams {        
+    func getSearchParams() -> SearchParams {
+        let myState = getFilterState()
+        
         let start = DateRangeSliderDelegate.getDate(sliderIndex: myState.dateMin)
         let end = DateRangeSliderDelegate.getDate(sliderIndex: myState.dateMax)
         let distance = Int(FilterSearchBar.metersPerMile * myState.maxMilesAway)
