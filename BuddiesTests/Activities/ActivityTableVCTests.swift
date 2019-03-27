@@ -363,22 +363,23 @@ class ActivityTableVCTests: XCTestCase {
     func testLoadAlgoliaResults(){
         let mockVC = MockActivityTableVC()
         
-        let searchParams: FilterState = ("", 1, 6, 200)
+        let searchParams: SearchParams = ("", Date(), Date(), 200)
         mockVC.lastSearch = searchParams
         
         let activities = ["id1", "id2"]
         
-        mockVC.loadAlgoliaResults(activities: activities, from: searchParams, err: nil, force: false)
+        mockVC.loadAlgoliaResults(activities: activities, from: ("", Date(), Date(), 200), err: nil, force: false)
         
         XCTAssert(mockVC.loadActivityCallIds == activities, "Load ids returned from Algolia")
     }
     
     func testLoadAlgoliaResultsNoNewParams(){
+        let now = Date()
         let mockVC = MockActivityTableVC()
-        let vSearchParams: FilterState = ("", 1, 6, 200)
+        let vSearchParams: SearchParams = ("", now, now, 200)
         mockVC.lastSearch = vSearchParams
 
-        let searchParams: FilterState = ("hello", 2, 6, 200)
+        let searchParams: SearchParams = ("", now, now, 200)
         
         let activities = ["id1", "id2"]
         
@@ -391,7 +392,7 @@ class ActivityTableVCTests: XCTestCase {
     func testParamsChanged_NoLastParamSet(){
         activityTableVC.lastSearch = nil
         
-        let params: FilterState = ("", 1, 6, 200)
+        let params: SearchParams = ("", Date(), Date(), 200)
         let nilToParams = activityTableVC.searchParamsChanged(from: params)
         
         XCTAssert(nilToParams, "Params changed when no previous params existed")
@@ -399,8 +400,8 @@ class ActivityTableVCTests: XCTestCase {
     
     func testParamsChanged_DiffParams(){
         
-        let params1: FilterState = ("", 1, 5, 123)
-        let params2: FilterState = ("", 1, 6, 120)
+        let params1: SearchParams = ("", Date(), Date(), 123)
+        let params2: SearchParams = ("", Date(), Date(), 120)
         
         activityTableVC.lastSearch = params1
         
@@ -410,8 +411,10 @@ class ActivityTableVCTests: XCTestCase {
     }
     
     func testParamsChanged_SameParam(){
-        let params1: FilterState = ("", 1, 5, 123)
-        let params2: FilterState = ("", 1, 5, 123)
+        
+        let now = Date()
+        let params1: SearchParams = ("", now, now, 123)
+        let params2: SearchParams = ("", now, now, 123)
         
         activityTableVC.lastSearch = params1
         
