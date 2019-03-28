@@ -80,23 +80,26 @@ class StorageManager {
     func localURL(for path: String) -> URL? {
         do {
             let directory = try FileManager.default.url(
-                for: .documentDirectory,
+                for: .libraryDirectory,
                 in: .userDomainMask,
                 appropriateFor: nil,
                 create: false
             ) as NSURL
             
-            return directory.appendingPathComponent(path)
+            return directory.appendingPathComponent("Caches/" + path)
         } catch { return nil }
     }
     
     func getSavedImage(filename: String) -> UIImage? {
         do {
-            let fileURL = localURL(for: filename)
-            let imageData = try Data(contentsOf: fileURL!)
-            return UIImage(data: imageData)
+            if let fileURL = localURL(for: filename) {
+                let imageData = try Data(contentsOf: fileURL)
+                return UIImage(data: imageData)
+            }
         } catch {
-            return nil
+            print("Error Loading Saved image: \(error.localizedDescription)")
         }
+        
+        return nil
     }
 }

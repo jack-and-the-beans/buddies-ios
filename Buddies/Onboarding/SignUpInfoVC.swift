@@ -52,29 +52,64 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
 
     var imagePicker = UIImagePickerController()
     var myFirstName: String?
+    
+    var canceler: Canceler?
+    var user: LoggedInUser?
+    @IBOutlet weak var finishButton: BuddyButton!
+    @IBOutlet weak var firstName: UITextField!
+    @IBOutlet weak var cancelButton: UIButton!
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
+    
     override func getTopField() -> UIView {
-        return buttonPicture
+        return firstName
+    }
+    
+    deinit {
+        canceler?()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupHideKeyboardOnTap()
+        
         // Do any additional setup after loading the view.
         bioText.delegate = self
         bioText.textColor = UIColor.lightGray
         bioText.layer.cornerRadius = Theme.cornerRadius
         bioText.textContainerInset = UIEdgeInsets(top: 12 ,left: 7, bottom: 12, right: 7)
+        bioText.layer.borderColor = Theme.fieldBorder.cgColor
+        bioText.layer.borderWidth = 2
+        
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
-        bioText.layer.borderColor = Theme.fieldBorderFocused.cgColor
-        bioText.layer.borderWidth = 2
         buttonPicture.layer.cornerRadius = buttonPicture.frame.size.width / 2
         
         LocationPersistence.instance.makeSureWeHaveLocationAccess(from: self)
-      
+        cancelButton.isEnabled = false
+        cancelButton.setTitleColor(UIColor.clear, for: .normal)
+        
+        firstName.text = myFirstName ?? stringUntil(Auth.auth().currentUser?.displayName, " ")
+        
+        // -- Handle edit mode --
+        canceler = DataAccessor.instance.useLoggedInUser { user in
+            // On first load
+            if let user = user, self.user == nil {
+                self.finishButton.setTitle("Save", for: .normal)
+                self.cancelButton.isEnabled = true
+                self.cancelButton.setTitleColor(Theme.themeAlt, for: .normal)
+                
+                self.buttonPicture.setImage(user.image, for: .normal)
+                self.firstName.text = user.name
+                self.bioText.text = user.bio
+                self.bioText.textColor = UIColor.black
+            }
+            
+            self.user = user
+        }
+        
          // If the user authenticated with Facebook, set
         // their profile picture to be from facebook.
         guard let user = Auth.auth().currentUser else { return }
@@ -105,6 +140,8 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.layer.borderColor = Theme.fieldBorderFocused.cgColor
+        
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
             textView.textColor = UIColor.black
@@ -113,6 +150,8 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     
     
     func textViewDidEndEditing(_ textView: UITextView) {
+        textView.layer.borderColor = Theme.fieldBorder.cgColor
+        
         if textView.text.isEmpty {
             textView.text = "About you..."
             textView.textColor = UIColor.lightGray
@@ -126,11 +165,15 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         present(imagePicker, animated: true)
     }
     
+    func getNextImageVersion() -> Int {
+        return (self.user?.imageVersion ?? -1) + 1
+    }
+    
     func uploadProfilePicToCloudStorage(imgUrl: URL, user: UserInfo? = Auth.auth().currentUser){
         
         if let curUID = user?.uid {
             //cloud storage paths / references
-            let storagePath = "/users/" + curUID + "/profilePicture.jpg"
+            let storagePath = "/users/" + curUID + "/\(getNextImageVersion()).jpg"
             let storageRef = StorageManager.shared.storage.reference().child(storagePath)
             
             //upload picture to storage async
@@ -156,6 +199,9 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
             self.buttonPicture.tintColor = UIColor.clear
             self.buttonPicture.setImage(image, for: .normal)
             
+            // Pretend we have the image now
+            self.user?.image = image
+            
             cacheImage(imgUrl: imgUrl)
          
             uploadProfilePicToCloudStorage(imgUrl: imgUrl)
@@ -170,7 +216,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
                     user: UserInfo? = Auth.auth().currentUser,
                     manager: StorageManager = StorageManager.shared) {
         if let uid = user?.uid,
-           let localUrl = manager.localURL(for: uid) {
+           let localUrl = manager.localURL(for: "\(uid)_\(getNextImageVersion())") {
             manager.persistDownload(temp: imgUrl, dest: localUrl)
         }
     }
@@ -196,10 +242,6 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
             let dateJoined = Timestamp(date: Date())
             let loc = GeoPoint(latitude: 0, longitude: 0)//this should get replaced momentarily
             let email = user?.email
-            let name = myFirstName
-                ?? stringUntil(user?.displayName, " ")
-                ?? stringUntil(email, "@")
-                ?? "Nameless"
             
             collection.document(UID).setData([
                 "favorite_topics": favTopics,
@@ -209,8 +251,6 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
                 "date_joined": dateJoined,
                 "location" : loc,
                 "email": email ?? "",
-                // Handle error cases with the name safely
-                "name": name
             ], merge: true)
             
         }
@@ -228,7 +268,8 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         
         if let UID = user?.uid {
             collection.document(UID).setData([
-                "image_url": url
+                "image_url": url,
+                "image_version": getNextImageVersion(),
             ], merge: true)
         }
         else {
@@ -237,15 +278,15 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     }
     
     
-    func saveBioToFirestore(
-        bio: String,
+    func saveFieldsToFirestore(
         user: UserInfo? = Auth.auth().currentUser,
         collection: CollectionReference = Firestore.firestore().collection("accounts")){
      
         if let UID = user?.uid
         {
             collection.document(UID).setData([
-                "bio": bio
+                "bio": bioText.text,
+                "name": firstName.text ?? ""
             ], merge: true)
         }
         else
@@ -255,19 +296,29 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         
         
     }
+    @IBAction func cancelEdit(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
     
     @IBAction func finishSignUp(_ sender: Any) {
         
-        if bioText.textColor! == UIColor.lightGray || buttonPicture.imageView?.image == nil {
-            let alert = UIAlertController(title: "Finish Sign Up", message: "Please enter a bio and choose a profile picture.", preferredStyle: .alert)
+        if bioText.textColor! == UIColor.lightGray || buttonPicture.imageView?.image == nil || (firstName.text ?? "").isEmpty {
+            let alert = UIAlertController(title: "Missing Information", message: "Make sure you've filled everything in.", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
             self.present(alert, animated: true)
         }
         else {
-            saveBioToFirestore(bio: bioText.text)
-            fillDataModel()
+            saveFieldsToFirestore()
+            
+            // For edit mode, dismiss the view.
+            if let _ = user {
+                self.dismiss(animated: true)
+            }
+            else {
+                fillDataModel()
+            }
             
             /* navigation to main storyboard
                is handled by AppDelegate */
