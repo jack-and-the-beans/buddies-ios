@@ -9,24 +9,28 @@
 import UIKit
 import Firebase
 
-class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
+class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityTableDataDelegate {
     // MARK:- User and activity data and data management
-    // The activity IDs we _want_ to listen to. NOTE, this is
-    // NOT the data source of the table view.
-    var wantedActivityIds = [[ActivityId]]()
-    
     // The activities the data accessor has given us for display:
     // This is the data source of the table view:
-    var activities = [[Activity]]()
     
     // Fabulous fab:
     var fab: FAB!
 
+    // Data manager and source. The manager controlls the listeners, posting back
+    // to this class when changes are made. This class handles interacting the actual
+    // data source and calling the listview stuff
+    let dataManager = ActivityTableDataListener()
+    let dataSource = ActivityList()
+
     // MARK:- Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = Theme.activityRowHeight
+        dataManager.delegate = self
         
+        self.tableView.rowHeight = Theme.activityRowHeight
+        self.tableView.dataSource = self.dataSource
+
         // We need to store a local so that the
         //  instance isn't deallocated along with
         //  the event handler!
@@ -54,6 +58,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
 
     func cleanup() {
         // @TODO: Implement cleanup:
+        dataManager.cleanup()
     }
 
     func endEditing() {
@@ -71,10 +76,6 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         tableView.refreshControl?.beginRefreshing()
     }
 
-    func stopRefreshIndicator() {
-        tableView.refreshControl?.endRefreshing()
-    }
-
     // Called when the user pulls down to trigger a refresh:
     @objc func handleRefreshControl() {
         self.fetchAndLoadActivities()
@@ -90,42 +91,27 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     // It then asks the data accessor for them, which will give back the
     // actual activities we're permitted to use:
     func updateWantedActivities(with ids: [[ActivityId]], dataAccessor: DataAccessor = DataAccessor.instance) {
-        self.wantedActivityIds = ids
-        // @TODO: Implement
-        
-        self.stopRefreshIndicator()
+        self.dataManager.updateWantedActivities(with: ids)
     }
 
     // MARK:- Table view data source
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return activities.count
+    func onActivityUpdate(updatedActivities: [[Activity]]) {
+        let paths = dataSource.updateActivities(updatedActivities)
+        tableView.reloadRows(at: paths, with: .fade)
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (activities.flatMap { $0 }).count == 0 {
-            tableView.setEmptyMessage("No results")
-        } else {
-            tableView.clearBackground()
-        }
-        return activities[section].count
+    func onNewActivities(newActivities: [[Activity]]) {
+        dataSource.setActivities(newActivities)
+        tableView.reloadData()
     }
     
-    func getActivity(at indexPath: IndexPath) -> Activity? {
-        return activities[indexPath.section][indexPath.row]
+    func onRemoveActivities(activityIds: [[ActivityId]]) {
+        let path = dataSource.removeActivities(matching: activityIds)
+        tableView.deleteRows(at: path, with: .fade)
     }
 
-    //MARK:- Table view rendering
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
-    
-        if let activity = getActivity(at: indexPath) {
-            let activityUserImages = activity.members.compactMap { users[$0]?.image }
-            cell.format(using: activity, userImages: activityUserImages)
-        } else {
-            cell.isHidden = true
-        }
-        return cell
+    func onOperationsFinished() {
+        tableView.refreshControl?.endRefreshing()
     }
 
     // Mark:- Displaying view activity:
@@ -138,7 +124,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let selectedIndex = self.tableView.indexPath(for: sender as! UITableViewCell)
-        if let path = selectedIndex, let activityId = getActivity(at: path)?.activityId {
+        if let path = selectedIndex {
+            let activityId = dataSource.get(path).activityId
             self.showActivity(with: activityId, for: segue)
         }
     }
@@ -153,4 +140,3 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         }
     }
 }
-
