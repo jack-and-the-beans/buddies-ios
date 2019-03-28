@@ -20,6 +20,7 @@ protocol User {
     var uid: UserId { get }
     var image: UIImage? { get set }
     var imageUrl: String { get }
+    var imageVersion: Int { get }
     var dateJoined: Date { get }
     var name: String { get }
     var bio: String { get }
@@ -30,6 +31,7 @@ class OtherUser : User {
     let uid: UserId
     var image: UIImage?
     let imageUrl: String
+    let imageVersion: Int
     let dateJoined: Date
     let name: String
     let bio: String
@@ -37,12 +39,14 @@ class OtherUser : User {
     
     init(uid: UserId,
          imageUrl: String,
+         imageVersion: Int,
          dateJoined: Date,
          name: String,
          bio: String,
          favoriteTopics: [String]) {
         self.uid = uid
         self.imageUrl = imageUrl
+        self.imageVersion = imageVersion
         self.dateJoined = dateJoined
         self.name = name
         self.bio = bio
@@ -60,9 +64,11 @@ class OtherUser : User {
         
         let uid = snap.documentID
         let favoriteTopics = data["favorite_topics"] as? [String] ?? []
+        let imageVersion = data["image_version"] as? Int ?? 0
         
         return OtherUser(uid: uid,
                          imageUrl: imageUrl,
+                         imageVersion: imageVersion,
                          dateJoined: dateJoined.dateValue(),
                          name: name,
                          bio: bio,
@@ -86,6 +92,8 @@ class LoggedInUser : User {
     
     // MARK: Mutable Properties
     var imageUrl : String { didSet { onChange("image_url", oldValue, imageUrl) } }
+    var imageVersion : Int { didSet { onChange("image_version", oldValue, imageVersion) } }
+    
     var name : String { didSet { onChange("name", oldValue, name) } }
     var bio : String { didSet { onChange("bio", oldValue, bio) } }
     var favoriteTopics : [String] { didSet { onChange("favorite_topics", oldValue, favoriteTopics) } }
@@ -131,6 +139,7 @@ class LoggedInUser : User {
     
     init(delegate: LoggedInUserInvalidationDelegate?,
          imageUrl: String,
+         imageVersion: Int,
          isAdmin: Bool,
          uid: String,
          name: String,
@@ -149,6 +158,7 @@ class LoggedInUser : User {
          chatReadAt: [ ActivityId: Timestamp ]) {
         self.delegate = delegate
         self.imageUrl = imageUrl
+        self.imageVersion = imageVersion
         self.isAdmin = isAdmin
         self.uid = uid
         self.name = name
@@ -185,6 +195,7 @@ class LoggedInUser : User {
         let blockedBy = data["blocked_by"] as? [String] ?? []
         let blockedActivities = data["blocked_activities"] as? [String] ?? []
         let chatReadAt = data["chat_read_at"] as? [String:Timestamp] ?? [:]
+        let imageVersion = data["image_version"] as? Int ?? 0
         
         let shouldSendJoinedActivityNotification =
             data["should_send_joined_activity_notification"] as? Bool ?? true
@@ -193,6 +204,7 @@ class LoggedInUser : User {
         
         return LoggedInUser(delegate: delegate,
                     imageUrl: imageUrl,
+                    imageVersion: imageVersion,
                     isAdmin: isAdmin,
                     uid: uid,
                     name: name,

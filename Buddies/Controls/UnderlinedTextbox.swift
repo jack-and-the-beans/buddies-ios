@@ -28,7 +28,10 @@ class UnderlinedTextbox: UITextField, UITextFieldDelegate {
     override func draw(_ rect: CGRect) {
         self.borderStyle = .none
         
-        border.backgroundColor = Theme.fieldBorder.cgColor
+        border.backgroundColor = isEditing
+            ? Theme.fieldBorderFocused.cgColor
+            : Theme.fieldBorder.cgColor
+        
         border.frame = CGRect(
             x: 0,
             y: self.bounds.height - 2,

@@ -150,7 +150,7 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
                 return
             }
             
-            self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
+            self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: "\(user.uid)_\(user.imageVersion)") { img in
                 user.image = img
             }
             
@@ -242,7 +242,7 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             }
             
             if let user = OtherUser.from(snap: snap) {
-                self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
+            	self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: "\(user.uid)_\(user.imageVersion)") { img in
                     user.image = img
                     self.onInvalidateUser(user: user)
                 }

@@ -330,10 +330,10 @@
             </objects>
             <point key="canvasLocation" x="879" y="27"/>
         </scene>
-        <!--Sign Up InfoVC-->
+        <!--Edit Profile-->
         <scene sceneID="bWc-17-Mtk">
             <objects>
-                <viewController storyboardIdentifier="SignUpInfo" title="Sign Up InfoVC" id="s0Y-7Y-nAN" customClass="SignUpInfoVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpInfo" title="Edit Profile" id="s0Y-7Y-nAN" customClass="SignUpInfoVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xy8-pU-I9d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -382,11 +382,33 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csP-zg-Rwj">
+                                <rect key="frame" x="10" y="510" width="355" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.4941176471" green="0.36078431370000003" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelEdit:" destination="s0Y-7Y-nAN" eventType="touchUpInside" id="0ti-c8-rjg"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="First Name" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gze-pW-dkc" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
+                                <rect key="frame" x="25" y="227" width="97" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="aiN-WU-PNV"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="ieI-QG-mvM" firstAttribute="trailing" secondItem="gze-pW-dkc" secondAttribute="trailing" constant="20" id="0C4-48-cmv"/>
+                            <constraint firstItem="ieI-QG-mvM" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="csP-zg-Rwj" secondAttribute="bottom" id="2dB-gG-3Zu"/>
                             <constraint firstItem="U5q-xz-N3r" firstAttribute="leading" secondItem="ieI-QG-mvM" secondAttribute="leading" constant="20" id="5Js-ZY-YDC"/>
+                            <constraint firstItem="U5q-xz-N3r" firstAttribute="top" secondItem="gze-pW-dkc" secondAttribute="bottom" constant="15" id="6HP-sb-gxI"/>
                             <constraint firstItem="U5q-xz-N3r" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="8PX-gO-z2q"/>
+                            <constraint firstItem="csP-zg-Rwj" firstAttribute="leading" secondItem="ieI-QG-mvM" secondAttribute="leading" constant="10" id="94y-o0-CnI"/>
                             <constraint firstItem="VL9-LF-7fc" firstAttribute="top" secondItem="ieI-QG-mvM" secondAttribute="top" constant="30" id="HSD-bh-LFC"/>
                             <constraint firstItem="QZ9-Ks-z4Y" firstAttribute="top" secondItem="VL9-LF-7fc" secondAttribute="bottom" constant="5" id="KXO-qJ-gF7"/>
                             <constraint firstItem="VL9-LF-7fc" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="PLq-7e-To1"/>
@@ -394,16 +416,22 @@
                             <constraint firstItem="ieI-QG-mvM" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8Lm-UX-4cY" secondAttribute="bottom" id="bTu-wH-ulT"/>
                             <constraint firstItem="8Lm-UX-4cY" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="cdV-md-xK5"/>
                             <constraint firstItem="QZ9-Ks-z4Y" firstAttribute="centerX" secondItem="xy8-pU-I9d" secondAttribute="centerX" id="cem-UX-fEI"/>
-                            <constraint firstItem="U5q-xz-N3r" firstAttribute="top" secondItem="QZ9-Ks-z4Y" secondAttribute="bottom" constant="30" id="hFC-ED-dud"/>
+                            <constraint firstItem="ieI-QG-mvM" firstAttribute="trailing" secondItem="csP-zg-Rwj" secondAttribute="trailing" constant="10" id="kvs-h4-zyj"/>
+                            <constraint firstItem="gze-pW-dkc" firstAttribute="leading" secondItem="ieI-QG-mvM" secondAttribute="leading" constant="20" id="oOw-uW-FQ2"/>
                             <constraint firstItem="8Lm-UX-4cY" firstAttribute="leading" secondItem="ieI-QG-mvM" secondAttribute="leading" constant="20" id="qQF-1I-kAX"/>
+                            <constraint firstItem="gze-pW-dkc" firstAttribute="top" secondItem="QZ9-Ks-z4Y" secondAttribute="bottom" constant="25" id="quK-fx-1Q9"/>
                             <constraint firstItem="ieI-QG-mvM" firstAttribute="trailing" secondItem="U5q-xz-N3r" secondAttribute="trailing" constant="20" id="rDC-t0-829"/>
                             <constraint firstItem="ieI-QG-mvM" firstAttribute="trailing" secondItem="8Lm-UX-4cY" secondAttribute="trailing" constant="20" id="riY-3l-UbE"/>
+                            <constraint firstItem="csP-zg-Rwj" firstAttribute="top" secondItem="8Lm-UX-4cY" secondAttribute="bottom" constant="15" id="wec-wR-AkR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ieI-QG-mvM"/>
                     </view>
                     <connections>
                         <outlet property="bioText" destination="U5q-xz-N3r" id="fan-6e-geL"/>
                         <outlet property="buttonPicture" destination="VL9-LF-7fc" id="oQJ-Wm-Icv"/>
+                        <outlet property="cancelButton" destination="csP-zg-Rwj" id="5FI-f3-bdk"/>
+                        <outlet property="finishButton" destination="8Lm-UX-4cY" id="lGS-Bf-fl9"/>
+                        <outlet property="firstName" destination="gze-pW-dkc" id="7WN-p5-dKW"/>
                         <outlet property="pictureButtonText" destination="QZ9-Ks-z4Y" id="9YW-8A-yO5"/>
                     </connections>
                 </viewController>

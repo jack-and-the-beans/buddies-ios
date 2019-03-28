@@ -26,6 +26,14 @@
             </objects>
             <point key="canvasLocation" x="-337" y="555"/>
         </scene>
+        <!--SignUpInfo-->
+        <scene sceneID="ez9-rk-c03">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Login" referencedIdentifier="SignUpInfo" id="Xny-9F-u3j" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="29m-GZ-TXM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="516" y="1065"/>
+        </scene>
         <!--Profile-->
         <scene sceneID="ged-W7-Ynx">
             <objects>
@@ -108,6 +116,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" id="L1I-Mj-bx6"/>
                     <navigationItem key="navigationItem" title="Profile" id="yjn-Y5-t13">
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="JJ6-ww-T1S">
+                            <connections>
+                                <segue destination="Xny-9F-u3j" kind="presentation" id="ZXf-fY-29P"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="sGl-Qk-ky6">
                             <connections>
                                 <segue destination="l1g-GD-m4H" kind="show" id="u2T-QX-lFD"/>
