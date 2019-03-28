@@ -113,7 +113,6 @@ class AlgoliaTest: XCTestCase {
         }
     }
     
-    // Test that we do not
     func testAlgoliaFactory() {
         let client = AlgoliaSearch.algoliaFactory()
         // Note: the default key is an empty string.
