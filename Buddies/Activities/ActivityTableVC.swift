@@ -10,29 +10,22 @@ import UIKit
 import Firebase
 
 class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
-    //MARK:- User and activity data and data management
-    var activities = [[Activity?]]()
-    var activityCancelers = [Canceler]()
+    // MARK:- User and activity data and data management
+    // The activity IDs we _want_ to listen to. NOTE, this is
+    // NOT the data source of the table view.
+    var wantedActivityIds = [[ActivityId]]()
     
-    var users      = [UserId: User]()
-    var userCancelers = [ActivityId: [Canceler]]()
+    // The activities the data accessor has given us for display:
+    // This is the data source of the table view:
+    var activities = [[Activity]]()
     
-    //Doubly nested array of Activity Ids.
-    //Each array is a section of the table view
-    var displayIds = [[ActivityId]]()
-    
-    //MARK:- Search API
-    //Should only be changed by unit tests
-    var api = AlgoliaSearch()
-    var lastSearch: SearchParams? = nil
-    
+    // Fabulous fab:
     var fab: FAB!
 
-    
-    //MARK:- Lifecycle
+    // MARK:- Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = 110
+        self.tableView.rowHeight = Theme.activityRowHeight
         
         // We need to store a local so that the
         //  instance isn't deallocated along with
@@ -47,123 +40,81 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchAndLoadActivities(force: true)
+        fetchAndLoadActivities()
     }
-    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        cleanup()
+        // @TODO: Suspend listening?
+    }
+    
+    deinit {
+        self.cleanup()
     }
 
-    // Must get a list of the appropiate topics for the view
-    func getTopics() -> [String] {return []}
-    
+    func cleanup() {
+        // @TODO: Implement cleanup:
+    }
+
     func endEditing() {
         self.view.endEditing(false)
     }
-    
-    //MARK:- Manage queries and query changes
-    func fetchAndLoadActivities(force: Bool) {}
-    
-    func loadAlgoliaResults(activities: [ActivityId], from state: SearchParams, err: Error?, force: Bool){
-        // Cancel if we've made a new request #NoRaceConditions
-        if !force && !searchParamsChanged(from: state) { return }
-        
-        // Handle errors
-        if let error = err { print(error) }
-    
-        // Load new data
-        self.loadData(for: [activities])
+
+    // MARK:- Refresh Control for the TableView:
+    func configureRefreshControl () {
+        // Add the refresh control to your UIScrollView object.
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
     }
     
-    func searchParamsChanged(from newSearch: SearchParams?) -> Bool {
-        let oldSearch = lastSearch
-        lastSearch = newSearch
-        
-        return oldSearch?.startDate != newSearch?.startDate
-            || oldSearch?.endDate != newSearch?.endDate
-            || oldSearch?.filterText != newSearch?.filterText
-            || oldSearch?.maxMetersAway != newSearch?.maxMetersAway
+    func startRefreshIndicator() {
+        tableView.refreshControl?.beginRefreshing()
+    }
+
+    func stopRefreshIndicator() {
+        tableView.refreshControl?.endRefreshing()
+    }
+
+    // Called when the user pulls down to trigger a refresh:
+    @objc func handleRefreshControl() {
+        self.fetchAndLoadActivities()
     }
     
-    //MARK: - Load user from DataAccessor
-    func loadUser(uid: UserId,
-                  dataAccessor: DataAccessor = DataAccessor.instance,
-                  onLoaded: (()->Void)?) {
+    // MARK:- Manage queries and query changes.
+    // Implemented by the children who handle the actual logic of what activities
+    // the child wants to see. When implementing this, please also call
+    // `startRefreshIndicator()` at the beginning of the function definition
+    func fetchAndLoadActivities() {}
+    
+    // This function is called to update the IDs that we want to display.
+    // It then asks the data accessor for them, which will give back the
+    // actual activities we're permitted to use:
+    func updateWantedActivities(with ids: [[ActivityId]], dataAccessor: DataAccessor = DataAccessor.instance) {
+        self.wantedActivityIds = ids
+        // @TODO: Implement
         
-        let canceler = dataAccessor.useUser(id: uid) { user in
-            if let user = user {
-                self.users[user.uid] = user
-            } else if self.users[uid] != nil {
-                self.users.removeValue(forKey: uid)
-            }
-            onLoaded?()
+        self.stopRefreshIndicator()
+    }
+
+    // MARK:- Table view data source
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return activities.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (activities.flatMap { $0 }).count == 0 {
+            tableView.setEmptyMessage("No results")
+        } else {
+            tableView.clearBackground()
         }
-        if userCancelers[uid] == nil { userCancelers[uid] = [] }
-        userCancelers[uid]?.append(canceler)
+        return activities[section].count
     }
     
-    func loadActivity(_ id: ActivityId,
-                      at indexPath: IndexPath,
-                      dataAccessor: DataAccessor = DataAccessor.instance,
-                      onLoaded: (()->Void)?){
-        
-        let canceler = dataAccessor.useActivity(id: id) { activity in
-            self.userCancelers[id]?.forEach() { $0() }
-
-            if let activity = activity {
-                activity.members.forEach() { uid in
-                    self.loadUser(uid: uid, onLoaded: onLoaded)
-                }
-            }
-
-            self.activities[indexPath.section][indexPath.row] = activity
-            
-            onLoaded?()
-        }
-        activityCancelers.append(canceler)
-
+    func getActivity(at indexPath: IndexPath) -> Activity? {
+        return activities[indexPath.section][indexPath.row]
     }
-    
-    func loadData(for displayIds: [[String]], dataAccessor: DataAccessor = DataAccessor.instance){
-        //Each time we load data, get rid of old listeners
-        cleanup()
-        
-        self.displayIds = displayIds
 
-        //Create an nil-filled nested array of activities
-        activities = displayIds.map { $0.map { _ in nil } }
-        
-        //Reload here so that we have the right number of empty cells
-        //Since we are loading async and data size,
-        // we reload here to avoid inconsistency errors
-        tableView.reloadData()
-
-        for (section, ids) in displayIds.enumerated() {
-            for (row, id) in ids.enumerated(){
-                //Index that these users and activity are bound to
-                let indexPath = IndexPath(row: row, section: section)
-                loadActivity(id, at: indexPath) {
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                }
-                
-            }
-        }
-    }
-    
-    func cleanup(){
-        activityCancelers.forEach() { $0() }
-        activityCancelers = []
-        for cancelers in userCancelers.values {
-            cancelers.forEach { $0() }
-        }
-        userCancelers = [:]
-    }
-    
-   
     //MARK:- Table view rendering
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
@@ -176,36 +127,12 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
         }
         return cell
     }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let _ = getActivity(at: indexPath) {
-            return super.tableView(tableView, heightForRowAt: indexPath)
-        } else {
-            return 0
-        }
-    }
 
-    
-    func getActivity(at indexPath: IndexPath) -> Activity? {
-        return activities[indexPath.section][indexPath.row]
-    }
-    
-    // MARK: - Table view data source
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return displayIds.count
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (displayIds.flatMap { $0 }).count == 0 {
-            tableView.setEmptyMessage("No results")
-        } else {
-            tableView.restore()
-        }
-        return displayIds[section].count
-    }
-    
+    // Mark:- Displaying view activity:
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? ActivityCell
+        // @TODO: can we perform the seuge without the cell? E.g. for displaying
+        // view activity programmatically from notifications.......
         self.performSegue(withIdentifier: "showActivityDetails", sender: cell)
     }
     
@@ -221,7 +148,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate {
             destination.loadWith(id)
         } else if let viewActivity = BuddiesStoryboard.ViewActivity.viewController(withID: "viewActivity") as? ViewActivityController {
             viewActivity.loadWith(id)
-            // Now we need to put the controller somewhere...
+            // Put the controller somewhere...
             self.navigationController?.pushViewController(viewActivity, animated: true)
         }
     }

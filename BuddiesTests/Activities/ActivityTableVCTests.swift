@@ -346,7 +346,7 @@ class ActivityTableVCTests: XCTestCase {
     
         let data = [["1.1", "1.2"], ["2.1", "2.2", "2.3"], ["3.1", "3.2"]]
         
-        mockVC.loadData(for: data, dataAccessor: instance)
+        mockVC.updateWantedActivities(for: data, dataAccessor: instance)
 
         var correctIds = data.count == mockVC.displayIds.count
         

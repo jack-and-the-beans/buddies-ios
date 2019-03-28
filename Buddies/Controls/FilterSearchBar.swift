@@ -15,7 +15,7 @@ typealias FilterMenuElements = (container: UIView, locationRangeSlider: RangeSee
 
 protocol FilterSearchBarDelegate {
     func endEditing()
-    func fetchAndLoadActivities(force: Bool)
+    func fetchAndLoadActivities()
 }
 
 class FilterSearchBar : UISearchBar, UISearchBarDelegate {
@@ -290,6 +290,6 @@ class FilterSearchBar : UISearchBar, UISearchBarDelegate {
                                  "dateMax": lastFilterState.dateMax,
                                  "maxMilesAway": Int(lastFilterState.maxMilesAway) ]
         
-        target?.fetchAndLoadActivities(force: false)
+        target?.fetchAndLoadActivities()
     }
 }

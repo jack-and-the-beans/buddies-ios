@@ -135,7 +135,7 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
         if userActivities.count == 0 {
             activityTable.setEmptyMessage("No previous activities")
         } else {
-            activityTable.restore()
+            activityTable.clearBackground()
         }
         
         return min(maxPrevActivities, userActivities.count)

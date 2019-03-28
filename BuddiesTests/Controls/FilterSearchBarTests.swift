@@ -12,7 +12,7 @@ import UIKit
 
 class TestFilterSearchBarDelegate : FilterSearchBarDelegate {
     var onFetchAndLoad: (()->Void)?
-    func fetchAndLoadActivities(force: Bool){
+    func fetchAndLoadActivities(){
         onFetchAndLoad?()
     }
     func endEditing() { /*Do nothing*/ }
