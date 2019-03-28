@@ -49,6 +49,7 @@ class OtherUser : User {
         self.favoriteTopics = favoriteTopics
     }
     
+    //create user from a DocumentSnapshot of a user document
     static func from(snap: DocumentSnapshot) -> OtherUser? {
         guard let data = snap.data(),
             let imageUrl = data["image_url"] as? String,

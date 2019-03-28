@@ -5,7 +5,9 @@
 //  Created by Jake Thurman on 2/2/19.
 //  Copyright © 2019 Jack and the Beans. All rights reserved.
 //
-
+//FAB is a floating action button with a "+" icon that sits
+//in the bottom right corner of the screen. Tapping it takes
+//the user to the Create Activity screen.
 import UIKit
 import MaterialComponents.MaterialButtons
 
