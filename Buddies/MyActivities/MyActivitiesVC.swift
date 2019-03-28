@@ -18,14 +18,14 @@ class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
     
     // Force is ignored since we don't do the fun Race Condition blocking here
     //  these are your activities and will be fine <3
-    override func fetchAndLoadActivities(force: Bool) {
+    override func fetchAndLoadActivities() {
         guard let user = user else { return }
-        
-        FirestoreManager.getUserAssociatedActivities(userID: user.uid){ activities in
+        self.startRefreshIndicator()
+        FirestoreManager.getUserAssociatedActivities(userID: user.uid) { activities in
             let filtered = self.filterActivities(activities, query: self.searchBar.text)
             
-            self.displayIds = filtered.map { $0.map { $0.activityId } }
-            self.loadData(for: self.displayIds)
+            let ids = filtered.map { $0.map { $0.activityId } }
+            self.updateWantedActivities(with: ids)
         }
     }
     
@@ -40,7 +40,7 @@ class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
             // If user changed
             self.user = user
             if user.uid != oldUser?.uid {
-                self.fetchAndLoadActivities(force: true)
+                self.fetchAndLoadActivities()
             }
         }
     }
@@ -73,7 +73,7 @@ class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
         // Create a timer to reload stuff so that we don't just reload for every time a letter is pressed in the search bar
         searchTimer?.invalidate()
         searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-            self.fetchAndLoadActivities(force: false)
+            self.fetchAndLoadActivities()
         }
     }
     

@@ -12,7 +12,9 @@ import InstantSearchClient
 
 class DiscoverTableVC : ActivityTableVC {
     @IBOutlet weak var searchBar: FilterSearchBar!
-    
+
+    let api = AlgoliaSearch()
+
     var user: LoggedInUser? { didSet { self.searchBar.sendParams(to: self) } }
     var cancelUserListener: Canceler?
     
@@ -41,11 +43,12 @@ class DiscoverTableVC : ActivityTableVC {
         cancelUserListener?()
     }
     
-    override func getTopics() -> [String] {
+    func getTopics() -> [String] {
         return user?.favoriteTopics ?? []
     }
     
-    override func fetchAndLoadActivities(force: Bool) {
+    override func fetchAndLoadActivities() {
+        self.startRefreshIndicator()
         let searchParams = searchBar.getSearchParams()
                 
         //Sort into `geoPrecisionGroups` number of groups
@@ -62,9 +65,7 @@ class DiscoverTableVC : ActivityTableVC {
                              aroundPrecision: geoPrecision,
                              sumOrFiltersScores: true) {
                                 (activities: [ActivityId], err: Error?) in
-                                
-                                self.loadAlgoliaResults(activities: activities, from: searchParams, err: err, force: force)
-                                
+                                self.updateWantedActivities(with: [activities])                                
         }
     }
 }

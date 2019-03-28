@@ -15,7 +15,8 @@ class TopicActivityTableVC : ActivityTableVC {
     var topic: Topic!
     var user: LoggedInUser?
     var cancelUserListener: Canceler?
-    
+    let api = AlgoliaSearch()
+
     @IBOutlet weak var favoriteButton: ToggleButton!
     
     @IBAction func favoriteTopic(_ sender: ToggleButton) {
@@ -59,11 +60,12 @@ class TopicActivityTableVC : ActivityTableVC {
         cancelUserListener?()
     }
     
-    override func getTopics() -> [String] {
+    func getTopics() -> [String] {
         return [topic.id]
     }
     
-    override func fetchAndLoadActivities(force: Bool) {
+    override func fetchAndLoadActivities() {
+        self.startRefreshIndicator()
         let searchParams = searchBar.getSearchParams()
         
         api.searchActivities(withText: searchParams.filterText,
@@ -73,9 +75,7 @@ class TopicActivityTableVC : ActivityTableVC {
                              atLocation: user?.locationCoords,
                              upToDistance: searchParams.maxMetersAway) {
                                 (activities: [ActivityId], err: Error?) in
-                                
-                                self.loadAlgoliaResults(activities: activities, from: searchParams, err: err, force: force)
-                                
+                                self.updateWantedActivities(with: [activities])
         }
     }
 }

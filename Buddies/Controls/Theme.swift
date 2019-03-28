@@ -19,4 +19,5 @@ class Theme {
     
     // Other constants
     static let cornerRadius: CGFloat = 10.0
+    static let activityRowHeight: CGFloat = 110
 }
