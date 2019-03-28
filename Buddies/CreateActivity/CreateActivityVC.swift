@@ -187,6 +187,20 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         
     }
     
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 1, activity != nil {
+            return "You can't edit the date range of an activty."
+        }
+        else if section == 1 {
+            return "A location can be as specific as you want, from a city name to the coffeeshop you're looking to try."
+        }
+        else if section == 0 {
+            return "The days the activity will be between - You can always nail down the details in chat later."
+        }
+        
+        return nil
+    }
+    
     @IBAction func unwindPickTopics(sender: UIStoryboardSegue) {
         if let source = sender.source as? TopicsVC {
             selectedTopics = source.selectedTopics
