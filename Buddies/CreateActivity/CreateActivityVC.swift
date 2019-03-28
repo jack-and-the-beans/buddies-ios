@@ -14,10 +14,11 @@ import Firebase
 //https://www.thorntech.com/2016/01/how-to-search-for-location-using-apples-mapkit/
 //https://stackoverflow.com/questions/39946100/search-for-address-using-swift
 class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDelegate {
-    
+
     @IBOutlet weak var dateSlider: RangeSeekSlider!
-    //MARK: - Variables/setup
+    @IBOutlet weak var suggestButton: UIBarButtonItem!
     
+    //MARK: - Variables/setup
     var chosenLocation: CLLocationCoordinate2D!
     var locationText : String!
     var locationManager = CLLocationManager()
@@ -36,6 +37,9 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     var region : MKCoordinateRegion!
     
     var _dismissHook: (() -> Void)?
+    
+    // Used for edit activity
+    var activity: Activity?
 
     var topicCollection: TopicCollection?
     var selectedTopics = [Topic]() {
@@ -60,28 +64,37 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     }
     
     @IBAction func finishCreateActivity(_ segue: UIStoryboardSegue) {
-        
-        
         let topicIDs = selectedTopics.map { $0.id }
+        let location = GeoPoint(latitude: chosenLocation.latitude,
+                                longitude: chosenLocation.longitude)
         guard let title = titleField.text,
             let description = descriptionTextView.text else { return }
         
         //display pop up corresponding to missing field
-        if let errorText = isValidActivityData(){
+        let missingFields = isValidActivityData()
+        if let errorText = missingFields.first {
             
-            let alert = UIAlertController(title: "Finish Suggesting Activity", message: "Please enter information for the " + errorText + " field.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Missing information", message: "Please fill in the the " + errorText + " field.", preferredStyle: .alert)
                 
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 
                 self.present(alert, animated: true)
         
-        }else
-        {
+        }
+        else if let activity = activity {
+            activity.description = description
+            activity.title = title
+            activity.topicIds = topicIDs
+            activity.locationText = locationText
+            activity.location = location
+            
+            dismiss(animated: true, completion: _dismissHook)
+        }
+        else {
             saveActivityToFirestore(
                 title: title,
                 description: description,
-                location: GeoPoint(latitude: chosenLocation.latitude,
-                                   longitude: chosenLocation.longitude),
+                location: location,
                 location_text: locationText,
                 start_time: DateRangeSliderDelegate.getDate(sliderIndex: Int(dateSlider.selectedMinValue)),
                 end_time: DateRangeSliderDelegate.getDate(sliderIndex: Int(dateSlider.selectedMaxValue)),
@@ -137,10 +150,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     }
     
     //MARK: -
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         searchCompleter.queryFragment = ""
         
@@ -166,15 +177,38 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         
         
         searchCompleter.region = region
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        //MARK: - Setup for Pick topics
+        // Setup for Pick topics
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         topicCollection = appDelegate.topicCollection
+        
+        // If this is edit, set the current state
+        if let activity = activity {
+            suggestButton.title = "Save"
+            self.title = "Edit Activity"
+            
+            titleField.text = activity.title
+            locationField.text = activity.locationText
+            
+            descriptionTextView.text = activity.description
+            descriptionTextView.textColor = UIColor.black
+            
+            locationText = activity.locationText
+            chosenLocation = CLLocationCoordinate2D(latitude: activity.location.latitude, longitude: activity.location.longitude)
+            
+            
+            let allTopics = topicCollection?.topics ?? []
+            selectedTopics = allTopics.filter({
+                activity.topicIds.contains($0.id)
+            })
+            
+            dateSlider.isEnabled = false
+            dateSlider.handleColor = UIColor.lightGray
+            dateSlider.handleBorderColor = UIColor.lightGray
+            dateSlider.colorBetweenHandles = UIColor.lightGray
+            dateSlider.maxLabelColor = UIColor.clear
+            dateSlider.minLabelColor = UIColor.clear
+        }
     }
     
     //MARK: - Topics
@@ -208,36 +242,39 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     }
     
     @IBAction func unwindCancelPickTopics(sender: UIStoryboardSegue) {
-        
     }
     
-    func isValidActivityData() -> String?{
+    func isValidActivityData() -> [String]{
     
         titleCell.layer.borderColor = UIColor.clear.cgColor
         locationCell.layer.borderColor = UIColor.clear.cgColor
         topicCell.layer.borderColor = UIColor.clear.cgColor
         descriptionCell.layer.borderColor = UIColor.clear.cgColor
         
+        var result = [String]()
     
         if (titleField.text?.isEmpty)! {
             titleCell.layer.borderWidth = 1.0
             titleCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
-            return "title"
-        } else if chosenLocation == nil {
+            result.append("title")
+        }
+        if chosenLocation == nil {
             locationCell.layer.borderWidth = 1.0
             locationCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
-            return "location"
-        } else if selectedTopics.count == 0 {
+            result.append("location")
+        }
+        if selectedTopics.count == 0 {
             topicCell.layer.borderWidth = 1.0
             topicCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
-            return "topic"
-        }else if descriptionTextView.text == "Description"{
+            result.append("topic")
+        }
+        if descriptionTextView.text == "Description" || descriptionTextView.text.isEmpty {
             descriptionCell.layer.borderWidth = 1.0
             descriptionCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
-            return "description"
+            result.append("description")
         }
         
-        return nil
+        return result
     }
     
     //MARK: - Firestore

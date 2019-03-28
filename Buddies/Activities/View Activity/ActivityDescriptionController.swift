@@ -62,6 +62,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
         leaveActivity?()
     }
     
+    
     var deleteActivity: (() -> Void)? // Set from parent
     @IBAction func onDeleteTap(_ sender: Any) {
         deleteActivity?()
