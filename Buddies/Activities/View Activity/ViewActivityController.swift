@@ -43,7 +43,6 @@ class ViewActivityController: UIViewController {
         editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(self.onEditTap))
         
         reportButton.tintColor = Theme.bad
-        self.navigationItem.rightBarButtonItem = reportButton
     }
 
     // Need to wait to render until here
