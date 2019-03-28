@@ -117,6 +117,8 @@
 		B688B47B221CCB6D0031A364 /* ActivityDescriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B47A221CCB6D0031A364 /* ActivityDescriptionController.swift */; };
 		B688B47D221CCBAE0031A364 /* ActivityChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B47C221CCBAE0031A364 /* ActivityChatController.swift */; };
 		B6AC54A621F8DB8500B075B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6AC54A521F8DB8500B075B8 /* Assets.xcassets */; };
+		B6AF8688224D215E00144AE2 /* ActivityTableDataListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AF8687224D215E00144AE2 /* ActivityTableDataListener.swift */; };
+		B6AF868A224D38C600144AE2 /* ActivityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AF8689224D38C600144AE2 /* ActivityList.swift */; };
 		B6E66B1C2242B8E4009643D2 /* BuddyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E66B1B2242B8E4009643D2 /* BuddyButton.swift */; };
 		BC97CE98FE7521FEC111E8D8 /* Pods_Buddies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDCC5B2DD5AC1E657A929E7 /* Pods_Buddies.framework */; };
 		D224642A61925CB2F139C62A /* Pods_BuddiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A75D052FEF0993FE926DD6A9 /* Pods_BuddiesTests.framework */; };
@@ -263,6 +265,8 @@
 		B6AC54AA21F8DB8500B075B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6AC54AF21F8DB8500B075B8 /* BuddiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BuddiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6AC54B521F8DB8500B075B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6AF8687224D215E00144AE2 /* ActivityTableDataListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableDataListener.swift; sourceTree = "<group>"; };
+		B6AF8689224D38C600144AE2 /* ActivityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityList.swift; sourceTree = "<group>"; };
 		B6E66B1B2242B8E4009643D2 /* BuddyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyButton.swift; sourceTree = "<group>"; };
 		B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaTest.swift; sourceTree = "<group>"; };
 		B6F8D990221748F100CDD081 /* AlgoliaMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaMock.swift; sourceTree = "<group>"; };
@@ -331,6 +335,7 @@
 				A95B958422133DDB00453AEA /* DataAccessor.swift */,
 				A850ED5C2203934200DBF1A6 /* NotificationService.swift */,
 				A939B98A2239C7DB0054D57F /* LocationPersistence.swift */,
+				B6AF8687224D215E00144AE2 /* ActivityTableDataListener.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -519,6 +524,7 @@
 			children = (
 				58EF8D912208A25F00872770 /* Topic.swift */,
 				A95B958722133FA500453AEA /* User.swift */,
+				B6AF8689224D38C600144AE2 /* ActivityList.swift */,
 				A95B958922133FB100453AEA /* Activity.swift */,
 			);
 			path = Models;
@@ -971,6 +977,7 @@
 				450779DF2210D7B00008D0DF /* TapticEngine.swift in Sources */,
 				B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */,
 				582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */,
+				B6AF868A224D38C600144AE2 /* ActivityList.swift in Sources */,
 				A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */,
 				5802266A220BE5E90068E08E /* ToggleButton.swift in Sources */,
 				58B41FDF224A6896001A3CA7 /* EmptyMessageBackground.swift in Sources */,
@@ -1001,6 +1008,7 @@
 				B688B47D221CCBAE0031A364 /* ActivityChatController.swift in Sources */,
 				58B41FDB2249476A001A3CA7 /* OtherProfileVC.swift in Sources */,
 				A9ADCDCC2223383300D12EB4 /* DateRangeSliderDelegate.swift in Sources */,
+				B6AF8688224D215E00144AE2 /* ActivityTableDataListener.swift in Sources */,
 				45FED0AF220A657100B90C3B /* DeleteAccountVC.swift in Sources */,
 				450779E02210D7B00008D0DF /* RangeSeekSlider.swift in Sources */,
 				58FC665722188E0E00D13723 /* DateInterval.swift in Sources */,

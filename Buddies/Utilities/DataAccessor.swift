@@ -203,7 +203,7 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             
             self._loadUser(id: id)
         }
-    
+        
         // Return a cancel callback
         return {
             self._userListeners[id] = self._userListeners[id]?.filter {
@@ -254,19 +254,22 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         if _activityListeners[id] == nil { _activityListeners[id] = [] }
         _activityListeners[id]?.append(callback)
         
+        // Cancelers for the user listeners for the activity:
+        var userCancelers: Canceler? = nil
+
         // Handle calling the callback
         if let activity = _activityCache.object(forKey: id as AnyObject) {
             callback.fn(activity)
-            
+
             // If we removed the firebase listener, add it back
             if _activityRegistration[id] == nil {
-                self._loadActivity(id: id)
+                userCancelers = self._loadActivity(id: id)
             }
         }
         else if !_activitiesLoading.contains(id) {
             _activitiesLoading.append(id)
             
-            self._loadActivity(id: id)
+            userCancelers = self._loadActivity(id: id)
         }
         
         // Return a cancel callback
@@ -274,7 +277,7 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             self._activityListeners[id] = self._activityListeners[id]?.filter {
                 $0 !== callback
             }
-            
+            userCancelers?()
             // If there are no listeners, stop listening to firebase
             if self._activityListeners[id]?.isEmpty ?? true,
                 let reg = self._activityRegistration[id] {
@@ -283,11 +286,14 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         }
     }
     
-    func _loadActivity(id: ActivityId) {
+    // Returns a canceler for the user listeners
+    // for the activity
+    func _loadActivity(id: ActivityId) -> Canceler? {
         if let oldReg = _activityRegistration[id] {
             oldReg.remove()
         }
         
+        var userCanceler: Canceler?
         _activityRegistration[id] = activitiesCollection.document(id).addSnapshotListener {
             guard let snap = $0 else {
                 print($1!)
@@ -295,11 +301,19 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             }
             
             let activity = Activity.from(snap: snap, with: self)
-            
+            if let activity = activity {
+                userCanceler = self.useUsers(from: activity.members) { users in
+                    guard let users = users as? [OtherUser] else { return }
+                    activity.users = users
+                    self.onInvalidateActivity(activity: activity, id: id)
+                }
+            }
+
             self._activitiesLoading.removeAll(where: { $0 == id })
             
             self.onInvalidateActivity(activity: activity, id: id)
         }
+        return userCanceler
     }
     
     // If user is nil, we can use the given id
