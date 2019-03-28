@@ -14,36 +14,52 @@ import Firebase
 
 class ProfilePicOp: Operation {
     
-    let imgURL : URL
+    let image : UIImage
+    let localPath : String
     let storageRef : StorageReference
     let vc : SignUpInfoVC
     
-    init(_ imgURL: URL, storageRef: StorageReference, vc: SignUpInfoVC) {
-        self.imgURL = imgURL
+    init(_ image: UIImage, localPath: String, storageRef: StorageReference, vc: SignUpInfoVC) {
+        self.image = image
+        self.localPath = localPath
         self.storageRef = storageRef
         self.vc = vc
     }
     
-    override func main() {
+    func makeLocalCache(uid: String? = Auth.auth().currentUser?.uid,
+                      manager: StorageManager = StorageManager.shared) -> URL? {
+        guard let imageData = image.jpegData(compressionQuality: 1) else {print("image is not a jpeg"); return nil }
+        guard let localUrl = manager.localURL(for: localPath) else { print("can't make local path"); return nil }
         
-        if isCancelled {
-            return
+        do {
+            try imageData.write(to: localUrl)
+        } catch (let writeError) {
+            print("Error caching image \(localUrl.absoluteString) : \(writeError)")
         }
+
+        return localUrl
+    }
+    
+    override func main() {
+        if isCancelled { return }
+        guard let localUrl = makeLocalCache() else { return }
+
+        let meta = StorageMetadata()
+        meta.contentType = "image/jpeg"
         
-        let uploadTask = storageRef.putFile(from: self.imgURL, metadata: nil) { metadata, error in
+        _ = storageRef.putFile(from: localUrl, metadata: meta) { metadata, error in
+            if let error = error {
+                print("Error uploading image: \(error)")
+                return
+            }
             self.storageRef.downloadURL { (url, error) in
-                if let downloadURL = url{
+                if let downloadURL = url {
                     self.vc.saveProfilePicURLToFirestore(url: downloadURL.absoluteString)
-                } else {
-                    print("Error updating document: \(error!)")
+                } else if let error = error {
+                    print("Error updating document: \(error)")
                 }
             }
         }
-        // Upload completed successfully
-        uploadTask.observe(.success) { snapshot in
-            return
-        }
-    
     }
 }
 
@@ -169,18 +185,20 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         return (self.user?.imageVersion ?? -1) + 1
     }
     
-    func uploadProfilePicToCloudStorage(imgUrl: URL, user: UserInfo? = Auth.auth().currentUser){
+    func uploadProfilePicToCloudStorage(image: UIImage, user: UserInfo? = Auth.auth().currentUser){
         
-        if let curUID = user?.uid {
+        if let uid = user?.uid {
             //cloud storage paths / references
-            let storagePath = "/users/" + curUID + "/\(getNextImageVersion()).jpg"
+            let storagePath = "/users/\(uid)/profilePicture.jpg"
             let storageRef = StorageManager.shared.storage.reference().child(storagePath)
             
             //upload picture to storage async
-            let profPicOp = ProfilePicOp(imgUrl, storageRef: storageRef, vc: self)
+            let profPicOp = ProfilePicOp(image, localPath: "\(uid)_\(getNextImageVersion())", storageRef: storageRef, vc: self)
+            
             let profPicOpQueue = OperationQueue()
             profPicOpQueue.name = "Profile Pic Operation Queue"
             profPicOpQueue.maxConcurrentOperationCount = 1
+            
             profPicOpQueue.addOperation(profPicOp)
         }
         else{
@@ -188,37 +206,23 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         }
         
     }
+    
+    var imageChanged = false
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let imgUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL{
-            let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-
-            self.pictureButtonText.isEnabled = false
-            self.pictureButtonText.setTitle("", for: UIControl.State.disabled)
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            
             self.buttonPicture.tintColor = UIColor.clear
             self.buttonPicture.setImage(image, for: .normal)
             
-            // Pretend we have the image now
-            self.user?.image = image
+            imageChanged = true
             
-            cacheImage(imgUrl: imgUrl)
-         
-            uploadProfilePicToCloudStorage(imgUrl: imgUrl)
-            
-            self.dismiss(animated: true, completion: nil)
+            // Dismiss picker view
+            self.dismiss(animated: true)
           
         }
         
-    }
-    
-    func cacheImage(imgUrl: URL,
-                    user: UserInfo? = Auth.auth().currentUser,
-                    manager: StorageManager = StorageManager.shared) {
-        if let uid = user?.uid,
-           let localUrl = manager.localURL(for: "\(uid)_\(getNextImageVersion())") {
-            manager.persistDownload(temp: imgUrl, dest: localUrl)
-        }
     }
     
     @IBOutlet weak var bioText: UITextView!
@@ -275,6 +279,8 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         else {
             print("Unable to authorize user.")
         }
+        
+        
     }
     
     
@@ -282,19 +288,26 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         user: UserInfo? = Auth.auth().currentUser,
         collection: CollectionReference = Firestore.firestore().collection("accounts")){
      
-        if let UID = user?.uid
-        {
+        // Should have a value the user changed the profile pic
+        if let image = self.buttonPicture.image(for: .normal), imageChanged {
+            self.user?.image = image
+            uploadProfilePicToCloudStorage(image: image)
+        }
+        
+        // Store everything else
+        if let UID = user?.uid {
             collection.document(UID).setData([
                 "bio": bioText.text,
                 "name": firstName.text ?? ""
             ], merge: true)
         }
-        else
-        {
+        else {
             print("Unable to authorize user.")
         }
         
-        
+        OperationQueue.main.addOperation {
+            self.dismiss(animated: true)
+        }
     }
     @IBAction func cancelEdit(_ sender: Any) {
         self.dismiss(animated: true)
@@ -311,12 +324,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         }
         else {
             saveFieldsToFirestore()
-            
-            // For edit mode, dismiss the view.
-            if let _ = user {
-                self.dismiss(animated: true)
-            }
-            else {
+            if user == nil {
                 fillDataModel()
             }
             
