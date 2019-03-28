@@ -29,11 +29,12 @@ class LoginBase: UIViewController {
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            print("view.safeAreaInsets.top \(view.safeAreaInsets.top)")
             if (view.frame.origin.y == 0) {
                 let field = getTopField().frame
-                view.frame.origin.y -= min(
-                    field.origin.y - 20, // 20px top padding
-                    keyboardSize.height
+                view.frame.origin.y = max(
+                    -field.origin.y + view.safeAreaInsets.top*3,
+                    -keyboardSize.height
                 )
             }
         }
