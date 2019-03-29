@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class ActivityList: NSObject, UITableViewDataSource {
+    
     // MARK: - Required TableView Methods for Data Source:
     func numberOfSections(in tableView: UITableView) -> Int {
         return activities.count
@@ -52,53 +53,36 @@ class ActivityList: NSObject, UITableViewDataSource {
         self.activities = activities
     }
 
-    func removeActivities(matching ids: [[String]]) -> [IndexPath] {
-        let paths = getIndexPaths(of: ids)
-        paths.forEach { activities[$0.section].remove(at: $0.row) }
-        return paths
+    func removeActivityInSection(id: ActivityId, section: Int) -> IndexPath? {
+        if let path = getIndexPath(of: id, in: section) {
+            activities[path.section].remove(at: path.row)
+            return path
+        }
+        return nil
     }
     
-    func updateActivities(_ activities: [[Activity]]) -> [IndexPath] {
-        let paths = updateAndGetIndexPaths(of: activities)
-        return paths
+    func updateActivityInSection(activity: Activity, section: Int) -> IndexPath? {
+        return updateAndGetIndexPath(of: activity, at: section)
     }
 
     // Returns the index paths of the matching IDs:
-    fileprivate func getIndexPaths(of activityIds: [[ActivityId]]) -> [IndexPath] {
-        var result = [IndexPath]()
-        for (section, ids) in activityIds.enumerated() {
-            for id in ids {
-                // We want to do something on the element at index
-                let index = activities[section].firstIndex { $0.activityId == id }
-                if let index = index {
-                    let indexPath = IndexPath(row: index, section: section)
-                    result.append(indexPath)
-                }
-            }
-        }
-        // Sort results with highest sections first, then highest rows first.
-        return result.sorted {
-            if ($0.section == $1.section) {
-                return $0.row > $1.row
-            }
-            return $0.section > $1.section
+    fileprivate func getIndexPath(of activityId: ActivityId, in section: Int) -> IndexPath? {
+        let index = activities[section].firstIndex { $0.activityId == activityId }
+        if let index = index {
+            return IndexPath(row: index, section: section)
+        } else {
+            return nil
         }
     }
     
     // Updates the given activities and returns their index paths:
-    fileprivate func updateAndGetIndexPaths(of activityUpdates: [[Activity]]) -> [IndexPath] {
-        var result = [IndexPath]()
-        for (section, activityList) in activityUpdates.enumerated() {
-            for activity in activityList {
-                // We want to do something on the element at index
-                let index = activities[section].firstIndex { $0.activityId == activity.activityId }
-                if let index = index {
-                    activities[section][index] = activity
-                    let indexPath = IndexPath(row: index, section: section)
-                    result.append(indexPath)
-                }
-            }
+    fileprivate func updateAndGetIndexPath(of activity: Activity, at section: Int) -> IndexPath? {
+        let index = activities[section].firstIndex { $0.activityId == activity.activityId }
+        if let index = index {
+            activities[section][index] = activity
+            return IndexPath(row: index, section: section)
+        } else {
+            return nil
         }
-        return result
     }
 }
