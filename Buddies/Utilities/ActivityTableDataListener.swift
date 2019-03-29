@@ -65,6 +65,7 @@ class ActivityTableDataListener {
                             let trimedActivities = self.trimActivities(newActivities)
                             self.delegate?.onNewActivities(newActivities: trimedActivities)
                             self.didFinishSetup = true
+                            self.delegate?.onOperationsFinished()
                         }
                     } else if self.handledActivities[id] == nil {
                         // DNE yet, but the activity is nil
