@@ -12,6 +12,7 @@
 		450779E02210D7B00008D0DF /* RangeSeekSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450779DD2210D7B00008D0DF /* RangeSeekSlider.swift */; };
 		450CC0F5220964F000282BAB /* SignUpInfoVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */; };
 		4515BC24220BA95F0027B415 /* CreateActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515BC23220BA95F0027B415 /* CreateActivityVC.swift */; };
+		453F105A224DAC4E0046EC6B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F1059224DAC4E0046EC6B /* Message.swift */; };
 		4544D3052214E93F007CB73D /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4544D3042214E93F007CB73D /* ActivityCell.swift */; };
 		4568210C223AD89A008368A4 /* MyActivities.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4568210B223AD89A008368A4 /* MyActivities.storyboard */; };
 		457F576B2218C54C00F27BFE /* ActivityTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F576A2218C54C00F27BFE /* ActivityTableVC.swift */; };
@@ -153,6 +154,7 @@
 		450779DD2210D7B00008D0DF /* RangeSeekSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSeekSlider.swift; sourceTree = "<group>"; };
 		450CC0F4220964F000282BAB /* SignUpInfoVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInfoVCTests.swift; sourceTree = "<group>"; };
 		4515BC23220BA95F0027B415 /* CreateActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityVC.swift; sourceTree = "<group>"; };
+		453F1059224DAC4E0046EC6B /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		4544D3042214E93F007CB73D /* ActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
 		4568210B223AD89A008368A4 /* MyActivities.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyActivities.storyboard; sourceTree = "<group>"; };
 		4574D3A9221F4E0800DDFD0F /* Keys.plist.enc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Keys.plist.enc; sourceTree = "<group>"; };
@@ -534,6 +536,7 @@
 				58EF8D912208A25F00872770 /* Topic.swift */,
 				A95B958722133FA500453AEA /* User.swift */,
 				A95B958922133FB100453AEA /* Activity.swift */,
+				453F1059224DAC4E0046EC6B /* Message.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1010,6 +1013,7 @@
 				58EF8D982208A25F00872770 /* TopicLayout.swift in Sources */,
 				A9E8BF5A2202055B00C05F2C /* UIApplication.swift in Sources */,
 				450779DE2210D7B00008D0DF /* RangeSeekSliderDelegate.swift in Sources */,
+				453F105A224DAC4E0046EC6B /* Message.swift in Sources */,
 				B6E66B1C2242B8E4009643D2 /* BuddyButton.swift in Sources */,
 				A9E8BF5C22022D9400C05F2C /* LoginBase.swift in Sources */,
 				A9E8BF5E22022F3400C05F2C /* UIVIewController.swift in Sources */,
