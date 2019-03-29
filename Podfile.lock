@@ -147,6 +147,9 @@ PODS:
     - MaterialComponents/private/Math
   - MDFInternationalization (2.0.0)
   - MDFTextAccessibility (2.0.0)
+  - MessageInputBar/Core (0.4.1)
+  - MessageKit (2.0.0):
+    - MessageInputBar/Core
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -164,6 +167,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - InstantSearchClient (~> 6.0)
   - MaterialComponents/Buttons
+  - MessageKit
   - SwiftDate
 
 SPEC REPOS:
@@ -192,6 +196,8 @@ SPEC REPOS:
     - MaterialComponents
     - MDFInternationalization
     - MDFTextAccessibility
+    - MessageInputBar
+    - MessageKit
     - nanopb
     - Protobuf
     - SwiftDate
@@ -221,10 +227,12 @@ SPEC CHECKSUMS:
   MaterialComponents: 9e6875acd311cc88fc0b64d76e2038afc3e71868
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
   MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
+  MessageInputBar: e81c7535347f1f7b923de7080409a535a004b6e4
+  MessageKit: 29c1c87e5a396d2ca7a3f712e5171dc9aba42a1e
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   SwiftDate: 6329e58969a2de31cea7f1ee1143b247693196e7
 
-PODFILE CHECKSUM: 74b3889071d89acfa7f9f6182d600f7994ec2ca5
+PODFILE CHECKSUM: 097228864ea9c61e9d3ef3f825b3f480372c04c5
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.1

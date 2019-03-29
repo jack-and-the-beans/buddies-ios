@@ -13,6 +13,9 @@ target 'Buddies' do
   
   pod 'SwiftDate'
   
+  # Activity Chat
+  pod 'MessageKit'
+  
   # Login Flow
   pod 'FBSDKLoginKit'
   
