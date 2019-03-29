@@ -95,9 +95,10 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     }
 
     // MARK:- Table view data source
-    func onActivityUpdate(updatedActivities: [[Activity]]) {
-        let paths = dataSource.updateActivities(updatedActivities)
-        tableView.reloadRows(at: paths, with: .fade)
+    func updateActivityInSection(activity: Activity, section: Int) {
+        if let path = dataSource.updateActivityInSection(activity: activity, section: section) {
+            tableView.reloadRows(at: [path], with: .fade)
+        }
     }
     
     func onNewActivities(newActivities: [[Activity]]) {
@@ -105,9 +106,10 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
         tableView.reloadData()
     }
     
-    func onRemoveActivities(activityIds: [[ActivityId]]) {
-        let path = dataSource.removeActivities(matching: activityIds)
-        tableView.deleteRows(at: path, with: .fade)
+    func removeActivityInSection(id: ActivityId, section: Int) {
+        if let path = dataSource.removeActivityInSection(id: id, section: section) {
+            tableView.deleteRows(at: [path], with: .fade)
+        }
     }
 
     func onOperationsFinished() {
