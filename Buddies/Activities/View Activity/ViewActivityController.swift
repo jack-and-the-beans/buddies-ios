@@ -30,13 +30,19 @@ class ViewActivityController: UIViewController {
     private var curMemberStatus: MemberStatus?
     private var activityTopics: [Topic]?
     private var activityUsers: [User]?
-
+    
+    var reportButton: UIBarButtonItem!
+    var editButton: UIBarButtonItem!
+    
+    
     // Programmatically setup nav bar:
     override func viewDidLoad() {
         self.title = "View Activity"
-        let button = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
-        button.tintColor = Theme.bad
-        self.navigationItem.rightBarButtonItem = button
+        
+        reportButton = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
+        editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(self.onEditTap))
+        
+        reportButton.tintColor = Theme.bad
     }
 
     // Need to wait to render until here
@@ -192,6 +198,14 @@ class ViewActivityController: UIViewController {
         let topics = appDelegate.topicCollection.topics.filter { topicIds.contains($0.id) }
         return topics
     }
+    
+    @objc func onEditTap() {
+        if let vc = BuddiesStoryboard.CreateActivity.viewController() as? UINavigationController,
+           let editView = vc.topViewController as? CreateActivityVC {
+            editView.activity = curActivity
+            present(vc, animated: true)
+        }
+    }
 
     func render() {
         // Do not render until view has mounted:
@@ -230,7 +244,7 @@ class ViewActivityController: UIViewController {
             onTapUser: self.tapUser,
             onDeleteActivity: self.deleteActivity,
             onJoin: self.joinActivity )
-
+        
         // If (and only if) the user is a member, display the
         // chat area underneath the description:
         if (memberStatus != .none) {
@@ -257,12 +271,8 @@ class ViewActivityController: UIViewController {
         }
         
         // Don't allow the owner to report an activity:
-        if (memberStatus == .owner) {
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
-        } else {
-            self.navigationItem.rightBarButtonItem?.isEnabled = true
-            self.navigationItem.rightBarButtonItem?.tintColor = Theme.bad
-        }
+        navigationItem.rightBarButtonItem = memberStatus == .owner
+            ? editButton
+            : reportButton
     }
 }
