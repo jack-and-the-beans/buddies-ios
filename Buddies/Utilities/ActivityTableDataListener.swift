@@ -20,7 +20,6 @@ class ActivityTableDataListener {
     var delegate: ActivityTableDataDelegate? = nil
 
     var cancelers = [Canceler]()
-
     // A list of the activities we want to get:
     var wantedActivities = [[ActivityId]]()
     // A list of the activities for which we've
@@ -53,7 +52,8 @@ class ActivityTableDataListener {
 
         var newActivities: [[Activity?]] = ids.map { $0.map { _ in nil } }
         
-        self.cancelers = ids.enumerated().flatMap { i, idList in
+        self.cancelers = []
+        self.cancelers += ids.enumerated().flatMap { i, idList in
             return idList.enumerated().map { j, id in
                 return dataAccessor.useActivity(id: id) { activity in
                     if (self.handledActivities[id] == nil && activity != nil) {
@@ -86,6 +86,16 @@ class ActivityTableDataListener {
                             self.delegate?.removeActivityInSection(id: id, section: i)
                         }
                         self.handledActivities[id] = false
+                    }
+                    
+                    if let activity = activity {
+                        self.cancelers += [dataAccessor.useUsers(from: activity.members) { users in
+                            activity.users = users
+                            newActivities[i][j] = activity
+                            if (self.didFinishSetup) {
+                                self.delegate?.updateActivityInSection(activity: activity, section: i)
+                            }
+                        }]
                     }
                 }
             }
