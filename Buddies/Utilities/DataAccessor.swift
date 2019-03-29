@@ -162,15 +162,28 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
     
     // Callback will not include users who DNE
     func useUsers(from userIds: [String], fn: @escaping ([User]) -> Void) -> Canceler {
-        var users: [UserId: User] = [:]
+        var handledUsers: [UserId: Bool] = [:]
+        var users = [User]()
         let cancelers = userIds.map { uid in useUser(id: uid) { user in
-            if let user = user {
-                users[user.uid] = user
+            if let user = user, handledUsers[uid] == nil {
+                users.append(user)
+                handledUsers[uid] = true
+                if (handledUsers.count == userIds.count) {
+                    fn(users)
+                }
+            } else if handledUsers[uid] == nil {
+                // DNE yet, but the user doesn't exist either:
+                handledUsers[uid] = false
+            } else if let user = user {
+                // Exists, so we want to update this user.
+                if let index = users.firstIndex(where: { $0.uid == uid }) {
+                    users[index] = user
+                    fn(users)
+                }
             } else {
-                // Note: this fn only removes the key if it exists
-                users.removeValue(forKey: uid)
+                // Used to exist, but we need to remove it now.
+                fn( users.filter { $0.uid != uid } )
             }
-            fn(Array(users.values))
         } }
         return { for c in cancelers { c() } }
     }
@@ -253,9 +266,6 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         // Insert it into the set of listeners
         if _activityListeners[id] == nil { _activityListeners[id] = [] }
         _activityListeners[id]?.append(callback)
-        
-        // Cancelers for the user listeners for the activity:
-        var userCancelers: Canceler? = nil
 
         // Handle calling the callback
         if let activity = _activityCache.object(forKey: id as AnyObject) {
@@ -263,13 +273,13 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
 
             // If we removed the firebase listener, add it back
             if _activityRegistration[id] == nil {
-                userCancelers = self._loadActivity(id: id)
+                self._loadActivity(id: id)
             }
         }
         else if !_activitiesLoading.contains(id) {
             _activitiesLoading.append(id)
             
-            userCancelers = self._loadActivity(id: id)
+            self._loadActivity(id: id)
         }
         
         // Return a cancel callback
@@ -277,7 +287,6 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             self._activityListeners[id] = self._activityListeners[id]?.filter {
                 $0 !== callback
             }
-            userCancelers?()
             // If there are no listeners, stop listening to firebase
             if self._activityListeners[id]?.isEmpty ?? true,
                 let reg = self._activityRegistration[id] {
@@ -288,12 +297,11 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
     
     // Returns a canceler for the user listeners
     // for the activity
-    func _loadActivity(id: ActivityId) -> Canceler? {
+    func _loadActivity(id: ActivityId) {
         if let oldReg = _activityRegistration[id] {
             oldReg.remove()
         }
         
-        var userCanceler: Canceler?
         _activityRegistration[id] = activitiesCollection.document(id).addSnapshotListener {
             guard let snap = $0 else {
                 print($1!)
@@ -301,19 +309,11 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             }
             
             let activity = Activity.from(snap: snap, with: self)
-            if let activity = activity {
-                userCanceler = self.useUsers(from: activity.members) { users in
-                    guard let users = users as? [OtherUser] else { return }
-                    activity.users = users
-                    self.onInvalidateActivity(activity: activity, id: id)
-                }
-            }
 
             self._activitiesLoading.removeAll(where: { $0 == id })
             
             self.onInvalidateActivity(activity: activity, id: id)
         }
-        return userCanceler
     }
     
     // If user is nil, we can use the given id

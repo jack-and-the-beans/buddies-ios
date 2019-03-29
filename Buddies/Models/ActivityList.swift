@@ -28,8 +28,7 @@ class ActivityList: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
         let activity = get(indexPath)
-        // @TODO: use user information from activity:
-        cell.format(using: activity, userImages: [])
+        cell.format(using: activity)
         return cell
     }
     

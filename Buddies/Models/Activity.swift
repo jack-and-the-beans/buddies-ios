@@ -45,7 +45,7 @@ class Activity {
     var endTime : Timestamp { didSet { onChange("end_time", oldValue, endTime) } }
     var topicIds : [String] { didSet { onChange("topic_ids", oldValue, topicIds) } }
     var locationText : String { didSet { onChange("location_text", oldValue, locationText) }}
-    var users = [OtherUser]()
+    var users = [User]()
 
     private func onChange<T : Equatable>(_ key: String, _ oldValue: T?, _ newValue: T?) {
         if oldValue != newValue {

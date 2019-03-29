@@ -27,16 +27,9 @@ class ActivityCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-        for memberPic in memberPics{
-            memberPic.imageView?.layer.cornerRadius = memberPic.bounds.size.width / 2
-            memberPic.imageView?.clipsToBounds = true
-        }
     }
     
-    func format(using activity: Activity, userImages: [UIImage]) {
-        
+    func format(using activity: Activity) {
         titleLabel.text = activity.title
         descriptionLabel.text = activity.description
         locationLabel.text = activity.locationText
@@ -55,16 +48,22 @@ class ActivityCell: UITableViewCell {
         
         dateLabel.text = locStr.capitalized
         
+        let userImages = activity.users.compactMap { $0.image }
         zip(memberPics, userImages).forEach() { (btn, img) in
             btn.setImage(img, for: .normal)
         }
         
         
         // hide "..." as needed
-        if activity.members.count <= 3{
+        if userImages.count <= 3{
             extraPicturesLabel.isHidden = true
         } else {
             extraPicturesLabel.isHidden = false
+        }
+        
+        for memberPic in memberPics{
+            memberPic.imageView?.layer.cornerRadius = memberPic.bounds.size.width / 2
+            memberPic.imageView?.clipsToBounds = true
         }
     }
 }

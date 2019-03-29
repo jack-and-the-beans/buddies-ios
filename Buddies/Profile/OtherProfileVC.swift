@@ -146,7 +146,7 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
         
         if let activity = getActivity(at: indexPath) {
-            cell.format(using: activity, userImages: [])
+            cell.format(using: activity)
             cell.extraPicturesLabel.isHidden = true
             cell.accessoryType = .none
         }
