@@ -21,7 +21,7 @@ class ViewActivityController: UIViewController {
     
     // UIViews and controllers:
     private var descriptionController: ActivityDescriptionController?
-    private var chatController: ActivityChatController?
+    private var chatController = ActivityChatController()
     private var descriptionView: UIView?
     @IBOutlet weak var contentArea: UIView! // We render EVERYTHING inside this.
 
@@ -33,6 +33,17 @@ class ViewActivityController: UIViewController {
     
     var reportButton: UIBarButtonItem!
     var editButton: UIBarButtonItem!
+    
+    
+    /// Required for the `MessageInputBar` to be visible
+    override var canBecomeFirstResponder: Bool {
+        return chatController.canBecomeFirstResponder
+    }
+    
+    /// Required for the `MessageInputBar` to be visible
+    override var inputAccessoryView: UIView? {
+        return chatController.inputAccessoryView
+    }
     
     
     // Programmatically setup nav bar:
@@ -266,7 +277,7 @@ class ViewActivityController: UIViewController {
                 chatView.bindFrameToSuperviewBounds()
             }
             // Refresh the chat
-            chatController?.render(with: activity, memberStatus: memberStatus)
+            chatController.render(with: activity, memberStatus: memberStatus)
         }
         
         // Don't allow the owner to report an activity:
