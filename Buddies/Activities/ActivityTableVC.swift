@@ -16,7 +16,6 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     
     // Fabulous fab:
     var fab: FAB!
-
     // Data manager and source. The manager controlls the listeners, posting back
     // to this class when changes are made. This class handles interacting the actual
     // data source and calling the listview stuff
@@ -27,9 +26,10 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     override func viewDidLoad() {
         super.viewDidLoad()
         dataManager.delegate = self
-        
+
         self.tableView.rowHeight = Theme.activityRowHeight
         self.tableView.dataSource = self.dataSource
+        self.configureRefreshControl()
 
         // We need to store a local so that the
         //  instance isn't deallocated along with
@@ -68,12 +68,13 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     // MARK:- Refresh Control for the TableView:
     func configureRefreshControl () {
         // Add the refresh control to your UIScrollView object.
-        tableView.refreshControl = UIRefreshControl()
-        tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+        self.refreshControl = UIRefreshControl()
+        tableView.refreshControl = self.refreshControl
+        self.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
     }
     
     func startRefreshIndicator() {
-        tableView.refreshControl?.beginRefreshing()
+        self.refreshControl?.beginRefreshing()
     }
 
     // Called when the user pulls down to trigger a refresh:
@@ -113,7 +114,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     }
 
     func onOperationsFinished() {
-        tableView.refreshControl?.endRefreshing()
+        self.refreshControl?.endRefreshing()
     }
 
     // Mark:- Displaying view activity:
