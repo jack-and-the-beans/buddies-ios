@@ -214,8 +214,9 @@ class ViewActivityController: UIViewController {
         // Do not render until data exists:
         guard let activity = self.curActivity,
             let memberStatus = self.curMemberStatus,
-            let topics = self.activityTopics,
-            let users = self.activityUsers else { return }
+            let topics = self.activityTopics else { return }
+
+        let users = self.activityUsers ?? []
 
         // We always load the description view because it is for all member statuses:
         // Instantiate description view if it does not exist:
