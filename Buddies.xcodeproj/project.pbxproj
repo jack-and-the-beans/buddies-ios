@@ -78,6 +78,7 @@
 		A850ED5D2203934200DBF1A6 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850ED5C2203934200DBF1A6 /* NotificationService.swift */; };
 		A850ED612203A12900DBF1A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A850ED602203A12900DBF1A6 /* GoogleService-Info.plist */; };
 		A850ED622203A12900DBF1A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A850ED602203A12900DBF1A6 /* GoogleService-Info.plist */; };
+		A874427C22501411002DFDAA /* UIRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874427B22501411002DFDAA /* UIRefreshControl.swift */; };
 		A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B2F37B22040710006B91D1 /* NotificationServiceTest.swift */; };
 		A91BA3372202404600DED6B3 /* LoginVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA3362202404600DED6B3 /* LoginVCTests.swift */; };
 		A91BA33A22024A8900DED6B3 /* LoginExistingVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */; };
@@ -220,6 +221,7 @@
 		A850ED5C2203934200DBF1A6 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		A850ED5F2203A0C100DBF1A6 /* Buddies.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Buddies.entitlements; sourceTree = "<group>"; };
 		A850ED602203A12900DBF1A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A874427B22501411002DFDAA /* UIRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIRefreshControl.swift; sourceTree = "<group>"; };
 		A8B2F37B22040710006B91D1 /* NotificationServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationServiceTest.swift; sourceTree = "<group>"; };
 		A91BA3362202404600DED6B3 /* LoginVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVCTests.swift; sourceTree = "<group>"; };
 		A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVCTests.swift; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 			children = (
 				58FC665522188D8C00D13723 /* DateInterval.swift */,
 				A9E8BF592202055B00C05F2C /* UIApplication.swift */,
+				A874427B22501411002DFDAA /* UIRefreshControl.swift */,
 				B6428EF4221DD42F0052E469 /* UIView.swift */,
 				A9E8BF5D22022F3400C05F2C /* UIVIewController.swift */,
 				A81722B8221F1AA700DF6935 /* UIImageView.swift */,
@@ -981,6 +984,7 @@
 				A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */,
 				5802266A220BE5E90068E08E /* ToggleButton.swift in Sources */,
 				58B41FDF224A6896001A3CA7 /* EmptyMessageBackground.swift in Sources */,
+				A874427C22501411002DFDAA /* UIRefreshControl.swift in Sources */,
 				A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */,
 				45DA93A8220957CE0064CBEF /* Testing.swift in Sources */,
 				A9C9852C221E658C003462AC /* FilterSearchBar.swift in Sources */,

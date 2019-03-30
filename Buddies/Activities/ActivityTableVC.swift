@@ -71,6 +71,12 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     }
     
     func startRefreshIndicator() {
+        // This lets us show the refresh indicator above the list if
+        // the table is empty. If there were results, calling this
+        // function would move the list height in a weird way.
+        if (dataSource.hasNoActivities()) {
+            self.refreshControl?.beginRefreshingManually()
+        }
         self.refreshControl?.beginRefreshing()
     }
 
