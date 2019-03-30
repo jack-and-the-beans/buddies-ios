@@ -24,7 +24,7 @@ class ActivityTableDataListener {
     var wantedActivities = [[ActivityId]]()
     // A list of the activities for which we've
     // handled the initial setup. The boolean
-    // denotes whether or not the activity DNE.
+    // denotes whether or not the activity exists.
     var handledActivities = [ActivityId : Bool]()
 
     var didFinishSetup = false

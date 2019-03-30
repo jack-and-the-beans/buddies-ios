@@ -80,7 +80,7 @@ class ActivityList: NSObject, UITableViewDataSource {
         return nil
     }
 
-    // Returns the index paths of the matching IDs:
+    // Returns the index paths of the matching ID:
     fileprivate func getIndexPath(of activityId: ActivityId, in section: Int) -> IndexPath? {
         let index = activities[section].firstIndex { $0.activityId == activityId }
         if let index = index {
