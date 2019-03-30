@@ -47,17 +47,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
         fetchAndLoadActivities()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        // @TODO: Suspend listening?
-    }
-    
     deinit {
-        self.cleanup()
-    }
-
-    func cleanup() {
-        // @TODO: Implement cleanup:
         dataManager.cleanup()
     }
 
@@ -120,8 +110,6 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     // Mark:- Displaying view activity:
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? ActivityCell
-        // @TODO: can we perform the seuge without the cell? E.g. for displaying
-        // view activity programmatically from notifications.......
         self.performSegue(withIdentifier: "showActivityDetails", sender: cell)
     }
     
