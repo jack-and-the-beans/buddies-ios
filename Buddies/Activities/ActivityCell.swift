@@ -18,13 +18,18 @@ class ActivityCell: UITableViewCell {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var extraPicturesLabel: UILabel!
     
-    @IBOutlet var memberPics:[UIButton]!
-    
-    
     @IBAction func goToUserProfile(_ sender: UIButton) {
     }
+
+    @IBOutlet weak var pic1: UIImageView!
+    @IBOutlet weak var pic2: UIImageView!
+    @IBOutlet weak var pic3: UIImageView!
     
-    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.roundUserPictures()
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -49,21 +54,44 @@ class ActivityCell: UITableViewCell {
         dateLabel.text = locStr.capitalized
         
         let userImages = activity.users.compactMap { $0.image }
-        zip(memberPics, userImages).forEach() { (btn, img) in
-            btn.setImage(img, for: .normal)
+        configureUserImages(images: userImages)
+    }
+    
+    func configureUserImages(images: [UIImage]) {
+        if (images.count > 0) {
+            pic1.isHidden = false
+            pic1.image = images[0]
+        }
+        if (images.count > 1) {
+            pic2.isHidden = false
+            pic2.image = images[1]
+        }
+        if (images.count > 2) {
+            pic3.isHidden = false
+            pic3.image = images[2]
+        }
+        if (images.count < 3) {
+            pic3.isHidden = true
+        }
+        if (images.count < 2) {
+            pic2.isHidden = true
+        }
+        if (images.count < 1) {
+            pic1.isHidden = true
         }
         
-        
         // hide "..." as needed
-        if userImages.count <= 3{
+        if images.count <= 3{
             extraPicturesLabel.isHidden = true
         } else {
             extraPicturesLabel.isHidden = false
         }
-        
-        for memberPic in memberPics{
-            memberPic.imageView?.layer.cornerRadius = memberPic.bounds.size.width / 2
-            memberPic.imageView?.clipsToBounds = true
-        }
+        self.roundUserPictures()
+    }
+
+    func roundUserPictures() {
+        pic1.makeCircle()
+        pic2.makeCircle()
+        pic3.makeCircle()
     }
 }

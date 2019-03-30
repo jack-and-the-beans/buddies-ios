@@ -374,8 +374,8 @@
 			children = (
 				B6A57B6F22209BAE00C26948 /* View Activity */,
 				4544D3042214E93F007CB73D /* ActivityCell.swift */,
-				457F576A2218C54C00F27BFE /* ActivityTableVC.swift */,
 				588289F7222C2A02009FEFC8 /* ActivityCell.xib */,
+				457F576A2218C54C00F27BFE /* ActivityTableVC.swift */,
 			);
 			path = Activities;
 			sourceTree = "<group>";

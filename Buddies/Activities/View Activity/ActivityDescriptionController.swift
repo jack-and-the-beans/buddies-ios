@@ -79,6 +79,13 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     
     let topicDataSource = TopicStubDataSource()
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        miniUser1.makeCircle()
+        miniUser2.makeCircle()
+        miniUser3.makeCircle()
+    }
+
     // MARK: Render: Refreshes the UI elements with new data.
     func render(
         withActivity activity: Activity,
