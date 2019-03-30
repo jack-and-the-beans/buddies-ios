@@ -115,6 +115,8 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
         else { return }
         
         reportModal.userId = userId
+        reportModal.name   = user?.name
+        
     }
     
     //MARK: - UICollectionViewDelegateFlowLayout
