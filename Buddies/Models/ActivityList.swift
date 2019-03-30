@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 class ActivityList: NSObject, UITableViewDataSource {
-    
+    var sectionHeaders: [String] = []
+
     // MARK: - Required TableView Methods for Data Source:
     func numberOfSections(in tableView: UITableView) -> Int {
         return activities.count
@@ -61,6 +62,18 @@ class ActivityList: NSObject, UITableViewDataSource {
     
     func updateActivityInSection(activity: Activity, section: Int) -> IndexPath? {
         return updateAndGetIndexPath(of: activity, at: section)
+    }
+
+    func setSectionHeaders(_ headers: [String]) {
+        self.sectionHeaders = headers
+    }
+
+    // If we don't handle section headers in this class, they won't display whatsoever:
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section < sectionHeaders.count {
+            return sectionHeaders[section]
+        }
+        return nil
     }
 
     // Returns the index paths of the matching IDs:
