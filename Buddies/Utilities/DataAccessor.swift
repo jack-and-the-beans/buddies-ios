@@ -222,19 +222,12 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             self._userListeners[id] = self._userListeners[id]?.filter {
                 $0 !== callback
             }
-            
-            // If there are no listeners, stop listening to firebase
-            if self._userListeners[id]?.isEmpty ?? true,
-                let reg = self._userRegistration[id] {
-                reg.remove()
-            }
         }
     }
     
     func _loadUser(id: UserId) {
-        if let oldReg = _userRegistration[id] {
-            oldReg.remove()
-        }
+        // If the user registration already exists, no need to set it up again:
+        guard _userRegistration[id] == nil else { return }
 
         _userRegistration[id] = usersCollection.document(id).addSnapshotListener { snap, err in
             var user: OtherUser?
@@ -287,21 +280,15 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             self._activityListeners[id] = self._activityListeners[id]?.filter {
                 $0 !== callback
             }
-            // If there are no listeners, stop listening to firebase
-            if self._activityListeners[id]?.isEmpty ?? true,
-                let reg = self._activityRegistration[id] {
-                reg.remove()
-            }
         }
     }
     
     // Returns a canceler for the user listeners
     // for the activity
     func _loadActivity(id: ActivityId) {
-        if let oldReg = _activityRegistration[id] {
-            oldReg.remove()
-        }
-        
+        // Use the existing registration if one exists:
+        guard _activityRegistration[id] == nil else { return }
+
         _activityRegistration[id] = activitiesCollection.document(id).addSnapshotListener {
             guard let snap = $0 else {
                 print($1!)
