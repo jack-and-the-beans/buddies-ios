@@ -105,6 +105,7 @@ class ViewActivityController: UIViewController {
         
         
         reportModal.activityId = curActivity?.activityId
+        reportModal.name = curActivity?.title
         reportModal.modalPresentationStyle = .formSheet
         
         self.present(parentNav, animated: true, completion: nil)        
