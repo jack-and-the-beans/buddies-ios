@@ -18,7 +18,7 @@ class ActivityList: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (activities.flatMap { $0 }).count == 0 {
+        if ( hasNoActivities() ) {
             tableView.setEmptyMessage("No results")
         } else {
             tableView.clearBackground()
@@ -35,6 +35,10 @@ class ActivityList: NSObject, UITableViewDataSource {
     
     // MARK: - Methods for interacting with the data source:
     fileprivate var activities = [[Activity]]()
+
+    func hasNoActivities() -> Bool {
+        return activities.flatMap { $0 }.count == 0
+    }
 
     func get(_ indexPath: IndexPath) -> Activity {
         return activities[indexPath.section][indexPath.row]
