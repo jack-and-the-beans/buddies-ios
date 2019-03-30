@@ -277,22 +277,36 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Account Actions" id="EfG-IG-4ek">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="98" id="UHc-FF-sdP">
-                                        <rect key="frame" x="0.0" y="231.5" width="375" height="98"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="UHc-FF-sdP">
+                                        <rect key="frame" x="0.0" y="231.5" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UHc-FF-sdP" id="BpQ-lw-JsN">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="97.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VHx-ke-qXu">
-                                                    <rect key="frame" x="157.5" y="15" width="60" height="30"/>
+                                                    <rect key="frame" x="157.5" y="10" width="60" height="30"/>
                                                     <state key="normal" title="Sign Out"/>
                                                     <connections>
                                                         <action selector="signOut:" destination="l1g-GD-m4H" eventType="touchUpInside" id="yLq-zJ-pJw"/>
                                                     </connections>
                                                 </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="VHx-ke-qXu" firstAttribute="centerX" secondItem="BpQ-lw-JsN" secondAttribute="centerX" id="Od4-MX-oB1"/>
+                                                <constraint firstItem="VHx-ke-qXu" firstAttribute="centerY" secondItem="BpQ-lw-JsN" secondAttribute="centerY" id="Q9D-L3-tzD"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Hd9-On-ShN">
+                                        <rect key="frame" x="0.0" y="281.5" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hd9-On-ShN" id="VXV-rf-szC">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dy-kY-hCk">
-                                                    <rect key="frame" x="135" y="53" width="105" height="30"/>
+                                                    <rect key="frame" x="135" y="10" width="105" height="30"/>
                                                     <state key="normal" title="Delete Account"/>
                                                     <connections>
                                                         <action selector="deleteAccount:" destination="l1g-GD-m4H" eventType="touchUpInside" id="FRG-Gd-2Ud"/>
@@ -300,10 +314,8 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="4dy-kY-hCk" firstAttribute="top" secondItem="VHx-ke-qXu" secondAttribute="bottom" constant="8" id="6xG-Ne-BLC"/>
-                                                <constraint firstItem="VHx-ke-qXu" firstAttribute="centerX" secondItem="BpQ-lw-JsN" secondAttribute="centerX" id="PYZ-h4-kOl"/>
-                                                <constraint firstItem="VHx-ke-qXu" firstAttribute="top" secondItem="BpQ-lw-JsN" secondAttribute="top" constant="15" id="So4-jT-lRN"/>
-                                                <constraint firstItem="4dy-kY-hCk" firstAttribute="centerX" secondItem="BpQ-lw-JsN" secondAttribute="centerX" id="v7a-WO-iAd"/>
+                                                <constraint firstItem="4dy-kY-hCk" firstAttribute="centerX" secondItem="VXV-rf-szC" secondAttribute="centerX" id="Xdi-gt-9NH"/>
+                                                <constraint firstItem="4dy-kY-hCk" firstAttribute="centerY" secondItem="VXV-rf-szC" secondAttribute="centerY" id="hgv-s5-JxP"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -358,7 +370,7 @@
                     </cells>
                 </tableViewSection>
             </objects>
-            <point key="canvasLocation" x="1209" y="611"/>
+            <point key="canvasLocation" x="1208.8" y="610.34482758620697"/>
         </scene>
     </scenes>
     <resources>
