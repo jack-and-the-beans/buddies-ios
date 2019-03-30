@@ -85,6 +85,16 @@ class FirestoreManager {
         ])
     }
     
+    static func reportUser(_ reported_uid: String, reportMessage: String, curUid: String? = Auth.auth().currentUser?.uid) {
+        guard let curUid = curUid else { return }
+        Firestore.firestore().collection("user_report").addDocument(data: [
+            "report_by_id": curUid,
+            "reported_user_id": reported_uid,
+            "message": reportMessage,
+            "timestamp": Timestamp(date: Date())
+            ])
+    }
+    
     static func deleteActivity(_ activity: Activity, curUid: String? = Auth.auth().currentUser?.uid) {
         guard let uid = curUid else { return }
         if activity.getMemberStatus(of: uid) == .owner {

@@ -29,6 +29,7 @@
 		5854E62222371AEC007E7E8D /* TopicStubDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5854E62122371AEC007E7E8D /* TopicStubDataSource.swift */; };
 		5854E62622381756007E7E8D /* OtherProfileVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5854E62522381756007E7E8D /* OtherProfileVCTests.swift */; };
 		5854E628223818A6007E7E8D /* TopicStubDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5854E627223818A6007E7E8D /* TopicStubDataSourceTests.swift */; };
+		58568DEB224EA65C0032F7F6 /* Report.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58568DEA224EA65C0032F7F6 /* Report.storyboard */; };
 		5868DEE2221DEEAE008B86FE /* AlgoliaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D98E22173E5200CDD081 /* AlgoliaTest.swift */; };
 		5868DEE3221DEEC3008B86FE /* AlgoliaMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8D990221748F100CDD081 /* AlgoliaMock.swift */; };
 		5868DEE7221F0564008B86FE /* TopicTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5868DEE6221F0564008B86FE /* TopicTabVC.swift */; };
@@ -51,6 +52,7 @@
 		58B42611221CE7EE000ACB28 /* TopicActivityTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B42610221CE7EE000ACB28 /* TopicActivityTableVC.swift */; };
 		58DBF760221CB7B3008512B3 /* ActivityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DBF75E221CB7B3008512B3 /* ActivityTests.swift */; };
 		58DBF761221CB7B3008512B3 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DBF75F221CB7B3008512B3 /* UserTests.swift */; };
+		58E1BF8B224EA12F00C7A8E4 /* ReportModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E1BF8A224EA12E00C7A8E4 /* ReportModalVC.swift */; };
 		58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EA1EF622041436003F6A3A /* StorageManagerTests.swift */; };
 		58EF8D852208A1DF00872770 /* FAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D832208A1DF00872770 /* FAB.swift */; };
 		58EF8D882208A20500872770 /* SignUpInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF8D872208A20500872770 /* SignUpInfoVC.swift */; };
@@ -167,6 +169,7 @@
 		5854E62122371AEC007E7E8D /* TopicStubDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicStubDataSource.swift; sourceTree = "<group>"; };
 		5854E62522381756007E7E8D /* OtherProfileVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileVCTests.swift; sourceTree = "<group>"; };
 		5854E627223818A6007E7E8D /* TopicStubDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicStubDataSourceTests.swift; sourceTree = "<group>"; };
+		58568DEA224EA65C0032F7F6 /* Report.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Report.storyboard; sourceTree = "<group>"; };
 		5868DEE6221F0564008B86FE /* TopicTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicTabVC.swift; sourceTree = "<group>"; };
 		58705ECA22285CB700EFE9F2 /* Discover.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		588289F7222C2A02009FEFC8 /* ActivityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityCell.xib; sourceTree = "<group>"; };
@@ -187,6 +190,7 @@
 		58B42610221CE7EE000ACB28 /* TopicActivityTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicActivityTableVC.swift; sourceTree = "<group>"; };
 		58DBF75E221CB7B3008512B3 /* ActivityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTests.swift; sourceTree = "<group>"; };
 		58DBF75F221CB7B3008512B3 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
+		58E1BF8A224EA12E00C7A8E4 /* ReportModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportModalVC.swift; sourceTree = "<group>"; };
 		58EA1EF622041436003F6A3A /* StorageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerTests.swift; sourceTree = "<group>"; };
 		58EF8D832208A1DF00872770 /* FAB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAB.swift; sourceTree = "<group>"; };
 		58EF8D872208A20500872770 /* SignUpInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpInfoVC.swift; sourceTree = "<group>"; };
@@ -452,6 +456,7 @@
 				58705ECA22285CB700EFE9F2 /* Discover.storyboard */,
 				4568210B223AD89A008368A4 /* MyActivities.storyboard */,
 				58B41FDC22495C15001A3CA7 /* OtherProfile.storyboard */,
+				58568DEA224EA65C0032F7F6 /* Report.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -555,6 +560,7 @@
 				A9E8BF4B2201FB9C00C05F2C /* Theme.swift */,
 				58022669220BE5E90068E08E /* ToggleButton.swift */,
 				A9ADCDCB2223383300D12EB4 /* DateRangeSliderDelegate.swift */,
+				58E1BF8A224EA12E00C7A8E4 /* ReportModalVC.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -830,6 +836,7 @@
 				58EF8DC32208BE5E00872770 /* Topics.storyboard in Resources */,
 				A81722BB221F24AC00DF6935 /* ActivityUserCollectionCell.xib in Resources */,
 				58EF8DC12208BE5E00872770 /* Main.storyboard in Resources */,
+				58568DEB224EA65C0032F7F6 /* Report.storyboard in Resources */,
 				58EF8DBE2208BE5E00872770 /* CreateActivity.storyboard in Resources */,
 				A850ED612203A12900DBF1A6 /* GoogleService-Info.plist in Resources */,
 				58EF8DC02208BE5E00872770 /* LaunchScreen.storyboard in Resources */,
@@ -974,6 +981,7 @@
 				A9E8BF472201534D00C05F2C /* LoginExistingVC.swift in Sources */,
 				5802266A220BE5E90068E08E /* ToggleButton.swift in Sources */,
 				58B41FDF224A6896001A3CA7 /* EmptyMessageBackground.swift in Sources */,
+				58E1BF8B224EA12F00C7A8E4 /* ReportModalVC.swift in Sources */,
 				A9E8BF402201427A00C05F2C /* LoginVC.swift in Sources */,
 				45DA93A8220957CE0064CBEF /* Testing.swift in Sources */,
 				A9C9852C221E658C003462AC /* FilterSearchBar.swift in Sources */,
