@@ -98,11 +98,16 @@ class ViewActivityController: UIViewController {
     }
 
     @objc func onReportTap(_ sender: Any) {
-        guard self.curMemberStatus != .owner else { return }
-        showCancelableAlert(withMsg: "What's wrong with this activity?", withTitle: "Report Activity", withAction: "Report", showTextEntry: true) { (didConfirm, msg) in
-            guard didConfirm, let activity = self.curActivity else { return }
-            FirestoreManager.reportActivity(activity.activityId, reportMessage: msg ?? "")
-        }
+        guard self.curMemberStatus != .owner,
+            let parentNav = BuddiesStoryboard.Report.viewController() as? UINavigationController,
+            let reportModal = parentNav.viewControllers[0] as? ReportModalVC
+            else { return }
+        
+        
+        reportModal.activityId = curActivity?.activityId
+        reportModal.modalPresentationStyle = .formSheet
+        
+        self.present(parentNav, animated: true, completion: nil)        
     }
     
     // Adds the current user to the activity
