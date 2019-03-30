@@ -10,26 +10,32 @@ import UIKit
 import Firebase
 
 class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityTableDataDelegate {
-    // MARK:- User and activity data and data management
-    // The activities the data accessor has given us for display:
-    // This is the data source of the table view:
-    
+    // Override the getter for this proprty in a subclass
+    // to set the section headers for the TableView:
+    var sectionHeaders: [String] = []
+
     // Fabulous fab:
     var fab: FAB!
+
     // Data manager and source. The manager controlls the listeners, posting back
-    // to this class when changes are made. This class handles interacting the actual
-    // data source and calling the listview stuff
+    // to this class when changes are made. The data source handles modifying the
+    // tableview data source. ActivityTableVC handles the interaction between the
+    // two, including calling the TableView refresh methods as needed.
     let dataManager = ActivityTableDataListener()
     let dataSource = ActivityList()
 
     // MARK:- Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Set up data source stuff:
         dataManager.delegate = self
-
-        self.tableView.rowHeight = Theme.activityRowHeight
+        dataSource.setSectionHeaders(sectionHeaders)
         self.tableView.dataSource = self.dataSource
+
+        // Set up some TableView rendering stuff:
+        self.tableView.rowHeight = Theme.activityRowHeight
         self.configureRefreshControl()
+        tableView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellReuseIdentifier: "ActivityCell")
 
         // We need to store a local so that the
         //  instance isn't deallocated along with
@@ -38,15 +44,16 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
         fab.renderCreateActivityFab()
         
         LocationPersistence.instance.makeSureWeHaveLocationAccess(from: self)
-        
-        tableView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellReuseIdentifier: "ActivityCell")
     }
     
+    // Calls the subclass implementation whenever the view re-appears
+    // to make sure we get the most up-to-date information we need.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchAndLoadActivities()
     }
     
+    // Clears all the listeners in the data manager:
     deinit {
         dataManager.cleanup()
     }
@@ -59,8 +66,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     func configureRefreshControl () {
         // Add the refresh control to your UIScrollView object.
         self.refreshControl = UIRefreshControl()
-        tableView.refreshControl = self.refreshControl
         self.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+        tableView.refreshControl = self.refreshControl
     }
     
     func startRefreshIndicator() {
@@ -79,8 +86,8 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     func fetchAndLoadActivities() {}
     
     // This function is called to update the IDs that we want to display.
-    // It then asks the data accessor for them, which will give back the
-    // actual activities we're permitted to use:
+    // It then asks the data accessor for them, which will post back the
+    // actual activities we're permitted to use via `onNewActivities`
     func updateWantedActivities(with ids: [[ActivityId]], dataAccessor: DataAccessor = DataAccessor.instance) {
         self.dataManager.updateWantedActivities(with: ids)
     }

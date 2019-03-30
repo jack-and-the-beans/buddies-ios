@@ -9,15 +9,16 @@
 import UIKit
 import Firebase
 class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
-    
+    override var sectionHeaders: [String] { get {
+         return ["Created", "Joined", "Previous"]
+    } set { } }
+
     var user: LoggedInUser?
     var cancelUserListener: Canceler?
     var searchTimer: Timer?
 
     @IBOutlet weak var searchBar: UISearchBar!
     
-    // Force is ignored since we don't do the fun Race Condition blocking here
-    //  these are your activities and will be fine <3
     override func fetchAndLoadActivities() {
         guard let user = user else { return }
         self.startRefreshIndicator()
@@ -76,19 +77,4 @@ class MyActivitiesVC: ActivityTableVC, UISearchBarDelegate {
             self.fetchAndLoadActivities()
         }
     }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section{
-        case 0:
-            return "Created"
-        case 1:
-            return "Joined"
-        case 2:
-            return "Previous"
-        default:
-            return nil
-        }
-    }
-
-    
 }
