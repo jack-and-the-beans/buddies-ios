@@ -36,7 +36,6 @@ class ActivityList: NSObject, UITableViewDataSource {
     fileprivate var activities = [[Activity]]()
 
     func get(_ indexPath: IndexPath) -> Activity {
-        // @TODO: return nil for outside of bounds
         return activities[indexPath.section][indexPath.row]
     }
     
