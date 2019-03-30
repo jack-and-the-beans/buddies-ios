@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -55,72 +55,48 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D98-JP-Dae">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="77V-uI-XXV">
                         <rect key="frame" x="20" y="74.5" width="25" height="25"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="25" id="8NT-JD-edP"/>
-                            <constraint firstAttribute="width" constant="25" id="E8w-0k-bZL"/>
+                            <constraint firstAttribute="height" constant="25" id="Xy3-Tx-zkP"/>
+                            <constraint firstAttribute="width" constant="25" id="aJu-B6-FVQ"/>
                         </constraints>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <state key="normal">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </state>
-                        <connections>
-                            <action selector="goToUserProfile:" destination="BFV-ZN-V3a" eventType="touchUpInside" id="4yq-NW-kFE"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Wd-3d-oQw">
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NGf-m4-HV0">
                         <rect key="frame" x="53" y="74.5" width="25" height="25"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="25" id="TQn-CK-UzX"/>
-                            <constraint firstAttribute="height" constant="25" id="aNY-u1-hRj"/>
+                            <constraint firstAttribute="width" constant="25" id="XVP-Yw-FL9"/>
+                            <constraint firstAttribute="height" constant="25" id="mJN-ND-our"/>
                         </constraints>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <state key="normal">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </state>
-                        <connections>
-                            <action selector="goToUserProfile:" destination="BFV-ZN-V3a" eventType="touchUpInside" id="zyd-9k-i8F"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gw1-cE-j4f">
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0uC-Qg-wt8">
                         <rect key="frame" x="86" y="74.5" width="25" height="25"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="25" id="F2s-RG-0YK"/>
-                            <constraint firstAttribute="width" constant="25" id="x6v-zu-zFo"/>
+                            <constraint firstAttribute="width" constant="25" id="fHQ-NN-FTL"/>
+                            <constraint firstAttribute="height" constant="25" id="frL-5Y-YMh"/>
                         </constraints>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <state key="normal">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </state>
-                        <connections>
-                            <action selector="goToUserProfile:" destination="BFV-ZN-V3a" eventType="touchUpInside" id="1bN-Qo-OcL"/>
-                        </connections>
-                    </button>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="NGf-m4-HV0" firstAttribute="leading" secondItem="77V-uI-XXV" secondAttribute="trailing" constant="8" id="5Ig-9Y-gxO"/>
                     <constraint firstItem="APC-Ky-HEV" firstAttribute="top" secondItem="hfs-Ad-S4m" secondAttribute="bottom" constant="10" id="FTz-rO-oMZ"/>
-                    <constraint firstAttribute="bottom" secondItem="9Wd-3d-oQw" secondAttribute="bottom" constant="10" id="FyK-Sc-ZZ6"/>
-                    <constraint firstAttribute="bottom" secondItem="D98-JP-Dae" secondAttribute="bottom" constant="10" id="GMF-D7-5bF"/>
-                    <constraint firstItem="9Wd-3d-oQw" firstAttribute="leading" secondItem="D98-JP-Dae" secondAttribute="trailing" constant="8" id="KCd-yt-k2k"/>
-                    <constraint firstItem="gw1-cE-j4f" firstAttribute="leading" secondItem="9Wd-3d-oQw" secondAttribute="trailing" constant="8" id="LTG-cQ-yLn"/>
+                    <constraint firstAttribute="bottom" secondItem="0uC-Qg-wt8" secondAttribute="bottom" constant="10" id="Kut-qt-EIF"/>
                     <constraint firstAttribute="bottom" secondItem="a5l-Zo-WAK" secondAttribute="bottom" constant="10" id="NU7-tn-Nl1"/>
-                    <constraint firstItem="a5l-Zo-WAK" firstAttribute="leading" secondItem="gw1-cE-j4f" secondAttribute="trailing" constant="8" id="OSG-sG-hTP"/>
                     <constraint firstAttribute="trailing" secondItem="APC-Ky-HEV" secondAttribute="trailing" id="Opx-4r-Nml"/>
+                    <constraint firstItem="77V-uI-XXV" firstAttribute="leading" secondItem="5ag-QT-gc9" secondAttribute="leading" constant="20" id="P9F-EI-f06"/>
                     <constraint firstAttribute="trailing" secondItem="Xmi-eD-txk" secondAttribute="trailing" id="PMq-Yg-L29"/>
                     <constraint firstItem="Ju9-ey-FZf" firstAttribute="leading" secondItem="5ag-QT-gc9" secondAttribute="leading" constant="20" id="PrT-dh-qzx"/>
+                    <constraint firstAttribute="bottom" secondItem="NGf-m4-HV0" secondAttribute="bottom" constant="10" id="Tj3-Md-dyU"/>
                     <constraint firstItem="hfs-Ad-S4m" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ju9-ey-FZf" secondAttribute="trailing" constant="5" id="US6-N3-ros"/>
                     <constraint firstAttribute="bottom" secondItem="Xmi-eD-txk" secondAttribute="bottom" constant="10" id="Wh1-ho-GXz"/>
                     <constraint firstItem="Ju9-ey-FZf" firstAttribute="top" secondItem="5ag-QT-gc9" secondAttribute="top" constant="5" id="XSI-Ce-iht"/>
                     <constraint firstAttribute="trailing" secondItem="hfs-Ad-S4m" secondAttribute="trailing" id="Xi2-0o-qUf"/>
                     <constraint firstItem="Xmi-eD-txk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="a5l-Zo-WAK" secondAttribute="trailing" constant="10" id="b4T-51-1SY"/>
-                    <constraint firstItem="D98-JP-Dae" firstAttribute="leading" secondItem="5ag-QT-gc9" secondAttribute="leading" constant="20" id="cUX-to-uLV"/>
                     <constraint firstItem="APC-Ky-HEV" firstAttribute="top" secondItem="Ju9-ey-FZf" secondAttribute="bottom" constant="8" id="foh-L1-6R7"/>
+                    <constraint firstItem="0uC-Qg-wt8" firstAttribute="leading" secondItem="NGf-m4-HV0" secondAttribute="trailing" constant="8" id="gnT-fC-xJD"/>
+                    <constraint firstAttribute="bottom" secondItem="77V-uI-XXV" secondAttribute="bottom" constant="10" id="lBN-6t-pou"/>
                     <constraint firstItem="APC-Ky-HEV" firstAttribute="leading" secondItem="5ag-QT-gc9" secondAttribute="leading" constant="20" id="sqX-gq-d5C"/>
-                    <constraint firstAttribute="bottom" secondItem="gw1-cE-j4f" secondAttribute="bottom" constant="10" id="vKl-lK-Cmt"/>
+                    <constraint firstItem="a5l-Zo-WAK" firstAttribute="leading" secondItem="0uC-Qg-wt8" secondAttribute="trailing" constant="8" id="xpY-gV-bYB"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -128,12 +104,12 @@
                 <outlet property="descriptionLabel" destination="APC-Ky-HEV" id="QZr-qk-lM9"/>
                 <outlet property="extraPicturesLabel" destination="a5l-Zo-WAK" id="UCA-gm-OpD"/>
                 <outlet property="locationLabel" destination="Xmi-eD-txk" id="84W-5f-mwi"/>
+                <outlet property="pic1" destination="77V-uI-XXV" id="HNe-j1-vQR"/>
+                <outlet property="pic2" destination="NGf-m4-HV0" id="K2S-fI-Ee6"/>
+                <outlet property="pic3" destination="0uC-Qg-wt8" id="btb-fo-VRG"/>
                 <outlet property="titleLabel" destination="Ju9-ey-FZf" id="Utz-2r-O9Y"/>
-                <outletCollection property="memberPics" destination="D98-JP-Dae" collectionClass="NSMutableArray" id="hML-He-6Dy"/>
-                <outletCollection property="memberPics" destination="9Wd-3d-oQw" collectionClass="NSMutableArray" id="AYk-BK-zre"/>
-                <outletCollection property="memberPics" destination="gw1-cE-j4f" collectionClass="NSMutableArray" id="zGe-Ut-pr8"/>
             </connections>
-            <point key="canvasLocation" x="58" y="120"/>
+            <point key="canvasLocation" x="56.799999999999997" y="119.64017991004499"/>
         </tableViewCell>
     </objects>
 </document>
