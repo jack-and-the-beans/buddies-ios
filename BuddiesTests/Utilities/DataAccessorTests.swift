@@ -11,18 +11,18 @@ import Firebase
 import FirebaseFirestore
 @testable import Buddies
 
+class MockUser : Firebase.User {
+    override var uid: String { get { return "my_uid" } }
+    init(_ workaround: Any) {}
+}
+
 class DataAccessorTests: XCTestCase {
     var cancels: [Canceler] = []
     var instance: DataAccessor!
     var me: Buddies.LoggedInUser!
     var them: Buddies.OtherUser!
     var myActivity: Activity!
-    
-    class MockUser : Firebase.User {
-        override var uid: String { get { return "my_uid" } }
-        init(_ workaround: Any) {}
-    }
-    
+
     override func setUp() {
         // Create user stuff
         let user = MockUser(0)

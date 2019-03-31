@@ -164,13 +164,11 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
     func useUsers(from userIds: [String], fn: @escaping ([User]) -> Void) -> Canceler {
         var handledUsers: [UserId: Bool] = [:]
         var users = [User]()
+        var didFinishSetup = false
         let cancelers = userIds.map { uid in useUser(id: uid) { user in
             if let user = user, handledUsers[uid] == nil {
                 users.append(user)
                 handledUsers[uid] = true
-                if (handledUsers.count == userIds.count) {
-                    fn(users)
-                }
             } else if handledUsers[uid] == nil {
                 // DNE yet, but the user doesn't exist either:
                 handledUsers[uid] = false
@@ -183,6 +181,10 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             } else {
                 // Used to exist, but we need to remove it now.
                 fn( users.filter { $0.uid != uid } )
+            }
+            if (handledUsers.count == userIds.count && !didFinishSetup) {
+                didFinishSetup = true
+                fn(users)
             }
         } }
         return { for c in cancelers { c() } }

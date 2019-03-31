@@ -28,13 +28,6 @@ class ActivityTableDataListener {
     var handledActivities = [ActivityId : Bool]()
 
     var didFinishSetup = false
-
-    // Returns the nested array flattened to a single list, in order.
-    fileprivate func getStringsInOrder(_ ids: [[String]]) -> [String] {
-        var allids = ids.flatMap { $0 }
-        allids.sort()
-        return allids
-    }
     
     func updateWantedActivities(with ids: [[ActivityId]], dataAccessor: DataAccessor = DataAccessor.instance) {
         let orderedNewIds = getStringsInOrder(ids)
@@ -60,13 +53,6 @@ class ActivityTableDataListener {
                         // DNE yet but we have the activity
                         newActivities[i][j] = activity
                         self.handledActivities[id] = true
-                        if (self.handledActivities.count == orderedNewIds.count) {
-                            // Now, all activities have been handled
-                            let trimedActivities = self.trimActivities(newActivities)
-                            self.delegate?.onNewActivities(newActivities: trimedActivities)
-                            self.didFinishSetup = true
-                            self.delegate?.onOperationsFinished()
-                        }
                     } else if self.handledActivities[id] == nil {
                         // DNE yet, but the activity is nil
                         self.handledActivities[id] = false
@@ -90,6 +76,16 @@ class ActivityTableDataListener {
                         self.handledActivities[id] = false
                     }
                     
+                    // If we're done with setup, AND if we have handled all the
+                    // activities, give them back!
+                    if (self.handledActivities.count == orderedNewIds.count && !self.didFinishSetup) {
+                        // Now, all activities have been handled
+                        let trimedActivities = self.trimActivities(newActivities)
+                        self.delegate?.onNewActivities(newActivities: trimedActivities)
+                        self.didFinishSetup = true
+                        self.delegate?.onOperationsFinished()
+                    }
+
                     if let activity = activity {
                         self.cancelers += [dataAccessor.useUsers(from: activity.members) { users in
                             activity.users = users
@@ -107,6 +103,13 @@ class ActivityTableDataListener {
     // Removes the nils from the given array:
     func trimActivities(_ activities: [[Activity?]]) -> [[Activity]] {
         return activities.map { $0.compactMap { $0 } }
+    }
+
+    // Returns the nested array flattened to a single list, in order.
+    func getStringsInOrder(_ ids: [[String]]) -> [String] {
+        var allids = ids.flatMap { $0 }
+        allids.sort()
+        return allids
     }
 
     func cleanup() {
