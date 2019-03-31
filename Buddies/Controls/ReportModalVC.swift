@@ -15,16 +15,16 @@ class ReportModalVC: UIViewController, UITextViewDelegate {
     var name: String? = nil
     let placeholderText = "Tell us a little about what went wrong..."
     
-    var forUser: Bool { get { return userId != nil }}
+    var isUser: Bool { get { return userId != nil }}
     
     @IBOutlet weak var warningText: UILabel!
     
     var pronoun: String {
-        get { return forUser ? "them" : "it" }
+        get { return isUser ? "them" : "it" }
     }
     
     var type: String {
-        get { return forUser ? "user" : "activity" }
+        get { return isUser ? "user" : "activity" }
     }
 
     @IBOutlet weak var textView: UITextView!
@@ -69,10 +69,11 @@ class ReportModalVC: UIViewController, UITextViewDelegate {
         textView.textContainerInset = Theme.textAreaInset
         textView.layer.borderWidth = Theme.textAreaBorderWidth
         
-        navItem.title = forUser ? "Report User" : "Report Activity"
+        navItem.title = "Report \(type.capitalized)"
         
         //Quotes if mentioning an activity
-        let nameText = "\(!forUser ? "\"" : "")\(name ?? "this")\(!forUser ? "\"" : "")"
+        let quote = isUser ? "" : "\""
+        let nameText = "\(quote)\(name ?? "this")\(quote)"
         
         warningText.text = "By reporting \(nameText), you block \(pronoun)."
     }
