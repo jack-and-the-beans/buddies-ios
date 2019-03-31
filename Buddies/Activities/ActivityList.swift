@@ -11,6 +11,7 @@ import UIKit
 
 class ActivityList: NSObject, UITableViewDataSource {
     var sectionHeaders: [String] = []
+    var tableView: UITableView?
 
     // MARK: - Required TableView Methods for Data Source:
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -52,8 +53,26 @@ class ActivityList: NSObject, UITableViewDataSource {
         return activities[section].count
     }
 
-    func setActivities(_ activities: [[Activity]]) {
+    func setActivities(_ activities: [[Activity]]) -> [IndexPath]? {
+        // Get sets of the current and existing activity IDs:
+        let currentIds = Set(self.activities.flatMap { $0.map { $0.activityId } })
+        let newIds = Set(activities.flatMap { $0.map { $0.activityId } })
+        
+        // Use set operations to figure out what the added and removed activities are:
+        let addedActivities = newIds.subtracting( currentIds )
+        let removedActivities = currentIds.subtracting( newIds )
+        
+        // In this case, we have only removed an activity; we have not added any.
+        // As a result, we can make the animation more clean by just deleting
+        // the rows at the specified activities.
+        if (removedActivities.count > 0 && addedActivities.count == 0) {
+            let removedIndices = removedActivities.compactMap { getIndexPath(of: $0 ) }
+            // Note: only set activities AFTER we have the indexes of the deleted ones:
+            self.activities = activities
+            return removedIndices
+        }
         self.activities = activities
+        return nil
     }
 
     func removeActivityInSection(id: ActivityId, section: Int) -> IndexPath? {
@@ -89,7 +108,19 @@ class ActivityList: NSObject, UITableViewDataSource {
             return nil
         }
     }
-    
+
+    // Gets the index path of an activity no matter its section:
+    fileprivate func getIndexPath(of activityId: ActivityId) -> IndexPath? {
+        for (i, section) in self.activities.enumerated() {
+            for (j, activity) in section.enumerated() {
+                if activity.activityId == activityId {
+                    return IndexPath(row: j, section: i)
+                }
+            }
+        }
+        return nil
+    }
+
     // Updates the given activities and returns their index paths:
     fileprivate func updateAndGetIndexPath(of activity: Activity, at section: Int) -> IndexPath? {
         let index = activities[section].firstIndex { $0.activityId == activity.activityId }

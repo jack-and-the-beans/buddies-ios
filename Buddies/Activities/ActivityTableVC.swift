@@ -106,8 +106,11 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     }
     
     func onNewActivities(newActivities: [[Activity]]) {
-        dataSource.setActivities(newActivities)
-        tableView.reloadData()
+        if let paths = dataSource.setActivities(newActivities) {
+            tableView.deleteRows(at: paths, with: .fade)
+        } else {
+            tableView.reloadData()
+        }
     }
     
     func removeActivityInSection(id: ActivityId, section: Int) {

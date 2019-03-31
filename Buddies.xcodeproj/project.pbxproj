@@ -378,6 +378,7 @@
 				4544D3042214E93F007CB73D /* ActivityCell.swift */,
 				588289F7222C2A02009FEFC8 /* ActivityCell.xib */,
 				457F576A2218C54C00F27BFE /* ActivityTableVC.swift */,
+				B6AF8689224D38C600144AE2 /* ActivityList.swift */,
 			);
 			path = Activities;
 			sourceTree = "<group>";
@@ -526,7 +527,6 @@
 			children = (
 				58EF8D912208A25F00872770 /* Topic.swift */,
 				A95B958722133FA500453AEA /* User.swift */,
-				B6AF8689224D38C600144AE2 /* ActivityList.swift */,
 				A95B958922133FB100453AEA /* Activity.swift */,
 			);
 			path = Models;
