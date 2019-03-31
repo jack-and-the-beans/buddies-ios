@@ -76,6 +76,7 @@ class ActivityTableDataListener {
                         // Already exists, and we have an activity
                         if (self.didFinishSetup) {
                             self.delegate?.updateActivityInSection(activity: activity, section: i)
+                            self.delegate?.onOperationsFinished()
                         }
                         self.handledActivities[id] = true
                     } else {
@@ -84,6 +85,7 @@ class ActivityTableDataListener {
                         // Already exists, but the activity is now nil
                         if (self.didFinishSetup) {
                             self.delegate?.removeActivityInSection(id: id, section: i)
+                            self.delegate?.onOperationsFinished()
                         }
                         self.handledActivities[id] = false
                     }

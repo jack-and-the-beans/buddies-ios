@@ -119,8 +119,19 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
         }
     }
 
+    // Called by the data listener when an operation
+    // ("new/remove/update" activity) has completed
     func onOperationsFinished() {
         self.refreshControl?.endRefreshing()
+        checkAndShowNoActivitiesMessage()
+    }
+
+    func checkAndShowNoActivitiesMessage () {
+        if ( self.dataSource.hasNoActivities() ) {
+            tableView.setEmptyMessage("No results")
+        } else {
+            tableView.clearBackground()
+        }
     }
 
     // Mark:- Displaying view activity:
