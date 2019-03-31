@@ -14,7 +14,8 @@ class ActivityChatController: MessagesViewController {
     @IBOutlet weak var chatAreaView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
     
-    var messageList: [Message] = [Message(text: "test", sender: Sender(id: "asdf", displayName: "adsaf"), messageId: "testID", date: Date())]
+    var messageList: [Message] = [Message(text: "test", sender: Sender(id: "asdf", displayName: "adsaf"), messageId: "testID", date: Date()),
+                                  Message(text: "testtesttest", sender: Sender(id: "asdf", displayName: "adsaf"), messageId: "testID", date: Date())]
 
     // Local data for rendering:
     var activity: Activity?
