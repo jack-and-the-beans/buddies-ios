@@ -168,7 +168,7 @@ class ActivityTableVCTests: XCTestCase {
         cell.extraPicturesLabel = extraPicturesLabel
 
         thisUser.image = UIImage()
-
+        let locationText = "Beans"
         let activity = Activity(delegate: nil,
                                 activityId: "test_id",
                                 dateCreated: Timestamp(date: "11/23/1998".toDate()!.date),
@@ -218,7 +218,7 @@ class ActivityTableVCTests: XCTestCase {
         cell.pic3 = image3
         
         thisUser.image = UIImage()
-        
+        let locationText = "beans"
         let activity = Activity(delegate: nil,
                                 activityId: "test_id",
                                 dateCreated: Timestamp(date: "11/23/1998".toDate()!.date),
