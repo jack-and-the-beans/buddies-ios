@@ -29,7 +29,7 @@ class ActivityList: NSObject, UITableViewDataSource {
     }
     
     // MARK: - Methods for interacting with the data source:
-    fileprivate var activities = [[Activity]]()
+    var activities = [[Activity]]()
 
     func hasNoActivities() -> Bool {
         return activities.flatMap { $0 }.count == 0
@@ -37,14 +37,6 @@ class ActivityList: NSObject, UITableViewDataSource {
 
     func get(_ indexPath: IndexPath) -> Activity {
         return activities[indexPath.section][indexPath.row]
-    }
-    
-    func numSections () -> Int {
-        return activities.count
-    }
-
-    func numRows(in section: Int) -> Int {
-        return activities[section].count
     }
 
     func setActivities(_ activities: [[Activity]]) -> [IndexPath]? {
@@ -94,7 +86,10 @@ class ActivityList: NSObject, UITableViewDataSource {
     }
 
     // Returns the index path of the matching ID:
-    fileprivate func getIndexPath(of activityId: ActivityId, in section: Int) -> IndexPath? {
+    func getIndexPath(of activityId: ActivityId, in section: Int) -> IndexPath? {
+        if (section >= activities.count) {
+            return nil
+        }
         let index = activities[section].firstIndex { $0.activityId == activityId }
         if let index = index {
             return IndexPath(row: index, section: section)
@@ -104,7 +99,7 @@ class ActivityList: NSObject, UITableViewDataSource {
     }
 
     // Gets the index path of an activityID no matter its section:
-    fileprivate func getIndexPath(of activityId: ActivityId) -> IndexPath? {
+    func getIndexPath(of activityId: ActivityId) -> IndexPath? {
         for (i, section) in self.activities.enumerated() {
             for (j, activity) in section.enumerated() {
                 if activity.activityId == activityId {
@@ -116,7 +111,10 @@ class ActivityList: NSObject, UITableViewDataSource {
     }
 
     // Updates the given activity and returns its index path:
-    fileprivate func updateAndGetIndexPath(of activity: Activity, at section: Int) -> IndexPath? {
+    func updateAndGetIndexPath(of activity: Activity, at section: Int) -> IndexPath? {
+        if (section >= activities.count) {
+            return nil
+        }
         let index = activities[section].firstIndex { $0.activityId == activity.activityId }
         if let index = index {
             activities[section][index] = activity
