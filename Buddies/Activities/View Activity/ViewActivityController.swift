@@ -21,7 +21,7 @@ class ViewActivityController: UIViewController {
     
     // UIViews and controllers:
     private var descriptionController: ActivityDescriptionController?
-    private var chatController : ActivityChatController?
+    private var chatController = ActivityChatController()
     private var descriptionView: UIView?
     @IBOutlet weak var contentArea: UIView! // We render EVERYTHING inside this.
 
@@ -34,22 +34,32 @@ class ViewActivityController: UIViewController {
     var reportButton: UIBarButtonItem!
     var editButton: UIBarButtonItem!
     
-    /*
+    
     /// Required for the `MessageInputBar` to be visible
     override var canBecomeFirstResponder: Bool {
-        return chatController.canBecomeFirstResponder
+        
+        if curMemberStatus! == .none {
+            return false
+        }else
+        {
+            return chatController.canBecomeFirstResponder
+        }
+        
+ 
     }
     
     /// Required for the `MessageInputBar` to be visible
     override var inputAccessoryView: UIView? {
         return chatController.inputAccessoryView
-    }*/
+    }
+    
+    
     
     
     // Programmatically setup nav bar:
     override func viewDidLoad() {
         self.title = "View Activity"
-        
+        contentArea.becomeFirstResponder()
         reportButton = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
         editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(self.onEditTap))
         
@@ -263,31 +273,26 @@ class ViewActivityController: UIViewController {
         // chat area underneath the description:
         if (memberStatus != .none) {
             // Initialize chat area if it's nil:
-            if (chatController == nil) {
-                chatController = ActivityChatController()
+        
+                //chatController = ActivityChatController()
+            
                 //let chatView = UINib(nibName: "ActivityChat", bundle: nil).instantiate(withOwner: chatController, options: nil)[0] as! UIView
 
                 // Note: the description view should always be initialized
                 // before this is called. The else case should never be called.
                 // Insert it underneath the description view in the hierarchy.
                 if let desc = self.descriptionView {
-                    contentArea.insertSubview((chatController?.view)!, belowSubview: desc)
-                    self.addChild(chatController!)
-                    chatController?.didMove(toParent: self)
-                    self.becomeFirstResponder()
+                    contentArea.insertSubview((chatController.view)!, belowSubview: desc)
+                    //contentArea.insertSubview((chatController.inputAccessoryView)!, belowSubview: desc)
+                    self.addChild(chatController)
+                    chatController.didMove(toParent: self)
+                    
                     
                     //adjust height
-                    chatController?.view.frame = CGRect(x: 0, y: descriptionView!.frame.height, width: view.bounds.width, height: view.bounds.height - descriptionView!.frame.height)
-                } else {
-                    //contentArea.addSubview(chatView)
+                    chatController.view.frame = CGRect(x: 0, y: descriptionView!.frame.height, width: view.bounds.width, height: view.bounds.height - descriptionView!.frame.height)
                 }
+            
 
-                // Bind chat view to parent on all sides
-                // so that it takes up the whole screen:
-                //chatView.bindFrameToSuperviewBounds()
-            }
-            // Refresh the chat
-            //chatController.render(with: activity, memberStatus: memberStatus)
         }
         
         // Don't allow the owner to report an activity:
