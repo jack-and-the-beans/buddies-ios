@@ -68,6 +68,16 @@ class OtherUser : User {
                          bio: bio,
                          favoriteTopics: favoriteTopics)
     }
+    
+    func isLooselyDifferent(from otherUser: User?) -> Bool {
+        if let otherUser = otherUser {
+            return
+                self.uid != otherUser.uid ||
+                self.name != otherUser.name
+        } else {
+            return false
+        }
+    }
 }
 
 class LoggedInUser : User {
@@ -210,5 +220,15 @@ class LoggedInUser : User {
                     filterSettings: data["filter_settings"] as? [String:Int] ?? FilterSearchBar.defaultSettings,
                     notificationToken: data["notification_token"] as? String,
                     chatReadAt: chatReadAt)
+    }
+    
+    func isLooselyDifferent(from otherUser: User?) -> Bool {
+        if let otherUser = otherUser {
+            return
+                self.uid != otherUser.uid ||
+                self.name != otherUser.name
+        } else {
+            return false
+        }
     }
 }
