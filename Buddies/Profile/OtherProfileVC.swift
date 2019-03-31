@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
 
 class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITableViewDataSource {
     @IBOutlet weak var profilePic: UIButton!
@@ -97,6 +97,9 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
     func render(with user: User){
         self.bioLabel.text = user.bio
         self.nameLabel.text = user.name
+        
+        //Disable if current user
+        reportButton.isEnabled = userId != Auth.auth().currentUser?.uid
         
         self.dataSource.topics = self.getTopics(from: user.favoriteTopics)
         
