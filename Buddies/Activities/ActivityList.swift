@@ -19,11 +19,6 @@ class ActivityList: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if ( hasNoActivities() ) {
-            tableView.setEmptyMessage("No results")
-        } else {
-            tableView.clearBackground()
-        }
         return activities[section].count
     }
     
