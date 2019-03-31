@@ -94,7 +94,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     // This function is called to update the IDs that we want to display.
     // It then asks the data accessor for them, which will post back the
     // actual activities we're permitted to use via `onNewActivities`
-    func updateWantedActivities(with ids: [[ActivityId]], dataAccessor: DataAccessor = DataAccessor.instance) {
+    func updateWantedActivities(with ids: [[ActivityId]]) {
         self.dataManager.updateWantedActivities(with: ids)
     }
 

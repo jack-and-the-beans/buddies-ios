@@ -13,7 +13,7 @@ import InstantSearchClient
 class DiscoverTableVC : ActivityTableVC {
     @IBOutlet weak var searchBar: FilterSearchBar!
 
-    let api = AlgoliaSearch()
+    var api = AlgoliaSearch()
 
     var user: LoggedInUser? { didSet { self.searchBar.sendParams(to: self) } }
     var cancelUserListener: Canceler?
