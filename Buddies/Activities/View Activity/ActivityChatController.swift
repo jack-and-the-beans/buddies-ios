@@ -14,52 +14,28 @@ class ActivityChatController: MessagesViewController {
     @IBOutlet weak var chatAreaView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
     
-    var messageList: [Message] = []
+    var messageList: [Message] = [Message(text: "test", sender: Sender(id: "asdf", displayName: "adsaf"), messageId: "testID", date: Date())]
 
     // Local data for rendering:
-    private var activity: Activity?
-    private var memberStatus: MemberStatus?
+    var activity: Activity?
+    var memberStatus: MemberStatus?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view = chatAreaView
+        //self.view = chatAreaView
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        messageInputBar.delegate = self
     }
     
+    /*
     // Call this to re-render with new data:
     func render(with activity: Activity?, memberStatus: MemberStatus?) {
-        self.activity = activity
-        self.memberStatus = memberStatus
-        self.statusLabel?.text = memberStatus == .owner ? "You are this activity's owner." : "You are a member of this activity."
-    }
+
+
+    }*/
     
-    // MARK: - Helpers
-    
-    func insertMessage(_ message: Message) {
-        messageList.append(message)
-        // Reload last section to update header/footer labels and insert a new one
-        messagesCollectionView.performBatchUpdates({
-            messagesCollectionView.insertSections([messageList.count - 1])
-            if messageList.count >= 2 {
-                messagesCollectionView.reloadSections([messageList.count - 2])
-            }
-        }, completion: { [weak self] _ in
-            if self?.isLastSectionVisible() == true {
-                self?.messagesCollectionView.scrollToBottom(animated: true)
-            }
-        })
-    }
-    
-    func isLastSectionVisible() -> Bool {
-        
-        guard !messageList.isEmpty else { return false }
-        
-        let lastIndexPath = IndexPath(item: 0, section: messageList.count - 1)
-        
-        return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
-    }
     
 }
 
@@ -91,10 +67,11 @@ extension ActivityChatController: MessageInputBarDelegate {
             
             if let str = component as? String {
                 let message = Message(text: str, sender: currentSender(), messageId: UUID().uuidString, date: Date())
-                insertMessage(message)
+                messageList.append(message)
             }
         }
         inputBar.inputTextView.text = String()
+        messagesCollectionView.reloadData()
         messagesCollectionView.scrollToBottom(animated: true)
     }
     
