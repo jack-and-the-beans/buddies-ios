@@ -80,6 +80,7 @@
 		A850ED622203A12900DBF1A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A850ED602203A12900DBF1A6 /* GoogleService-Info.plist */; };
 		A874427C22501411002DFDAA /* UIRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874427B22501411002DFDAA /* UIRefreshControl.swift */; };
 		A874427E22512604002DFDAA /* ActivityTableDataListenerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874427D22512604002DFDAA /* ActivityTableDataListenerTest.swift */; };
+		A8744280225133F8002DFDAA /* ActivityListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874427F225133F8002DFDAA /* ActivityListTest.swift */; };
 		A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B2F37B22040710006B91D1 /* NotificationServiceTest.swift */; };
 		A91BA3372202404600DED6B3 /* LoginVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA3362202404600DED6B3 /* LoginVCTests.swift */; };
 		A91BA33A22024A8900DED6B3 /* LoginExistingVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */; };
@@ -224,6 +225,7 @@
 		A850ED602203A12900DBF1A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A874427B22501411002DFDAA /* UIRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIRefreshControl.swift; sourceTree = "<group>"; };
 		A874427D22512604002DFDAA /* ActivityTableDataListenerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableDataListenerTest.swift; sourceTree = "<group>"; };
+		A874427F225133F8002DFDAA /* ActivityListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListTest.swift; sourceTree = "<group>"; };
 		A8B2F37B22040710006B91D1 /* NotificationServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationServiceTest.swift; sourceTree = "<group>"; };
 		A91BA3362202404600DED6B3 /* LoginVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVCTests.swift; sourceTree = "<group>"; };
 		A91BA33922024A8900DED6B3 /* LoginExistingVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingVCTests.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 			isa = PBXGroup;
 			children = (
 				584C350B221BC192000442B2 /* ActivityTableVCTests.swift */,
+				A874427F225133F8002DFDAA /* ActivityListTest.swift */,
 			);
 			path = Activities;
 			sourceTree = "<group>";
@@ -1042,6 +1045,7 @@
 				58B41FE1224A9571001A3CA7 /* LoggedInProfileVCTests.swift in Sources */,
 				A9C98530221FB1E5003462AC /* TopicActivityTableVCTests.swift in Sources */,
 				A8B2F37C22040710006B91D1 /* NotificationServiceTest.swift in Sources */,
+				A8744280225133F8002DFDAA /* ActivityListTest.swift in Sources */,
 				A95B958C2214B6A800453AEA /* DataAccessorTests.swift in Sources */,
 				58EA1EF722041436003F6A3A /* StorageManagerTests.swift in Sources */,
 				58A0032E222DEAA0002522C0 /* TopicLayoutTests.swift in Sources */,
