@@ -11,7 +11,6 @@ import UIKit
 
 class ActivityList: NSObject, UITableViewDataSource {
     var sectionHeaders: [String] = []
-    var tableView: UITableView?
 
     // MARK: - Required TableView Methods for Data Source:
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -94,7 +93,7 @@ class ActivityList: NSObject, UITableViewDataSource {
         return nil
     }
 
-    // Returns the index paths of the matching ID:
+    // Returns the index path of the matching ID:
     fileprivate func getIndexPath(of activityId: ActivityId, in section: Int) -> IndexPath? {
         let index = activities[section].firstIndex { $0.activityId == activityId }
         if let index = index {
@@ -104,7 +103,7 @@ class ActivityList: NSObject, UITableViewDataSource {
         }
     }
 
-    // Gets the index path of an activity no matter its section:
+    // Gets the index path of an activityID no matter its section:
     fileprivate func getIndexPath(of activityId: ActivityId) -> IndexPath? {
         for (i, section) in self.activities.enumerated() {
             for (j, activity) in section.enumerated() {
@@ -116,7 +115,7 @@ class ActivityList: NSObject, UITableViewDataSource {
         return nil
     }
 
-    // Updates the given activities and returns their index paths:
+    // Updates the given activity and returns its index path:
     fileprivate func updateAndGetIndexPath(of activity: Activity, at section: Int) -> IndexPath? {
         let index = activities[section].firstIndex { $0.activityId == activity.activityId }
         if let index = index {
