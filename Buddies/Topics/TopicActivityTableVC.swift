@@ -15,7 +15,7 @@ class TopicActivityTableVC : ActivityTableVC {
     var topic: Topic!
     var user: LoggedInUser?
     var cancelUserListener: Canceler?
-    let api = AlgoliaSearch()
+    var api = AlgoliaSearch()
 
     @IBOutlet weak var favoriteButton: ToggleButton!
     
