@@ -13,18 +13,13 @@ import FirebaseStorage
 import FirebaseAuth
 
 class FirestoreManager {
-    var db: Firestore {
-        get {
-            return Firestore.firestore()
-        }
-    }
-
+    
     static let shared = FirestoreManager()
     
     //https://github.com/AssassinDev422/hallow/blob/e1b334df607a1a5cddf4f5b1eb23a88c3db7871e/Hallow/Utilities/FirebaseUtilities.swift
     func loadAllDocuments(ofType type: String,
                                  _ callback: @escaping ([DocumentSnapshot]) -> ()) {
-        db.collection(type).getDocuments { result, error in
+        Firestore.firestore().collection(type).getDocuments { result, error in
             guard let result = result,
                 error == nil else {
                     print("Error loading \(type) from Firestore: \n \(String(describing: error))")
@@ -75,24 +70,24 @@ class FirestoreManager {
         }
     }
     
-    static func reportActivity(_ activityId: String, reportMessage: String, curUid: String? = Auth.auth().currentUser?.uid) {
+    static func reportActivity(_ activityId: String, reportMessage: String, curUid: String? = Auth.auth().currentUser?.uid, completion: ((Error?) -> ())? = nil) {
         guard let uid = curUid else { return }
         Firestore.firestore().collection("activity_report").addDocument(data: [
             "report_by_id": uid,
             "reported_activity_id": activityId,
             "message": reportMessage,
             "timestamp": Timestamp(date: Date())
-        ])
+            ], completion: completion)
     }
     
-    static func reportUser(_ reported_uid: String, reportMessage: String, curUid: String? = Auth.auth().currentUser?.uid) {
+    static func reportUser(_ reported_uid: String, reportMessage: String, curUid: String? = Auth.auth().currentUser?.uid, completion: ((Error?) -> ())? = nil) {
         guard let curUid = curUid else { return }
         Firestore.firestore().collection("user_report").addDocument(data: [
             "report_by_id": curUid,
             "reported_user_id": reported_uid,
             "message": reportMessage,
             "timestamp": Timestamp(date: Date())
-            ])
+            ], completion: completion)
     }
     
     static func deleteActivity(_ activity: Activity, curUid: String? = Auth.auth().currentUser?.uid) {
