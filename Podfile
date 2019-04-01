@@ -12,6 +12,7 @@ target 'Buddies' do
   pod 'Firebase/Messaging'
   
   pod 'SwiftDate'
+  pod 'Toast-Swift', '~> 4.0.0'
   
   # Activity Chat
   pod 'MessageKit'
