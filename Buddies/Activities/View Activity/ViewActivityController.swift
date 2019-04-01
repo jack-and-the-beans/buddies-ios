@@ -38,10 +38,8 @@ class ViewActivityController: UIViewController {
     // Programmatically setup nav bar:
     override func viewDidLoad() {
         self.title = "View Activity"
-        
         reportButton = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
         editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(self.onEditTap))
-        
         reportButton.tintColor = Theme.bad
     }
 

@@ -143,7 +143,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let selectedIndex = self.tableView.indexPath(for: sender as! UITableViewCell)
         if let path = selectedIndex {
-            let activityId = dataSource.get(path).activityId
+            let activityId = dataSource[activityAt: path].activityId
             self.showActivity(with: activityId, for: segue)
         }
     }

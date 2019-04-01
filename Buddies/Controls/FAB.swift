@@ -30,22 +30,19 @@ class FAB {
         button.setBackgroundColor(Theme.theme)
         button.setShadowColor(UIColor.black.withAlphaComponent(0.4), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.zPosition = 1000
         
         // Render
         button.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
-        vc.parent?.view.addSubview(button)
+        vc.view.addSubview(button)
         
         // Position it!
-        
-        if let guide = vc.parent?.view.safeAreaLayoutGuide {
-            NSLayoutConstraint.activate([
-                guide.bottomAnchor.constraint(equalToSystemSpacingBelow: button.bottomAnchor, multiplier: 2),
-                guide.rightAnchor.constraint(equalToSystemSpacingAfter: button.rightAnchor, multiplier: 2)
-            ])
-        }
+        let guide = vc.view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            guide.bottomAnchor.constraint(equalToSystemSpacingBelow: button.bottomAnchor, multiplier: 2),
+            guide.rightAnchor.constraint(equalToSystemSpacingAfter: button.rightAnchor, multiplier: 2)
+        ])
     }
-    
+
     var _createActivityPresentedHook: (() -> Void)?
     @objc func onCreateActivityFabTapped() {
         let createView = BuddiesStoryboard.CreateActivity.viewController()
