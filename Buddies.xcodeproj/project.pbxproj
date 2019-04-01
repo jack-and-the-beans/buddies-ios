@@ -24,6 +24,8 @@
 		45FED0AF220A657100B90C3B /* DeleteAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FED0AE220A657100B90C3B /* DeleteAccountVC.swift */; };
 		5802266A220BE5E90068E08E /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58022669220BE5E90068E08E /* ToggleButton.swift */; };
 		5802266F220CC1210068E08E /* ToggleButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802266E220CC1210068E08E /* ToggleButtonTests.swift */; };
+		5811D8E62252D5D1002D2166 /* BuddiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5811D8E52252D5D1002D2166 /* BuddiesTests.swift */; };
+		5811D8E82252D82A002D2166 /* TestReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5811D8E72252D82A002D2166 /* TestReport.swift */; };
 		582D0FA622035C3D004F71E3 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA522035C3D004F71E3 /* FirestoreManager.swift */; };
 		582D0FA822036C93004F71E3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA722036C93004F71E3 /* StorageManager.swift */; };
 		584C350C221BC192000442B2 /* ActivityTableVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C350B221BC192000442B2 /* ActivityTableVCTests.swift */; };
@@ -111,7 +113,7 @@
 		A9E8BF60220239EF00C05F2C /* UIApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF5F220239EE00C05F2C /* UIApplicationTests.swift */; };
 		A9E8BF6622023D2E00C05F2C /* UIViewControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */; };
 		B60FD0072215C86100A26AF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC549E21F8DB8300B075B8 /* AppDelegate.swift */; };
-		B63D444A22417DC600612239 /* BuddiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63D444922417DC600612239 /* BuddiesUITests.swift */; };
+		B63D444A22417DC600612239 /* TestOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63D444922417DC600612239 /* TestOnboarding.swift */; };
 		B641D0CB221360C80025CE65 /* AlgoliaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */; };
 		B6428EEF221DB5130052E469 /* ActivityDescription.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6428EEE221DB5130052E469 /* ActivityDescription.xib */; };
 		B6428EF1221DB51D0052E469 /* ActivityChat.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6428EF0221DB51D0052E469 /* ActivityChat.xib */; };
@@ -169,6 +171,8 @@
 		45FED0AE220A657100B90C3B /* DeleteAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVC.swift; sourceTree = "<group>"; };
 		58022669220BE5E90068E08E /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
 		5802266E220CC1210068E08E /* ToggleButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonTests.swift; sourceTree = "<group>"; };
+		5811D8E52252D5D1002D2166 /* BuddiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddiesTests.swift; sourceTree = "<group>"; };
+		5811D8E72252D82A002D2166 /* TestReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestReport.swift; sourceTree = "<group>"; };
 		582D0FA522035C3D004F71E3 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		582D0FA722036C93004F71E3 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		583FD2DD220244F8005B2C75 /* TopicModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicModelTests.swift; sourceTree = "<group>"; };
@@ -259,7 +263,7 @@
 		A9E8BF5F220239EE00C05F2C /* UIApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationTests.swift; sourceTree = "<group>"; };
 		A9E8BF6522023D2E00C05F2C /* UIViewControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControlTests.swift; sourceTree = "<group>"; };
 		B63D444722417DC600612239 /* BuddiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BuddiesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B63D444922417DC600612239 /* BuddiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddiesUITests.swift; sourceTree = "<group>"; };
+		B63D444922417DC600612239 /* TestOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestOnboarding.swift; sourceTree = "<group>"; };
 		B63D444B22417DC600612239 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B641D0CA221360C80025CE65 /* AlgoliaSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaSearch.swift; sourceTree = "<group>"; };
 		B6428EEE221DB5130052E469 /* ActivityDescription.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityDescription.xib; sourceTree = "<group>"; };
@@ -631,8 +635,10 @@
 		B63D444822417DC600612239 /* BuddiesUITests */ = {
 			isa = PBXGroup;
 			children = (
-				B63D444922417DC600612239 /* BuddiesUITests.swift */,
+				B63D444922417DC600612239 /* TestOnboarding.swift */,
+				5811D8E52252D5D1002D2166 /* BuddiesTests.swift */,
 				B63D444B22417DC600612239 /* Info.plist */,
+				5811D8E72252D82A002D2166 /* TestReport.swift */,
 			);
 			path = BuddiesUITests;
 			sourceTree = "<group>";
@@ -979,7 +985,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B63D444A22417DC600612239 /* BuddiesUITests.swift in Sources */,
+				B63D444A22417DC600612239 /* TestOnboarding.swift in Sources */,
+				5811D8E62252D5D1002D2166 /* BuddiesTests.swift in Sources */,
+				5811D8E82252D82A002D2166 /* TestReport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

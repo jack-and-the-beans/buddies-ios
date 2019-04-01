@@ -28,6 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         topicCollection = TopicCollection()
         
+        if CommandLine.arguments.contains("--uitesting") {
+            do { try Auth.auth().signOut() }
+            catch { print("Error signing out for testing, \(error)") }
+        }
+        
         // Setup delegates for notifications:
         UNUserNotificationCenter.current().delegate = self.notifications
         Messaging.messaging().delegate = self.notifications
