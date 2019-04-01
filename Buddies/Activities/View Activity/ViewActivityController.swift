@@ -40,8 +40,7 @@ class ViewActivityController: UIViewController {
         
         if curMemberStatus! == .none {
             return false
-        }else
-        {
+        }else{
             return chatController.canBecomeFirstResponder
         }
         
@@ -50,20 +49,30 @@ class ViewActivityController: UIViewController {
     
     /// Required for the `MessageInputBar` to be visible
     override var inputAccessoryView: UIView? {
-        return chatController.inputAccessoryView
+        
+        if curMemberStatus! == .none {
+            return nil
+        }else{
+            return chatController.inputAccessoryView
+        }
+        
     }
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        resignFirstResponder()
+    }
     
     
     // Programmatically setup nav bar:
     override func viewDidLoad() {
         self.title = "View Activity"
-        contentArea.becomeFirstResponder()
+        //contentArea.becomeFirstResponder()
         reportButton = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
         editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(self.onEditTap))
         
         reportButton.tintColor = Theme.bad
+        
+        setupHideKeyboardOnTap()
     }
 
     // Need to wait to render until here
@@ -166,6 +175,12 @@ class ViewActivityController: UIViewController {
     var shouldExpand = false
     func expandDescription() {
         shouldExpand = !shouldExpand
+        if shouldExpand {
+            //resignFirstResponder()
+        }else
+        {
+            //becomeFirstResponder()
+        }
         render()
     }
 
@@ -269,30 +284,37 @@ class ViewActivityController: UIViewController {
             onDeleteActivity: self.deleteActivity,
             onJoin: self.joinActivity )
         
+        
         // If (and only if) the user is a member, display the
         // chat area underneath the description:
         if (memberStatus != .none) {
-            // Initialize chat area if it's nil:
-        
-                //chatController = ActivityChatController()
             
-                //let chatView = UINib(nibName: "ActivityChat", bundle: nil).instantiate(withOwner: chatController, options: nil)[0] as! UIView
-
+            if !shouldExpand{
                 // Note: the description view should always be initialized
                 // before this is called. The else case should never be called.
                 // Insert it underneath the description view in the hierarchy.
                 if let desc = self.descriptionView {
                     contentArea.insertSubview((chatController.view)!, belowSubview: desc)
-                    //contentArea.insertSubview((chatController.inputAccessoryView)!, belowSubview: desc)
                     self.addChild(chatController)
                     chatController.didMove(toParent: self)
+                    chatController.activity = activity
                     
+                    chatController.loadMessageList()
                     
+                    //contentArea.insertSubview(chatController.messageInputBar, belowSubview: desc)
+                    becomeFirstResponder()
                     //adjust height
                     chatController.view.frame = CGRect(x: 0, y: descriptionView!.frame.height, width: view.bounds.width, height: view.bounds.height - descriptionView!.frame.height)
+                    chatController.view.bindFrameToSuperviewBounds()
                 }
-            
-
+            }
+            else
+            {
+                resignFirstResponder()  
+                chatController.view.removeFromSuperview()
+                chatController.messageInputBar.removeFromSuperview()
+            }
+           
         }
         
         // Don't allow the owner to report an activity:
