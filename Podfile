@@ -12,6 +12,7 @@ target 'Buddies' do
   pod 'Firebase/Messaging'
   
   pod 'SwiftDate'
+  pod 'Toast-Swift', '~> 4.0.0'
   
   # Login Flow
   pod 'FBSDKLoginKit'
@@ -21,6 +22,7 @@ target 'Buddies' do
   
   # Algolia
   pod 'InstantSearchClient', '~> 6.0'
+  
   
   target 'BuddiesTests' do
     inherit! :search_paths
