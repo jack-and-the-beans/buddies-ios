@@ -90,10 +90,6 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
     var _loggedInUID: String?
     var _cachedLoggedInUser: LoggedInUser?
     
-    // To deduplicate requests!
-    var _usersLoading: [UserId] = []
-    var _activitiesLoading: [ActivityId] = []
-    
     deinit {
         _userRegistration.values.forEach { $0.remove() }
         _activityRegistration.values.forEach { $0.remove() }
@@ -142,19 +138,21 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         
         _loggedInUserRegistration = accountCollection.document(uid).addSnapshotListener {
             guard let snap = $0 else {
-                print($1!)
+                if let err = $1 {
+                    print("BAD: Logged in user did NOT load for some reason", err)
+                    self.onInvalidateLoggedInUser(user: nil)
+                }
                 return
             }
             guard let user = LoggedInUser.from(snap: snap, with: self) else {
                 print("VERY BAD: invalid account ID=\"\(uid)\"")
+                self.onInvalidateLoggedInUser(user: nil)
                 return
             }
             
             self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
                 user.image = img
             }
-            
-            self._usersLoading.removeAll(where: { $0 == uid })
             
             self.onInvalidateLoggedInUser(user: user)
         }
@@ -212,21 +210,13 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         if _userListeners[id] == nil { _userListeners[id] = [] }
         _userListeners[id]?.append(callback)
         
-        // Handle calling the callback
+        // Immediately post back update if we have info cached:
         if let user = _userCache.object(forKey: id as AnyObject) {
             callback.fn(user)
-            
-            // If we removed the listener, add it back
-            if _userRegistration[id] == nil {
-                _usersLoading.append(id)
-                self._loadUser(id: id)
-            }
         }
-        else if !_usersLoading.contains(id) {
-            _usersLoading.append(id)
-            
-            self._loadUser(id: id)
-        }
+        
+        // Makes sure that firebase listener is set up:
+        self._loadUser(id: id)
         
         // Return a cancel callback
         return {
@@ -241,25 +231,23 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         guard _userRegistration[id] == nil else { return }
 
         _userRegistration[id] = usersCollection.document(id).addSnapshotListener { snap, err in
-            var user: OtherUser?
-            
-            if let snap = snap {
-                user = OtherUser.from(snap: snap)
-                if let user = user {
-                    self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
-                        user.image = img
-                        self.onInvalidateUser(user: user)
-                    }
+            guard let snap = snap else {
+                if let err = err {
+                    print("BAD: Could not load a user's snapshot", err)
                 }
-            } else if let err = err {
-                print(err)
+                self.onInvalidateUser(user: nil, id: id)
+                return
             }
-
-            // We want to remove and invalidate, even
-            // if getting the user failed:
-            self._usersLoading.removeAll(where: { $0 == id })
             
-            self.onInvalidateUser(user: user, id: id)
+            if let user = OtherUser.from(snap: snap) {
+                self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: user.uid) { img in
+                    user.image = img
+                    self.onInvalidateUser(user: user)
+                }
+                self.onInvalidateUser(user: user, id: id)
+            } else {
+                self.onInvalidateUser(user: nil, id: id)
+            }
         }
     }
     
@@ -271,20 +259,13 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         if _activityListeners[id] == nil { _activityListeners[id] = [] }
         _activityListeners[id]?.append(callback)
 
-        // Handle calling the callback
+        // If it exists in the cache, immediately post back to the listener
         if let activity = _activityCache.object(forKey: id as AnyObject) {
             callback.fn(activity)
-
-            // If we removed the firebase listener, add it back
-            if _activityRegistration[id] == nil {
-                self._loadActivity(id: id)
-            }
         }
-        else if !_activitiesLoading.contains(id) {
-            _activitiesLoading.append(id)
-            
-            self._loadActivity(id: id)
-        }
+        
+        // Make sure firebase listener is set up:
+        self._loadActivity(id: id)
         
         // Return a cancel callback
         return {
@@ -302,13 +283,14 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
 
         _activityRegistration[id] = activitiesCollection.document(id).addSnapshotListener {
             guard let snap = $0 else {
-                print($1!)
+                if let error = $1 {
+                    print("BAD: error loading activity", error)
+                }
+                self.onInvalidateActivity(activity: nil, id: id)
                 return
             }
             
             let activity = Activity.from(snap: snap, with: self)
-
-            self._activitiesLoading.removeAll(where: { $0 == id })
             
             self.onInvalidateActivity(activity: activity, id: id)
         }
