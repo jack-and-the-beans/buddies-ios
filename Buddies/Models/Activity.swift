@@ -131,17 +131,4 @@ class Activity {
             self.members.append(uid)
         }
     }
-    
-    func isLooselyDifferent(from otherActivity: Activity?) -> Bool {
-        if let otherActivity = otherActivity {
-            return
-                self.activityId != otherActivity.activityId ||
-                self.title != otherActivity.title ||
-                self.description != otherActivity.description ||
-                self.locationText != otherActivity.locationText ||
-                self.members.sorted() != otherActivity.members.sorted()
-        } else {
-            return false
-        }
-    }
 }

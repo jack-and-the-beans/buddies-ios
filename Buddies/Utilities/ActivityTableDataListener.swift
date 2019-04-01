@@ -57,7 +57,7 @@ class ActivityTableDataListener {
         self.cancelers += ids.enumerated().flatMap { i, idList in
             return idList.enumerated().map { j, id in
                 return dataAccessor.useActivity(id: id) { activity in
-                    if (self.handledActivities[id] == nil && activity != nil) {
+                    if let activity = activity, self.handledActivities[id] == nil {
                         // Going from not having the activity to having it
                         newActivities[i][j] = activity
                         self.handledActivities[id] = true
