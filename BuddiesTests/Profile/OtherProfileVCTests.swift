@@ -17,6 +17,7 @@ class OtherProfileVCTests: XCTestCase {
     var bioLabel = UILabel()
     var nameLabel = UILabel()
     var activityTable = UITableView()
+    var reportButton = UIBarButtonItem()
     var favoriteTopicsCollection = UICollectionView(frame: CGRect(x: 0, y: 0, width: 10, height: 10), collectionViewLayout: UICollectionViewLayout())
 
     override func setUp() {
@@ -29,6 +30,7 @@ class OtherProfileVCTests: XCTestCase {
         vc?.nameLabel = nameLabel
         vc?.activityTable = activityTable
         vc?.favoriteTopicsCollection = favoriteTopicsCollection
+        vc?.reportButton = reportButton
         
     }
     
@@ -41,6 +43,8 @@ class OtherProfileVCTests: XCTestCase {
                              name: "name",
                              bio: "bio",
                              favoriteTopics: [])
+        
+        vc?.userId = "id"
         
         vc?.render(with: user)
         
