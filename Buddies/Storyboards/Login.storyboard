@@ -21,6 +21,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zud-rn-gyx" customClass="BuddyButton" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="497" width="335" height="40"/>
                                 <color key="backgroundColor" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signUpWithFacebook"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="awV-fy-ssB"/>
                                 </constraints>
@@ -36,6 +37,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NPG-8f-5D9" customClass="BuddyButton" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="420" width="335" height="40"/>
                                 <color key="backgroundColor" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signUp"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="fdz-pO-8eX"/>
                                 </constraints>
@@ -50,7 +52,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwO-uY-FYC">
                                 <rect key="frame" x="99.5" y="587" width="176" height="30"/>
-                                <accessibility key="accessibilityConfiguration" identifier="haveAccount"/>
+                                <accessibility key="accessibilityConfiguration" identifier="haveAccount" label="havingAccount"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="KIN-L2-3af"/>
                                 </constraints>
@@ -71,6 +73,7 @@
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="58C-Ul-F4u" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="226" width="335" height="38"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signUpFirstNameField"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="huO-qM-qtH"/>
                                 </constraints>
@@ -80,6 +83,7 @@
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="02Z-AH-9si" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="284" width="335" height="38"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signUpEmailField"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="1UI-gy-Gdo"/>
                                 </constraints>
@@ -89,6 +93,7 @@
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IaT-Yb-ken" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="342" width="335" height="38"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signUpPasswordField"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="daj-bn-XM9"/>
                                 </constraints>
@@ -190,6 +195,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8U0-3o-i9I" customClass="BuddyButton" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="497" width="335" height="40"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signInWithFacebook"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Ao5-cP-9FI"/>
                                 </constraints>
@@ -202,6 +208,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kb8-ia-qhM" customClass="BuddyButton" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="420" width="335" height="40"/>
+                                <accessibility key="accessibilityConfiguration" identifier="logIn"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="rb8-Ib-lYW"/>
                                 </constraints>
@@ -223,6 +230,7 @@
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bSu-km-Xzk" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="255" width="335" height="38"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signInEmailField"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="6R5-u1-9HY"/>
                                 </constraints>
@@ -232,6 +240,7 @@
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="95w-lF-53I" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="313" width="335" height="38"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signInPasswordField"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="ccO-yh-N3t"/>
                                 </constraints>
@@ -282,6 +291,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yj0-kZ-d79">
                                 <rect key="frame" x="111" y="587" width="153" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="createAccount"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="Srw-6s-sqj"/>
                                     <constraint firstAttribute="height" constant="30" id="goG-ng-ZL5"/>
