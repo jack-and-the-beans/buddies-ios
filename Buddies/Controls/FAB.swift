@@ -30,7 +30,8 @@ class FAB {
         button.setBackgroundColor(Theme.theme)
         button.setShadowColor(UIColor.black.withAlphaComponent(0.4), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
+        button.layer.zPosition = 2000
+
         // Render
         button.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
         vc.view.addSubview(button)

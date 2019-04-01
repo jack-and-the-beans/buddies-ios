@@ -64,7 +64,7 @@ class ActivityListTest: XCTestCase {
     func testGet () {
         let list = ActivityList()
         list.activities = [[testActivity]]
-        let activity = list.get(IndexPath(row: 0, section: 0))
+        let activity = list[activityAt: IndexPath(row: 0, section: 0)]
         XCTAssertTrue(activity.activityId == testActivity.activityId)
     }
 
