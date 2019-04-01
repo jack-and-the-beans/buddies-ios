@@ -33,7 +33,7 @@ class ActivityTableDataListener {
         let orderedNewIds = getStringsInOrder(ids)
         // Checks to see if the arrays are different. If they are the same,
         // cancel the operation. Otherwise, continue getting the activities.
-        if (orderedNewIds == getStringsInOrder(wantedActivities) && orderedNewIds.count > 0 ) {
+        if (orderedNewIds == getStringsInOrder(wantedActivities) && orderedNewIds.count > 0) {
             delegate?.onOperationsFinished()
             return
         }
