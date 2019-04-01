@@ -23,7 +23,7 @@ class ActivityList: NSObject, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
-        let activity = get(indexPath)
+        let activity = self[activityAt: indexPath]
         cell.format(using: activity)
         return cell
     }
@@ -35,9 +35,10 @@ class ActivityList: NSObject, UITableViewDataSource {
         return activities.flatMap { $0 }.count == 0
     }
 
-    func get(_ indexPath: IndexPath) -> Activity {
+    subscript(activityAt indexPath: IndexPath) -> Activity {
         return activities[indexPath.section][indexPath.row]
     }
+    
 
     func setActivities(_ activities: [[Activity]]) -> [IndexPath]? {
         // Get sets of the current and existing activity IDs:
