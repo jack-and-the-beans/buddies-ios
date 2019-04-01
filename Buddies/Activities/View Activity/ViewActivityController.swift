@@ -304,8 +304,9 @@ class ViewActivityController: UIViewController {
                     //contentArea.insertSubview(chatController.messageInputBar, belowSubview: desc)
                     becomeFirstResponder()
                     //adjust height
-                    chatController.view.frame = CGRect(x: 0, y: descriptionView!.frame.height, width: view.bounds.width, height: view.bounds.height - descriptionView!.frame.height)
+                 
                     chatController.view.bindFrameToSuperviewBounds()
+                    chatController.messagesCollectionView.contentInset = UIEdgeInsets(top: 90, left: 10, bottom: 90, right: 10)
                 }
             }
             else
