@@ -285,11 +285,14 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     
     
     func saveFieldsToFirestore(
+        bio: String,
+        name: String,
+        image: UIImage?,
         user: UserInfo? = Auth.auth().currentUser,
         collection: CollectionReference = Firestore.firestore().collection("accounts")){
      
         // Should have a value the user changed the profile pic
-        if let image = self.buttonPicture.image(for: .normal), imageChanged {
+        if let image = image, imageChanged {
             self.user?.image = image
             uploadProfilePicToCloudStorage(image: image)
         }
@@ -297,8 +300,8 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         // Store everything else
         if let UID = user?.uid {
             collection.document(UID).setData([
-                "bio": bioText.text,
-                "name": firstName.text ?? ""
+                "bio": bio,
+                "name": name,
             ], merge: true)
         }
         else {
@@ -323,7 +326,11 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
             self.present(alert, animated: true)
         }
         else {
-            saveFieldsToFirestore()
+            saveFieldsToFirestore(
+                bio: bioText.text,
+                name: firstName.text ?? "",
+                image: buttonPicture.image(for: .normal))
+            
             if user == nil {
                 fillDataModel()
             }
