@@ -328,14 +328,15 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
     
     // MARK: ActivityInvalidationDelegate
     func onInvalidateActivity(activity: Activity?, id: String) {
+        // Update activity
         if let updatedActivity = activity {
             _activityCache.setObject(updatedActivity, forKey: updatedActivity.activityId as AnyObject)
-            _activityListeners[id]?.forEach { $0.fn(updatedActivity) }
         } else {
             // Activity was deleted, or is invalid:
             _activityCache.removeObject(forKey: id as AnyObject)
-            _activityListeners[id]?.forEach { $0.fn(activity) }
         }
+        // Call listeners:
+        _activityListeners[id]?.forEach { $0.fn(activity) }
     }
     
     func triggerServerUpdate(activityId: ActivityId, key: String, value: Any?) {

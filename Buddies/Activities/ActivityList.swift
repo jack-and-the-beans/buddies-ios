@@ -40,6 +40,10 @@ class ActivityList: NSObject, UITableViewDataSource {
     }
     
 
+    // This sets the activities of the data source. If the operation only
+    // removes activities, it returns indices of rows to delete. Otherwise
+    // (e.g. if there are any new activities), it returns nil indicating
+    // that we ought to refresh the entire table view.
     func setActivities(_ activities: [[Activity]]) -> [IndexPath]? {
         // Get sets of the current and existing activity IDs:
         let currentIds = Set(self.activities.flatMap { $0.map { $0.activityId } })
@@ -101,11 +105,9 @@ class ActivityList: NSObject, UITableViewDataSource {
 
     // Gets the index path of an activityID no matter its section:
     func getIndexPath(of activityId: ActivityId) -> IndexPath? {
-        for (i, section) in self.activities.enumerated() {
-            for (j, activity) in section.enumerated() {
-                if activity.activityId == activityId {
-                    return IndexPath(row: j, section: i)
-                }
+        for (i, _) in self.activities.enumerated() {
+            if let path = getIndexPath(of: activityId, in: i) {
+                return path
             }
         }
         return nil
@@ -113,15 +115,10 @@ class ActivityList: NSObject, UITableViewDataSource {
 
     // Updates the given activity and returns its index path:
     func updateAndGetIndexPath(of activity: Activity, at section: Int) -> IndexPath? {
-        if (section >= activities.count) {
-            return nil
+        if let index = getIndexPath(of: activity.activityId, in: section) {
+            activities[index.section][index.row] = activity
+            return index
         }
-        let index = activities[section].firstIndex { $0.activityId == activity.activityId }
-        if let index = index {
-            activities[section][index] = activity
-            return IndexPath(row: index, section: section)
-        } else {
-            return nil
-        }
+        return nil
     }
 }
