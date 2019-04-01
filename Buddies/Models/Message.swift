@@ -15,19 +15,15 @@ class Message: MessageType {
     var sender: Sender
     var sentDate: Date
     var kind: MessageKind
+    var content: String
     
-    init(kind: MessageKind, sender: Sender, messageId: String, date: Date) {
-        self.kind = kind
-        self.sender = sender
-        self.messageId = messageId
-        self.sentDate = date
-    }
     
     init(text: String, sender: Sender, messageId: String, date: Date) {
         self.kind = .text(text)
         self.sender = sender
         self.messageId = messageId
         self.sentDate = date
+        self.content = text
     }
 
     
