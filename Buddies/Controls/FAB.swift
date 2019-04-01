@@ -34,14 +34,16 @@ class FAB {
         
         // Render
         button.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
-        vc.view.addSubview(button)
+        vc.parent?.view.addSubview(button)
         
         // Position it!
-        let guide = vc.view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-            guide.bottomAnchor.constraint(equalToSystemSpacingBelow: button.bottomAnchor, multiplier: 2),
-            guide.rightAnchor.constraint(equalToSystemSpacingAfter: button.rightAnchor, multiplier: 2)
-        ])
+        
+        if let guide = vc.parent?.view.safeAreaLayoutGuide {
+            NSLayoutConstraint.activate([
+                guide.bottomAnchor.constraint(equalToSystemSpacingBelow: button.bottomAnchor, multiplier: 2),
+                guide.rightAnchor.constraint(equalToSystemSpacingAfter: button.rightAnchor, multiplier: 2)
+            ])
+        }
     }
     
     var _createActivityPresentedHook: (() -> Void)?
