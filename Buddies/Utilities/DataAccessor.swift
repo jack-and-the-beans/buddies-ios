@@ -162,25 +162,34 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
     
     // Callback will not include users who DNE
     func useUsers(from userIds: [String], fn: @escaping ([User]) -> Void) -> Canceler {
+        // If a user ID is in this, we've loaded it initially
+        // The boolean tracks if it exists or if it's nil
         var handledUsers: [UserId: Bool] = [:]
         var users = [User]()
         var didFinishSetup = false
         let cancelers = userIds.map { uid in useUser(id: uid) { user in
             if let user = user, handledUsers[uid] == nil {
+                // User is not loaded yet, and the user exists
                 users.append(user)
                 handledUsers[uid] = true
             } else if handledUsers[uid] == nil {
-                // DNE yet, but the user doesn't exist either:
+                // Is not loaded yet, and the user doesn't exist either:
                 handledUsers[uid] = false
             } else if let user = user {
-                // Exists, so we want to update this user.
+                // The user has been loaded, so we want to update this user.
                 if let index = users.firstIndex(where: { $0.uid == uid }) {
+                    let oldUser = users[index]
                     users[index] = user
-                    fn(users)
+                    if (oldUser.image == nil && user.image != nil && didFinishSetup) {
+                        fn(users)
+                    }
                 }
             } else {
                 // Used to exist, but we need to remove it now.
-                fn( users.filter { $0.uid != uid } )
+                users = users.filter { $0.uid != uid }
+                if (didFinishSetup) {
+                    fn(users)
+                }
             }
             if (handledUsers.count == userIds.count && !didFinishSetup) {
                 didFinishSetup = true

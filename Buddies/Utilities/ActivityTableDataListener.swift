@@ -50,14 +50,22 @@ class ActivityTableDataListener {
             return idList.enumerated().map { j, id in
                 return dataAccessor.useActivity(id: id) { activity in
                     if (self.handledActivities[id] == nil && activity != nil) {
-                        // DNE yet but we have the activity
+                        // Going from not having the activity to having it
                         newActivities[i][j] = activity
                         self.handledActivities[id] = true
+                        
+                        self.cancelers += [dataAccessor.useUsers(from: activity.members) { users in
+                            activity.users = users
+                            newActivities[i][j] = activity
+                            if (self.didFinishSetup) {
+                                self.delegate?.updateActivityInSection(activity: activity, section: i)
+                            }
+                        }]
                     } else if self.handledActivities[id] == nil {
                         // DNE yet, but the activity is nil
                         self.handledActivities[id] = false
                     } else if let activity = activity {
-                        // Update the activity in the big list
+                        // Update the activity in the table:
                         newActivities[i][j] = activity
                         // Already exists, and we have an activity
                         if (self.didFinishSetup) {
@@ -66,7 +74,7 @@ class ActivityTableDataListener {
                         }
                         self.handledActivities[id] = true
                     } else {
-                        // Set the activity in the list to nil:
+                        // Set the activity in the table to nil:
                         newActivities[i][j] = nil
                         // Already exists, but the activity is now nil
                         if (self.didFinishSetup) {
@@ -84,16 +92,6 @@ class ActivityTableDataListener {
                         self.delegate?.onNewActivities(newActivities: trimedActivities)
                         self.didFinishSetup = true
                         self.delegate?.onOperationsFinished()
-                    }
-
-                    if let activity = activity {
-                        self.cancelers += [dataAccessor.useUsers(from: activity.members) { users in
-                            activity.users = users
-                            newActivities[i][j] = activity
-                            if (self.didFinishSetup) {
-                                self.delegate?.updateActivityInSection(activity: activity, section: i)
-                            }
-                        }]
                     }
                 }
             }
