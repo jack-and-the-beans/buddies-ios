@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class ReportModalVC: UIViewController, UITextViewDelegate {
     
@@ -46,12 +47,31 @@ class ReportModalVC: UIViewController, UITextViewDelegate {
             text != placeholderText
             else { return }
         
-        if let userId = userId {
-            FirestoreManager.reportUser(userId, reportMessage: text)
-        } else if let activityId = activityId {
-            FirestoreManager.reportActivity(activityId, reportMessage: text)
+        let tabBar = self.presentingViewController as? UITabBarController
+        let srcNav = tabBar?.selectedViewController as? UINavigationController
+        
+        self.dismiss(animated: true){
+            srcNav?.popToRootViewController(animated: true)
+            if let userId = self.userId {
+                FirestoreManager.reportUser(userId, reportMessage: text, completion: self.displayToast(on: srcNav?.view))
+            } else if let activityId = self.activityId {
+                FirestoreManager.reportActivity(activityId, reportMessage: text, completion: self.displayToast(on: srcNav?.view))
+            }
         }
-        dismiss(animated: true)
+    }
+    
+    func displayToast(on view: UIView?) -> (Error?)->(){
+        return { err in
+            var text = ""
+            if let _ = err {
+                text = "Failed to report \(self.type)"
+            } else {
+                text = "Successfully reported \(self.type)"
+            }
+            
+            view?.makeToast(text, duration: 2.0, position: .bottom)
+        }
+        
     }
     
     override func viewDidLoad() {
