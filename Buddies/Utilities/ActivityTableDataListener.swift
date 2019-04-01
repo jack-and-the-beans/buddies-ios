@@ -33,7 +33,7 @@ class ActivityTableDataListener {
         let orderedNewIds = getStringsInOrder(ids)
         // Checks to see if the arrays are different. If they are the same,
         // cancel the operation. Otherwise, continue getting the activities.
-        if (orderedNewIds == getStringsInOrder(wantedActivities)) {
+        if (orderedNewIds == getStringsInOrder(wantedActivities) && orderedNewIds.count > 0 ) {
             delegate?.onOperationsFinished()
             return
         }
@@ -42,6 +42,14 @@ class ActivityTableDataListener {
         self.handledActivities = [:]
         self.cleanup()
         self.didFinishSetup = false
+
+        // Handle the case where the we're trying to get nothing:
+        if (orderedNewIds.count == 0) {
+            let emptyResult: [[Activity]] = ids.map { _ in [] }
+            delegate?.onNewActivities(newActivities: emptyResult)
+            delegate?.onOperationsFinished()
+            return
+        }
 
         var newActivities: [[Activity?]] = ids.map { $0.map { _ in nil } }
         
@@ -53,14 +61,6 @@ class ActivityTableDataListener {
                         // Going from not having the activity to having it
                         newActivities[i][j] = activity
                         self.handledActivities[id] = true
-                        
-                        self.cancelers += [dataAccessor.useUsers(from: activity.members) { users in
-                            activity.users = users
-                            newActivities[i][j] = activity
-                            if (self.didFinishSetup) {
-                                self.delegate?.updateActivityInSection(activity: activity, section: i)
-                            }
-                        }]
                     } else if self.handledActivities[id] == nil {
                         // DNE yet, but the activity is nil
                         self.handledActivities[id] = false
@@ -93,6 +93,15 @@ class ActivityTableDataListener {
                         self.didFinishSetup = true
                         self.delegate?.onOperationsFinished()
                     }
+                    
+                    guard let activity = activity else { return }
+                    self.cancelers += [dataAccessor.useUsers(from: activity.members) { users in
+                        activity.users = users
+                        newActivities[i][j] = activity
+                        if (self.didFinishSetup) {
+                            self.delegate?.updateActivityInSection(activity: activity, section: i)
+                        }
+                    }]
                 }
             }
         }
