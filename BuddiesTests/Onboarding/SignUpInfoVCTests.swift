@@ -101,8 +101,10 @@ class SignUpInfoVCTests: XCTestCase {
         let collection = MockCollectionReference()
         let user = MockExistingUser()
         
-        vc.saveBioToFirestore(
+        vc.saveFieldsToFirestore(
             bio: "biography",
+            name: "luke",
+            image: nil,
             user: user,
             collection: collection
         )

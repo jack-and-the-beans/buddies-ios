@@ -40,8 +40,8 @@ class StorageManagerTests: XCTestCase {
         let fileManager = FileManager.default
         let name = "example"
         do {
-            let documentDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
-            let fileURL = documentDirectory.appendingPathComponent(name)
+            let documentDirectory = try fileManager.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
+            let fileURL = documentDirectory.appendingPathComponent("Caches/" + name)
             let calculatedURL = StorageManager.shared.localURL(for: name)
             XCTAssert(fileURL == calculatedURL!)
         } catch {

@@ -36,6 +36,7 @@ class OtherProfileVCTests: XCTestCase {
         
         let user = OtherUser(uid: "id",
                              imageUrl: "lolurl",
+                             imageVersion: 0,
                              dateJoined: Date(),
                              name: "name",
                              bio: "bio",
