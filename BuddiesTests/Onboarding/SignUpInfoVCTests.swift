@@ -14,28 +14,37 @@ import FirebaseFirestore
 class SignUpInfoVCTests: XCTestCase {
     
     var vc: SignUpInfoVC!
+    var bioText = UITextView()
+    var finishButton = BuddyButton(type: .custom)
+    var firstName = UITextField()
+    var cancelButton = UIButton()
+    var pictureButtonText = UIButton()
+    var buttonPicture = UIButton()
+    
     
     override func setUp() {
+        vc = SignUpInfoVC()
+        vc.bioText = bioText
+        vc.finishButton = finishButton
+        vc.firstName = firstName
+        vc.cancelButton = cancelButton
+        vc.pictureButtonText = pictureButtonText
+        vc.buttonPicture = buttonPicture
+    }
+    
+    
+    func testInitLifecycle() {
         vc = BuddiesStoryboard.Login.viewController(withID: "SignUpInfo")
         UIApplication.setRootView(vc, animated: false)
         _ = vc.view // Make sure view is loaded
-    }
-    
-    override func tearDown() {
+        XCTAssertNotNil(vc.view, "View should be loaded")
         UIApplication.shared.keyWindow?.rootViewController = nil
         vc = nil
     }
     
     
-    
-    func testInitLifecycle() {
-        XCTAssertNotNil(vc.view, "View should be loaded")
-    }
-    
-    
     func testFillDataModel()
     {
-        let vc = SignUpInfoVC()
         let collection = MockCollectionReference()
         let user = MockExistingUser()
         
@@ -55,9 +64,6 @@ class SignUpInfoVCTests: XCTestCase {
     
     func testTextViewDidBeginEditing()
     {
-        let vc = SignUpInfoVC()
-        let tempTextView = UITextView()
-        vc.bioText = tempTextView
         vc.bioText.textColor = UIColor.lightGray
         vc.bioText.text = "About you..."
         vc.textViewDidBeginEditing(vc.bioText)
@@ -67,10 +73,6 @@ class SignUpInfoVCTests: XCTestCase {
     }
     
     func testTextViewDidEndEditing(){
-        
-        let vc = SignUpInfoVC()
-        let tempTextView = UITextView()
-        vc.bioText = tempTextView
         vc.bioText.text = nil
         vc.textViewDidEndEditing(vc.bioText)
         
@@ -79,9 +81,7 @@ class SignUpInfoVCTests: XCTestCase {
     }
     
     
-    func testSaveProfilePicURLToFirestore()
-    {
-        let vc = SignUpInfoVC()
+    func testSaveProfilePicURLToFirestore(){
         let collection = MockCollectionReference()
         let user = MockExistingUser()
         
@@ -97,7 +97,6 @@ class SignUpInfoVCTests: XCTestCase {
     }
     
     func testSaveBioToFirestore(){
-        let vc = SignUpInfoVC()
         let collection = MockCollectionReference()
         let user = MockExistingUser()
         

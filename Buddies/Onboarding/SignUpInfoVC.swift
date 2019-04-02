@@ -71,9 +71,14 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     
     var canceler: Canceler?
     var user: LoggedInUser?
+    
     @IBOutlet weak var finishButton: BuddyButton!
     @IBOutlet weak var firstName: UITextField!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var pictureButtonText: UIButton!
+    @IBOutlet weak var buttonPicture: UIButton!
+    @IBOutlet weak var bioText: UITextView!
+
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
@@ -173,8 +178,6 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         }
     }
 
-    @IBOutlet weak var pictureButtonText: UIButton!
-    @IBOutlet weak var buttonPicture: UIButton!
     
     @IBAction func changePicture(_ sender: Any) {
         present(imagePicker, animated: true)
@@ -224,7 +227,6 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         
     }
     
-    @IBOutlet weak var bioText: UITextView!
     
     // returns the first part of the string `s`, up until the first occurence of the character `c`
     func stringUntil(_ s: String?, _ c: Character) -> String? {
