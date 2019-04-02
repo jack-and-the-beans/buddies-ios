@@ -9,14 +9,19 @@
 import XCTest
 
 class TestReport: BuddiesUITest {
-    func testExample() {
+    func testReportButton() {
         self.login()
         
         let app = XCUIApplication()
         app.tables.cells["activityCell0.0"].tap()
+        app.navigationBars["View Activity"]/*@START_MENU_TOKEN@*/.buttons["reportActivity"]/*[[".buttons[\"Report\"]",".buttons[\"reportActivity\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let reportActivityNavigationBar = app.navigationBars["Report Activity"]
+        let sendButton = reportActivityNavigationBar.buttons["Send"]
+        //It gets really angry when I try to use the "Cancel" button
+        sendButton.tap()
+        XCTAssertTrue(sendButton.isHittable, "Nothing typed, so Send does nothing")
+
     }
 
 }

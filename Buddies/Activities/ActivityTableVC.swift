@@ -76,8 +76,9 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
         // function would move the list height in a weird way.
         if (dataSource.hasNoActivities()) {
             self.refreshControl?.beginRefreshingManually()
+        } else {
+            self.refreshControl?.beginRefreshing()
         }
-        self.refreshControl?.beginRefreshing()
     }
 
     // Called when the user pulls down to trigger a refresh:

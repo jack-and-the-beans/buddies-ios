@@ -70,6 +70,9 @@ class ViewActivityController: UIViewController {
         reportButton = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
         editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(self.onEditTap))
         
+        reportButton.accessibilityIdentifier = "reportActivity"
+        editButton.accessibilityIdentifier = "editActivity"
+        
         reportButton.tintColor = Theme.bad
         
         setupHideKeyboardOnTap()
