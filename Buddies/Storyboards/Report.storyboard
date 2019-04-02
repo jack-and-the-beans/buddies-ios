@@ -49,6 +49,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Tell us what's wrong" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nTN-Qo-ybY">
                                 <rect key="frame" x="20" y="196" width="335" height="160"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="reportTextArea"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="160" id="lGH-Xm-R64"/>
                                 </constraints>
@@ -72,12 +73,12 @@
                         <viewLayoutGuide key="safeArea" id="Rro-Wd-UHk"/>
                     </view>
                     <navigationItem key="navigationItem" title="Report" id="WQA-FS-MPk">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="sr9-p6-0li">
+                        <barButtonItem key="leftBarButtonItem" largeContentSizeImage="cancelReport" systemItem="cancel" id="sr9-p6-0li">
                             <connections>
                                 <action selector="cancel:" destination="hBy-GS-KjE" id="mFy-aB-oa4"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Send" id="OeX-dO-iPj">
+                        <barButtonItem key="rightBarButtonItem" title="Send" largeContentSizeImage="sendReport" id="OeX-dO-iPj">
                             <connections>
                                 <action selector="report:" destination="hBy-GS-KjE" id="RyY-C9-zZx"/>
                             </connections>
@@ -96,4 +97,8 @@
             <point key="canvasLocation" x="2018.4000000000001" y="513.19340329835086"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cancelReport" width="16" height="16"/>
+        <image name="sendReport" width="16" height="16"/>
+    </resources>
 </document>
