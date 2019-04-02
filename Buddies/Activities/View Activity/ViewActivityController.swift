@@ -98,8 +98,8 @@ class ViewActivityController: UIViewController {
 
     @objc func onReportTap(_ sender: Any) {
         guard self.curMemberStatus != .owner,
-            let parentNav = BuddiesStoryboard.Report.viewController() as? UINavigationController,
-            let reportModal = parentNav.viewControllers[0] as? ReportModalVC
+            let modalParentNav = BuddiesStoryboard.Report.viewController() as? UINavigationController,
+            let reportModal = modalParentNav.viewControllers[0] as? ReportModalVC
             else { return }
         
         
@@ -107,7 +107,7 @@ class ViewActivityController: UIViewController {
         reportModal.name = curActivity?.title
         reportModal.modalPresentationStyle = .formSheet
         
-        self.present(parentNav, animated: true, completion: nil)        
+        self.present(modalParentNav, animated: true, completion: nil)        
     }
     
     // Adds the current user to the activity
