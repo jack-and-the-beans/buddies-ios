@@ -32,6 +32,7 @@ class ActivityCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        isAccessibilityElement = true
     }
     
     func format(using activity: Activity) {
