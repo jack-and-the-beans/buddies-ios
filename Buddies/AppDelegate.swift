@@ -24,8 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // it until we have notification permission.
         application.registerForRemoteNotifications()
         
+        //Uncomment below to play with dev data (or Record UI Test in dev)
+        //let filename = "GoogleService-Info-Dev"
+        let filename = CommandLine.arguments.contains("--uitesting") ? "GoogleService-Info-Dev" : "GoogleService-Info-Prod"
+        
+        guard let firebaseConfigPath = Bundle.main.path(forResource: filename, ofType: "plist") else { fatalError() }
+        
         // Initialize
-        FirebaseApp.configure()
+        
+        FirebaseApp.configure(options: FirebaseOptions(contentsOfFile: firebaseConfigPath)!)
         topicCollection = TopicCollection()
         
         // Setup delegates for notifications:
