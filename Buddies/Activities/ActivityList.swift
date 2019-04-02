@@ -25,6 +25,8 @@ class ActivityList: NSObject, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
         let activity = get(indexPath)
         cell.format(using: activity)
+        cell.accessibilityIdentifier = "activityCell\(indexPath.section).\(indexPath.row)"
+        cell.isAccessibilityElement = true
         return cell
     }
     
