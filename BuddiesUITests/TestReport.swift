@@ -11,9 +11,8 @@ import XCTest
 class TestReport: BuddiesUITest {
     func testReportButton() {
         self.login()
-        
-        let app = XCUIApplication()
-        app.tables.cells["activityCell0.0"].tap()
+        sleep(2)
+        app.tables.cells.allElementsBoundByIndex.first?.tap()
         app.navigationBars["View Activity"]/*@START_MENU_TOKEN@*/.buttons["reportActivity"]/*[[".buttons[\"Report\"]",".buttons[\"reportActivity\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         
         let reportActivityNavigationBar = app.navigationBars["Report Activity"]
