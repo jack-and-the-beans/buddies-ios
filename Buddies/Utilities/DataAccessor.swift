@@ -66,8 +66,11 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             else { self.onInvalidateLoggedInUser(user: nil) }
             
             self._loggedInUID = user?.uid
-            lastCanceler = self.useLoggedInUser { self._cachedLoggedInUser = $0 }
-            
+            lastCanceler = self.useLoggedInUser {
+                let oldUser = self._cachedLoggedInUser
+                self._cachedLoggedInUser = $0
+                self.handleBlockListChange(oldUser: oldUser, newUser: $0)
+            }
         }
         
         self.cancelAuthStateListener = {
@@ -209,9 +212,11 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         // Insert it into the set of listeners
         if _userListeners[id] == nil { _userListeners[id] = [] }
         _userListeners[id]?.append(callback)
-        
+
         // Immediately post back update if we have info cached:
-        if let user = _userCache.object(forKey: id as AnyObject) {
+        if (_cachedLoggedInUser?.isBlocked(user: id) ?? false) {
+            callback.fn(nil)
+        } else if let user = _userCache.object(forKey: id as AnyObject) {
             callback.fn(user)
         }
         
@@ -263,7 +268,11 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
 
         // If it exists in the cache, immediately post back to the listener
         if let activity = _activityCache.object(forKey: id as AnyObject) {
-            callback.fn(activity)
+            if (_cachedLoggedInUser?.isBlocked(activity: activity) ?? false) {
+                callback.fn(nil)
+            } else {
+                callback.fn(activity)
+            }
         }
 
         // Make sure firebase listener is set up:
@@ -301,14 +310,23 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         }
     }
     
-    // If user is nil, we can use the given id
-    // to call the listeners
+    // If user is nil, we can use the given id to call the listeners
     func onInvalidateUser(user: OtherUser?, id: UserId? = nil) {
+        let uid = user?.uid ?? id
+        // Handle cache:
         if let user = user {
             _userCache.setObject(user, forKey: user.uid as AnyObject)
+        } else if let id = uid {
+            _userCache.removeObject(forKey: id as AnyObject)
+        }
+
+        let isBlocked = _cachedLoggedInUser?.isBlocked(user: id) ?? false
+        if let uid = uid, (isBlocked || user == nil) {
+            // If the user is blocked or if it does not exist:
+            _userListeners[uid]?.forEach { $0.fn(nil) }
+        } else if let user = user, !isBlocked {
+            // Otherwise use the actual data:
             _userListeners[user.uid]?.forEach { $0.fn(user) }
-        } else if let uid = id {
-            _userListeners[uid]?.forEach { $0.fn(user) }
         }
     }
     
@@ -336,7 +354,14 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             _activityCache.removeObject(forKey: id as AnyObject)
         }
         // Call listeners:
-        _activityListeners[id]?.forEach { $0.fn(activity) }
+        let isBlocked = _cachedLoggedInUser?.isBlocked(activity: activity) ?? false
+        if (isBlocked || activity == nil) {
+            // Case where the activity is either blocked or does not exist
+            _activityListeners[id]?.forEach { $0.fn(nil) }
+        } else if let activity = activity, !isBlocked {
+            // Case where the activity exists and is not blocked:
+            _activityListeners[id]?.forEach { $0.fn(activity) }
+        }
     }
     
     func triggerServerUpdate(activityId: ActivityId, key: String, value: Any?) {
@@ -344,6 +369,21 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         
         if let value = value {
             doc.setData([ key: value ], merge: true)
+        }
+    }
+    
+    func handleBlockListChange(oldUser: LoggedInUser?, newUser: LoggedInUser?) {
+        guard let newUser = newUser else { return }
+        if (oldUser?.isUserBlockListDifferent(newUser) ?? true) {
+            newUser.blockedUsers.forEach { id in
+                _userListeners[id]?.forEach { $0.fn(nil) }
+            }
+        }
+        
+        if (oldUser?.isActivityBlockListDifferent(newUser) ?? true) {
+            newUser.blockedActivities.forEach { id in
+                _activityListeners[id]?.forEach { $0.fn(nil) }
+            }
         }
     }
 }
