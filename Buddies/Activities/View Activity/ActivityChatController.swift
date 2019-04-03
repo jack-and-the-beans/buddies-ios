@@ -63,7 +63,6 @@ class ActivityChatController: MessagesViewController {
                 return user.image
             }
         }
-        
         return nil
     }
 
@@ -139,23 +138,26 @@ extension ActivityChatController: MessagesDataSource {
     }
     
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        if indexPath.section % 3 == 0 {
+        if isTimeLabelVisible(at: indexPath) {
             return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         }
         return nil
     }
     
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let name = message.sender.displayName
-        return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        if !isPreviousMessageSameSender(at: indexPath) {
+            let name = message.sender.displayName
+            return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        }
+        return nil
     }
     
+
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         let dateString = formatter.string(from: message.sentDate)
-        let toReturn = NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
         return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
     
@@ -180,6 +182,22 @@ extension ActivityChatController: MessageInputBarDelegate {
 
 // MARK: - MessagesDisplayDelegate
 extension ActivityChatController: MessagesDisplayDelegate {
+    
+    // MARK: - Helpers
+    
+    func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
+        return indexPath.section % 3 == 0 && !isPreviousMessageSameSender(at: indexPath)
+    }
+    
+    func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section - 1 >= 0 else { return false }
+        return messageList[indexPath.section].sender == messageList[indexPath.section - 1].sender
+    }
+    
+    func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section + 1 < messageList.count else { return false }
+        return messageList[indexPath.section].sender == messageList[indexPath.section + 1].sender
+    }
     
     // MARK: - Text Messages
     
@@ -222,11 +240,18 @@ extension ActivityChatController: MessagesDisplayDelegate {
 extension ActivityChatController: MessagesLayoutDelegate {
     
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 18
+        if isTimeLabelVisible(at: indexPath) {
+            return 18
+        }
+        return 0
     }
     
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 20
+        if isFromCurrentSender(message: message) {
+            return !isPreviousMessageSameSender(at: indexPath) ? 20 : 0
+        } else {
+            return !isPreviousMessageSameSender(at: indexPath) ? (37.5) : 0
+        }
     }
     
     
