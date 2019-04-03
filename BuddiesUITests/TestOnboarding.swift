@@ -20,7 +20,7 @@ extension XCUIApplication {
     }
 }
 
-class TestOnboarding: BuddiesUITest {
+class TestOnboarding: BuddiesUITestCase {
     func testLoginBase () {
         XCTAssertTrue(app.isDisplayingLoginBase)
         XCTAssertFalse(app.isDisplayingLoginExisting)

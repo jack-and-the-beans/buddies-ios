@@ -14,7 +14,7 @@ extension XCUIApplication {
     }
 }
 
-class TestTabBar: BuddiesUITest {
+class TestTabBar: BuddiesUITestCase {
     func testAllTabBarButtons() {
         login()
         

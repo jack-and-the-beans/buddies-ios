@@ -15,7 +15,7 @@ extension XCUIElement {
     }
 }
 
-class BuddiesUITest: XCTestCase {
+class BuddiesUITestCase: XCTestCase {
     var app: XCUIApplication!
     
     override func setUp() {
