@@ -31,7 +31,7 @@ class ActivityChatController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         messageInputBar.delegate = self
         messageInputBar.tintColor = Theme.theme
-        messageInputBar.backgroundColor = Theme.theme
+        
         
         userCanceler = DataAccessor.instance.useLoggedInUser { user in
             self.user = user
@@ -144,7 +144,7 @@ extension ActivityChatController: MessagesDisplayDelegate {
     // MARK: - All Messages
     
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? Theme.theme : .lightGray
+        return isFromCurrentSender(message: message) ? Theme.theme : Theme.lightGray
     }
     
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
