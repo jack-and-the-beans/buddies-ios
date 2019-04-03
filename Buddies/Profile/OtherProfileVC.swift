@@ -33,6 +33,8 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
         super.viewDidLoad()
 
         reportButton.tintColor = Theme.bad
+        reportButton.isEnabled = Auth.auth().currentUser?.uid != userId
+        
         activityTable.allowsSelection = false
         activityTable.rowHeight = 110
         
