@@ -15,6 +15,7 @@ class ActivityChatController: MessagesViewController {
     @IBOutlet weak var statusLabel: UILabel!
     
     var messageList: [Message] = []
+    var userList: [User] = []
 
     // Local data for rendering:
     var activity: Activity?
@@ -32,7 +33,6 @@ class ActivityChatController: MessagesViewController {
         messageInputBar.delegate = self
         messageInputBar.tintColor = Theme.theme
         
-        
         userCanceler = DataAccessor.instance.useLoggedInUser { user in
             self.user = user
         }
@@ -42,6 +42,33 @@ class ActivityChatController: MessagesViewController {
         userCanceler?()
         registration?.remove()
     }
+    
+    func getUserName(id:String) -> String{
+        
+        var name = ""
+        
+        for user in (activity?.users)!{
+            if user.uid == id{
+                name = user.name
+            }
+        }
+        
+        return name
+    }
+    
+    func getAvatarImage(id:String) -> UIImage?{
+        
+        for user in (activity?.users)!{
+            if user.uid == id{
+                return user.image
+            }
+        }
+        
+        return nil
+    }
+
+    
+    
     
     func loadMessageList() {
         registration?.remove()
@@ -54,7 +81,10 @@ class ActivityChatController: MessagesViewController {
                 
                 self.messageList = (snap.documents.compactMap { doc in
                     let data = doc.data()
-                    let sender = Sender(id: data["sender"] as! String, displayName: "Someone Else")
+                    
+                    let id = data["sender"] as! String
+                    
+                    let sender = Sender(id: id , displayName: self.getUserName(id: id))
                     
                     if data["type"] as! String != "message" {
                         return nil
@@ -179,9 +209,9 @@ extension ActivityChatController: MessagesDisplayDelegate {
         
         let userID = message.sender.id
         
-        //let avatarImage =
+        let avatarImage = getAvatarImage(id: userID)
         
-        let avi = Avatar(image: nil, initials: String(message.sender.displayName.prefix(1)))
+        let avi = Avatar(image: avatarImage, initials: String(message.sender.displayName.prefix(1)))
         
         avatarView.set(avatar:avi)
     }
@@ -199,8 +229,5 @@ extension ActivityChatController: MessagesLayoutDelegate {
         return 20
     }
     
-    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 16
-    }
     
 }

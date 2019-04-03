@@ -224,6 +224,7 @@ class ViewActivityController: UIViewController {
             self.stopListeningToUsers = DataAccessor.instance.useUsers(from: newUserIds) { users in
                 // re-render when the users change:
                 self.activityUsers = users
+                self.curActivity?.users = users
                 self.render()
             }
         }
@@ -297,6 +298,7 @@ class ViewActivityController: UIViewController {
                     self.addChild(chatController)
                     chatController.didMove(toParent: self)
                     chatController.activity = activity
+                    //chatController.userList = activityUsers
                     
                     chatController.loadMessageList()
                     
