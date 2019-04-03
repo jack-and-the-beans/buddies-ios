@@ -26,7 +26,6 @@ class ActivityChatController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.view = chatAreaView
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
@@ -85,11 +84,15 @@ class ActivityChatController: MessagesViewController {
                     
                     let sender = Sender(id: id , displayName: self.getUserName(id: id))
                     
+                    //if message about user leaving or joining
                     if data["type"] as! String != "message" {
-                        return nil
+                        let systemSender = Sender(id: "system", displayName: "")
+                        
+                        return Message(text: data["message"] as! String, sender: systemSender, messageId: doc.documentID, date: (data["date_sent"] as! Timestamp).dateValue())
                     }
                     
                     return Message(text: data["message"] as! String, sender: sender, messageId: doc.documentID, date: (data["date_sent"] as! Timestamp).dateValue())
+                    
                 }).sorted { $0.sentDate < $1.sentDate }
                 
                 self.messagesCollectionView.reloadData()
@@ -217,21 +220,33 @@ extension ActivityChatController: MessagesDisplayDelegate {
     
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         
-        let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
-        return .bubbleTail(tail, .curved)
+        //hide tail if from system
+        if message.sender.id == "system"{
+            return MessageStyle.bubble
+        }else{
+            let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+            
+            
+            return .bubbleTail(tail, .curved)
+        }
+
     }
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
-        //let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
-        //avatarView.set(avatar: avatar)
         
-        let userID = message.sender.id
-        
-        let avatarImage = getAvatarImage(id: userID)
-        
-        let avi = Avatar(image: avatarImage, initials: String(message.sender.displayName.prefix(1)))
-        
-        avatarView.set(avatar:avi)
+        //hide avatar if from system
+        if message.sender.id == "system"{
+            avatarView.isHidden = true
+        }else{
+            let userID = message.sender.id
+            
+            let avatarImage = getAvatarImage(id: userID)
+            
+            let avi = Avatar(image: avatarImage, initials: String(message.sender.displayName.prefix(1)))
+            
+            avatarView.set(avatar:avi)
+        }
+      
     }
     
 }
@@ -252,6 +267,10 @@ extension ActivityChatController: MessagesLayoutDelegate {
         } else {
             return !isPreviousMessageSameSender(at: indexPath) ? (37.5) : 0
         }
+    }
+    
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return (message.sender.id == "system") ? 16 : 0
     }
     
     
