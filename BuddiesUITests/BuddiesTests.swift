@@ -28,11 +28,20 @@ class BuddiesUITest: XCTestCase {
         app.launch()
     }
     
-    func login(){
-        app/*@START_MENU_TOKEN@*/.buttons["haveAccount"]/*[[".otherElements[\"loginBase\"]",".buttons[\"havingAccount\"]",".buttons[\"haveAccount\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
+    func waitForElementToAppear(_ element: XCUIElement, timeout: Double = 5) -> Bool {
+        let predicate = NSPredicate(format: "exists == true")
+        let expectation = XCTNSPredicateExpectation(predicate: predicate,
+                                                    object: element)
         
-        let emailField = app/*@START_MENU_TOKEN@*/.textFields["signInEmailField"]/*[[".otherElements[\"loginExistingVC\"]",".textFields[\"Email\"]",".textFields[\"signInEmailField\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
-        let passwordField = app/*@START_MENU_TOKEN@*/.secureTextFields["signInPasswordField"]/*[[".otherElements[\"loginExistingVC\"]",".secureTextFields[\"Password\"]",".secureTextFields[\"signInPasswordField\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
+        let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
+        return result == .completed
+    }
+    
+    func login(){
+        app.buttons["haveAccount"].tap()
+        
+        let emailField = app.textFields["signInEmailField"]
+        let passwordField = app.secureTextFields["signInPasswordField"]
         
         emailField.tap()
         XCTAssertTrue(emailField.hasFocus, "Password field is focused")
@@ -43,7 +52,7 @@ class BuddiesUITest: XCTestCase {
         XCTAssertFalse(emailField.hasFocus, "Email field is no longer focused")
         passwordField.typeText("password")
         
-        let loginButton = app/*@START_MENU_TOKEN@*/.buttons["logIn"]/*[[".otherElements[\"loginExistingVC\"]",".buttons[\"Log In\"]",".buttons[\"logIn\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
+        let loginButton = app.buttons["logIn"]
         
         //Hide keyboard
         loginButton.tap()
