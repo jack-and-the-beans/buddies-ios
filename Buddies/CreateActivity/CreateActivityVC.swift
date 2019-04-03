@@ -19,7 +19,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     @IBOutlet weak var suggestButton: UIBarButtonItem!
     
     //MARK: - Variables/setup
-    var chosenLocation: CLLocationCoordinate2D!
+    var chosenLocation: CLLocationCoordinate2D?
     var locationText : String!
     var locationManager = CLLocationManager()
 
@@ -64,24 +64,35 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
     }
     
     @IBAction func finishCreateActivity(_ segue: UIStoryboardSegue) {
-        let topicIDs = selectedTopics.map { $0.id }
-        let location = GeoPoint(latitude: chosenLocation.latitude,
-                                longitude: chosenLocation.longitude)
-        guard let title = titleField.text,
-            let description = descriptionTextView.text else { return }
-        
         //display pop up corresponding to missing field
         let missingFields = isValidActivityData()
-        if let errorText = missingFields.first {
-            
-            let alert = UIAlertController(title: "Missing information", message: "Please fill in the the " + errorText + " field.", preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                
-                self.present(alert, animated: true)
         
+        //If anything is empty, warn users and return early
+        guard missingFields.isEmpty else {
+            var errorText = missingFields[0]
+            let multiple = missingFields.count > 1
+            
+            if multiple {
+                errorText = missingFields[0..<missingFields.endIndex - 1].joined(separator: ", ") + " and " + missingFields[missingFields.endIndex - 1]
+            }
+            
+            let alert = UIAlertController(title: "Missing information", message: "Please fill in the \(errorText) field\(multiple ? "s" : "").", preferredStyle: .alert)
+                
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+            return
         }
-        else if let activity = activity {
+        
+        guard let activityLoc = chosenLocation,
+            let title = titleField.text,
+            let description = descriptionTextView.text else { return }
+        
+        let topicIDs = selectedTopics.map { $0.id }
+        let location = GeoPoint(latitude: activityLoc.latitude,
+                                longitude: activityLoc.longitude)
+        
+        if let activity = activity {
             activity.description = description
             activity.title = title
             activity.topicIds = topicIDs
@@ -253,12 +264,13 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         
         var result = [String]()
     
-        if (titleField.text?.isEmpty)! {
+        if (titleField.text?.isEmpty ?? true) {
             titleCell.layer.borderWidth = 1.0
             titleCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
             result.append("title")
         }
-        if chosenLocation == nil {
+        // If no location is chosen, or a location is chosen but the text is placeholder or empty
+        if chosenLocation == nil || locationField.text == "Location" || locationField.text?.isEmpty ?? true {
             locationCell.layer.borderWidth = 1.0
             locationCell.layer.borderColor = UIColor.red.cgColor.copy(alpha: 0.5)
             result.append("location")
@@ -306,12 +318,12 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         ])
     }
     
-    func setChosenLocation(location:MapItemSearchResult) {
+    func setChosenLocation(location: MapItemSearchResult) {
         let searchRequest = MKLocalSearch.Request(completion: location.mapData!)
         let search = MKLocalSearch(request: searchRequest)
         
         search.start { (response, error) in
-            self.chosenLocation = response?.mapItems[0].placemark.coordinate ?? CLLocationCoordinate2D()
+            self.chosenLocation = response?.mapItems[0].placemark.coordinate
         }
         
         self.locationText = location.title
