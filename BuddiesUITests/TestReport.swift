@@ -8,9 +8,9 @@
 
 import XCTest
 
-class TestReport: BuddiesUITest {
+class TestReport: BuddiesUITestCase {
     func testReportButton() {
-        self.login()
+        login()
     
         let topCell = app.tables/*@START_MENU_TOKEN@*/.cells["activityCell0.0"]/*[[".cells[\"hfdg, Hey, London, PA, United States, Through Tomorrow\"]",".cells[\"activityCell0.0\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
         XCTAssertTrue(waitForElementToAppear(topCell, timeout: 30), "top activity cell never appeared (30 second timeout)")

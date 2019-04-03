@@ -174,6 +174,12 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
 
         descriptionTextView.delegate = self
         descriptionTextView.textColor = UIColor.lightGray
+        
+        descriptionTextView.accessibilityIdentifier = "activityDescriptionField"
+        locationField.accessibilityIdentifier = "activityLocationField"
+        titleField.accessibilityIdentifier = "activityTitleField"
+        
+        
         self.setupHideKeyboardOnTap()
         configureSearchTextField()
         
