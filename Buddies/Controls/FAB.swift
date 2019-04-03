@@ -18,6 +18,7 @@ class FAB {
     init(for vc: UIViewController) {
         self.vc = vc
         self.button = MDCFloatingButton()
+        self.button.accessibilityIdentifier = "FAB"
     }
     
     func renderCreateActivityFab() {

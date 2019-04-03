@@ -8,7 +8,7 @@
 
 import XCTest
 
-class TestProfile: BuddiesUITest {
+class TestProfile: BuddiesUITestCase {
 
     func testEditProfile() {
         login()
