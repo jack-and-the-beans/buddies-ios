@@ -30,6 +30,8 @@ class ActivityChatController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messageInputBar.delegate = self
+        messageInputBar.tintColor = Theme.theme
+        messageInputBar.backgroundColor = Theme.theme
         
         userCanceler = DataAccessor.instance.useLoggedInUser { user in
             self.user = user
@@ -91,7 +93,7 @@ class ActivityChatController: MessagesViewController {
 
 
 
-extension ActivityChatController: MessagesDataSource,MessagesDisplayDelegate, MessagesLayoutDelegate {
+extension ActivityChatController: MessagesDataSource, MessagesLayoutDelegate {
     // MARK: - MessagesDataSource
     
     func currentSender() -> Sender {
@@ -121,6 +123,47 @@ extension ActivityChatController: MessageInputBarDelegate {
 
         messagesCollectionView.reloadData()
         messagesCollectionView.scrollToBottom(animated: true)
+    }
+    
+}
+
+// MARK: - MessagesDisplayDelegate
+
+extension ActivityChatController: MessagesDisplayDelegate {
+    
+    // MARK: - Text Messages
+    
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? .white : .darkText
+    }
+    
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
+        return MessageLabel.defaultAttributes
+    }
+    
+    // MARK: - All Messages
+    
+    func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? Theme.theme : .lightGray
+    }
+    
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+        
+        let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+        return .bubbleTail(tail, .curved)
+    }
+    
+    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        //let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
+        //avatarView.set(avatar: avatar)
+        
+        let userID = message.sender.id
+        
+        //let avatarImage =
+        
+        let avi = Avatar(image: nil, initials: String(message.sender.displayName.prefix(1)))
+        
+        avatarView.set(avatar:avi)
     }
     
 }
