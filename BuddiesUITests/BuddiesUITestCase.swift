@@ -8,7 +8,6 @@
 
 import XCTest
 
-
 extension XCUIElement {
     var hasFocus: Bool {
         let hasKeyboardFocus = (self.value(forKey: "hasKeyboardFocus") as? Bool) ?? false
@@ -36,7 +35,7 @@ class BuddiesUITest: XCTestCase {
         let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
         return result == .completed
     }
-    
+
     func login(){
         app.buttons["haveAccount"].tap()
         
