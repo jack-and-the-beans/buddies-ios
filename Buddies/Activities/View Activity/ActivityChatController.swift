@@ -91,10 +91,9 @@ class ActivityChatController: MessagesViewController {
     
 }
 
-
-
-extension ActivityChatController: MessagesDataSource, MessagesLayoutDelegate {
-    // MARK: - MessagesDataSource
+// MARK: - MessagesDataSource
+extension ActivityChatController: MessagesDataSource {
+  
     
     func currentSender() -> Sender {
         
@@ -108,6 +107,28 @@ extension ActivityChatController: MessagesDataSource, MessagesLayoutDelegate {
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messageList[indexPath.section]
     }
+    
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        if indexPath.section % 3 == 0 {
+            return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        }
+        return nil
+    }
+    
+    func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let name = message.sender.displayName
+        return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+    }
+    
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        let dateString = formatter.string(from: message.sentDate)
+        let toReturn = NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+    }
+    
 }
 
 // MARK: - MessageInputBarDelegate
@@ -128,7 +149,6 @@ extension ActivityChatController: MessageInputBarDelegate {
 }
 
 // MARK: - MessagesDisplayDelegate
-
 extension ActivityChatController: MessagesDisplayDelegate {
     
     // MARK: - Text Messages
@@ -164,6 +184,23 @@ extension ActivityChatController: MessagesDisplayDelegate {
         let avi = Avatar(image: nil, initials: String(message.sender.displayName.prefix(1)))
         
         avatarView.set(avatar:avi)
+    }
+    
+}
+
+// MARK: - MessagesLayoutDelegate
+extension ActivityChatController: MessagesLayoutDelegate {
+    
+    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 18
+    }
+    
+    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 20
+    }
+    
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 16
     }
     
 }
