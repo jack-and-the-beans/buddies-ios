@@ -37,7 +37,6 @@ class ViewActivityController: UIViewController {
     
     /// Required for the `MessageInputBar` to be visible
     override var canBecomeFirstResponder: Bool {
-        
         let status = curMemberStatus ?? .none
         if status == . none {
             return false
