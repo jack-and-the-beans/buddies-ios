@@ -17,7 +17,7 @@ class TopicsVC: UICollectionViewController {
     
     var selectedTopics = [Topic]()
 
-      
+    
     @IBAction func toggleSelected(_ sender: ToggleButton) {
         guard let cell = sender.superview?.superview?.superview?.superview as? TopicCell,
             let topic = cell.topic else { return }
@@ -57,6 +57,15 @@ class TopicsVC: UICollectionViewController {
         }
     
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? TopicCell,
+            let topic = cell.topic else { return }
+        
+        cell.toggleButton.toggle()
+        let selected = cell.toggleButton.isSelected
+        changeSelectedState(for: topic, isSelected: selected)
     }
 }
 
