@@ -65,12 +65,14 @@ class ActivityTableDataListener {
                         // DNE yet, but the activity is nil
                         self.handledActivities[id] = false
                     } else if let activity = activity {
-                        // Update the activity in the table:
-                        newActivities[i][j] = activity
                         // Already exists, and we have an activity
-                        if (self.didFinishSetup) {
-                            self.delegate?.updateActivityInSection(activity: activity, section: i)
-                            self.delegate?.onOperationsFinished()
+                        // Update the activity in the table if it is different:
+                        if (activity != newActivities[i][j]) {
+                            newActivities[i][j] = activity
+                            if (self.didFinishSetup) {
+                                self.delegate?.updateActivityInSection(activity: activity, section: i)
+                                self.delegate?.onOperationsFinished()
+                            }
                         }
                         self.handledActivities[id] = true
                     } else {

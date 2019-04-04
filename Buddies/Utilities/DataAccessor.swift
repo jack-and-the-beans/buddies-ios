@@ -374,15 +374,23 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
     
     func handleBlockListChange(oldUser: LoggedInUser?, newUser: LoggedInUser?) {
         guard let newUser = newUser else { return }
-        if (oldUser?.isUserBlockListDifferent(newUser) ?? true) {
+
+        let isActivityBlockListDifferent = oldUser?.isActivityBlockListDifferent(newUser) ?? true
+        let isUserBlockListDifferent = oldUser?.isUserBlockListDifferent(newUser) ?? true
+        
+        // If the user block list has changed, invalidate the blocked
+        // activities with nil:
+        if (isUserBlockListDifferent) {
             newUser.blockedUsers.forEach { id in
                 _userListeners[id]?.forEach { $0.fn(nil) }
             }
         }
         
-        if (oldUser?.isActivityBlockListDifferent(newUser) ?? true) {
-            newUser.blockedActivities.forEach { id in
-                _activityListeners[id]?.forEach { $0.fn(nil) }
+        // If either block list has changed, re-start all the activity listeners.
+        // This lets each activity determine if it needs to be blocked.
+        if (isUserBlockListDifferent || isActivityBlockListDifferent) {
+            _activityListeners.keys.forEach { key in
+                self._loadActivity(id: key)
             }
         }
     }
