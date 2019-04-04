@@ -37,8 +37,8 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="08U-5Q-pJD">
                                                     <rect key="frame" x="0.0" y="109" width="180" height="50"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Caption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shh-TG-IEz">
-                                                            <rect key="frame" x="8" y="19" width="59" height="22"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Caption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="shh-TG-IEz">
+                                                            <rect key="frame" x="8" y="19" width="138" height="22"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
                                                             <color key="textColor" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -73,6 +73,7 @@
                                                         <constraint firstItem="SrS-2P-gga" firstAttribute="centerY" secondItem="08U-5Q-pJD" secondAttribute="centerY" constant="4.5" id="Ei3-YD-qXo"/>
                                                         <constraint firstAttribute="trailing" secondItem="SrS-2P-gga" secondAttribute="trailing" constant="-6" id="ROr-Lo-ctC"/>
                                                         <constraint firstAttribute="height" constant="50" id="uBn-OJ-1Of"/>
+                                                        <constraint firstItem="SrS-2P-gga" firstAttribute="leading" secondItem="shh-TG-IEz" secondAttribute="trailing" constant="-16" id="xru-bw-XVe"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>

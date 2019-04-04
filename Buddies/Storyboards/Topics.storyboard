@@ -59,8 +59,8 @@
                                                                 <action selector="toggleSelected:" destination="Zc6-W6-bDA" eventType="touchUpInside" id="B4v-q2-J1J"/>
                                                             </connections>
                                                         </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Caption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9F7-fL-Jk5">
-                                                            <rect key="frame" x="8" y="19" width="59" height="22"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Caption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9F7-fL-Jk5">
+                                                            <rect key="frame" x="8" y="19" width="138" height="22"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
                                                             <color key="textColor" red="0.27058823529999998" green="0.2666666667" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -72,6 +72,7 @@
                                                         <constraint firstItem="9F7-fL-Jk5" firstAttribute="centerY" secondItem="Xh3-Aa-hsf" secondAttribute="centerY" constant="5" id="Tme-Ls-r8H"/>
                                                         <constraint firstItem="lNO-2G-fTv" firstAttribute="centerY" secondItem="Xh3-Aa-hsf" secondAttribute="centerY" constant="3" id="ZWx-OX-3Mb"/>
                                                         <constraint firstAttribute="height" constant="50" id="dcU-8U-2z0"/>
+                                                        <constraint firstItem="lNO-2G-fTv" firstAttribute="leading" secondItem="9F7-fL-Jk5" secondAttribute="trailing" constant="-16" id="hRo-O4-w94"/>
                                                         <constraint firstAttribute="trailing" secondItem="lNO-2G-fTv" secondAttribute="trailing" constant="-6" id="j9j-ok-kKL"/>
                                                     </constraints>
                                                 </view>
