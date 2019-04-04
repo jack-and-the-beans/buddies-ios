@@ -162,13 +162,13 @@ class LoggedInUser : User, Equatable {
     func isUserBlockListDifferent(_ newUser: LoggedInUser) -> Bool {
         let oldList = Set(blockedUsers + blockedBy)
         let newList = Set(newUser.blockedUsers + newUser.blockedBy)
-        return oldList == newList
+        return oldList != newList
     }
     
     func isActivityBlockListDifferent(_ newUser: LoggedInUser) -> Bool {
         let oldList = Set(blockedActivities)
         let newList = Set(newUser.blockedActivities)
-        return oldList == newList
+        return oldList != newList
     }
 
     // map of activity ID to timestamp - when the user last read the chat.
