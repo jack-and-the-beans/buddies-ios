@@ -13,6 +13,7 @@ import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    var pendingNotificationToLoad: ActivityNotificationInfo?
     var notifications: NotificationService = NotificationService()
     var window: UIWindow?
     var topicCollection: TopicCollection!
@@ -47,6 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.tintColor = Theme.theme
         initLoginListener(launchOptions: launchOptions)
         
+        pendingNotificationToLoad = NotificationService.getNotificationInfo(from: launchOptions)
+        
         self.window?.makeKeyAndVisible()
         return true
     }
@@ -74,10 +77,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             wasLoggedIn = isLoggedIn
             wasAUserDoc = isAUserDoc
             
-            // Nil if there is no activity ID from launch.
-            // Otherwise, we need to load view Activity.
-            let notificationInfo = NotificationService.getNotificationInfo(from: launchOptions)
-            
             if authHasChanged {
                 // Navigates to the appropriate view of:
                 //  - Login
@@ -85,8 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 //  - Main
                 self.setupView(isLoggedOut: !isLoggedIn,
                                isInitial: isInitial,
-                               needsAccountInfo: isLoggedIn && !isAUserDoc,
-                               notificationInfo: notificationInfo)
+                               needsAccountInfo: isLoggedIn && !isAUserDoc)
                 
                 // If we are logged in, setup other app content.
                 if isLoggedIn {
@@ -117,7 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         else {
             self.setWindow(isInitial, vc: BuddiesStoryboard.Main.viewController())
-            self.handleLaunch(from: notificationInfo)
+            self.handleLaunchFromNotification()
         }
     }
 
@@ -126,14 +124,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Do NOT navigate to the activities screen while the
         // user is already using the app!
         guard application.applicationState != .active else { return }
-        self.handleLaunch(from: NotificationService.getNotificationInfo(from: notification))
+        self.pendingNotificationToLoad = NotificationService.getNotificationInfo(from: notification)
+        self.handleLaunchFromNotification()
     }
 
     // Handles launch if we have an activity ID from a notification.
     // Called with nil if there is no activityID on launch.
-    func handleLaunch(from notificationInfo: ActivityNotificationInfo?) {
-        guard let activityId = notificationInfo?.activityId,
-              let destination = notificationInfo?.navigationDestination,
+    func handleLaunchFromNotification() {
+        guard let activityId = self.pendingNotificationToLoad?.activityId,
+              let destination = self.pendingNotificationToLoad?.navigationDestination,
               let tabController = window?.rootViewController as? UITabBarController,
               let controllers = tabController.viewControllers else { return }
         
@@ -159,6 +158,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         activityTable?.showActivity(with: activityId)
+        
+        // Clear pending notification if we're able to show the activity
+        self.pendingNotificationToLoad = nil
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
