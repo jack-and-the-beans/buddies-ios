@@ -25,6 +25,9 @@ class ViewActivityController: UIViewController {
     private var descriptionView: UIView?
     @IBOutlet weak var contentArea: UIView! // We render EVERYTHING inside this.
 
+    // For the "you can't see this" message
+    @IBOutlet weak var errorText: UILabel!
+    
     // MARK: Activity specific data which is refreshed by the updater:
     private var curActivity: Activity?
     private var curMemberStatus: MemberStatus?
@@ -61,6 +64,7 @@ class ViewActivityController: UIViewController {
     // Programmatically setup nav bar:
     override func viewDidLoad() {
         self.title = "View Activity"
+        self.errorText.isHidden = true
         //contentArea.becomeFirstResponder()
         reportButton = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
         editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(self.onEditTap))
@@ -211,7 +215,6 @@ class ViewActivityController: UIViewController {
             } else {
                 // It has been deleted
                 self.stopListeningToActivity?()
-                self.goBack()
             }
         }
     }
@@ -253,6 +256,12 @@ class ViewActivityController: UIViewController {
     func render() {
         // Do not render until view has mounted:
         guard viewHasMounted else { return }
+
+        if (curActivity == nil) {
+            self.errorText.isHidden = false
+        } else {
+            self.errorText.isHidden = true
+        }
 
         // Do not render until data exists:
         guard let activity = self.curActivity,
