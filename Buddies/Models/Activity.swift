@@ -22,7 +22,7 @@ enum MemberStatus {
     case none
 }
 
-class Activity {
+class Activity: Equatable {
     let delegate: ActivityInvalidationDelegate?
     
     // MARK: Immutable properties
@@ -108,6 +108,30 @@ class Activity {
                         endTime: endTime,
                         locationText: locationText,
                         topicIds: topicIds)
+    }
+
+    static func == (lhs: Activity, rhs: Activity) -> Bool {
+        return
+            lhs.activityId == rhs.activityId &&
+            lhs.title == rhs.title &&
+            lhs.description == rhs.description &&
+            lhs.members == rhs.members &&
+            lhs.topicIds == rhs.topicIds &&
+            lhs.location == rhs.location &&
+            lhs.locationText == rhs.locationText &&
+            lhs.startTime == rhs.startTime &&
+            lhs.endTime == rhs.endTime &&
+            lhs.areUsersEqual(to: rhs.users)
+    }
+    
+    func areUsersEqual(to otherUsers: [User]) -> Bool {
+        for user in users {
+            // See if the user exists anywhere in the other array. We only
+            guard let _ = otherUsers.firstIndex(where: { $0.isEqual(to: user) }) else {
+                return false
+            }
+        }
+        return true
     }
 
     func getMemberStatus(of userId: String) -> MemberStatus {
