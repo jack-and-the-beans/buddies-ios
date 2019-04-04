@@ -32,9 +32,10 @@ import UIKit
 
 class TopicLayout: UICollectionViewLayout {
 
-    let topicWidth: CGFloat = 150
-    let heightToWidthRatio: CGFloat = 1
+    let topicWidth: CGFloat = 130
+    let heightToWidthRatio: CGFloat = 0.8
     var cellPadding: CGFloat = 6
+    let maxCols = 4
     
     func xOffsets(for cols: Int, ofSize width: CGFloat) -> [CGFloat] {
         return (0 ..< cols).map { width * CGFloat($0) }
@@ -57,7 +58,7 @@ class TopicLayout: UICollectionViewLayout {
     
     var numberOfColumns: Int {
         get {
-            return Int(floor(contentWidth / (topicWidth + 2*cellPadding)))
+            return min(Int(floor(contentWidth / (topicWidth + 2*cellPadding))), maxCols)
         }
     }
 
@@ -112,7 +113,7 @@ class TopicLayout: UICollectionViewLayout {
             return
         }
         
-        let height = cellHeight(relativeTo: topicWidth, ratio: heightToWidthRatio, padding: cellPadding)
+        let height = cellHeight(relativeTo: columnWidth, ratio: heightToWidthRatio, padding: cellPadding)
         
         let (maxRow, _) = getCoords(item: collectionView.numberOfItems(inSection: 0))
 
