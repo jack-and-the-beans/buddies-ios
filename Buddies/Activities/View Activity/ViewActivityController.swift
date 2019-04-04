@@ -37,20 +37,26 @@ class ViewActivityController: UIViewController {
     
     /// Required for the `MessageInputBar` to be visible
     override var canBecomeFirstResponder: Bool {
-        if curMemberStatus! == .none {
+        
+        let status = curMemberStatus ?? .none
+        if status == . none {
             return false
         }else{
-            return chatController.canBecomeFirstResponder
+             return chatController.canBecomeFirstResponder
         }
+
     }
     
     /// Required for the `MessageInputBar` to be visible
     override var inputAccessoryView: UIView? {
-        if curMemberStatus! == .none {
+        
+        let status = curMemberStatus ?? .none
+        if status == . none {
             return nil
         }else{
-            return chatController.inputAccessoryView
+           return chatController.inputAccessoryView
         }
+
     }
     
     // Programmatically setup nav bar:
