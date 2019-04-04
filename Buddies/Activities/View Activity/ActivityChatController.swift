@@ -26,6 +26,8 @@ class ActivityChatController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        messageList = messageList.sorted { $0.sentDate < $1.sentDate }
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
@@ -35,6 +37,10 @@ class ActivityChatController: MessagesViewController {
         userCanceler = DataAccessor.instance.useLoggedInUser { user in
             self.user = user
         }
+        
+        messagesCollectionView.reloadData()
+        messagesCollectionView.scrollToBottom(animated: true)
+        
     }
     
     deinit {
@@ -177,11 +183,13 @@ extension ActivityChatController: MessageInputBarDelegate {
     
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         
-            let message = Message(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date())
-            insertMessage(msg: message)
+        let message = Message(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date())
         
+        insertMessage(msg: message)
+        loadMessageList()
+        messageList = messageList.sorted { $0.sentDate < $1.sentDate }
         inputBar.inputTextView.text = String()
-
+        
         messagesCollectionView.reloadData()
         messagesCollectionView.scrollToBottom(animated: true)
     }
