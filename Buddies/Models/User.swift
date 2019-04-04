@@ -141,6 +141,10 @@ class LoggedInUser : User, Equatable {
     var blockedActivities : [ActivityId] { didSet { onChange("blocked_activities", oldValue, blockedActivities) } }
     let blockedBy : [UserId] // Shouldn't be updated directly! Automatic inverse of blocked_users.
     
+    var userBlockList: [UserId] {
+        return blockedUsers + blockedBy
+    }
+
     func isBlocked(user: UserId?) -> Bool {
         guard let user = user else { return false }
         return blockedUsers.contains(user) || blockedBy.contains(user)
@@ -159,16 +163,25 @@ class LoggedInUser : User, Equatable {
         return false
     }
 
-    func isUserBlockListDifferent(_ newUser: LoggedInUser) -> Bool {
-        let oldList = Set(blockedUsers + blockedBy)
-        let newList = Set(newUser.blockedUsers + newUser.blockedBy)
-        return oldList != newList
+    func isUserBlockListDifferent(_ newUser: LoggedInUser?) -> Bool {
+        if let newUser = newUser {
+            let oldList = Set(blockedUsers + blockedBy)
+            let newList = Set(newUser.blockedUsers + newUser.blockedBy)
+            return oldList != newList
+        } else {
+            let numBlocked = self.blockedUsers.count + self.blockedBy.count
+            return numBlocked > 0
+        }
     }
     
-    func isActivityBlockListDifferent(_ newUser: LoggedInUser) -> Bool {
-        let oldList = Set(blockedActivities)
-        let newList = Set(newUser.blockedActivities)
-        return oldList != newList
+    func isActivityBlockListDifferent(_ newUser: LoggedInUser?) -> Bool {
+        if let newUser = newUser {
+            let oldList = Set(blockedActivities)
+            let newList = Set(newUser.blockedActivities)
+            return oldList != newList
+        } else {
+            return self.blockedActivities.count > 0
+        }
     }
 
     // map of activity ID to timestamp - when the user last read the chat.
