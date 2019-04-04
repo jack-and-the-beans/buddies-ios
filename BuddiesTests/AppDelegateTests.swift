@@ -61,6 +61,7 @@ class AppDelegateTests: XCTestCase {
         }
 
         let info = ActivityNotificationInfo(activityId: "abcd", navigationDestination: "discover")
-        app.handleLaunch(from: info)
+        app.pendingNotificationToLoad = info
+        app.handleLaunchFromNotification()
     }
 }

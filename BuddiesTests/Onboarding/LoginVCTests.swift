@@ -95,6 +95,7 @@ class LoginVCTests: XCTestCase {
             vc.firstNameField.text = name
             vc.emailField.text = email
             vc.passwordField.text = password
+            vc.confirmPassword.text = password
             
             handler.nCallsCreateUser = 0
             
