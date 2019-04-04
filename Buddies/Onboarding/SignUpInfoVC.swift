@@ -103,7 +103,7 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         bioText.textContainerInset = Theme.textAreaInset
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
-        bioText.layer.borderColor = Theme.fieldBorderFocused.cgColor
+        bioText.layer.borderColor = Theme.fieldBorder.cgColor
         bioText.layer.borderWidth = Theme.textAreaBorderWidth
         buttonPicture.layer.cornerRadius = buttonPicture.frame.size.width / 2
         
