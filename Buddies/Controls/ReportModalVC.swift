@@ -94,8 +94,8 @@ class ReportModalVC: UIViewController, UITextViewDelegate {
         //Quotes if mentioning an activity
         let quote = isUser ? "" : "\""
         let nameText = "\(quote)\(name ?? "this")\(quote)"
-        
-        warningText.text = "By reporting \(nameText), you block \(pronoun)."
+        let blockInfoText = isUser ? " You'll be removed from all activities you share, and you won't be able to see activities they're in." : ""
+        warningText.text = "By reporting \(nameText), you block \(pronoun).\(blockInfoText)"
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
