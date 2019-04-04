@@ -12,6 +12,7 @@ import Firebase
 class LoginVC: LoginBase {
     @IBOutlet weak var firstNameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var haveAcctButton: UIButton!
 
@@ -34,6 +35,16 @@ class LoginVC: LoginBase {
         
         guard password != "" else {
             showMessagePrompt("You must enter a password")
+            return
+        }
+        
+        guard let confirmedPassword = confirmPassword.text, confirmedPassword != "" else {
+            showMessagePrompt("You must confirm your password")
+            return
+        }
+        
+        guard confirmedPassword == password else {
+            showMessagePrompt("Password does not match confirmed password")
             return
         }
         
@@ -61,7 +72,7 @@ class LoginVC: LoginBase {
             email: email,
             password: password,
             onError: { msg in self.showMessagePrompt(msg) },
-            onSuccess: { user in self.performSegue(withIdentifier: "GetSignUpInfo", sender: self)}
+            onSuccess: { user in /* Nav on login is handled by AppDelegate */}
         )
     }
     
@@ -79,10 +90,6 @@ class LoginVC: LoginBase {
         if let dest = segue.destination as? LoginExistingVC {
             dest.initEmailText = emailField.text
             dest.initPasswordText = passwordField.text
-        }
-        
-        if let dest = segue.destination as? SignUpInfoVC {
-            dest.myFirstName = firstNameField.text
         }
     }
 }

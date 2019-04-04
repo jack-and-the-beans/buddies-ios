@@ -71,7 +71,7 @@
                                 <color key="textColor" red="0.36367782360406087" green="0.36367782360406087" blue="0.36367782360406087" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="58C-Ul-F4u" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="58C-Ul-F4u" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="226" width="335" height="38"/>
                                 <accessibility key="accessibilityConfiguration" identifier="signUpFirstNameField"/>
                                 <constraints>
@@ -79,9 +79,9 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" textContentType="name"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" textContentType="email"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="02Z-AH-9si" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="02Z-AH-9si" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="284" width="335" height="38"/>
                                 <accessibility key="accessibilityConfiguration" identifier="signUpEmailField"/>
                                 <constraints>
@@ -89,9 +89,9 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" textContentType="email"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IaT-Yb-ken" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IaT-Yb-ken" customClass="UnderlinedTextbox" customModule="Buddies" customModuleProvider="target">
                                 <rect key="frame" x="20" y="342" width="335" height="38"/>
                                 <accessibility key="accessibilityConfiguration" identifier="signUpPasswordField"/>
                                 <constraints>
@@ -174,10 +174,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="emailField" destination="02Z-AH-9si" id="7Lf-80-Pmh"/>
+                        <outlet property="confirmPassword" destination="IaT-Yb-ken" id="bPg-L3-7l4"/>
+                        <outlet property="emailField" destination="58C-Ul-F4u" id="ceF-oT-qB6"/>
                         <outlet property="firstNameField" destination="58C-Ul-F4u" id="1CH-Dn-lOS"/>
                         <outlet property="haveAcctButton" destination="uwO-uY-FYC" id="LjU-ao-AoK"/>
-                        <outlet property="passwordField" destination="IaT-Yb-ken" id="Fqq-Pg-d5o"/>
+                        <outlet property="passwordField" destination="02Z-AH-9si" id="dBH-gc-r9W"/>
                         <segue destination="s0Y-7Y-nAN" kind="show" identifier="GetSignUpInfo" id="9lV-Tx-R2h"/>
                     </connections>
                 </viewController>
