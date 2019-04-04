@@ -25,9 +25,10 @@ protocol User {
     var name: String { get }
     var bio: String { get }
     var favoriteTopics: [String] { get }
+    func isEqual(to user: User) -> Bool
 }
 
-class OtherUser : User {
+class OtherUser : User, Equatable {
     let uid: UserId
     var image: UIImage?
     let imageUrl: String
@@ -74,9 +75,22 @@ class OtherUser : User {
                          bio: bio,
                          favoriteTopics: favoriteTopics)
     }
+
+    func isEqual(to user: User) -> Bool {
+        return self.uid == user.uid &&
+            self.name == user.name &&
+            self.bio == user.bio &&
+            self.imageVersion == user.imageVersion &&
+            self.image == user.image &&
+            self.favoriteTopics == user.favoriteTopics
+    }
+
+    static func == (lhs: OtherUser, rhs: OtherUser) -> Bool {
+        return lhs.isEqual(to: rhs)
+    }
 }
 
-class LoggedInUser : User {
+class LoggedInUser : User, Equatable {
     
     let delegate: LoggedInUserInvalidationDelegate?
     
@@ -252,5 +266,30 @@ class LoggedInUser : User {
                     filterSettings: data["filter_settings"] as? [String:Int] ?? FilterSearchBar.defaultSettings,
                     notificationToken: data["notification_token"] as? String,
                     chatReadAt: chatReadAt)
+    }
+
+    func isEqual(to user: User) -> Bool {
+        return self.uid == user.uid &&
+            self.name == user.name &&
+            self.bio == user.bio &&
+            self.imageVersion == user.imageVersion &&
+            self.image == user.image &&
+            self.favoriteTopics == user.favoriteTopics
+    }
+
+    static func == (lhs: LoggedInUser, rhs: LoggedInUser) -> Bool {
+        return lhs.isEqual(to: rhs) &&
+            lhs.email == rhs.email &&
+            lhs.facebookId == rhs.facebookId &&
+            lhs.favoriteTopics == rhs.favoriteTopics &&
+            lhs.isAdmin == rhs.isAdmin &&
+            lhs.blockedUsers == rhs.blockedUsers &&
+            lhs.blockedBy == rhs.blockedBy &&
+            lhs.blockedActivities == rhs.blockedActivities &&
+            lhs.location == rhs.location &&
+            lhs.shouldSendJoinedActivityNotification == rhs.shouldSendJoinedActivityNotification &&
+            lhs.shouldSendActivitySuggestionNotification == rhs.shouldSendActivitySuggestionNotification &&
+            lhs.filterSettings == rhs.filterSettings &&
+            lhs.notificationToken == rhs.notificationToken
     }
 }
