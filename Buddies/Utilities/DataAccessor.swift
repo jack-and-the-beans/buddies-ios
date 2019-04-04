@@ -66,10 +66,16 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             else { self.onInvalidateLoggedInUser(user: nil) }
             
             self._loggedInUID = user?.uid
-            lastCanceler = self.useLoggedInUser {
+            lastCanceler = self.useLoggedInUser { newUser in
                 let oldUser = self._cachedLoggedInUser
-                self._cachedLoggedInUser = $0
-                self.handleBlockListChange(oldUser: oldUser, newUser: $0)
+                // Default to true because we'd be going from nil to something, which is a change:
+                let isActivityBlockListDifferent = oldUser?.isActivityBlockListDifferent(newUser) ?? true
+                let isUserBlockListDifferent = oldUser?.isUserBlockListDifferent(newUser) ?? true
+                
+                self._cachedLoggedInUser = newUser
+                if (isActivityBlockListDifferent || isUserBlockListDifferent) {
+                    self.handleBlockListChange(newUser, handleUsers: isUserBlockListDifferent, handleActivities: isActivityBlockListDifferent)
+                }
             }
         }
         
@@ -332,7 +338,6 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
     
     // MARK: LoggedInUserInvalidationDelegate
     func onInvalidateLoggedInUser(user: LoggedInUser?) {
-        _cachedLoggedInUser = user
         _loggedInUserListeners.forEach { $0.fn(user) }
     }
     
@@ -372,23 +377,16 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         }
     }
     
-    func handleBlockListChange(oldUser: LoggedInUser?, newUser: LoggedInUser?) {
-        guard let newUser = newUser else { return }
-
-        let isActivityBlockListDifferent = oldUser?.isActivityBlockListDifferent(newUser) ?? true
-        let isUserBlockListDifferent = oldUser?.isUserBlockListDifferent(newUser) ?? true
+    func handleBlockListChange(_ user: LoggedInUser?, handleUsers: Bool, handleActivities: Bool) {
+        guard let user = user else { return }
         
-        // If the user block list has changed, invalidate the blocked
-        // activities with nil:
-        if (isUserBlockListDifferent) {
-            newUser.blockedUsers.forEach { id in
+        if (handleUsers) {
+            user.userBlockList.forEach { id in
                 _userListeners[id]?.forEach { $0.fn(nil) }
             }
         }
-        
-        // If either block list has changed, re-start all the activity listeners.
-        // This lets each activity determine if it needs to be blocked.
-        if (isUserBlockListDifferent || isActivityBlockListDifferent) {
+
+        if (handleActivities || handleUsers) {
             _activityListeners.keys.forEach { key in
                 self._loadActivity(id: key)
             }

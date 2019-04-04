@@ -102,7 +102,7 @@ class ActivityTableVC: UITableViewController, FilterSearchBarDelegate, ActivityT
     // MARK:- Table view data source
     func updateActivityInSection(activity: Activity, section: Int) {
         if let path = dataSource.updateActivityInSection(activity: activity, section: section) {
-            tableView.reloadRows(at: [path], with: .fade)
+            tableView.reloadRows(at: [path], with: .none)
         }
     }
     
