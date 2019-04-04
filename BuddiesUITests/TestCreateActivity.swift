@@ -31,7 +31,11 @@ class TestCreateActivity: BuddiesUITestCase {
         
         let tablesQuery = app.tables
         
-        tablesQuery/*@START_MENU_TOKEN@*/.buttons["FAB"]/*[[".buttons[\"plus\"]",".buttons[\"FAB\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        let fab = tablesQuery/*@START_MENU_TOKEN@*/.buttons["FAB"]/*[[".buttons[\"plus\"]",".buttons[\"FAB\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        
+        XCTAssertTrue(waitForElementToAppear(fab, timeout: 10), "Fab never loads")
+        
+        fab.tap()
         
         trySuggest(shouldAlert: true, extraMsg: "Inititally on an empty table")
         
