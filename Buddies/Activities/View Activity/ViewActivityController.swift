@@ -116,7 +116,7 @@ class ViewActivityController: UIViewController {
     // Adds the current user to the activity
     // if they are not yet in it.
     func joinActivity() {
-        let uid = Auth.auth().currentUser!.uid
+        guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let activity = self.curActivity else { return }
         activity.addMember(with: uid)
     }
@@ -201,9 +201,10 @@ class ViewActivityController: UIViewController {
     func loadWith(
         _ activityId: ActivityId?,
         dataAccess: DataAccessor = DataAccessor.instance,
-        currentUser uid: String = Auth.auth().currentUser!.uid
+        currentUser uid: String? = Auth.auth().currentUser?.uid
         ) {
         guard let id = activityId else { return }
+        guard let uid = uid else { return }
 
         self.stopListeningToActivity = dataAccess.useActivity(id: id) { activity in
             if let activity = activity {
@@ -242,7 +243,7 @@ class ViewActivityController: UIViewController {
 
     // Gets topics from the root topic store:
     func getTopics(from topicIds: [String]) -> [Topic] {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
         let topics = appDelegate.topicCollection.topics.filter { topicIds.contains($0.id) }
         return topics
     }
@@ -331,7 +332,7 @@ class ViewActivityController: UIViewController {
                 // before this is called. The else case should never be called.
                 // Insert it underneath the description view in the hierarchy.
                 if let desc = self.descriptionView {
-                    contentArea.insertSubview((chatController.view)!, belowSubview: desc)
+                    contentArea.insertSubview(chatController.view, belowSubview: desc)
                     self.addChild(chatController)
                     chatController.didMove(toParent: self)
                     chatController.activity = activity
