@@ -187,7 +187,6 @@ extension ActivityChatController: MessageInputBarDelegate {
 extension ActivityChatController: MessagesDisplayDelegate {
     
     // MARK: - Helpers
-    
     func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
         return indexPath.section % 3 == 0 && !isPreviousMessageSameSender(at: indexPath)
     }
@@ -203,7 +202,6 @@ extension ActivityChatController: MessagesDisplayDelegate {
     }
     
     // MARK: - Text Messages
-    
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .white : .darkText
     }
@@ -213,7 +211,6 @@ extension ActivityChatController: MessagesDisplayDelegate {
     }
     
     // MARK: - All Messages
-    
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? Theme.theme : Theme.lightGray
     }

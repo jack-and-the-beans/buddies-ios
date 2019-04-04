@@ -37,31 +37,21 @@ class ViewActivityController: UIViewController {
     
     /// Required for the `MessageInputBar` to be visible
     override var canBecomeFirstResponder: Bool {
-        
         if curMemberStatus! == .none {
             return false
         }else{
             return chatController.canBecomeFirstResponder
         }
-        
- 
     }
     
     /// Required for the `MessageInputBar` to be visible
     override var inputAccessoryView: UIView? {
-        
         if curMemberStatus! == .none {
             return nil
         }else{
             return chatController.inputAccessoryView
         }
-        
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        resignFirstResponder()
-    }
-    
     
     // Programmatically setup nav bar:
     override func viewDidLoad() {
@@ -298,23 +288,21 @@ class ViewActivityController: UIViewController {
                     self.addChild(chatController)
                     chatController.didMove(toParent: self)
                     chatController.activity = activity
-                    //chatController.userList = activityUsers
-                    
                     chatController.loadMessageList()
                     
-                    //contentArea.insertSubview(chatController.messageInputBar, belowSubview: desc)
                     becomeFirstResponder()
+                    
+                    chatController.messageInputBar.inputTextView.becomeFirstResponder()
+                    
                     //adjust height
-                 
                     chatController.view.bindFrameToSuperviewBounds()
                     chatController.messagesCollectionView.contentInset = UIEdgeInsets(top: 90, left: 10, bottom: 90, right: 10)
                 }
             }
             else
             {
-                resignFirstResponder()  
-                chatController.view.removeFromSuperview()
-                chatController.messageInputBar.removeFromSuperview()
+                chatController.messageInputBar.inputTextView.resignFirstResponder()
+                resignFirstResponder()
             }
            
         }
