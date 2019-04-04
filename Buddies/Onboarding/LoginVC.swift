@@ -71,19 +71,7 @@ class LoginVC: LoginBase {
         tempAuthHandler.logInWithFacebook(
             ref: self,
             onError: { msg in self.showMessagePrompt(msg) },
-            onSuccess: { user in
-                if(tempAuthHandler.isNewUser) {
-                    if let fbFirstName = user.displayName?.split(separator: " ")[0] {
-                        self.firstNameField.text = String(fbFirstName)
-                    }
-                    self.performSegue(withIdentifier: "GetSignUpInfo", sender: self)
-                }
-                else {
-                    BuddiesStoryboard.Main.goTo()
-                }
-                
-               
-            }
+            onSuccess: { user in /* Nav on login is handled by AppDelegate */ }
         )
     }
     
