@@ -158,10 +158,15 @@ extension ActivityChatController: MessagesDataSource {
 
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        let dateString = formatter.string(from: message.sentDate)
-        return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        if message.sender.id == "system"{
+            return nil
+        }else{
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            let dateString = formatter.string(from: message.sentDate)
+            return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        }
+        
     }
     
 }
@@ -212,7 +217,14 @@ extension ActivityChatController: MessagesDisplayDelegate {
     
     // MARK: - All Messages
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? Theme.theme : Theme.lightGray
+        
+        if message.sender.id == "system"{
+            return UIColor.clear
+        }else
+        {
+             return isFromCurrentSender(message: message) ? Theme.theme : Theme.lightGray
+        }
+        
     }
     
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
