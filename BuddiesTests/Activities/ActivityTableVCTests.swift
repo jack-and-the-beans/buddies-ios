@@ -24,6 +24,7 @@ class ActivityTableVCTests: XCTestCase {
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
                                 locationText: "What up buddy",
+                                bannedUsers: [],
                                 topicIds: [])
   
     // For testLoadData
@@ -130,6 +131,7 @@ class ActivityTableVCTests: XCTestCase {
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
                                 locationText: locationText,
+                                bannedUsers: [],
                                 topicIds: [])
         
         
@@ -180,6 +182,7 @@ class ActivityTableVCTests: XCTestCase {
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
                                 locationText: locationText,
+                                bannedUsers: [],
                                 topicIds: [])
         activity.users = [thisUser]
         cell.format(using: activity)
@@ -230,6 +233,7 @@ class ActivityTableVCTests: XCTestCase {
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
                                 locationText: locationText,
+                                bannedUsers: [],
                                 topicIds: [])
         
         activity.users = [thisUser, thisUser, thisUser, thisUser]

@@ -23,6 +23,7 @@ class ActivityTableDataListenerTest: XCTestCase {
                                 startTime: Timestamp(date: "11/23/1998".toDate()!.date),
                                 endTime: Timestamp(date: "11/24/1998".toDate()!.date),
                                 locationText: "What up buddy",
+                                bannedUsers: [],
                                 topicIds: [])
 
     var dataAccessor: DataAccessor!
