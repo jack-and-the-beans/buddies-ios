@@ -50,6 +50,8 @@ class DiscoverTableVC : ActivityTableVC {
     override func fetchAndLoadActivities() {
         self.startRefreshIndicator()
         let searchParams = searchBar.getSearchParams()
+        let topics = (searchParams.filterText?.isEmpty ?? true) ? getTopics() : []
+        
                 
         //Sort into `geoPrecisionGroups` number of groups
         //  i.e. for search range of 1000 meters and 4 groups,
@@ -57,7 +59,7 @@ class DiscoverTableVC : ActivityTableVC {
         let geoPrecision = Int(Double(searchParams.maxMetersAway)/geoPrecisionGroups)
         
         api.searchActivities(withText: searchParams.filterText,
-                             matchingAnyTopicOf: getTopics(),
+                             matchingAnyTopicOf: topics,
                              startingAt: searchParams.startDate,
                              endingAt: searchParams.endDate,
                              atLocation: user?.locationCoords,
