@@ -13,13 +13,13 @@ class TestCreateActivity: BuddiesUITestCase {
     func trySuggest(shouldAlert: Bool = true, extraMsg: String = ""){
         let suggestButton = app.navigationBars["Suggest Activity"].buttons["Suggest"]
         
-        XCTAssertTrue(waitForElementToAppear(suggestButton, timeout: 5), "Suggest button should exist. \(extraMsg)")
+        XCTAssertTrue(suggestButton.waitForExistence(timeout: 5), "Suggest button should exist. \(extraMsg)")
         
         suggestButton.tap()
         
         let okButton = app.alerts["Missing information"].buttons["OK"]
         
-        XCTAssert(waitForElementToAppear(okButton, timeout: 5) == shouldAlert, "Alert should \(shouldAlert ? "" : "not") appear when suggesting. \(extraMsg)")
+        XCTAssert(okButton.waitForExistence(timeout: 5) == shouldAlert, "Alert should \(shouldAlert ? "" : "not") appear when suggesting. \(extraMsg)")
         
         if shouldAlert {
             okButton.tap()
@@ -33,7 +33,7 @@ class TestCreateActivity: BuddiesUITestCase {
         
         let fab = tablesQuery/*@START_MENU_TOKEN@*/.buttons["FAB"]/*[[".buttons[\"plus\"]",".buttons[\"FAB\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
         
-        XCTAssertTrue(waitForElementToAppear(fab, timeout: 10), "Fab never loads")
+        XCTAssertTrue(fab.waitForExistence(timeout: 10), "Fab never loads")
         
         fab.tap()
         
@@ -59,8 +59,6 @@ class TestCreateActivity: BuddiesUITestCase {
         
         description.tap()
         description.typeText("Description")
-        
-        print(app.debugDescription)
         
         let pickTopics = tablesQuery.cells["activityPickTopics"]
         pickTopics.tap()

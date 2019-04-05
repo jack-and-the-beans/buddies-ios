@@ -78,7 +78,7 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
     var curActivity: Activity?
     
     let topicDataSource = TopicStubDataSource()
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         miniUser1.makeCircle()
@@ -217,6 +217,8 @@ class ActivityDescriptionController: UIView, UICollectionViewDataSource, UIColle
             let user = users[indexPath.row]
             let isIndividualOwner = self.curActivity?.getMemberStatus(of: user.uid) == .owner
             let isCurUserOwner = self.memberStatus == .owner
+            
+            cell.accessibilityIdentifier = "activityMember\(indexPath.row)"
             cell.render(withUser: users[indexPath.row], isCurUserOwner: isCurUserOwner, isIndividualOwner: isIndividualOwner, tapUser: self.tapUser, removeUser: self.removeUser)
             return cell
         } else {

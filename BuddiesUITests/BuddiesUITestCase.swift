@@ -27,15 +27,6 @@ class BuddiesUITestCase: XCTestCase {
         app.launch()
     }
     
-    func waitForElementToAppear(_ element: XCUIElement, timeout: Double = 5) -> Bool {
-        let predicate = NSPredicate(format: "exists == true")
-        let expectation = XCTNSPredicateExpectation(predicate: predicate,
-                                                    object: element)
-        
-        let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
-        return result == .completed
-    }
-
     func login(){
         app.buttons["haveAccount"].tap()
         

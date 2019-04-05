@@ -29,7 +29,6 @@ class LoginBase: UIViewController {
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            print("view.safeAreaInsets.top \(view.safeAreaInsets.top)")
             if (view.frame.origin.y == 0) {
                 let field = getTopField().frame
                 view.frame.origin.y = max(
