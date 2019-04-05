@@ -147,11 +147,14 @@ class LoggedInUser : User, Equatable {
 
     func isBlocked(user: UserId?) -> Bool {
         guard let user = user else { return false }
-        return blockedUsers.contains(user) || blockedBy.contains(user)
+        return userBlockList.contains(user)
     }
 
     func isBlocked(activity: Activity?) -> Bool {
         guard let activity = activity else { return false }
+        if activity.getMemberStatus(of: self.uid) == .banned {
+            return true
+        }
         if blockedActivities.contains(activity.activityId) {
             return true
         }
