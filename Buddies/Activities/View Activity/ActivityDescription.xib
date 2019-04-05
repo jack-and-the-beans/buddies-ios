@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,7 +38,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Fx-Cv-PlK">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Fx-Cv-PlK" customClass="cona">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1BD-Ph-UYj">
@@ -109,6 +109,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPS-y9-NQ4" customClass="BuddyButton" customModule="Buddies" customModuleProvider="target">
                             <rect key="frame" x="20" y="607" width="335" height="40"/>
                             <color key="backgroundColor" red="0.0" green="0.43204674529999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <accessibility key="accessibilityConfiguration" identifier="joinActivity"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="frQ-bO-IP2"/>
                             </constraints>
@@ -127,6 +128,7 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rc6-SZ-CsE">
                             <rect key="frame" x="172.5" y="621" width="30" height="36"/>
+                            <accessibility key="accessibilityConfiguration" identifier="shrinkButton"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                             <color key="tintColor" red="0.4941176471" green="0.36078431370000003" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" title="^">
@@ -145,6 +147,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DbE-YH-bXB">
                             <rect key="frame" x="137.5" y="586" width="100" height="30"/>
+                            <accessibility key="accessibilityConfiguration" identifier="deleteActivity"/>
                             <state key="normal" title="Delete Activity"/>
                             <connections>
                                 <action selector="onDeleteTap:" destination="-1" eventType="touchUpInside" id="oNo-gB-eMW"/>
@@ -152,6 +155,9 @@
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <accessibility key="accessibilityConfiguration" identifier="descriptionNestedView">
+                        <bool key="isElement" value="NO"/>
+                    </accessibility>
                     <constraints>
                         <constraint firstItem="oYt-RJ-04X" firstAttribute="centerX" secondItem="6Fx-Cv-PlK" secondAttribute="centerX" id="3e4-q1-gEw"/>
                         <constraint firstItem="DbE-YH-bXB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="uBp-lP-0wh" secondAttribute="bottom" constant="5" id="3tS-IP-xnb"/>
@@ -191,6 +197,9 @@
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <accessibility key="accessibilityConfiguration" identifier="activityDescriptionFull">
+                <bool key="isElement" value="NO"/>
+            </accessibility>
             <constraints>
                 <constraint firstItem="6Fx-Cv-PlK" firstAttribute="trailing" secondItem="I7N-C4-DAa" secondAttribute="trailing" id="55k-Sz-fhF"/>
                 <constraint firstItem="6Fx-Cv-PlK" firstAttribute="top" secondItem="8Aj-ns-Yst" secondAttribute="top" id="feb-X0-9FD"/>
@@ -263,6 +272,9 @@
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <accessibility key="accessibilityConfiguration" identifier="activityDescriptionMini">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
             <constraints>
                 <constraint firstItem="ghE-9Q-yHp" firstAttribute="leading" secondItem="2qq-Kx-3Rd" secondAttribute="leading" id="IZX-iS-3ET"/>
                 <constraint firstItem="ghE-9Q-yHp" firstAttribute="top" secondItem="2qq-Kx-3Rd" secondAttribute="top" id="JQi-Iy-Xta"/>

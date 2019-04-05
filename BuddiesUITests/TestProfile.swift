@@ -14,15 +14,15 @@ class TestProfile: BuddiesUITestCase {
         login()
         let profile = app.tabBars.buttons["Profile"]
         
-        XCTAssertTrue(waitForElementToAppear(profile, timeout: 15), "Profile tab button appears")
-        print(app.debugDescription)
+        XCTAssertTrue(profile.waitForExistence(timeout: 15), "Profile tab button appears")
+        
         profile.tap()
 
         
         let profileNavigationBar = app.navigationBars["Profile"]
         let settingsBtn = profileNavigationBar.buttons["Settings"]
         
-        XCTAssertTrue(waitForElementToAppear(settingsBtn, timeout: 5), "Settings button appears on Profile")
+        XCTAssertTrue(settingsBtn.waitForExistence(timeout: 5), "Settings button appears on Profile")
         
         settingsBtn.tap()
         

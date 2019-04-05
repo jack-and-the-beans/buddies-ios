@@ -21,7 +21,7 @@ class TestTabBar: BuddiesUITestCase {
         let tabBarQuery = app.tabBars
         let topics = tabBarQuery.buttons["Topics"]
         
-        XCTAssertTrue(waitForElementToAppear(topics))
+        XCTAssertTrue(topics.waitForExistence(timeout: 5))
         
         topics.tap()
         tabBarQuery.buttons["My Activities"].tap()

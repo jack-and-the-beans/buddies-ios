@@ -25,7 +25,7 @@
 		5802266A220BE5E90068E08E /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58022669220BE5E90068E08E /* ToggleButton.swift */; };
 		5802266F220CC1210068E08E /* ToggleButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802266E220CC1210068E08E /* ToggleButtonTests.swift */; };
 		5811D8E62252D5D1002D2166 /* BuddiesUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5811D8E52252D5D1002D2166 /* BuddiesUITestCase.swift */; };
-		5811D8E82252D82A002D2166 /* TestReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5811D8E72252D82A002D2166 /* TestReport.swift */; };
+		5811D8E82252D82A002D2166 /* TestActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5811D8E72252D82A002D2166 /* TestActivity.swift */; };
 		5811D8EE2252E928002D2166 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5811D8EC2252E3DB002D2166 /* GoogleService-Info-Dev.plist */; };
 		5811D8EF2252E929002D2166 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5811D8EC2252E3DB002D2166 /* GoogleService-Info-Dev.plist */; };
 		582D0FA622035C3D004F71E3 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D0FA522035C3D004F71E3 /* FirestoreManager.swift */; };
@@ -177,7 +177,7 @@
 		58022669220BE5E90068E08E /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
 		5802266E220CC1210068E08E /* ToggleButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonTests.swift; sourceTree = "<group>"; };
 		5811D8E52252D5D1002D2166 /* BuddiesUITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddiesUITestCase.swift; sourceTree = "<group>"; };
-		5811D8E72252D82A002D2166 /* TestReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestReport.swift; sourceTree = "<group>"; };
+		5811D8E72252D82A002D2166 /* TestActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestActivity.swift; sourceTree = "<group>"; };
 		5811D8EC2252E3DB002D2166 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		5811D8F22252EE8E002D2166 /* MockLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = MockLocation.gpx; sourceTree = "<group>"; };
 		582D0FA522035C3D004F71E3 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
@@ -657,7 +657,7 @@
 				B63D444922417DC600612239 /* TestOnboarding.swift */,
 				5811D8E52252D5D1002D2166 /* BuddiesUITestCase.swift */,
 				B63D444B22417DC600612239 /* Info.plist */,
-				5811D8E72252D82A002D2166 /* TestReport.swift */,
+				5811D8E72252D82A002D2166 /* TestActivity.swift */,
 				5811D8F22252EE8E002D2166 /* MockLocation.gpx */,
 				58DA53282254ECB500A604DE /* TestTabBar.swift */,
 				58DA532A2254F98C00A604DE /* TestProfile.swift */,
@@ -1012,7 +1012,7 @@
 			files = (
 				B63D444A22417DC600612239 /* TestOnboarding.swift in Sources */,
 				5811D8E62252D5D1002D2166 /* BuddiesUITestCase.swift in Sources */,
-				5811D8E82252D82A002D2166 /* TestReport.swift in Sources */,
+				5811D8E82252D82A002D2166 /* TestActivity.swift in Sources */,
 				58DA53292254ECB500A604DE /* TestTabBar.swift in Sources */,
 				58DA532D22551E6400A604DE /* TestCreateActivity.swift in Sources */,
 				58DA532B2254F98C00A604DE /* TestProfile.swift in Sources */,

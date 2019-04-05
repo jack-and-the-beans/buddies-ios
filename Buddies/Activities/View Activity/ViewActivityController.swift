@@ -266,8 +266,17 @@ class ViewActivityController: UIViewController {
         // Instantiate description view if it does not exist:
         if (descriptionController == nil) {
             descriptionController = ActivityDescriptionController()
+            
+            
+            
             let descView = (UINib(nibName: "ActivityDescription", bundle: nil).instantiate(withOwner: descriptionController, options: nil)[0] as! UIView)
             self.descriptionView = descView
+    
+            
+            self.descriptionView?.isAccessibilityElement = false
+        
+            descriptionController?.shrinkButton.isAccessibilityElement = true
+            descriptionController?.shrinkButton.accessibilityIdentifier = "shrinkMe"
             // Put the view on the superview if the member is public:
             contentArea.addSubview(descView)
 
