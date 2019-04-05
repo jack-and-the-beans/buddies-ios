@@ -132,8 +132,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Called with nil if there is no activityID on launch.
     func handleLaunchFromNotification() {
         guard let activityId = self.pendingNotificationToLoad?.activityId,
-              let destination = self.pendingNotificationToLoad?.navigationDestination,
-              let tabController = window?.rootViewController as? UITabBarController,
+              let destination = self.pendingNotificationToLoad?.navigationDestination else { return }
+        
+        openActivity(activityId: activityId, destination: destination)
+    }
+    
+    func openActivity(activityId: String, destination: String="my_activities") {
+        guard let tabController = window?.rootViewController as? UITabBarController,
               let controllers = tabController.viewControllers else { return }
         
         // Find the table from which we want to show the activity

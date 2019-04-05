@@ -102,7 +102,7 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             dismiss(animated: true, completion: _dismissHook)
         }
         else {
-            saveActivityToFirestore(
+            let activityId = saveActivityToFirestore(
                 title: title,
                 description: description,
                 location: location,
@@ -111,10 +111,16 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
                 end_time: DateRangeSliderDelegate.getDate(sliderIndex: Int(dateSlider.selectedMaxValue)),
                 topicIDs: topicIDs
             )
-            dismiss(animated: true, completion: _dismissHook)
+            
+            dismiss(animated: true) {
+                self._dismissHook?()
+                
+                if let activityId = activityId,
+                   let app = UIApplication.shared.delegate as? AppDelegate {
+                    app.openActivity(activityId: activityId)
+                }
+            }
         }
-        
-        
     }
     
     //MARK: - Editing
@@ -306,11 +312,11 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
         collection: CollectionReference = Firestore.firestore().collection("activities"),
         start_time: Date = Date(),
         end_time: Date = Date(),
-        topicIDs: [String]){
+        topicIDs: [String]) -> ActivityId? {
         
-        guard let uid = user?.uid else {return}
+        guard let uid = user?.uid else {return nil}
         
-        collection.addDocument(data: [
+        let doc = collection.addDocument(data: [
             "title": title,
             "owner_id": uid,
             "description" : description,
@@ -322,6 +328,8 @@ class CreateActivityVC: UITableViewController, UITextViewDelegate, UITextFieldDe
             "topic_ids": topicIDs,
             "members": [uid]
         ])
+        
+        return doc.documentID;
     }
     
     func setChosenLocation(location: MapItemSearchResult) {
