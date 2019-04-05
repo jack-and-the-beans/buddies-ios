@@ -65,6 +65,10 @@ class ViewActivityController: UIViewController {
         //contentArea.becomeFirstResponder()
         reportButton = UIBarButtonItem(title: "Report", style: .plain, target: self, action: #selector(self.onReportTap(_:)))
         editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(self.onEditTap))
+        
+        reportButton.accessibilityIdentifier = "reportActivity"
+        editButton.accessibilityIdentifier = "editActivity"
+        
         reportButton.tintColor = Theme.bad
         
         setupHideKeyboardOnTap()
@@ -93,11 +97,17 @@ class ViewActivityController: UIViewController {
     }
 
     @objc func onReportTap(_ sender: Any) {
-        guard self.curMemberStatus != .owner else { return }
-        showCancelableAlert(withMsg: "What's wrong with this activity?", withTitle: "Report Activity", withAction: "Report", showTextEntry: true) { (didConfirm, msg) in
-            guard didConfirm, let activity = self.curActivity else { return }
-            FirestoreManager.reportActivity(activity.activityId, reportMessage: msg ?? "")
-        }
+        guard self.curMemberStatus != .owner,
+            let modalParentNav = BuddiesStoryboard.Report.viewController() as? UINavigationController,
+            let reportModal = modalParentNav.viewControllers[0] as? ReportModalVC
+            else { return }
+        
+        
+        reportModal.activityId = curActivity?.activityId
+        reportModal.name = curActivity?.title
+        reportModal.modalPresentationStyle = .formSheet
+        
+        self.present(modalParentNav, animated: true, completion: nil)        
     }
     
     // Adds the current user to the activity

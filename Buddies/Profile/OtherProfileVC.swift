@@ -15,6 +15,7 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var favoriteTopicsCollection: UICollectionView!
     @IBOutlet weak var activityTable: UITableView!
+
     @IBOutlet weak var reportButton: UIBarButtonItem!
     
     let maxPrevActivities = 4
@@ -32,6 +33,8 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
         super.viewDidLoad()
 
         reportButton.tintColor = Theme.bad
+        reportButton.isEnabled = Auth.auth().currentUser?.uid != userId
+        
         activityTable.allowsSelection = false
         activityTable.rowHeight = 110
         
@@ -106,6 +109,16 @@ class OtherProfileVC: UIViewController, UICollectionViewDelegateFlowLayout, UITa
         if let image = user.image {
             self.onImageLoaded(image: image)
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let navParent = segue.destination as? UINavigationController,
+            let reportModal = navParent.viewControllers[0] as? ReportModalVC
+        else { return }
+        
+        reportModal.userId = userId
+        reportModal.name   = user?.name
+        
     }
     
     //MARK: - UICollectionViewDelegateFlowLayout

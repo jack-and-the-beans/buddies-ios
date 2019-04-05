@@ -19,6 +19,8 @@ class Theme {
     static let lightGray = UIColor(red: 241/255, green: 240/255, blue: 240/255, alpha: 1.0)
     
     // Other constants
+    static let textAreaInset = UIEdgeInsets(top: 12 ,left: 7, bottom: 12, right: 7)
+    static let textAreaBorderWidth: CGFloat = 1.5
     static let cornerRadius: CGFloat = 10.0
     static let activityRowHeight: CGFloat = 110
 }

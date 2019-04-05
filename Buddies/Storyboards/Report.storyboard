@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y1Y-PV-DPe">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="Vos-q9-16w">
+            <objects>
+                <navigationController id="Y1Y-PV-DPe" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rSt-tZ-Fmt">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="hBy-GS-KjE" kind="relationship" relationship="rootViewController" id="67i-Wm-Eh5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QO1-rR-hFW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1247" y="520"/>
+        </scene>
+        <!--Report-->
+        <scene sceneID="Lug-mD-e0f">
+            <objects>
+                <viewController id="hBy-GS-KjE" customClass="ReportModalVC" customModule="Buddies" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bRT-yH-hQ4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We're really sorry you had a negative experience." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RtB-eQ-96I">
+                                <rect key="frame" x="20" y="84" width="335" height="38.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By reporting this ${Type } you will block ${pronoun}.  " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMS-zD-FBP">
+                                <rect key="frame" x="20" y="137.5" width="335" height="38.5"/>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Tell us what's wrong" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nTN-Qo-ybY">
+                                <rect key="frame" x="20" y="196" width="335" height="160"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="reportTextArea"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="lGH-Xm-R64"/>
+                                </constraints>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="QMS-zD-FBP" firstAttribute="leading" secondItem="Rro-Wd-UHk" secondAttribute="leading" constant="20" id="2tl-Xr-3nr"/>
+                            <constraint firstItem="nTN-Qo-ybY" firstAttribute="top" secondItem="QMS-zD-FBP" secondAttribute="bottom" constant="20" id="BoH-gG-esD"/>
+                            <constraint firstItem="nTN-Qo-ybY" firstAttribute="leading" secondItem="Rro-Wd-UHk" secondAttribute="leading" constant="20" id="CXg-p0-bJ0"/>
+                            <constraint firstItem="Rro-Wd-UHk" firstAttribute="trailing" secondItem="RtB-eQ-96I" secondAttribute="trailing" constant="20" id="SOd-47-frv"/>
+                            <constraint firstAttribute="trailing" secondItem="QMS-zD-FBP" secondAttribute="trailing" constant="20" id="XGE-ra-RUx"/>
+                            <constraint firstItem="Rro-Wd-UHk" firstAttribute="trailing" secondItem="nTN-Qo-ybY" secondAttribute="trailing" constant="20" id="aoO-o7-nsq"/>
+                            <constraint firstItem="RtB-eQ-96I" firstAttribute="top" secondItem="Rro-Wd-UHk" secondAttribute="top" constant="20" id="e69-qh-d5J"/>
+                            <constraint firstItem="QMS-zD-FBP" firstAttribute="top" secondItem="RtB-eQ-96I" secondAttribute="bottom" constant="15" id="lSY-A0-uqc"/>
+                            <constraint firstItem="RtB-eQ-96I" firstAttribute="leading" secondItem="Rro-Wd-UHk" secondAttribute="leading" constant="20" id="xf0-Nj-WN6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Rro-Wd-UHk"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Report" id="WQA-FS-MPk">
+                        <barButtonItem key="leftBarButtonItem" largeContentSizeImage="cancelReport" systemItem="cancel" id="sr9-p6-0li">
+                            <connections>
+                                <action selector="cancel:" destination="hBy-GS-KjE" id="mFy-aB-oa4"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Send" largeContentSizeImage="sendReport" id="OeX-dO-iPj">
+                            <connections>
+                                <action selector="report:" destination="hBy-GS-KjE" id="RyY-C9-zZx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cancelButton" destination="sr9-p6-0li" id="Rqr-zX-Aqb"/>
+                        <outlet property="navItem" destination="WQA-FS-MPk" id="BPK-99-vqD"/>
+                        <outlet property="reportButton" destination="OeX-dO-iPj" id="8A7-TG-e1n"/>
+                        <outlet property="textView" destination="nTN-Qo-ybY" id="kSR-4k-5pF"/>
+                        <outlet property="warningText" destination="QMS-zD-FBP" id="Wvh-ex-iab"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tmi-O6-xWS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2018.4000000000001" y="513.19340329835086"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="cancelReport" width="16" height="16"/>
+        <image name="sendReport" width="16" height="16"/>
+    </resources>
+</document>

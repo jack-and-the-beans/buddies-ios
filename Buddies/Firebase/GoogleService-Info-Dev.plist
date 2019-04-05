@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>508779456352-reij7n34a882b92kq4ii7m0ndoirdqdj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.508779456352-reij7n34a882b92kq4ii7m0ndoirdqdj</string>
+	<key>API_KEY</key>
+	<string>AIzaSyASOuGjdfdl91IlSNF-FyMb_4FLzwUPS14</string>
+	<key>GCM_SENDER_ID</key>
+	<string>508779456352</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>edu.gcc.cs.buddies</string>
+	<key>PROJECT_ID</key>
+	<string>beans-buddies-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>beans-buddies-dev.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:508779456352:ios:f40a0ac37275d200</string>
+	<key>DATABASE_URL</key>
+	<string>https://beans-buddies-dev.firebaseio.com</string>
+</dict>
+</plist>

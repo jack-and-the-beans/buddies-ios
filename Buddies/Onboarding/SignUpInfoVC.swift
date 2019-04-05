@@ -71,9 +71,14 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
     
     var canceler: Canceler?
     var user: LoggedInUser?
+    
     @IBOutlet weak var finishButton: BuddyButton!
     @IBOutlet weak var firstName: UITextField!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var pictureButtonText: UIButton!
+    @IBOutlet weak var buttonPicture: UIButton!
+    @IBOutlet weak var bioText: UITextView!
+
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
@@ -95,12 +100,11 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         bioText.delegate = self
         bioText.textColor = UIColor.lightGray
         bioText.layer.cornerRadius = Theme.cornerRadius
-        bioText.textContainerInset = UIEdgeInsets(top: 12 ,left: 7, bottom: 12, right: 7)
-        bioText.layer.borderColor = Theme.fieldBorder.cgColor
-        bioText.layer.borderWidth = 2
-        
+        bioText.textContainerInset = Theme.textAreaInset
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
+        bioText.layer.borderColor = Theme.fieldBorderFocused.cgColor
+        bioText.layer.borderWidth = Theme.textAreaBorderWidth
         buttonPicture.layer.cornerRadius = buttonPicture.frame.size.width / 2
         
         LocationPersistence.instance.makeSureWeHaveLocationAccess(from: self)
@@ -174,8 +178,6 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         }
     }
 
-    @IBOutlet weak var pictureButtonText: UIButton!
-    @IBOutlet weak var buttonPicture: UIButton!
     
     @IBAction func changePicture(_ sender: Any) {
         present(imagePicker, animated: true)
@@ -225,7 +227,6 @@ class SignUpInfoVC: LoginBase, UIImagePickerControllerDelegate, UINavigationCont
         
     }
     
-    @IBOutlet weak var bioText: UITextView!
     
     // returns the first part of the string `s`, up until the first occurence of the character `c`
     func stringUntil(_ s: String?, _ c: Character) -> String? {

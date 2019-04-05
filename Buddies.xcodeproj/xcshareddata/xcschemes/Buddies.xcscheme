@@ -29,6 +29,24 @@
       codeCoverageEnabled = "YES"
       onlyGenerateCoverageForSpecifiedTargets = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "B6AC549A21F8DB8300B075B8"
+                     BuildableName = "Buddies.app"
+                     BlueprintName = "Buddies"
+                     ReferencedContainer = "container:Buddies.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -62,6 +80,10 @@
                BlueprintName = "BuddiesUITests"
                ReferencedContainer = "container:Buddies.xcodeproj">
             </BuildableReference>
+            <LocationScenarioReference
+               identifier = "../BuddiesUITests/MockLocation.gpx"
+               referenceType = "0">
+            </LocationScenarioReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>

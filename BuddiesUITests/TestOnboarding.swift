@@ -20,18 +20,7 @@ extension XCUIApplication {
     }
 }
 
-class TestOnboarding: XCTestCase {
-    var app: XCUIApplication!
-    override func setUp() {
-        continueAfterFailure = false
-        app = XCUIApplication()
-        app.launch()
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
+class TestOnboarding: BuddiesUITestCase {
     func testLoginBase () {
         XCTAssertTrue(app.isDisplayingLoginBase)
         XCTAssertFalse(app.isDisplayingLoginExisting)
@@ -41,5 +30,9 @@ class TestOnboarding: XCTestCase {
         app.haveAccountButton.tap()
         XCTAssertTrue(app.isDisplayingLoginExisting)
         XCTAssertFalse(app.isDisplayingLoginBase)
+    }
+    
+    func testLogin(){
+        self.login()
     }
 }

@@ -157,6 +157,7 @@ PODS:
   - nanopb/encode (0.3.901)
   - Protobuf (3.6.1)
   - SwiftDate (5.1.0)
+  - Toast-Swift (4.0.1)
 
 DEPENDENCIES:
   - FBSDKLoginKit
@@ -169,6 +170,7 @@ DEPENDENCIES:
   - MaterialComponents/Buttons
   - MessageKit
   - SwiftDate
+  - Toast-Swift (~> 4.0.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -201,6 +203,7 @@ SPEC REPOS:
     - nanopb
     - Protobuf
     - SwiftDate
+    - Toast-Swift
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -232,7 +235,8 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   SwiftDate: 6329e58969a2de31cea7f1ee1143b247693196e7
+  Toast-Swift: e42a638589a2f95036b4bb7626cfbdde7daf0393
 
-PODFILE CHECKSUM: 097228864ea9c61e9d3ef3f825b3f480372c04c5
+PODFILE CHECKSUM: 25219ea58db273c44d045d8a411fd5a645437748
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.5.3

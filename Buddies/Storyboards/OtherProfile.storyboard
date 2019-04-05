@@ -100,7 +100,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" id="r5G-28-ixa"/>
                     <navigationItem key="navigationItem" title="Profile" id="fiB-DG-zhD">
-                        <barButtonItem key="rightBarButtonItem" title="Report" id="IJL-Uq-ANs"/>
+                        <barButtonItem key="rightBarButtonItem" title="Report" id="IJL-Uq-ANs">
+                            <connections>
+                                <segue destination="dih-Vf-oie" kind="presentation" modalPresentationStyle="formSheet" id="bY6-2R-yWB"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityTable" destination="XJX-df-EdQ" id="3QW-3U-vua"/>
@@ -108,12 +112,20 @@
                         <outlet property="favoriteTopicsCollection" destination="85M-cq-nzf" id="ib2-oJ-E5Y"/>
                         <outlet property="nameLabel" destination="FoO-fW-uhp" id="T9P-0p-EiB"/>
                         <outlet property="profilePic" destination="Nsd-PI-6eI" id="d3w-xr-kEt"/>
-                        <outlet property="reportButton" destination="IJL-Uq-ANs" id="cK4-AV-y2W"/>
+                        <outlet property="reportButton" destination="IJL-Uq-ANs" id="Rir-jv-kWG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MsW-tX-0vI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="368.80000000000001" y="520.38980509745136"/>
+        </scene>
+        <!--Report-->
+        <scene sceneID="509-Tu-1to">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Report" id="dih-Vf-oie" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YMk-9m-EvY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1226" y="484"/>
         </scene>
     </scenes>
     <resources>

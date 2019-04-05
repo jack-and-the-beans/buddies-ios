@@ -60,4 +60,9 @@ class TopicTabVC: TopicsVC, TopicCollectionDelegate {
             self.collectionView.reloadData()
         }
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        return
+    }
+            
 }
