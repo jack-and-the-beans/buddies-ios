@@ -14,7 +14,6 @@ class LoginVCTests: XCTestCase {
     
     override func setUp() {
         vc = BuddiesStoryboard.Login.viewController(withID: "create")
-        UIApplication.setRootView(vc, animated: false)
         _ = vc.view // Make sure view is loaded
     }
     
@@ -68,40 +67,40 @@ class LoginVCTests: XCTestCase {
         self.addTeardownBlock { self.vc._authHandler = nil }
         
         let values: [(String?, String?, String?, Int)] = [
-            ("Bob", "example@example.com", "", 0),
-            ("Bob", "example@example.com", nil, 0),
-            ("Bob", "", "myGoodP@ssword1", 0),
-            ("Bob", nil, "myGoodP@ssword1", 0),
+            ("myGoodP@ssword1", "example@example.com", "", 0),
+            ("myGoodP@ssword1", "example@example.com", nil, 0),
+            ("myGoodP@ssword1", "", "myGoodP@ssword1", 0),
+            ("myGoodP@ssword1", nil, "myGoodP@ssword1", 0),
             ("", "example@example.com", "myGoodP@ssword1", 0),
             (nil, "example@example.com", "myGoodP@ssword1", 0),
             (nil, nil, "myGoodP@ssword1", 0),
             ("", "", "myGoodP@ssword1", 0),
             ("", nil, "myGoodP@ssword1", 0),
             (nil, "", "myGoodP@ssword1", 0),
-            ("Bob", "", "", 0),
-            ("Bob", nil, nil, 0),
-            ("Bob", "", nil, 0),
-            ("Bob", nil, "", 0),
+            ("myGoodP@ssword1", "", "", 0),
+            ("myGoodP@ssword1", nil, nil, 0),
+            ("myGoodP@ssword1", "", nil, 0),
+            ("myGoodP@ssword1", nil, "", 0),
             ("", "example@example.com", "", 0),
             (nil, "example@example.com", nil, 0),
             ("", "example@example.com", nil, 0),
             (nil, "example@example.com", "", 0),
             (nil, nil, nil, 0),
             ("", "", "", 0),
-            ("Bob", "example@example.com", "myGoodP@ssword1", 1),
+            ("myGoodP@ssword1", "example@example.com", "myWrongP@ssword9", 0),
+            ("myGoodP@ssword1", "example@example.com", "myGoodP@ssword1", 1),
         ]
         
-        for (name, email, password, nExpectedCalls) in values {
-            vc.firstNameField.text = name
+        for (password, email, confPassword, nExpectedCalls) in values {
             vc.emailField.text = email
             vc.passwordField.text = password
-            vc.confirmPassword.text = password
+            vc.confirmPassword.text = confPassword
             
             handler.nCallsCreateUser = 0
             
             vc.signUpWithEmail()
             
-            XCTAssert(handler.nCallsCreateUser == nExpectedCalls, "Expected: \(nExpectedCalls) Actual: \(handler.nCallsCreateUser) Email: \(email ?? "nil") Name: \(name ?? "nil") Password: \(password ?? "nil")")
+            XCTAssert(handler.nCallsCreateUser == nExpectedCalls, "Expected: \(nExpectedCalls) Actual: \(handler.nCallsCreateUser) Email: \(email ?? "nil") Password: \(password ?? "nil") Confirmed Password: \(confPassword ?? "nil")")
         }
     }
     

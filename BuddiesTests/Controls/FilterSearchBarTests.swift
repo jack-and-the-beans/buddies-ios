@@ -16,7 +16,6 @@ class TestFilterSearchBarDelegate : FilterSearchBarDelegate {
         onFetchAndLoad?()
     }
     func endEditing() { /*Do nothing*/ }
-    func getTopics() -> [String] { return [ "j0FFY5VI4Ti6SZ5jUsDJ" ] }
 }
 
 class FilterSearchBarTests: XCTestCase {

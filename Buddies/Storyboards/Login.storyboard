@@ -176,7 +176,6 @@
                     <connections>
                         <outlet property="confirmPassword" destination="IaT-Yb-ken" id="bPg-L3-7l4"/>
                         <outlet property="emailField" destination="58C-Ul-F4u" id="ceF-oT-qB6"/>
-                        <outlet property="firstNameField" destination="58C-Ul-F4u" id="1CH-Dn-lOS"/>
                         <outlet property="haveAcctButton" destination="uwO-uY-FYC" id="LjU-ao-AoK"/>
                         <outlet property="passwordField" destination="02Z-AH-9si" id="dBH-gc-r9W"/>
                         <segue destination="s0Y-7Y-nAN" kind="show" identifier="GetSignUpInfo" id="9lV-Tx-R2h"/>
