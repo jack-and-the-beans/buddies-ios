@@ -10,7 +10,6 @@ import UIKit
 import Firebase
 
 class LoginVC: LoginBase {
-    @IBOutlet weak var firstNameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -24,7 +23,7 @@ class LoginVC: LoginBase {
     }
     
     override func getTopField() -> UIView {
-        return firstNameField;
+        return emailField
     }
     
     @IBAction func signUpWithEmail() {
@@ -55,16 +54,6 @@ class LoginVC: LoginBase {
         
         guard email != "" else {
             showMessagePrompt("You must enter an email")
-            return
-        }
-        
-        guard let name = firstNameField.text else {
-            showMessagePrompt("You must enter a name")
-            return
-        }
-        
-        guard name != "" else {
-            showMessagePrompt("You must enter a name")
             return
         }
         
