@@ -132,8 +132,12 @@ class Activity: Equatable {
     }
     
     func areUsersEqual(to otherUsers: [User]) -> Bool {
+        if self.users.count != otherUsers.count {
+            return false
+        }
         for user in users {
-            // See if the user exists anywhere in the other array. We only
+            // See if the user exists anywhere in the other array.
+            // Return false if the user does not exist:
             guard let _ = otherUsers.firstIndex(where: { $0.isEqual(to: user) }) else {
                 return false
             }

@@ -12,6 +12,27 @@ import FirebaseFirestore
 @testable import Buddies
 
 class ActivityTests: XCTestCase {
+    let testDate = Date()
+    let testDate2 = Date()
+    func createActivity(id: String) -> Activity {
+        return Activity.init(delegate: deli,
+                              activityId: id,
+                              dateCreated: Timestamp(date: Date()),
+                              members: [],
+                              location: GeoPoint(latitude: 0, longitude: 0),
+                              ownerId: "ownerId",
+                              title: "title",
+                              description: "description",
+                              startTime: Timestamp(date: testDate),
+                              endTime: Timestamp(date: testDate2),
+                              locationText: "What up buddy",
+                              bannedUsers: [],
+                              topicIds: [])
+    }
+    func createUser(id: String) -> OtherUser {
+        return OtherUser.init(uid: id, imageUrl: "yummy", imageVersion: 0, dateJoined: testDate, name: "hi", bio: "hi", favoriteTopics: [])
+    }
+
     class TestDeli : ActivityInvalidationDelegate {
         var invalidations = 0
         var triggers = 0
@@ -70,11 +91,113 @@ class ActivityTests: XCTestCase {
                               startTime: Timestamp(date: Date()),
                               endTime: Timestamp(date: Date()),
                               locationText: "What up buddy",
+                              bannedUsers: [],
                               topicIds: [])
         
         XCTAssert(a.activityId == "activityId")
         XCTAssert(a.title == "title")
         XCTAssert(a.ownerId == "ownerId")
         XCTAssert(a.description == "description")
+    }
+
+    func testTimeRagne() {
+        let x = activity.timeRange
+        XCTAssertLessThan(x.duration, 1) // Because it'd be foolish to do an equality comparision on a double
+    }
+
+    func testEquality() {
+        let a = createActivity(id: "abc")
+        let b = createActivity(id: "abc")
+        XCTAssertTrue(a == b)
+        let c = createActivity(id: "1")
+        XCTAssertFalse(a == c)
+    }
+    
+    func testAreUsersEqual() {
+        let a = createActivity(id: "abcde")
+        let user1 = createUser(id: "hello")
+        let users = [ user1 ]
+        XCTAssertFalse(a.areUsersEqual(to: users))
+        
+        let user2 = createUser(id: "hello")
+        a.users = [ user2 ]
+        XCTAssertTrue(a.areUsersEqual(to: users))
+        
+        let user3 = createUser(id: "hello2")
+        a.users = [ user3 ]
+        XCTAssertFalse(a.areUsersEqual(to: users))
+    }
+    
+    func testGetMemberStatus() {
+        let a = createActivity(id: "howdy")
+        a.bannedUsers = ["a"]
+        
+        XCTAssertTrue(a.getMemberStatus(of: "a") == .banned)
+        
+        let b = createActivity(id: "howdy2")
+        b.ownerId = "a"
+        XCTAssertTrue(b.getMemberStatus(of: "a") == .owner)
+
+        let c = createActivity(id: "howdy2")
+        c.members = ["c"]
+        XCTAssertTrue(c.getMemberStatus(of: "c") == .member)
+
+        let d = createActivity(id: "howdy2")
+        XCTAssertTrue(d.getMemberStatus(of: "c") == .none)
+    }
+    
+    func testRemoveMember() {
+        let a = createActivity(id: "howdy")
+        a.removeMember(with: "notme")
+        XCTAssertTrue(a.members == [])
+
+        let b = createActivity(id: "howdy")
+        b.members = ["notme"]
+        XCTAssertTrue(b.members.contains("notme"))
+        b.removeMember(with: "notme")
+        XCTAssertFalse(b.members.contains("notme"))
+    }
+    
+    func testRemoveMember2() {
+        let b = createActivity(id: "howdy")
+        b.members = ["me", "notme"]
+        XCTAssertTrue(b.members.contains("notme"))
+        b.removeMember(with: "notme")
+        XCTAssertFalse(b.members.contains("notme"))
+    }
+
+    func testAddMember() {
+        let b = createActivity(id: "howdy")
+        b.members = ["me", "notme"]
+        XCTAssertTrue(b.members.contains("notme"))
+        b.addMember(with: "notme")
+        XCTAssertTrue(b.members == ["me", "notme"])
+    }
+    
+    func testAddMember2() {
+        let b = createActivity(id: "howdy")
+        b.members = ["me"]
+        b.bannedUsers = ["notme"]
+        b.addMember(with: "notme")
+        XCTAssertFalse(b.members.contains("notme"))
+    }
+
+    func testAddMember3() {
+        let b = createActivity(id: "howdy")
+        b.members = []
+        b.addMember(with: "notme")
+        XCTAssertTrue(b.members.contains("notme"))
+    }
+
+    func testBanUser() {
+        let a = createActivity(id: "hello")
+        a.members = [ "a" ]
+        a.banUser(with: "a")
+        XCTAssertFalse(a.members.contains("a"))
+        XCTAssertTrue(a.bannedUsers.contains("a"))
+        
+        a.banUser(with: "a")
+        XCTAssertFalse(a.members.contains("a"))
+        XCTAssertTrue(a.bannedUsers.contains("a"))
     }
 }
