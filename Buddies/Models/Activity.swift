@@ -19,6 +19,7 @@ protocol ActivityInvalidationDelegate {
 enum MemberStatus {
     case owner
     case member
+    case banned
     case none
 }
 
@@ -44,7 +45,8 @@ class Activity: Equatable {
     var startTime : Timestamp { didSet { onChange("start_time", oldValue, startTime) } }
     var endTime : Timestamp { didSet { onChange("end_time", oldValue, endTime) } }
     var topicIds : [String] { didSet { onChange("topic_ids", oldValue, topicIds) } }
-    var locationText : String { didSet { onChange("location_text", oldValue, locationText) }}
+    var bannedUsers : [UserId] { didSet { onChange("banned_users", oldValue, bannedUsers) } }
+    var locationText : String { didSet { onChange("location_text", oldValue, locationText) } }
     var users = [User]()
 
     private func onChange<T : Equatable>(_ key: String, _ oldValue: T?, _ newValue: T?) {
@@ -65,6 +67,7 @@ class Activity: Equatable {
          startTime: Timestamp,
          endTime: Timestamp,
          locationText: String,
+         bannedUsers: [UserId],
          topicIds: [String]) {
         self.delegate = delegate
         self.activityId = activityId
@@ -78,6 +81,7 @@ class Activity: Equatable {
         self.endTime = endTime
         self.topicIds = topicIds
         self.locationText = locationText
+        self.bannedUsers = bannedUsers
     }
     
     static func from(snap: DocumentSnapshot, with delegate: ActivityInvalidationDelegate?) -> Activity? {
@@ -95,6 +99,7 @@ class Activity: Equatable {
         let activityId = snap.documentID
         let description = data["description"] as? String ?? ""
         let locationText = data["location_text"] as? String ?? "🌍"
+        let bannedUsers = data["banned_users"] as? [UserId] ?? []
 
         return Activity(delegate: delegate,
                         activityId: activityId,
@@ -107,6 +112,7 @@ class Activity: Equatable {
                         startTime: startTime,
                         endTime: endTime,
                         locationText: locationText,
+                        bannedUsers: bannedUsers,
                         topicIds: topicIds)
     }
 
@@ -121,6 +127,7 @@ class Activity: Equatable {
             lhs.locationText == rhs.locationText &&
             lhs.startTime == rhs.startTime &&
             lhs.endTime == rhs.endTime &&
+            lhs.bannedUsers == rhs.bannedUsers &&
             lhs.areUsersEqual(to: rhs.users)
     }
     
@@ -134,8 +141,10 @@ class Activity: Equatable {
         return true
     }
 
-    func getMemberStatus(of userId: String) -> MemberStatus {
-        if (userId == self.ownerId) {
+    func getMemberStatus(of userId: UserId) -> MemberStatus {
+        if (self.bannedUsers.contains(userId)) {
+            return MemberStatus.banned
+        } else if (userId == self.ownerId) {
             return MemberStatus.owner
         } else if (self.members.contains(userId)) {
             return MemberStatus.member
@@ -144,15 +153,24 @@ class Activity: Equatable {
         }
     }
     
-    func removeMember(with uid: String) {
+    func removeMember(with uid: UserId) {
         if let i = self.members.index(of: uid) {
             self.members.remove(at: i)
         }
     }
     
-    func addMember(with uid: String) {
+    func addMember(with uid: UserId) {
         if (getMemberStatus(of: uid) == .none) {
             self.members.append(uid)
+        }
+    }
+    
+    func banUser(with uid: UserId) {
+        if (members.contains(uid)) {
+            removeMember(with: uid)
+        }
+        if (!bannedUsers.contains(uid)) {
+            bannedUsers.append(uid)
         }
     }
 }

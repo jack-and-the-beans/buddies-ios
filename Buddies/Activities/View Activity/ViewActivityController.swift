@@ -137,7 +137,7 @@ class ViewActivityController: UIViewController {
         showCancelableAlert(withMsg: "Are you sure you want to remove this user?", withTitle: "Remove User", withAction: "Remove") { didConfirm, msg in
             guard didConfirm,
                 let activity = self.curActivity else { return }
-            activity.removeMember(with: uid)
+            activity.banUser(with: uid)
         }
     }
     
