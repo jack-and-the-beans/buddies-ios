@@ -15,6 +15,7 @@ class ActivityChatController: MessagesViewController {
     @IBOutlet weak var statusLabel: UILabel!
     
     var messageList: [Message] = []
+    var userList: [User] = []
 
     // Local data for rendering:
     var activity: Activity?
@@ -25,21 +26,53 @@ class ActivityChatController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.view = chatAreaView
+
+        messageList = messageList.sorted { $0.sentDate < $1.sentDate }
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messageInputBar.delegate = self
+        messageInputBar.tintColor = Theme.theme
         
         userCanceler = DataAccessor.instance.useLoggedInUser { user in
             self.user = user
         }
+        
+        messagesCollectionView.reloadData()
+        messagesCollectionView.scrollToBottom(animated: true)
+        
     }
     
     deinit {
         userCanceler?()
         registration?.remove()
     }
+    
+    func getUserName(id:String) -> String{
+        
+        var name = ""
+        
+        for user in (activity?.users)!{
+            if user.uid == id{
+                name = user.name
+            }
+        }
+        
+        return name
+    }
+    
+    func getAvatarImage(id:String) -> UIImage?{
+        
+        for user in (activity?.users)!{
+            if user.uid == id{
+                return user.image
+            }
+        }
+        return nil
+    }
+
+    
+    
     
     func loadMessageList() {
         registration?.remove()
@@ -52,13 +85,20 @@ class ActivityChatController: MessagesViewController {
                 
                 self.messageList = (snap.documents.compactMap { doc in
                     let data = doc.data()
-                    let sender = Sender(id: data["sender"] as! String, displayName: "Someone Else")
                     
+                    let id = data["sender"] as! String
+                    
+                    let sender = Sender(id: id , displayName: self.getUserName(id: id))
+                    
+                    //if message about user leaving or joining
                     if data["type"] as! String != "message" {
-                        return nil
+                        let systemSender = Sender(id: "system", displayName: "")
+                        
+                        return Message(text: data["message"] as! String, sender: systemSender, messageId: doc.documentID, date: (data["date_sent"] as! Timestamp).dateValue())
                     }
                     
                     return Message(text: data["message"] as! String, sender: sender, messageId: doc.documentID, date: (data["date_sent"] as! Timestamp).dateValue())
+                    
                 }).sorted { $0.sentDate < $1.sentDate }
                 
                 self.messagesCollectionView.reloadData()
@@ -89,10 +129,9 @@ class ActivityChatController: MessagesViewController {
     
 }
 
-
-
-extension ActivityChatController: MessagesDataSource,MessagesDisplayDelegate, MessagesLayoutDelegate {
-    // MARK: - MessagesDataSource
+// MARK: - MessagesDataSource
+extension ActivityChatController: MessagesDataSource {
+  
     
     func currentSender() -> Sender {
         
@@ -106,6 +145,36 @@ extension ActivityChatController: MessagesDataSource,MessagesDisplayDelegate, Me
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messageList[indexPath.section]
     }
+    
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        if isTimeLabelVisible(at: indexPath) {
+            return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        }
+        return nil
+    }
+    
+    func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        if !isPreviousMessageSameSender(at: indexPath) {
+            let name = message.sender.displayName
+            return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        }
+        return nil
+    }
+    
+
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        
+        if message.sender.id == "system"{
+            return nil
+        }else{
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            let dateString = formatter.string(from: message.sentDate)
+            return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        }
+        
+    }
+    
 }
 
 // MARK: - MessageInputBarDelegate
@@ -114,13 +183,112 @@ extension ActivityChatController: MessageInputBarDelegate {
     
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         
-            let message = Message(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date())
-            insertMessage(msg: message)
+        let message = Message(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date())
         
+        insertMessage(msg: message)
+        loadMessageList()
+        messageList = messageList.sorted { $0.sentDate < $1.sentDate }
         inputBar.inputTextView.text = String()
-
+        
         messagesCollectionView.reloadData()
         messagesCollectionView.scrollToBottom(animated: true)
     }
+    
+}
+
+// MARK: - MessagesDisplayDelegate
+extension ActivityChatController: MessagesDisplayDelegate {
+    
+    // MARK: - Helpers
+    func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
+        return indexPath.section % 3 == 0 && !isPreviousMessageSameSender(at: indexPath)
+    }
+    
+    func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section - 1 >= 0 else { return false }
+        return messageList[indexPath.section].sender == messageList[indexPath.section - 1].sender
+    }
+    
+    func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section + 1 < messageList.count else { return false }
+        return messageList[indexPath.section].sender == messageList[indexPath.section + 1].sender
+    }
+    
+    // MARK: - Text Messages
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? .white : .darkText
+    }
+    
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
+        return MessageLabel.defaultAttributes
+    }
+    
+    // MARK: - All Messages
+    func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        
+        if message.sender.id == "system"{
+            return UIColor.clear
+        }else
+        {
+             return isFromCurrentSender(message: message) ? Theme.theme : Theme.lightGray
+        }
+        
+    }
+    
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+        
+        //hide tail if from system
+        if message.sender.id == "system"{
+            return MessageStyle.bubble
+        }else{
+            let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+            
+            
+            return .bubbleTail(tail, .curved)
+        }
+
+    }
+    
+    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        
+        //hide avatar if from system
+        if message.sender.id == "system"{
+            avatarView.isHidden = true
+        }else{
+            let userID = message.sender.id
+            
+            let avatarImage = getAvatarImage(id: userID)
+            
+            let avi = Avatar(image: avatarImage, initials: String(message.sender.displayName.prefix(1)))
+            
+            avatarView.set(avatar:avi)
+        }
+      
+    }
+    
+}
+
+// MARK: - MessagesLayoutDelegate
+extension ActivityChatController: MessagesLayoutDelegate {
+    
+    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        if isTimeLabelVisible(at: indexPath) {
+            return 18
+        }
+        return 0
+    }
+    
+    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        if isFromCurrentSender(message: message) {
+            return !isPreviousMessageSameSender(at: indexPath) ? 20 : 0
+        } else {
+            return !isPreviousMessageSameSender(at: indexPath) ? (37.5) : 0
+        }
+    }
+    
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return (message.sender.id == "system") ? 16 : 0
+    }
+    
     
 }

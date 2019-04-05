@@ -16,7 +16,7 @@ class Theme {
     static let themeAlt =  UIColor(red: 126/255, green: 92/255, blue: 171/255, alpha: 1.0)
     static let white = UIColor(red: 1, green: 1, blue: 1, alpha: 0.8)
     static let bad = UIColor.red
-
+    static let lightGray = UIColor(red: 241/255, green: 240/255, blue: 240/255, alpha: 1.0)
     
     // Other constants
     static let textAreaInset = UIEdgeInsets(top: 12 ,left: 7, bottom: 12, right: 7)
