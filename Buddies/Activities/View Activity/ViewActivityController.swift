@@ -213,8 +213,10 @@ class ViewActivityController: UIViewController {
                 self.curMemberStatus = activity.getMemberStatus(of: uid)
                 self.render()
             } else {
-                // It has been deleted
+                // It has been deleted, or we otherwise can't see it anymore:
+                self.curActivity = nil
                 self.stopListeningToActivity?()
+                self.render()
             }
         }
     }
@@ -253,20 +255,32 @@ class ViewActivityController: UIViewController {
         }
     }
 
+    func showErrorText() {
+        self.errorText.isHidden = false
+        descriptionView?.removeFromSuperview()
+        resignFirstResponder()
+        chatController.view.removeFromSuperview()
+        chatController.messageInputBar.removeFromSuperview()
+    }
+
     func render() {
         // Do not render until view has mounted:
         guard viewHasMounted else { return }
 
-        if (curActivity == nil) {
-            self.errorText.isHidden = false
+        // Show the info message if the user is banned or if we
+        // otherwise don't have access to the activity:
+        if (curActivity == nil || curMemberStatus == .banned) {
+            showErrorText()
         } else {
             self.errorText.isHidden = true
         }
-
+        
         // Do not render until data exists:
+        // Also, do not render if the current user is banned:
         guard let activity = self.curActivity,
             let memberStatus = self.curMemberStatus,
-            let topics = self.activityTopics else { return }
+            let topics = self.activityTopics,
+            memberStatus != .banned else { return }
 
         let users = self.activityUsers ?? []
 
@@ -301,7 +315,7 @@ class ViewActivityController: UIViewController {
         
         // If (and only if) the user is a member, display the
         // chat area underneath the description:
-        if (memberStatus != .none) {
+        if (memberStatus != .none && memberStatus != .banned) {
             
             if !shouldExpand{
                 // Note: the description view should always be initialized
