@@ -79,7 +79,6 @@ class TestActivity: BuddiesUITestCase {
         XCTAssertTrue(topMember.waitForExistence(timeout: 10), "Can't find a user in this activity")
         
         topMember.tap()
-        
         app.navigationBars["Profile"].buttons["View Activity"].tap()
         
         
