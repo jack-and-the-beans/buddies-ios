@@ -109,11 +109,12 @@ class ActivityChatController: MessagesViewController {
                     
                     let sender = Sender(id: id , displayName: self.getUserName(id: id))
                     
-                    //if message about user leaving or joining
+                    //if message from system
                     if data["type"] as! String != "message" {
                         let systemSender = Sender(id: "system", displayName: "")
+                        let content =  NSAttributedString(string: data["message"] as! String, attributes: [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 14)])
                         
-                        return Message(text: data["message"] as! String, sender: systemSender, messageId: doc.documentID, date: (data["date_sent"] as! Timestamp).dateValue())
+                        return Message(text: content, sender: systemSender, messageId: doc.documentID, date: (data["date_sent"] as! Timestamp).dateValue())
                     }
                     
                     return Message(text: data["message"] as! String, sender: sender, messageId: doc.documentID, date: (data["date_sent"] as! Timestamp).dateValue())
@@ -174,6 +175,7 @@ extension ActivityChatController: MessagesDataSource {
         }
         return nil
     }
+
     
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if !isPreviousMessageSameSender(at: indexPath) {
@@ -269,9 +271,9 @@ extension ActivityChatController: MessagesDisplayDelegate {
             
             return .bubbleTail(tail, .curved)
         }
-        
-
     }
+    
+    
     
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
