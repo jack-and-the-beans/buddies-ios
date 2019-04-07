@@ -44,6 +44,7 @@ class ActivityChatController: MessagesViewController {
         loadMessageList()
         messageList = messageList.sorted { $0.sentDate < $1.sentDate }
         messagesCollectionView.reloadData()
+        messageInputBar.inputTextView.resignFirstResponder()
         messagesCollectionView.scrollToBottom(animated: true)
         
     }
