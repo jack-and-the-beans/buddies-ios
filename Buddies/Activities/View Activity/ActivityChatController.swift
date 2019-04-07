@@ -15,7 +15,6 @@ class ActivityChatController: MessagesViewController {
     @IBOutlet weak var statusLabel: UILabel!
     
     var messageList: [Message] = []
-    var userList: [User] = []
 
     // Local data for rendering:
     var activity: Activity?
@@ -38,6 +37,7 @@ class ActivityChatController: MessagesViewController {
             self.user = user
         }
         
+        loadMessageList()
         messagesCollectionView.reloadData()
         messagesCollectionView.scrollToBottom(animated: true)
         
@@ -50,30 +50,43 @@ class ActivityChatController: MessagesViewController {
     
     func getUserName(id:String) -> String{
         
+        guard let userList = activity?.users else {return ""}
         var name = ""
-        
-        for user in (activity?.users)!{
+        for user in userList{
             if user.uid == id{
                 name = user.name
             }
         }
-        
         return name
     }
     
     func getAvatarImage(id:String) -> UIImage?{
         
-        for user in (activity?.users)!{
+        guard let userList = activity?.users else {return nil}
+        for user in userList{
             if user.uid == id{
                 return user.image
             }
         }
         return nil
     }
+    
+    //Redacts message sent by banned users, no effect if not sent by banned user
+    func redactMessages(){
+        
+        for msg in messageList {
+            
+            let msgSenderID = msg.sender.id
+            
+            if activity?.getMemberStatus(of: msgSenderID) == .banned {
+                msg.kind = MessageKind.text("This user has been removed.")
+            }
+            
+        }
+        
+    }
+    
 
-    
-    
-    
     func loadMessageList() {
         registration?.remove()
         
@@ -101,10 +114,13 @@ class ActivityChatController: MessagesViewController {
                     
                 }).sorted { $0.sentDate < $1.sentDate }
                 
+                self.redactMessages()
                 self.messagesCollectionView.reloadData()
                 self.messagesCollectionView.scrollToBottom()
             }
         }
+        
+        
         
         
     }
