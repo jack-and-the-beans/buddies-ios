@@ -336,6 +336,7 @@ class ViewActivityController: UIViewController {
                     self.addChild(chatController)
                     chatController.didMove(toParent: self)
                     chatController.activity = activity
+                    chatController.userList = activityUsers ?? []
                     chatController.loadMessageList()
                     
                     becomeFirstResponder()

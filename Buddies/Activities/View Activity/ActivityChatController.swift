@@ -15,6 +15,7 @@ class ActivityChatController: MessagesViewController {
     @IBOutlet weak var statusLabel: UILabel!
     
     var messageList: [Message] = []
+    var userList: [User] = []
 
     // Local data for rendering:
     var activity: Activity?
@@ -23,14 +24,17 @@ class ActivityChatController: MessagesViewController {
     var userCanceler: Canceler?
     var registration: ListenerRegistration?
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        messageList = messageList.sorted { $0.sentDate < $1.sentDate }
+        
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
+        scrollsToBottomOnKeyboardBeginsEditing = true
         messageInputBar.tintColor = Theme.theme
         
         userCanceler = DataAccessor.instance.useLoggedInUser { user in
@@ -38,6 +42,7 @@ class ActivityChatController: MessagesViewController {
         }
         
         loadMessageList()
+        messageList = messageList.sorted { $0.sentDate < $1.sentDate }
         messagesCollectionView.reloadData()
         messagesCollectionView.scrollToBottom(animated: true)
         
@@ -50,7 +55,6 @@ class ActivityChatController: MessagesViewController {
     
     func getUserName(id:String) -> String{
         
-        guard let userList = activity?.users else {return ""}
         var name = ""
         for user in userList{
             if user.uid == id{
@@ -62,7 +66,6 @@ class ActivityChatController: MessagesViewController {
     
     func getAvatarImage(id:String) -> UIImage?{
         
-        guard let userList = activity?.users else {return nil}
         for user in userList{
             if user.uid == id{
                 return user.image
@@ -83,6 +86,8 @@ class ActivityChatController: MessagesViewController {
             }
             
         }
+        
+        
         
     }
     
@@ -215,6 +220,7 @@ extension ActivityChatController: MessageInputBarDelegate {
 // MARK: - MessagesDisplayDelegate
 extension ActivityChatController: MessagesDisplayDelegate {
     
+    
     // MARK: - Helpers
     func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
         return indexPath.section % 3 == 0 && !isPreviousMessageSameSender(at: indexPath)
@@ -262,8 +268,10 @@ extension ActivityChatController: MessagesDisplayDelegate {
             
             return .bubbleTail(tail, .curved)
         }
+        
 
     }
+    
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         
@@ -279,6 +287,7 @@ extension ActivityChatController: MessagesDisplayDelegate {
             
             avatarView.set(avatar:avi)
         }
+        
       
     }
     
@@ -306,5 +315,15 @@ extension ActivityChatController: MessagesLayoutDelegate {
         return (message.sender.id == "system") ? 16 : 0
     }
     
+    
+}
+
+// MARK: - MessageCellDelegate
+
+extension ActivityChatController: MessageCellDelegate {
+    
+    func didTapMessage(in cell: MessageCollectionViewCell) {
+        messageInputBar.inputTextView.resignFirstResponder()
+    }
     
 }
