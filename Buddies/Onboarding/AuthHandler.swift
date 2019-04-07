@@ -101,8 +101,17 @@ class AuthHandler {
         }
     }
     
-    func signOut(onError: (String) -> Void, onSuccess: () -> Void) {
+    func signOut(onError: @escaping (String) -> Void, onSuccess: () -> Void) {
         do {
+            let collection: CollectionReference = Firestore.firestore().collection("accounts")
+            guard let uid = auth.currentUser?.uid else { return }
+            collection.document(uid).setData([
+                "notification_token" : ""
+            ], merge: true) { err in
+                if let err = err {
+                    onError("Could not update notification token: \(err)")
+                }
+            }
             try auth.signOut()
             onSuccess()
         }
