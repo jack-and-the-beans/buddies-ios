@@ -314,9 +314,6 @@ extension ActivityChatController: MessagesLayoutDelegate {
         }
     }
     
-    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return (message.sender.id == "system") ? 16 : 0
-    }
     
     
 }
