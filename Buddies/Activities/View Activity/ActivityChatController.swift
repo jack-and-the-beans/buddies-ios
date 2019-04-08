@@ -278,6 +278,8 @@ extension ActivityChatController: MessagesDisplayDelegate {
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         
+        avatarView.isHidden = false
+        
         //hide avatar if from system
         if message.sender.id == "system"{
             avatarView.isHidden = true
