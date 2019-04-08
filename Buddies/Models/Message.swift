@@ -25,6 +25,14 @@ class Message: MessageType {
         self.sentDate = date
         self.content = text
     }
+    
+    init(text: NSAttributedString, sender: Sender, messageId: String, date: Date) {
+        self.kind = .attributedText(text)
+        self.sender = sender
+        self.messageId = messageId
+        self.sentDate = date
+        self.content = text.string
+    }
 
     
 }

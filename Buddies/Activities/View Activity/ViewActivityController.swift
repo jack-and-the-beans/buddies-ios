@@ -74,7 +74,6 @@ class ViewActivityController: UIViewController {
         
         reportButton.tintColor = Theme.bad
         
-        setupHideKeyboardOnTap()
     }
 
     // Need to wait to render until here
@@ -336,11 +335,10 @@ class ViewActivityController: UIViewController {
                     self.addChild(chatController)
                     chatController.didMove(toParent: self)
                     chatController.activity = activity
+                    chatController.userList = activityUsers ?? []
                     chatController.loadMessageList()
                     
                     becomeFirstResponder()
-                    
-                    chatController.messageInputBar.inputTextView.becomeFirstResponder()
                     
                     //adjust height
                     chatController.view.bindFrameToSuperviewBounds()

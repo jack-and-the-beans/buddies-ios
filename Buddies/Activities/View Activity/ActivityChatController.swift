@@ -24,21 +24,27 @@ class ActivityChatController: MessagesViewController {
     var userCanceler: Canceler?
     var registration: ListenerRegistration?
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        messageList = messageList.sorted { $0.sentDate < $1.sentDate }
+        
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
+        scrollsToBottomOnKeyboardBeginsEditing = true
         messageInputBar.tintColor = Theme.theme
         
         userCanceler = DataAccessor.instance.useLoggedInUser { user in
             self.user = user
         }
         
+        loadMessageList()
+        messageList = messageList.sorted { $0.sentDate < $1.sentDate }
         messagesCollectionView.reloadData()
+        messageInputBar.inputTextView.resignFirstResponder()
         messagesCollectionView.scrollToBottom(animated: true)
         
     }
@@ -51,29 +57,42 @@ class ActivityChatController: MessagesViewController {
     func getUserName(id:String) -> String{
         
         var name = ""
-        
-        for user in (activity?.users)!{
+        for user in userList{
             if user.uid == id{
                 name = user.name
             }
         }
-        
         return name
     }
     
     func getAvatarImage(id:String) -> UIImage?{
         
-        for user in (activity?.users)!{
+        for user in userList{
             if user.uid == id{
                 return user.image
             }
         }
         return nil
     }
+    
+    //Redacts message sent by banned users, no effect if not sent by banned user
+    func redactMessages(){
+        
+        for msg in messageList {
+            
+            let msgSenderID = msg.sender.id
+            
+            if activity?.getMemberStatus(of: msgSenderID) == .banned {
+                msg.kind = MessageKind.text("This user has been removed.")
+            }
+            
+        }
+        
+        
+        
+    }
+    
 
-    
-    
-    
     func loadMessageList() {
         registration?.remove()
         
@@ -90,21 +109,25 @@ class ActivityChatController: MessagesViewController {
                     
                     let sender = Sender(id: id , displayName: self.getUserName(id: id))
                     
-                    //if message about user leaving or joining
+                    //if message from system
                     if data["type"] as! String != "message" {
                         let systemSender = Sender(id: "system", displayName: "")
+                        let content =  NSAttributedString(string: data["message"] as! String, attributes: [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 14)])
                         
-                        return Message(text: data["message"] as! String, sender: systemSender, messageId: doc.documentID, date: (data["date_sent"] as! Timestamp).dateValue())
+                        return Message(text: content, sender: systemSender, messageId: doc.documentID, date: (data["date_sent"] as! Timestamp).dateValue())
                     }
                     
                     return Message(text: data["message"] as! String, sender: sender, messageId: doc.documentID, date: (data["date_sent"] as! Timestamp).dateValue())
                     
                 }).sorted { $0.sentDate < $1.sentDate }
                 
+                self.redactMessages()
                 self.messagesCollectionView.reloadData()
                 self.messagesCollectionView.scrollToBottom()
             }
         }
+        
+        
         
         
     }
@@ -152,6 +175,7 @@ extension ActivityChatController: MessagesDataSource {
         }
         return nil
     }
+
     
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if !isPreviousMessageSameSender(at: indexPath) {
@@ -198,6 +222,7 @@ extension ActivityChatController: MessageInputBarDelegate {
 
 // MARK: - MessagesDisplayDelegate
 extension ActivityChatController: MessagesDisplayDelegate {
+    
     
     // MARK: - Helpers
     func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
@@ -246,10 +271,14 @@ extension ActivityChatController: MessagesDisplayDelegate {
             
             return .bubbleTail(tail, .curved)
         }
-
     }
     
+    
+    
+    
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        
+        avatarView.isHidden = false
         
         //hide avatar if from system
         if message.sender.id == "system"{
@@ -263,6 +292,7 @@ extension ActivityChatController: MessagesDisplayDelegate {
             
             avatarView.set(avatar:avi)
         }
+        
       
     }
     
@@ -286,9 +316,16 @@ extension ActivityChatController: MessagesLayoutDelegate {
         }
     }
     
-    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return (message.sender.id == "system") ? 16 : 0
-    }
     
+    
+}
+
+// MARK: - MessageCellDelegate
+
+extension ActivityChatController: MessageCellDelegate {
+    
+    func didTapMessage(in cell: MessageCollectionViewCell) {
+        messageInputBar.inputTextView.resignFirstResponder()
+    }
     
 }
