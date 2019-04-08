@@ -54,6 +54,13 @@ class ActivityChatController: MessagesViewController {
         registration?.remove()
     }
     
+    func tapUser(_ uid: String) {
+        if let userProfile = BuddiesStoryboard.OtherProfile.viewController(withID: "otherProfile") as? OtherProfileVC {
+            userProfile.userId = uid
+            self.navigationController?.pushViewController(userProfile, animated: true)
+        }
+    }
+    
     func getUserName(id:String) -> String{
         
         var name = ""
@@ -320,12 +327,31 @@ extension ActivityChatController: MessagesLayoutDelegate {
     
 }
 
-// MARK: - MessageCellDelegate
 
+
+// MARK: - MessageCellDelegate
 extension ActivityChatController: MessageCellDelegate {
     
     func didTapMessage(in cell: MessageCollectionViewCell) {
         messageInputBar.inputTextView.resignFirstResponder()
     }
     
+    func didTapAvatar(in cell: MessageCollectionViewCell) {
+        
+        //get index path from cell
+        if let indexPath = messagesCollectionView.indexPath(for: cell){
+            
+            let msg = messageForItem(at: indexPath, in: messagesCollectionView)
+            
+            let userID = msg.sender.id
+            
+            tapUser(userID)
+            
+        }
+        
+       
+        
+    }
+    
 }
+
