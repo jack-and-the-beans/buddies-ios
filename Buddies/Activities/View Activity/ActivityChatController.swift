@@ -345,7 +345,10 @@ extension ActivityChatController: MessageCellDelegate {
             
             let userID = msg.sender.id
             
-            tapUser(userID)
+            if activity?.getMemberStatus(of: userID) != .banned {
+                 tapUser(userID)
+            }
+
             
         }
         
