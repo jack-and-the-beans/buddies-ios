@@ -182,12 +182,6 @@ class ViewActivityController: UIViewController {
     var shouldExpand = false
     func expandDescription() {
         shouldExpand = !shouldExpand
-        if shouldExpand {
-            //resignFirstResponder()
-        }else
-        {
-            //becomeFirstResponder()
-        }
         render()
     }
 
@@ -337,6 +331,7 @@ class ViewActivityController: UIViewController {
                     chatController.activity = activity
                     chatController.userList = activityUsers ?? []
                     chatController.loadMessageList()
+                    chatController.messagesCollectionView.reloadData()
                     
                     becomeFirstResponder()
                     
