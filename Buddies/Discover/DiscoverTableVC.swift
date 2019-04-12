@@ -19,6 +19,15 @@ class DiscoverTableVC : ActivityTableVC {
     var cancelUserListener: Canceler?
     
     var geoPrecisionGroups = 3.0
+
+    
+    override func checkAndShowNoActivitiesMessage () {
+        if (self.dataSource.hasNoActivities() && getTopics().count == 0) {
+                tableView.setEmptyMessage("Discover suggests Activities based on your favorite Topics. \n\nVisit the Topics tab to select Topics you love! 😊\n\n\n\n\n\n")
+        } else {
+           super.checkAndShowNoActivitiesMessage()
+        }
+    }
     
     override func viewDidLoad() {
         self.setupHideKeyboardOnTap()
@@ -50,7 +59,14 @@ class DiscoverTableVC : ActivityTableVC {
     override func fetchAndLoadActivities() {
         self.startRefreshIndicator()
         let searchParams = searchBar.getSearchParams()
-        let topics = (searchParams.filterText?.isEmpty ?? true) ? getTopics() : []
+        let hasTextParam: Bool = !(searchParams.filterText?.isEmpty ?? true)
+        //If no topics and no query, hide results to show onboarding
+        guard hasTextParam || getTopics().count > 0 else {
+            self.updateWantedActivities(with: [[]])
+            return
+        }
+        
+        let topics = hasTextParam ? [] : getTopics()
         
                 
         //Sort into `geoPrecisionGroups` number of groups
