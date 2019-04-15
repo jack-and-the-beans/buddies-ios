@@ -147,17 +147,28 @@ class LoggedInUser : User, Equatable {
 
     func isBlocked(user: UserId?) -> Bool {
         guard let user = user else { return false }
-        return userBlockList.contains(user)
+        // Never block yourself:
+        if (user == self.uid) {
+            return false
+        } else {
+            return userBlockList.contains(user)
+        }
     }
 
     func isBlocked(activity: Activity?) -> Bool {
+        // Nil should not be blocked (so that changes can propogate correctly):
         guard let activity = activity else { return false }
-        if activity.getMemberStatus(of: self.uid) == .banned {
+
+        // Never block your own activities:
+        let ownStatus = activity.getMemberStatus(of: self.uid)
+        if ownStatus == .owner {
+            return false
+        } else if ownStatus == .banned {
+            return true
+        } else if blockedActivities.contains(activity.activityId) {
             return true
         }
-        if blockedActivities.contains(activity.activityId) {
-            return true
-        }
+
         for id in activity.members {
             if (isBlocked(user: id)) {
                 return true
