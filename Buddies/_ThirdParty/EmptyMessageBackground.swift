@@ -9,6 +9,19 @@
 //
 import UIKit
 
+//Wacky (not quite hacky) way of adding padding
+extension UIView {
+    func withPadding(_ padding: UIEdgeInsets) -> UIView {
+        let container = UIView()
+        self.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(self)
+        container.addConstraints(NSLayoutConstraint.constraints( withVisualFormat: "|-(\(padding.left))-[view]-(\(padding.right))-|" , options: [], metrics: nil, views: ["view": self]))
+        container.addConstraints(NSLayoutConstraint.constraints( withVisualFormat: "V:|-(\(padding.top))-[view]-(\(padding.bottom))-|", options: [], metrics: nil, views: ["view": self]))
+        return container
+    }
+}
+
+
 extension UITableView {
     func setEmptyMessage(_ message: String, font: UIFont = UIFont.systemFont(ofSize: 15)) {
         let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
@@ -19,7 +32,9 @@ extension UITableView {
         messageLabel.font = font
         messageLabel.sizeToFit()
         
-        self.backgroundView = messageLabel;
+        let padding = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        
+        self.backgroundView = messageLabel.withPadding(padding);
         self.separatorStyle = .none;
     }
     
