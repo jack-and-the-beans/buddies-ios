@@ -60,7 +60,9 @@ class DiscoverTableVC : ActivityTableVC {
         self.startRefreshIndicator()
         let searchParams = searchBar.getSearchParams()
         let hasTextParam: Bool = !(searchParams.filterText?.isEmpty ?? true)
-        //If no topics and no query, hide results to show onboarding
+        
+        //Hacky way of displaying Onboarding message
+        // If topics or search param, do search. Otherwise onboarding msg
         guard hasTextParam || getTopics().count > 0 else {
             self.updateWantedActivities(with: [[]])
             return
