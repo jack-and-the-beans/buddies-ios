@@ -22,7 +22,10 @@ class DiscoverTableVC : ActivityTableVC {
 
     
     override func checkAndShowNoActivitiesMessage () {
-        if (self.dataSource.hasNoActivities() && getTopics().count == 0) {
+        let searchParams = searchBar.getSearchParams()
+        let hasTextParam: Bool = !(searchParams.filterText?.isEmpty ?? true)
+
+        if (!hasTextParam && dataSource.hasNoActivities() && getTopics().count == 0) {
                 tableView.setEmptyMessage("Discover suggests Activities based on your favorite Topics. \n\nVisit the Topics tab to select Topics you love! 😊\n\n\n\n\n\n")
         } else {
            super.checkAndShowNoActivitiesMessage()
