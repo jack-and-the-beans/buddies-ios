@@ -128,8 +128,9 @@ class UserTests: XCTestCase {
 
     func testIsBlocked() {
         let user1 = createLoggedInUser(id: "me")
-        user1.blockedUsers = ["me"]
-        XCTAssertTrue(user1.isBlocked(user: "me"))
+        user1.blockedUsers = ["me", "not_me"]
+        XCTAssertFalse(user1.isBlocked(user: "me"))
+        XCTAssertTrue(user1.isBlocked(user: "not_me"))
     }
 
     func testIsBlocked1() {
