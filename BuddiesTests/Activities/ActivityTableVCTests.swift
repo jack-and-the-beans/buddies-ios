@@ -283,13 +283,13 @@ class ActivityTableVCTests: XCTestCase {
     
     func testNoActivities () {
         activityTableVC.checkAndShowNoActivitiesMessage()
-        let text = activityTableVC.tableView.backgroundView as? UILabel
+        let text = activityTableVC.tableView.backgroundView
         XCTAssertNotNil(text, "Text view should exist")
 
         // Add an activity:
         let _ = activityTableVC.dataSource.setActivities([[testActivity]])
         activityTableVC.checkAndShowNoActivitiesMessage()
-        let text2 = activityTableVC.tableView.backgroundView as? UILabel
+        let text2 = activityTableVC.tableView.backgroundView
         XCTAssertNil(text2, "Text view should not exist")
     }
     
