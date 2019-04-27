@@ -194,4 +194,11 @@ class UserTests: XCTestCase {
         let user1 = createLoggedInUser(id: "me")
         XCTAssertFalse(user1.isActivityBlockListDifferent(nil))
     }
+    
+    func testCopyEquality() {
+        let user1 = createOtherUser(id: "user1")
+        let user2 = user1.copy()
+        XCTAssert(user1 !== user2, "Copy creates a new object")
+        XCTAssert(user1 == user2, "Copy creates a functionally identical copy")
+    }
 }

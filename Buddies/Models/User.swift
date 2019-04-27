@@ -44,7 +44,8 @@ class OtherUser : User, Equatable {
          dateJoined: Date,
          name: String,
          bio: String,
-         favoriteTopics: [String]) {
+         favoriteTopics: [String],
+         image: UIImage? = nil) {
         self.uid = uid
         self.imageUrl = imageUrl
         self.imageVersion = imageVersion
@@ -87,6 +88,17 @@ class OtherUser : User, Equatable {
 
     static func == (lhs: OtherUser, rhs: OtherUser) -> Bool {
         return lhs.isEqual(to: rhs)
+    }
+    
+    func copy() -> OtherUser {
+        return OtherUser(uid: uid,
+                         imageUrl: imageUrl,
+                         imageVersion: imageVersion,
+                         dateJoined: dateJoined,
+                         name: name,
+                         bio: bio,
+                         favoriteTopics: favoriteTopics,
+                         image: image)
     }
 }
 
