@@ -254,8 +254,9 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             
             if let user = OtherUser.from(snap: snap) {
             	self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: "\(user.uid)_\(user.imageVersion)") { img in
-                    user.image = img
-                    self.onInvalidateUser(user: user)
+                    let newUser = user.copy()
+                    newUser.image = img
+                    self.onInvalidateUser(user: newUser)
                 }
                 self.onInvalidateUser(user: user, id: id)
             } else {
