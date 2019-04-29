@@ -185,9 +185,8 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             } else if let user = user {
                 // The user has been loaded, so we want to update this user.
                 if let index = users.firstIndex(where: { $0.uid == uid }) {
-                    let oldUser = users[index]
                     users[index] = user
-                    if (oldUser.image == nil && user.image != nil && didFinishSetup) {
+                    if (didFinishSetup) {
                         fn(users)
                     }
                 }
@@ -254,9 +253,8 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
             
             if let user = OtherUser.from(snap: snap) {
             	self.storageManager.getImage(imageUrl: user.imageUrl, localFileName: "\(user.uid)_\(user.imageVersion)") { img in
-                    let newUser = user.copy()
-                    newUser.image = img
-                    self.onInvalidateUser(user: newUser)
+                    user.image = img
+                    self.onInvalidateUser(user: user)
                 }
                 self.onInvalidateUser(user: user, id: id)
             } else {
