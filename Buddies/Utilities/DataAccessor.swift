@@ -205,12 +205,7 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         return { for c in cancelers { c() } }
     }
     
-    func useUser(id: UserId, fn: @escaping (User?) -> Void) -> Canceler {
-        // If this is for the logged in user, translate.
-        if id == _loggedInUID {
-            return useLoggedInUser(fn: fn)
-        }
-        
+    func useUser(id: UserId, fn: @escaping (User?) -> Void) -> Canceler {        
         // Wrap the callback for comparison later
         let callback = Listener(fn: fn)
         
