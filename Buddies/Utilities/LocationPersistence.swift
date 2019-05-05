@@ -24,7 +24,7 @@ class LocationPersistence : NSObject, CLLocationManagerDelegate {
     init(dataAccessor: DataAccessor = DataAccessor.instance) {
         super.init()
         
-        manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        manager.desiredAccuracy = kCLLocationAccuracyKilometer
         manager.delegate = self
         
         cancelUserListener = dataAccessor.useLoggedInUser { user in

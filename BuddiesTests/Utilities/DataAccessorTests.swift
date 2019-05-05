@@ -115,24 +115,6 @@ class DataAccessorTests: XCTestCase {
         self.waitForExpectations(timeout: 2.0)
     }
     
-    func testUseUserWithLoggedInUser() {
-        let exp1 = self.expectation(description: "user loaded")
-        
-        // call
-        let cancel1 = instance.useUser(id: me.uid) { user in
-            // Check some props were loaded
-            XCTAssertEqual(user?.uid, self.me.uid)
-            XCTAssertEqual(user?.name, self.me.name)
-            XCTAssertEqual(user?.imageUrl, self.me.imageUrl)
-            
-            exp1.fulfill()
-        }
-        
-        cancels.append(cancel1)
-        
-        self.waitForExpectations(timeout: 2.0)
-    }
-    
     func testUseLoggedInUser() {
         let exp1 = self.expectation(description: "user loaded")
         
@@ -334,25 +316,6 @@ class DataAccessorTests: XCTestCase {
         
         XCTAssert(calls1 >= 1, "expected first callback to be called twice")
         XCTAssert(calls2 >= 1, "expected second callback to be called twice")
-    }
-    
-    func testIsUserCached() {
-        let result1 = instance.isUserCached(id: me.uid)
-        XCTAssertTrue(result1)
-        
-        let result2 = instance.isUserCached(id: them.uid)
-        XCTAssertFalse(result2)
-        
-        let exp = self.expectation(description: "user loaded")
-        let cancel = instance.useUser(id: me.uid) { user in
-            exp.fulfill()
-        }
-        cancels.append(cancel)
-        
-        self.waitForExpectations(timeout: 2.0)
-        
-        let result3 = instance.isUserCached(id: me.uid)
-        XCTAssertTrue(result3)
     }
     
     func testTriggerServerUpdateUser() {

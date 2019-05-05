@@ -108,9 +108,6 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
     }
     
     func isUserCached(id: UserId) -> Bool {
-        if id == _loggedInUID {
-            return _loggedInUID != nil
-        }
         return _userCache.object(forKey: id as AnyObject) != nil
     }
     
@@ -205,7 +202,7 @@ class DataAccessor : LoggedInUserInvalidationDelegate, ActivityInvalidationDeleg
         return { for c in cancelers { c() } }
     }
     
-    func useUser(id: UserId, fn: @escaping (User?) -> Void) -> Canceler {        
+    func useUser(id: UserId, fn: @escaping (User?) -> Void) -> Canceler {
         // Wrap the callback for comparison later
         let callback = Listener(fn: fn)
         
